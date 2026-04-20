@@ -13,8 +13,11 @@
 }
 
 @theme {
-  --color-primary: #00BBCC;
-  --color-surface: #E5E5E5;
+  --color-background: #f5f5f5;
+  --color-foreground: #1d1d1d;
+  --color-primary: #00bbcc;
+  --color-surface: #e5e5e5;
+  --color-surface-top: #d3d3d3;
 }
 
 /* @theme inline {

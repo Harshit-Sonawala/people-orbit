@@ -1,8 +1,10 @@
+"use client"
 import SatelliteAltRoundedIcon from '@mui/icons-material/SatelliteAltRounded';
 import Card from "../components/Card";
 import Header1 from "../components/Header1";
 import Header2 from "../components/Header2";
 import Header3 from "../components/Header3";
+import Button from '../components/Button';
 
 export default function Home() {
   return (
@@ -24,18 +26,30 @@ export default function Home() {
         
         <p>Card Component</p>
         <Card>
-          <p>Card Children</p>
+          <p>Card when variant not specified, it takes surface</p>
+        </Card>
+        <Card variant="surface">
+          <p>Card surface variant</p>
         </Card>
         <Card>
-          <p>Card Children</p>
+          <p className="py-4">Parent Card</p>
+          <Card variant="surface-top">
+            <p>Child Card surface-top variant</p>
+          </Card>
         </Card>
-        <Card>
-          <p>Card Children</p>
+        <Card variant="outlined">
+          <p>Card outlined variant</p>
+        </Card>
+        <Card variant="outlined-primary">
+          <p>Card outlined-primary variant</p>
         </Card>
 
         <div className="m-4"/>
 
-
+        <p>Button Component</p>
+        <Button onPress={() => console.log("button 1 pressed")}>Filled Button</Button>
+        <Button variant="outlined" onPress={() => console.log("button 2 pressed")}>Outlined Button</Button>
+        <Button>Hello World</Button>
       </div>
     </div>
   );
