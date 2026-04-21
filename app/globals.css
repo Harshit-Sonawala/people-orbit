@@ -9,13 +9,14 @@
 
 :root {
   --background: #f5f5f5;
-  --foreground: #1d1d1d;
+  --foreground: #111111;
   --primary: #00bbcc;
-  --primary-light: #36d7b7;
+  --primary-light: #9884e9;
   --secondary: #ed8128;
-  --surface: #e5e5e5;
-  --surface-top: #d9d9d9;
+  --surface: #e3e3e3;
+  --surface-top: #dfdfdf;
   --surface-top-dark: #aaaaaa;
+  --error: #e05454;
 }
 
 @theme {
@@ -27,6 +28,7 @@
   --color-surface: var(--surface);
   --color-surface-top: var(--surface-top);
   --color-surface-top-dark: var(--surface-top-dark);
+  --color-error: var(--error);
 }
 
 /* @theme inline {
@@ -47,4 +49,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Inter", sans-serif;
+}
+
+label {
+  display: block;
 }
