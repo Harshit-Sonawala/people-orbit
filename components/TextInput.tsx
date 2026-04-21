@@ -1,7 +1,7 @@
 import React from "react";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
-  variant?: "filled" | "outlined" | "outlined-primary";
+  variant?: "filled" | "outlined" | "rounded" | "outlined-primary";
   placeholder?: string;
   error?: string;
   disabled?: boolean;

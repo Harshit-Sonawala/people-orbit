@@ -2,6 +2,7 @@
 import { Formik } from "formik"; // Formik forms
 import * as Yup from "yup"; // Yup Schema Validation
 import SatelliteAltRoundedIcon from "@mui/icons-material/SatelliteAltRounded";
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import Card from "../components/Card";
 import Header1 from "../components/Header1";
 import Header2 from "../components/Header2";
@@ -9,19 +10,40 @@ import Header3 from "../components/Header3";
 import Button from "../components/Button";
 import Divider from "../components/Divider";
 import TextInput from "../components/TextInput";
+import PersonCard from "../components/PersonCard";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-start w-[90%] mx-auto">
-      <div className="flex flex-row items-center justify-start p-2">
-        <SatelliteAltRoundedIcon
-          sx={{ fontSize: "2rem" }}
-          className="text-primary"
-        />
-        <h1 className="text-3xl font-bold p-2">
-          People<span className="text-primary">Orbit</span>
-        </h1>
+    <div className="flex flex-col flex-1 items-stretch justify-center w-[90%] mx-auto">
+      <div className="flex flex-row items-center justify-between p-2">
+        <div className="flex flex-row items-center justify-center px-2">
+          <SatelliteAltRoundedIcon
+            sx={{ fontSize: "2rem" }}
+            className="text-primary"
+          />
+          <h1 className="text-3xl font-bold p-2">
+            People<span className="text-primary">Orbit</span>
+          </h1>
+        </div>
+
+        <TextInput variant="rounded" placeholder="Search..." />
+
+        <div className="flex flex-row items-center justify-center gap-2 rounded-md">
+          <div className="flex items-center justify-center w-14 h-14 rounded-full bg-surface-top">
+            <AccountCircleRoundedIcon
+              sx={{ fontSize: "2.5rem" }}
+              className="text-primary"
+            />
+          </div>
+        </div>
       </div>
+
+      <div className="grid grid-cols-4 gap-4">
+        {Array.from({length: 16}).map((_, i) => (<PersonCard key={i} />))}
+      </div>
+
+      <div className="m-4" />
+
       <div className="m-2 flex flex-col gap-2">
         <p>Components Demo:</p>
         <p>Header 1</p>
@@ -97,7 +119,7 @@ export default function Home() {
         <p>Formik Form Sample</p>
         <Card className="flex flex-col gap-2 w-[90%] mx-auto">
           <Header3>Enter person information</Header3>
-          <Divider variant="primary"/>
+          <Divider variant="primary" />
           <Formik
             initialValues={{ firstName: "", lastName: "", email: "" }}
             validationSchema={Yup.object({
@@ -119,7 +141,10 @@ export default function Home() {
             }}
           >
             {(formik) => (
-              <form className="flex flex-col items-stretch align-center gap-4" onSubmit={formik.handleSubmit}>
+              <form
+                className="flex flex-col items-stretch align-center gap-4"
+                onSubmit={formik.handleSubmit}
+              >
                 <div className="flex flex-col gap-1">
                   <label htmlFor="firstName">First Name</label>
                   <TextInput
@@ -154,7 +179,9 @@ export default function Home() {
                   />
                 </div>
 
-                <Button type="submit" className="flex flex-1">Submit</Button>
+                <Button type="submit" className="flex flex-1">
+                  Submit
+                </Button>
               </form>
             )}
           </Formik>
