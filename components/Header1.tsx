@@ -1,13 +1,12 @@
-import React from 'react'
+import React from "react";
 
 type Props = {
-    children: React.ReactNode
-}
+  children: React.ReactNode;
+  className?: string;
+};
 
-const Header1 = ({ children }: Props) => {
-  return (
-    <h1 className="text-3xl font-bold">{children}</h1>
-  )
-}
+const Header1 = ({ children, className = "" }: Props) => {
+  return <h1 className={`text-4xl font-bold ${className}`}>{children}</h1>;
+};
 
-export default Header1
+export default Header1;

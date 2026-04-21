@@ -5,10 +5,11 @@ import Header1 from "../components/Header1";
 import Header2 from "../components/Header2";
 import Header3 from "../components/Header3";
 import Button from '../components/Button';
+import Divider from '../components/Divider';
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-start">
+    <div className="flex flex-col flex-1 items-stretch justify-start w-[90%] mx-auto">
       <div className="flex flex-row items-center justify-start p-2">
         <SatelliteAltRoundedIcon sx={{ fontSize: "2rem" }} className="text-primary"/>
         <h1 className="text-3xl font-bold p-2">People<span className="text-primary">Orbit</span></h1>
@@ -25,9 +26,6 @@ export default function Home() {
         <div className="m-4"/>
         
         <p>Card Component</p>
-        <Card>
-          <p>Card when variant not specified, it takes surface</p>
-        </Card>
         <Card variant="surface">
           <p>Card surface variant</p>
         </Card>
@@ -47,9 +45,19 @@ export default function Home() {
         <div className="m-4"/>
 
         <p>Button Component</p>
-        <Button onPress={() => console.log("button 1 pressed")}>Filled Button</Button>
-        <Button variant="outlined" onPress={() => console.log("button 2 pressed")}>Outlined Button</Button>
-        <Button>Hello World</Button>
+        <Card>
+          <Button onPress={() => console.log("Filled button pressed.")}>Filled Button</Button>
+          <Button variant="outlined" onPress={() => console.log("Outlined button pressed.")}>Outlined Button</Button>
+          <Button variant="rounded" onPress={()=> console.log("Rounded button pressed.")}>Rounded Button</Button>
+          <Button variant="outlined-rounded" onPress={() => console.log("Outlined Rounded button pressed.")}>Outlined Rounded Button</Button>
+        </Card>
+
+        <div className="m-4"/>
+
+        <p>Divider Component</p>
+        <Divider />
+
+        <div className="m-4"/>
       </div>
     </div>
   );

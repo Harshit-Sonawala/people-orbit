@@ -10,14 +10,23 @@
 :root {
   --background: #f5f5f5;
   --foreground: #1d1d1d;
+  --primary: #00bbcc;
+  --primary-light: #36d7b7;
+  --secondary: #ed8128;
+  --surface: #e5e5e5;
+  --surface-top: #d9d9d9;
+  --surface-top-dark: #aaaaaa;
 }
 
 @theme {
-  --color-background: #f5f5f5;
-  --color-foreground: #1d1d1d;
-  --color-primary: #00bbcc;
-  --color-surface: #e5e5e5;
-  --color-surface-top: #d3d3d3;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-secondary: var(--secondary);
+  --color-surface: var(--surface);
+  --color-surface-top: var(--surface-top);
+  --color-surface-top-dark: var(--surface-top-dark);
 }
 
 /* @theme inline {
