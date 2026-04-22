@@ -5,7 +5,7 @@ import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import WorkIcon from "@mui/icons-material/Work";
-import { Person } from "../../shared-types/Person";
+import { Person } from "../types/Person";
 import Image from "next/image";
 import profilePic from "../public/dummy_profilePic.jpg";
 import bgImage from "../public/dummy_bgImage.jpg";
@@ -47,12 +47,12 @@ const PersonCard = ({ person, className = "" }: Props) => {
           />
           <p className="text-sm text-foreground">{person.designation}</p>
         </div>
-        <div className="flex flex-row gap-2 items-center justify-start">
+        <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <EmailIcon
-            className="text-primary"
+            className="text-primary shrink-0"
             sx={{ fontSize: "1.2rem" }}
           />
-          <p className="text-sm text-foreground">{person.email}</p>
+          <p className="text-sm text-foreground truncate">{person.email}</p>
         </div>
         <div className="flex flex-row gap-2 items-center justify-start">
           <PhoneIcon

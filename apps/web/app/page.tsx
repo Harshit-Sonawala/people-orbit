@@ -11,9 +11,12 @@ import Button from "../components/Button";
 import Divider from "../components/Divider";
 import TextInput from "../components/TextInput";
 import PersonCard from "../components/PersonCard";
-import { dummyPersonData } from '../../shared-types/dummyPersonData';
+import { useFetchPeople } from "../hooks/useFetchPeople";
+// import { dummyPersonData } from '../types/dummyPersonData';
 
 export default function Home() {
+  const { data: people, isLoading, isError, error } = useFetchPeople();
+
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center w-[90%] mx-auto">
       <div className="flex flex-row items-center justify-between p-2">
@@ -31,17 +34,29 @@ export default function Home() {
 
         <div className="flex flex-row items-center justify-center gap-2 rounded-md">
           <div className="flex items-center justify-center w-14 h-14 rounded-full bg-surface border-2 border-primary">
-          <AccountCircleRoundedIcon
-            sx={{ fontSize: "3rem" }}
-            className="text-primary"
-          />
-        </div>
+            <AccountCircleRoundedIcon
+              sx={{ fontSize: "3rem" }}
+              className="text-primary"
+            />
+          </div>
         </div>
       </div>
 
-      <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {isLoading && <p className="text-center py-8">Loading...</p>}
+      {isError && (
+        <p className="text-center text-error py-8">Error: {error.message}</p>
+      )}
+      {people && (
+        <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {people.map((person, i) => (
+            <PersonCard person={person} key={person.id ?? i} />
+          ))}
+        </div>
+      )}
+
+      {/* <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {dummyPersonData.map((_, i) => (<PersonCard person={dummyPersonData[i]} key={i} />))}
-      </div>
+      </div> */}
 
       <div className="m-4" />
 

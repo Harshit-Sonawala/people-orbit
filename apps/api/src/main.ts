@@ -6,9 +6,14 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT') || 4000;
+  const PORT = configService.get<number>('PORT') || 4000;
+  
+  app.enableCors({
+    origin: "http://localhost:3000",
+  });
+  app.setGlobalPrefix('api'); // routes become /api/people...
 
-  await app.listen(port);
-  console.log(`Nestjs app running on http://localhost:${port}`);
+  await app.listen(PORT);
+  console.log(`Nestjs app running on http://localhost:${PORT}`);
 }
 bootstrap();
