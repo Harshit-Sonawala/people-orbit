@@ -11,6 +11,7 @@ import Button from "../components/Button";
 import Divider from "../components/Divider";
 import TextInput from "../components/TextInput";
 import PersonCard from "../components/PersonCard";
+import { dummyPersonData } from '../../../shared-types/dummyPersonData';
 
 export default function Home() {
   return (
@@ -39,7 +40,7 @@ export default function Home() {
       </div>
 
       <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {Array.from({length: 16}).map((_, i) => (<PersonCard key={i} />))}
+        {dummyPersonData.map((_, i) => (<PersonCard person={dummyPersonData[i]} key={i} />))}
       </div>
 
       <div className="m-4" />
