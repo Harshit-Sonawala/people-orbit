@@ -11,7 +11,7 @@ import Button from "../components/Button";
 import Divider from "../components/Divider";
 import TextInput from "../components/TextInput";
 import PersonCard from "../components/PersonCard";
-import { dummyPersonData } from '../../../shared-types/dummyPersonData';
+import { dummyPersonData } from '../../shared-types/dummyPersonData';
 
 export default function Home() {
   return (

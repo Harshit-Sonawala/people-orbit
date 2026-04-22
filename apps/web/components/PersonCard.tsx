@@ -5,7 +5,7 @@ import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import WorkIcon from "@mui/icons-material/Work";
-import { Person } from "../../../shared-types/Person";
+import { Person } from "../../shared-types/Person";
 import Image from "next/image";
 import profilePic from "../public/dummy_profilePic.jpg";
 import bgImage from "../public/dummy_bgImage.jpg";
