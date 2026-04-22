@@ -27,7 +27,7 @@ const TextInput = ({
 }: Props) => {
   let placeholderClasses: string = "text-foreground";
   let textClasses: string = "font-medium text-foreground";
-  let borderClasses: string = "border-2 border-surface";
+  let borderClasses: string = "border-2 border-surface-top";
 
   if (disabled) {
     placeholderClasses = "text-surface-top-dark";

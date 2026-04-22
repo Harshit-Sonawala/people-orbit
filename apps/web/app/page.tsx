@@ -29,16 +29,16 @@ export default function Home() {
         <TextInput variant="rounded" placeholder="Search..." />
 
         <div className="flex flex-row items-center justify-center gap-2 rounded-md">
-          <div className="flex items-center justify-center w-14 h-14 rounded-full bg-surface-top">
-            <AccountCircleRoundedIcon
-              sx={{ fontSize: "2.5rem" }}
-              className="text-primary"
-            />
-          </div>
+          <div className="flex items-center justify-center w-14 h-14 rounded-full bg-surface border-2 border-surface-top">
+          <AccountCircleRoundedIcon
+            sx={{ fontSize: "3rem" }}
+            className="text-primary"
+          />
+        </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {Array.from({length: 16}).map((_, i) => (<PersonCard key={i} />))}
       </div>
 
