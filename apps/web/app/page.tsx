@@ -30,7 +30,7 @@ export default function Home() {
         <TextInput variant="rounded" placeholder="Search..." />
 
         <div className="flex flex-row items-center justify-center gap-2 rounded-md">
-          <div className="flex items-center justify-center w-14 h-14 rounded-full bg-surface border-2 border-surface-top">
+          <div className="flex items-center justify-center w-14 h-14 rounded-full bg-surface border-2 border-primary">
           <AccountCircleRoundedIcon
             sx={{ fontSize: "3rem" }}
             className="text-primary"
