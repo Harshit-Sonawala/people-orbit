@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Person } from '../../../shared-types/Person';
-import { dummyPersonData } from '../../../shared-types/dummyPersonData';
+import type { Person } from '../types/Person';
+import { dummyPersonData } from '../types/dummyPersonData';
 
 @Injectable()
 export class PeopleService {

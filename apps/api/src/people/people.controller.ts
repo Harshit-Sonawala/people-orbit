@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { PeopleService } from './people.service';
-import type { Person } from '../../../shared-types/Person';
+import type { Person } from '../types/Person';;
 
 @Controller('people') // for URL: /people
 export class PeopleController {
@@ -13,6 +13,6 @@ export class PeopleController {
 
     @Get(':id')
     getPerson(@Param('id') id: number): Person | undefined {
-        return this.peopleService.findOne(id);
+        return this.peopleService.findOne(Number(id));
     }
 }
