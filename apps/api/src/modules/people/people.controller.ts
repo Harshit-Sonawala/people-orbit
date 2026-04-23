@@ -1,18 +1,18 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { PeopleService } from './people.service';
-import type { Person } from './types/Person';;
+import type { People } from './types/People';;
 
 @Controller('people') // for URL: /people
 export class PeopleController {
     constructor(private readonly peopleService: PeopleService) {}
 
     @Get()
-    getAllPeople(): Person[] {
+    getAllPeople(): People[] {
         return this.peopleService.findAll();
     }
 
     @Get(':id')
-    getPerson(@Param('id') id: number): Person | undefined {
+    getPeople(@Param('id') id: number): People | undefined {
         return this.peopleService.findOne(Number(id));
     }
 }

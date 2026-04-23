@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import type { Person } from './types/Person';
-import { dummyPersonData } from './dummyPersonData';
+import type { People } from './types/People';
+import { dummyPeopleData } from './dummyPeopleData.static';
 
 @Injectable()
 export class PeopleService {
-    findAll(): Person[] {
-        return dummyPersonData;
+    findAll(): People[] {
+        return dummyPeopleData;
     }
 
-    findOne(id: number): Person | undefined {
-        return dummyPersonData.find(person => person.id === id);
+    findOne(id: number): People | undefined {
+        return dummyPeopleData.find(People => People.id === id);
     }
 }

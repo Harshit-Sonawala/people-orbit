@@ -5,17 +5,17 @@ import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import WorkIcon from "@mui/icons-material/Work";
-import { Person } from "../types/Person";
+import { People } from "../types/People";
 import Image from "next/image";
 import profilePic from "../public/dummy_profilePic.jpg";
 import bgImage from "../public/dummy_bgImage.jpg";
 
 type Props = {
-  person: Person;
+  People: People;
   className?: string;
 };
 
-const PersonCard = ({ person, className = "" }: Props) => {
+const PeopleCard = ({ People, className = "" }: Props) => {
   return (
     <div className="flex flex-col">
       <Image
@@ -27,20 +27,20 @@ const PersonCard = ({ person, className = "" }: Props) => {
         <div className="absolute left-4 -top-8 flex items-center justify-center w-16 h-16 rounded-full bg-surface border-2 border-primary">
           <Image
             src={profilePic}
-            alt={person.firstName.charAt(0)}
+            alt={People.firstName.charAt(0)}
             fill
             className="w-16 h-16 rounded-full object-cover"
           />
         </div>
         <Header3>
-          {person.firstName} {person.lastName}
+          {People.firstName} {People.lastName}
         </Header3>
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <WorkIcon
             fontSize="inherit"
             className="icon-md text-primary shrink-0"
           />
-          <p className="text-sm text-foreground truncate">{person.designation}</p>
+          <p className="text-sm text-foreground truncate">{People.designation}</p>
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
@@ -48,7 +48,7 @@ const PersonCard = ({ person, className = "" }: Props) => {
             fontSize="inherit"
             className="icon-md text-primary shrink-0"
           />
-          <p className="text-sm text-foreground truncate">{person.email}</p>
+          <p className="text-sm text-foreground truncate">{People.email}</p>
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
@@ -56,11 +56,11 @@ const PersonCard = ({ person, className = "" }: Props) => {
             fontSize="inherit"
             className="icon-md text-primary shrink-0"
           />
-          <p className="text-sm text-foreground truncate">{person.phone}</p>
+          <p className="text-sm text-foreground truncate">{People.phone}</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default PersonCard;
+export default PeopleCard;

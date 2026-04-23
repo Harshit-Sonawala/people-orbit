@@ -1,12 +1,11 @@
-export type Person = {
+export type People = {
     id: number;
     firstName: string;
     lastName: string;
+    age: number;
     designation: string;
     email: string;
     phone: string;
-    profilePic: string;
-    bgImage: string;
     bio?: string;
     skills?: string[];
     socialLinks: {
@@ -14,4 +13,6 @@ export type Person = {
         website?: string;
         github?: string;
     }
+    profilePic: string;
+    bgImage: string;
 };

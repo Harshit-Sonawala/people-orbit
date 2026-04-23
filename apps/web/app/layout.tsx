@@ -6,7 +6,7 @@ import TopBar from "../components/TopBar";
 
 export const metadata: Metadata = {
   title: "PeopleOrbit",
-  description: "Person Directory Web App",
+  description: "People Directory Web App",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

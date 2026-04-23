@@ -10,7 +10,7 @@ import Header3 from "../components/Header3";
 import Button from "../components/Button";
 import Divider from "../components/Divider";
 import TextInput from "../components/TextInput";
-import PersonCard from "../components/PersonCard";
+import PeopleCard from "../components/PeopleCard";
 
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
@@ -36,20 +36,20 @@ export default function Home() {
       )}
       {people && (
         <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {people.map((person, i) => (
-            <PersonCard person={person} key={person.id ?? i} />
+          {people.map((People, i) => (
+            <PeopleCard People={People} key={People.id ?? i} />
           ))}
         </div>
       )}
 
       {/* <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {dummyPersonData.map((_, i) => (<PersonCard person={dummyPersonData[i]} key={i} />))}
+        {dummyPeopleData.map((_, i) => (<PeopleCard People={dummyPeopleData[i]} key={i} />))}
       </div> */}
 
       <div className="m-4" />
 
       <Card className="flex flex-col items-stretch justify-center gap-2 md:w-[80%] mx-auto">
-        <Header3>Post person information</Header3>
+        <Header3>Post People information</Header3>
         <Divider variant="primary" />
         <Formik
           initialValues={{ 
