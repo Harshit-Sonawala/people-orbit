@@ -21,8 +21,7 @@ const PersonCard = ({ person, className = "" }: Props) => {
       <Image
         src={bgImage}
         alt="Background"
-        className="bg-primary-light w-full h-32 rounded-tl-lg rounded-tr-lg"
-        style={{ objectFit: "cover" }}
+        className="bg-primary-light w-full h-32 rounded-tl-lg rounded-tr-lg object-cover"
       />
       <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-10 pb-6 px-4 bg-surface">
         <div className="absolute left-4 -top-8 flex items-center justify-center w-16 h-16 rounded-full bg-surface border-2 border-primary">
@@ -34,8 +33,7 @@ const PersonCard = ({ person, className = "" }: Props) => {
             src={profilePic}
             alt={person.firstName.charAt(0)}
             fill
-            className="w-16 h-16 rounded-full"
-            style={{ objectFit: "cover" }}
+            className="w-16 h-16 rounded-full object-cover"
           />
         </div>
         <Header3>

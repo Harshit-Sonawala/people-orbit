@@ -27,9 +27,9 @@ const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={`flex flex-row justify-center py-1 px-2 ${variantClasses[variant]}
+      className={`flex flex-row items-center justify-center py-1 px-2 ${variantClasses[variant]}
       hover:bg-primary-light hover:text-white hover:border-transparent hover:cursor-pointer
-      active:bg-secondary active:border-transparent active:translate-y-0.5
+      active:bg-secondary active:border-transparent transform active:scale-[0.98] transition-transform
       ${className}`}
     >
       {children}

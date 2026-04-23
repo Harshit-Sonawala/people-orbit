@@ -14,6 +14,7 @@ import { useFetchPeople } from "../hooks/useFetchPeople";
 
 export default function Home() {
   const { data: people, isLoading, isError, error } = useFetchPeople();
+  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center w-[90%] mx-auto">
@@ -32,6 +33,119 @@ export default function Home() {
       {/* <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {dummyPersonData.map((_, i) => (<PersonCard person={dummyPersonData[i]} key={i} />))}
       </div> */}
+
+      <div className="m-4" />
+
+      <Card className="flex flex-col items-stretch justify-center gap-2 w-full mx-auto">
+        <Header3>Post person information</Header3>
+        <Divider variant="primary" />
+        <Formik
+          initialValues={{ firstName: "", lastName: "", designation: "", email: "" }}
+          validationSchema={Yup.object({
+            firstName: Yup.string()
+              .max(40, "First name must be 40 characters or less")
+              .required("Required Field"),
+            lastName: Yup.string()
+              .max(40, "Last name must be 40 characters or less")
+              .required("Required Field"),
+            designation: Yup.string()
+              .max(40, "Designation must be 40 characters or less")
+              .required("Required Field"),
+            email: Yup.string()
+              .email("Please enter a valid email address")
+              .required("Required Field"),
+            phone: Yup.string()
+              .matches(phoneRegExp, "Please enter a valid phone number")
+              .required("Required Field")
+          })}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          {(formik) => (
+            <form
+              className="flex flex-col items-stretch align-center gap-4"
+              onSubmit={formik.handleSubmit}
+            >
+              <div className="flex flex-row items-center justify-stretch gap-4">
+                <div className="flex flex-col items-start justify-center gap-2">
+                  <label htmlFor="firstName">First Name</label>
+                  <TextInput
+                    id="firstName"
+                    type="text"
+                    placeholder="Johnathan"
+                    error={formik.errors.firstName}
+                    {...formik.getFieldProps("firstName")}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="lastName">Last Name</label>
+                  <TextInput
+                    id="lastName"
+                    type="text"
+                    placeholder="Doe"
+                    error={formik.errors.lastName}
+                    {...formik.getFieldProps("lastName")}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="designation">Designation</label>
+                <TextInput
+                  variant="filled"
+                  id="designation"
+                  type="text"
+                  placeholder="Full Stack Developer"
+                  error={formik.errors.designation}
+                  {...formik.getFieldProps("designation")}
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="email">Email Address</label>
+                <TextInput
+                  variant="filled"
+                  id="email"
+                  type="email"
+                  placeholder="johndoe@example.com"
+                  error={formik.errors.email}
+                  {...formik.getFieldProps("email")}
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="phone">Phone Number</label>
+                <TextInput
+                  variant="filled"
+                  id="phone"
+                  type="text"
+                  placeholder="+910987654321"
+                  error={formik.errors.phone}
+                  {...formik.getFieldProps("phone")}
+                />
+              </div>
+
+              <div className="flex flex-row gap-4">
+                <Button type="submit" className="flex-1">
+                  Submit
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={formik.handleReset}
+                  className="flex-1"
+                >
+                  Clear
+                </Button>
+              </div>
+            </form>
+          )}
+        </Formik>
+      </Card>
 
       <div className="m-4" />
 
@@ -104,79 +218,6 @@ export default function Home() {
           placeholder="TextInput with error"
           error="Please enter a valid email id."
         />
-
-        <div className="m-4" />
-
-        <p>Formik Form Sample</p>
-        <Card className="flex flex-col gap-2 w-[90%] mx-auto">
-          <Header3>Enter person information</Header3>
-          <Divider variant="primary" />
-          <Formik
-            initialValues={{ firstName: "", lastName: "", email: "" }}
-            validationSchema={Yup.object({
-              firstName: Yup.string()
-                .max(40, "First name must be 40 characters or less")
-                .required("Required Field"),
-              lastName: Yup.string()
-                .max(40, "Last name must be 40 characters or less")
-                .required("Required Field"),
-              email: Yup.string()
-                .email("Please enter a valid email address")
-                .required("Required Field"),
-            })}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
-            }}
-          >
-            {(formik) => (
-              <form
-                className="flex flex-col items-stretch align-center gap-4"
-                onSubmit={formik.handleSubmit}
-              >
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="firstName">First Name</label>
-                  <TextInput
-                    id="firstName"
-                    type="text"
-                    placeholder="Johnathan"
-                    error={formik.errors.firstName}
-                    {...formik.getFieldProps("firstName")}
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="lastName">Last Name</label>
-                  <TextInput
-                    id="lastName"
-                    type="text"
-                    placeholder="Doe"
-                    error={formik.errors.lastName}
-                    {...formik.getFieldProps("lastName")}
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="email">Email Address</label>
-                  <TextInput
-                    variant="filled"
-                    id="email"
-                    type="email"
-                    placeholder="johndoe@example.com"
-                    error={formik.errors.email}
-                    {...formik.getFieldProps("email")}
-                  />
-                </div>
-
-                <Button type="submit" className="flex flex-1">
-                  Submit
-                </Button>
-              </form>
-            )}
-          </Formik>
-        </Card>
       </div>
     </div>
   );

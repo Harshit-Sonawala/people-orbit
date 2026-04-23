@@ -2,7 +2,9 @@
 
 import SatelliteAltRoundedIcon from "@mui/icons-material/SatelliteAltRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import TextInput from "./TextInput";
+import Button from "./Button";
 
 const TopBar = () => {
   return (
@@ -16,13 +18,18 @@ const TopBar = () => {
           People<span className="text-primary">Orbit</span>
         </h1>
       </div>
+      <div className="hidden sm:block">
+        <div className="flex flex-row gap-2 relative">
+          <TextInput variant="rounded" placeholder="Search..." className="md:w-sm lg:w-md"/>
+          <Button variant="rounded" className="absolute right-1 top-1"><SearchRoundedIcon /></Button>
+        </div>
 
-      <TextInput variant="rounded" placeholder="Search..." />
+      </div>
 
       <div className="flex flex-row items-center justify-center gap-2 rounded-md">
-        <div className="flex items-center justify-center w-14 h-14 rounded-full bg-surface border-2 border-primary">
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-surface border-2 border-primary">
           <AccountCircleRoundedIcon
-            sx={{ fontSize: "3rem" }}
+            sx={{ fontSize: "2.5rem" }}
             className="text-primary"
           />
         </div>
