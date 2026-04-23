@@ -11,8 +11,8 @@ const TopBar = () => {
     <div className="flex flex-row items-center justify-between p-2 w-[90%] mx-auto">
       <div className="flex flex-row items-center justify-center px-2">
         <SatelliteAltRoundedIcon
-          sx={{ fontSize: "2rem" }}
-          className="text-primary"
+          fontSize="inherit"
+          className="icon-xl text-primary"
         />
         <h1 className="text-3xl font-bold p-2">
           People<span className="text-primary">Orbit</span>
@@ -29,8 +29,8 @@ const TopBar = () => {
       <div className="flex flex-row items-center justify-center gap-2 rounded-md">
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-surface border-2 border-primary">
           <AccountCircleRoundedIcon
-            sx={{ fontSize: "2.5rem" }}
-            className="text-primary"
+            fontSize="inherit"
+            className="icon-xl text-primary"
           />
         </div>
       </div>

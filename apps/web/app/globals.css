@@ -54,3 +54,15 @@ body {
 label {
   display: block;
 }
+
+.icon-md {
+  font-size: 1.2rem !important;
+}
+
+.icon-lg {
+  font-size: 2rem !important;
+}
+
+.icon-xl {
+  font-size: 2.4rem !important;
+}

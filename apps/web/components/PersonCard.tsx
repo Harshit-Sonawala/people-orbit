@@ -25,10 +25,6 @@ const PersonCard = ({ person, className = "" }: Props) => {
       />
       <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-10 pb-6 px-4 bg-surface">
         <div className="absolute left-4 -top-8 flex items-center justify-center w-16 h-16 rounded-full bg-surface border-2 border-primary">
-          {/* <AccountCircleRoundedIcon
-            sx={{ fontSize: "4rem" }}
-            className="text-primary"
-          /> */}
           <Image
             src={profilePic}
             alt={person.firstName.charAt(0)}
@@ -41,24 +37,24 @@ const PersonCard = ({ person, className = "" }: Props) => {
         </Header3>
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <WorkIcon
-            className="text-primary shrink-0"
-            sx={{ fontSize: "1.2rem" }} 
+            fontSize="inherit"
+            className="icon-md text-primary shrink-0"
           />
           <p className="text-sm text-foreground truncate">{person.designation}</p>
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <EmailIcon
-            className="text-primary"
-            sx={{ fontSize: "1.2rem" }}
+            fontSize="inherit"
+            className="icon-md text-primary shrink-0"
           />
           <p className="text-sm text-foreground truncate">{person.email}</p>
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <PhoneIcon
-            className="text-primary"
-            sx={{ fontSize: "1.2rem" }}
+            fontSize="inherit"
+            className="icon-md text-primary shrink-0"
           />
           <p className="text-sm text-foreground truncate">{person.phone}</p>
         </div>
