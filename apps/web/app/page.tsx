@@ -1,6 +1,8 @@
 "use client";
 import { Formik } from "formik"; // Formik forms
 import * as Yup from "yup"; // Yup Schema Validation
+import { useFetchPeople } from "../hooks/useFetchPeople"; // Tanstack Query
+
 import Card from "../components/Card";
 import Header1 from "../components/Header1";
 import Header2 from "../components/Header2";
@@ -9,8 +11,15 @@ import Button from "../components/Button";
 import Divider from "../components/Divider";
 import TextInput from "../components/TextInput";
 import PersonCard from "../components/PersonCard";
-import { useFetchPeople } from "../hooks/useFetchPeople";
-// import { dummyPersonData } from '../types/dummyPersonData';
+
+import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
+import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
+import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
+import AnnouncementRoundedIcon from "@mui/icons-material/AnnouncementRounded";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import LanguageRoundedIcon from "@mui/icons-material/LanguageRounded";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 export default function Home() {
   const { data: people, isLoading, isError, error } = useFetchPeople();
@@ -18,6 +27,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center w-[90%] mx-auto">
+
+      <div className="m-4" />
+
       {isLoading && <p className="text-center py-8">Loading...</p>}
       {isError && (
         <p className="text-center text-error py-8">Error: {error.message}</p>
@@ -36,11 +48,25 @@ export default function Home() {
 
       <div className="m-4" />
 
-      <Card className="flex flex-col items-stretch justify-center gap-2 w-full mx-auto">
+      <Card className="flex flex-col items-stretch justify-center gap-2 md:w-[80%] mx-auto">
         <Header3>Post person information</Header3>
         <Divider variant="primary" />
         <Formik
-          initialValues={{ firstName: "", lastName: "", designation: "", email: "" }}
+          initialValues={{ 
+            firstName: "",
+            lastName: "",
+            age: 0,
+            designation: "",
+            email: "",
+            phone: "",
+            bio: "",
+            skills: "",
+            socialLinkedIn: "",
+            socialWebsite: "",
+            socialGitHub: "",
+            profilePic: "",
+            bgImage: "",
+          }}
           validationSchema={Yup.object({
             firstName: Yup.string()
               .max(40, "First name must be 40 characters or less")
@@ -56,7 +82,16 @@ export default function Home() {
               .required("Required Field"),
             phone: Yup.string()
               .matches(phoneRegExp, "Please enter a valid phone number")
-              .required("Required Field")
+              .required("Required Field"),
+            bio: Yup.string()
+              .max(140, "Bio must be 140 characters or less"),
+            skills: Yup.string(),
+            socialLinkedIn: Yup.string()
+              .url("Please enter a valid url"),
+            socialWebsite: Yup.string()
+              .url("Please enter a valid url"),
+            socialGitHub: Yup.string()
+              .url("Please enter a valid url"),
           })}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -67,67 +102,166 @@ export default function Home() {
         >
           {(formik) => (
             <form
-              className="flex flex-col items-stretch align-center gap-4"
+              className="flex flex-col items-stretch align-center gap-6"
               onSubmit={formik.handleSubmit}
             >
-              <div className="flex flex-row items-center justify-stretch gap-4">
-                <div className="flex flex-col items-start justify-center gap-2">
-                  <label htmlFor="firstName">First Name</label>
+              <div className="flex flex-row items-center justify-stretch gap-4 w-full">
+                <div className="flex flex-col flex-1 gap-2">
+                  <div className="flex flex-row items-center flex-1 gap-2">
+                    <BadgeRoundedIcon className="text-primary" />
+                    <label htmlFor="firstName">First Name:</label>
+                  </div>
                   <TextInput
                     id="firstName"
                     type="text"
                     placeholder="Johnathan"
+                    className="w-full"
                     error={formik.errors.firstName}
                     {...formik.getFieldProps("firstName")}
                   />
                 </div>
-
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="lastName">Last Name</label>
+                <div className="flex flex-col flex-1 gap-2">
+                  <div className="flex flex-row items-center flex-1 gap-2">
+                    <BadgeRoundedIcon className="text-primary" />
+                    <label htmlFor="lastName">Last Name:</label>
+                  </div>
                   <TextInput
                     id="lastName"
                     type="text"
                     placeholder="Doe"
+                    className="w-full"
                     error={formik.errors.lastName}
                     {...formik.getFieldProps("lastName")}
                   />
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="designation">Designation</label>
+              <div className="flex flex-row items-center justify-stretch gap-4 w-full">
+                <div className="flex flex-col flex-1 gap-2">
+                  <div className="flex flex-row items-center flex-1 gap-2">
+                    <BadgeRoundedIcon className="text-primary" />
+                    <label htmlFor="age">Age:</label>
+                  </div>
+                  <TextInput
+                    variant="filled"
+                    id="designation"
+                    type="number"
+                    placeholder="20"
+                    className="w-full"
+                    error={formik.errors.age}
+                    {...formik.getFieldProps("age")}
+                  />
+                </div>
+                <div className="flex flex-col flex-1 gap-2">
+                  <div className="flex flex-row items-center flex-1 gap-2">
+                    <WorkRoundedIcon className="text-primary" />
+                    <label htmlFor="designation">Designation:</label>
+                  </div>
+                  <TextInput
+                    variant="filled"
+                    id="designation"
+                    type="text"
+                    placeholder="Full Stack Developer"
+                    className="w-full"
+                    error={formik.errors.designation}
+                    {...formik.getFieldProps("designation")}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-row items-center justify-stretch gap-4 w-full">
+                <div className="flex flex-col flex-1 gap-2">
+                  <div className="flex flex-row items-center flex-1 gap-2">
+                    <EmailRoundedIcon className="text-primary" />
+                    <label htmlFor="email">Email Address:</label>
+                  </div>
+                  <TextInput
+                    variant="filled"
+                    id="email"
+                    type="email"
+                    placeholder="johndoe@example.com"
+                    className="w-full"
+                    error={formik.errors.email}
+                    {...formik.getFieldProps("email")}
+                  />
+                </div>
+                <div className="flex flex-col flex-1 gap-2">
+                  <div className="flex flex-row items-center flex-1 gap-2">
+                    <PhoneRoundedIcon className="text-primary" />
+                    <label htmlFor="phone">Phone Number:</label>
+                  </div>
+                  <TextInput
+                    variant="filled"
+                    id="phone"
+                    type="text"
+                    placeholder="+910987654321"
+                    className="w-full"
+                    error={formik.errors.phone}
+                    {...formik.getFieldProps("phone")}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col flex-1 gap-2">
+                <div className="flex flex-row items-center flex-1 gap-2">
+                  <AnnouncementRoundedIcon className="text-primary" />
+                  <label htmlFor="bio">Bio / Headline:</label>
+                </div>
                 <TextInput
                   variant="filled"
-                  id="designation"
+                  id="bio"
                   type="text"
-                  placeholder="Full Stack Developer"
-                  error={formik.errors.designation}
-                  {...formik.getFieldProps("designation")}
+                  placeholder="Tell us a bit about yourself in 140 characters or less..."
+                  error={formik.errors.bio}
+                  {...formik.getFieldProps("bio")}
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="email">Email Address</label>
-                <TextInput
-                  variant="filled"
-                  id="email"
-                  type="email"
-                  placeholder="johndoe@example.com"
-                  error={formik.errors.email}
-                  {...formik.getFieldProps("email")}
-                />
-              </div>
+              <div className="flex flex-row items-center justify-stretch gap-4 w-full">
+                <div className="flex flex-col flex-1 items-stretch justify-center gap-2">
+                  <div className="flex flex-row items-center flex-1 gap-2">
+                    <LinkedInIcon className="text-primary" />
+                    <label htmlFor="socialLinkedIn">LinkedIn Profile:</label>
+                  </div>
+                  <TextInput
+                    id="socialLinkedIn"
+                    type="text"
+                    placeholder="www.linkedin.com/john-doe-09"
+                    className="w-full"
+                    error={formik.errors.socialLinkedIn}
+                    {...formik.getFieldProps("socialLinkedIn")}
+                  />
+                </div>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="phone">Phone Number</label>
-                <TextInput
-                  variant="filled"
-                  id="phone"
-                  type="text"
-                  placeholder="+910987654321"
-                  error={formik.errors.phone}
-                  {...formik.getFieldProps("phone")}
-                />
+                <div className="flex flex-col flex-1 items-stretch justify-center gap-2">
+                  <div className="flex flex-row items-center flex-1 gap-2">
+                    <LanguageRoundedIcon className="text-primary" />
+                    <label htmlFor="socialWebsite">Website:</label>
+                  </div>
+                  <TextInput
+                    id="socialWebsite"
+                    type="text"
+                    placeholder="www.my-website.com"
+                    className="w-full"
+                    error={formik.errors.socialWebsite}
+                    {...formik.getFieldProps("socialWebsite")}
+                  />
+                </div>
+
+                <div className="flex flex-col flex-1 items-stretch justify-center gap-2">
+                  <div className="flex flex-row items-center flex-1 gap-2">
+                    <GitHubIcon className="text-primary"/>
+                    <label htmlFor="socialGitHub">GitHub Profile:</label>
+                  </div>
+                  <TextInput
+                    id="socialGitHub"
+                    type="text"
+                    placeholder="www.github.com/My-Github"
+                    className="w-full"
+                    error={formik.errors.socialGitHub}
+                    {...formik.getFieldProps("socialGitHub")}
+                  />
+                </div>
               </div>
 
               <div className="flex flex-row gap-4">
@@ -142,6 +276,7 @@ export default function Home() {
                   Clear
                 </Button>
               </div>
+
             </form>
           )}
         </Formik>
