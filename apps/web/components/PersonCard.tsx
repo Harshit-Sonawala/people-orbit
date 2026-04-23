@@ -21,7 +21,8 @@ const PersonCard = ({ person, className = "" }: Props) => {
       <Image
         src={bgImage}
         alt="Background"
-        className="bg-primary-light w-full rounded-tl-lg rounded-tr-lg"
+        className="bg-primary-light w-full h-32 rounded-tl-lg rounded-tr-lg"
+        style={{ objectFit: "cover" }}
       />
       <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-10 pb-6 px-4 bg-surface">
         <div className="absolute left-4 -top-8 flex items-center justify-center w-16 h-16 rounded-full bg-surface border-2 border-primary">
@@ -33,33 +34,35 @@ const PersonCard = ({ person, className = "" }: Props) => {
             src={profilePic}
             alt={person.firstName.charAt(0)}
             fill
-            style={{ objectFit: "cover" }}
             className="w-16 h-16 rounded-full"
+            style={{ objectFit: "cover" }}
           />
         </div>
         <Header3>
           {person.firstName} {person.lastName}
         </Header3>
-        <div className="flex flex-row gap-2 items-center justify-start">
+        <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <WorkIcon
-            className="text-primary"
-            sx={{ fontSize: "1.2rem" }}
+            className="text-primary shrink-0"
+            sx={{ fontSize: "1.2rem" }} 
           />
-          <p className="text-sm text-foreground">{person.designation}</p>
+          <p className="text-sm text-foreground truncate">{person.designation}</p>
         </div>
+
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <EmailIcon
-            className="text-primary shrink-0"
+            className="text-primary"
             sx={{ fontSize: "1.2rem" }}
           />
           <p className="text-sm text-foreground truncate">{person.email}</p>
         </div>
-        <div className="flex flex-row gap-2 items-center justify-start">
+
+        <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <PhoneIcon
             className="text-primary"
             sx={{ fontSize: "1.2rem" }}
           />
-          <p className="text-sm text-foreground">{person.phone}</p>
+          <p className="text-sm text-foreground truncate">{person.phone}</p>
         </div>
       </div>
     </div>

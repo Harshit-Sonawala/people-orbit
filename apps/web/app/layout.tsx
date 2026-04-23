@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "./providers";
 
+import TopBar from "../components/TopBar";
+
 export const metadata: Metadata = {
-  title: "People Orbit",
+  title: "PeopleOrbit",
   description: "Person Directory Web App",
 };
 
@@ -15,6 +17,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <body className="min-h-full flex flex-col">
         <Providers>
+          <TopBar />
           {children}
         </Providers>
       </body>

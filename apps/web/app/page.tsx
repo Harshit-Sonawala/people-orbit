@@ -1,8 +1,6 @@
 "use client";
 import { Formik } from "formik"; // Formik forms
 import * as Yup from "yup"; // Yup Schema Validation
-import SatelliteAltRoundedIcon from "@mui/icons-material/SatelliteAltRounded";
-import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import Card from "../components/Card";
 import Header1 from "../components/Header1";
 import Header2 from "../components/Header2";
@@ -19,29 +17,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center w-[90%] mx-auto">
-      <div className="flex flex-row items-center justify-between p-2">
-        <div className="flex flex-row items-center justify-center px-2">
-          <SatelliteAltRoundedIcon
-            sx={{ fontSize: "2rem" }}
-            className="text-primary"
-          />
-          <h1 className="text-3xl font-bold p-2">
-            People<span className="text-primary">Orbit</span>
-          </h1>
-        </div>
-
-        <TextInput variant="rounded" placeholder="Search..." />
-
-        <div className="flex flex-row items-center justify-center gap-2 rounded-md">
-          <div className="flex items-center justify-center w-14 h-14 rounded-full bg-surface border-2 border-primary">
-            <AccountCircleRoundedIcon
-              sx={{ fontSize: "3rem" }}
-              className="text-primary"
-            />
-          </div>
-        </div>
-      </div>
-
       {isLoading && <p className="text-center py-8">Loading...</p>}
       {isError && (
         <p className="text-center text-error py-8">Error: {error.message}</p>
