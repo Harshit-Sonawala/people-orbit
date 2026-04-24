@@ -1,3 +1,9 @@
+export type SocialLinks = {
+  linkedIn?: string;
+  website?: string;
+  github?: string;
+};
+
 export type People = {
   id: number;
   firstName: string;
@@ -11,10 +17,4 @@ export type People = {
   socialLinks: SocialLinks;
   profilePic?: string;
   bgImage?: string;
-};
-
-export type SocialLinks = {
-  linkedIn?: string;
-  website?: string;
-  github?: string;
 };

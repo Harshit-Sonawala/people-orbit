@@ -15,6 +15,20 @@ import {
 import { Type } from 'class-transformer';
 import { People } from '../types/people.type';
 
+class SocialLinks {
+  @IsUrl()
+  @IsOptional()
+  linkedIn?: string;
+
+  @IsUrl()
+  @IsOptional()
+  website?: string;
+
+  @IsUrl()
+  @IsOptional()
+  github?: string;
+}
+
 export class CreatePeopleDto implements Omit<People, 'id'> {
   @IsString()
   @IsNotEmpty()
@@ -34,7 +48,7 @@ export class CreatePeopleDto implements Omit<People, 'id'> {
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(100)
+  @MaxLength(40)
   designation!: string;
 
   @IsEmail()
@@ -67,18 +81,4 @@ export class CreatePeopleDto implements Omit<People, 'id'> {
   @IsUrl()
   @IsNotEmpty()
   bgImage!: string;
-}
-
-class SocialLinks {
-  @IsUrl()
-  @IsOptional()
-  linkedIn?: string;
-
-  @IsUrl()
-  @IsOptional()
-  website?: string;
-
-  @IsUrl()
-  @IsOptional()
-  github?: string;
 }

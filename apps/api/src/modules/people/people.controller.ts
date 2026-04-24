@@ -3,7 +3,7 @@ import { PeopleService } from './people.service';
 import type { People } from './types/people.type';
 import { CreatePeopleDto } from './dto/create-people.dto';
 
-@Controller('people') // for URL: /people
+@Controller('people') // for URL: /api/people
 export class PeopleController {
   constructor(private readonly peopleService: PeopleService) {}
 
