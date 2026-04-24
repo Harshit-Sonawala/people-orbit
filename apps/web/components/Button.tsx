@@ -9,9 +9,9 @@ type Props = {
 };
 
 const variantClasses: { [key: string]: string } = {
-  filled: "rounded-md bg-primary font-semibold text-white",
+  filled: "rounded-md bg-primary border-2 border-primary font-semibold text-white",
   outlined: "rounded-md border-2 border-primary font-semibold text-primary",
-  rounded: "rounded-full bg-primary font-semibold text-white",
+  rounded: "rounded-full bg-primary border-2 border-primary font-semibold text-white",
   "outlined-rounded":
     "rounded-full border-2 border-primary font-semibold text-primary",
 };

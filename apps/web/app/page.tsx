@@ -12,47 +12,65 @@ import Divider from "../components/Divider";
 import TextInput from "../components/TextInput";
 import PeopleCard from "../components/PeopleCard";
 
-import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
-import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
-import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
-import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
-import AnnouncementRoundedIcon from "@mui/icons-material/AnnouncementRounded";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import LanguageRoundedIcon from "@mui/icons-material/LanguageRounded";
-import GitHubIcon from "@mui/icons-material/GitHub";
+import {
+  BadgeRounded,
+  WorkRounded,
+  EmailRounded,
+  PhoneRounded,
+  AnnouncementRounded,
+  LinkedIn,
+  LanguageRounded,
+  GitHub,
+  ArrowBackRounded,
+  ArrowForwardRounded,
+} from "@mui/icons-material";
 
 export default function Home() {
   const { data: people, isLoading, isError, error } = useFetchPeople();
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center w-[90%] mx-auto">
-
-      <div className="m-4" />
-
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[90%] mx-auto">
       {isLoading && <p className="text-center py-8">Loading...</p>}
       {isError && (
         <p className="text-center text-error py-8">Error: {error.message}</p>
       )}
       {people && (
-        <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {people.data.map((People, i) => (
-            <PeopleCard People={People} key={People.id ?? i} />
-          ))}
+        <div className="flex flex-col gap-6">
+          <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {people.data.map((eachPeople, i) => (
+              <PeopleCard People={eachPeople} key={eachPeople.id ?? i} />
+            ))}
+          </div>
+
+          <div className="flex flex-row items-center justify-center w-[80%] mx-auto">
+            <Card className="flex flex-row items-center justify-start gap-4 w-full">
+              <div className="flex flex-row items-center justify-center gap-4 w-full">
+                <Button variant="rounded">
+                  <ArrowBackRounded />PREV
+                </Button>
+                <div className="flex flex-row gap-4">
+                  {Array.from({ length: people.meta.totalPages }, (_, i) => i + 1).map((pageNumber) => (
+                    <Button key={pageNumber} variant={people.meta.currentPage === pageNumber ? "rounded" : "outlined-rounded"} className="w-9 h-9">
+                      {pageNumber}
+                    </Button>
+                  ))}
+                </div>
+                <Button variant="rounded">
+                  NEXT<ArrowForwardRounded />
+                </Button>
+              </div>
+            </Card>
+          </div>
         </div>
       )}
-
-      {/* <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {dummyPeopleData.map((_, i) => (<PeopleCard People={dummyPeopleData[i]} key={i} />))}
-      </div> */}
-
-      <div className="m-4" />
 
       <Card className="flex flex-col items-stretch justify-center gap-2 md:w-[80%] mx-auto">
         <Header3>Post People information</Header3>
         <Divider variant="primary" />
         <Formik
-          initialValues={{ 
+          initialValues={{
             firstName: "",
             lastName: "",
             age: 0,
@@ -83,15 +101,11 @@ export default function Home() {
             phone: Yup.string()
               .matches(phoneRegExp, "Please enter a valid phone number")
               .required("Required Field"),
-            bio: Yup.string()
-              .max(140, "Bio must be 140 characters or less"),
+            bio: Yup.string().max(140, "Bio must be 140 characters or less"),
             skills: Yup.string(),
-            socialLinkedIn: Yup.string()
-              .url("Please enter a valid url"),
-            socialWebsite: Yup.string()
-              .url("Please enter a valid url"),
-            socialGitHub: Yup.string()
-              .url("Please enter a valid url"),
+            socialLinkedIn: Yup.string().url("Please enter a valid url"),
+            socialWebsite: Yup.string().url("Please enter a valid url"),
+            socialGitHub: Yup.string().url("Please enter a valid url"),
           })}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -108,7 +122,7 @@ export default function Home() {
               <div className="flex flex-row items-center justify-stretch gap-4 w-full">
                 <div className="flex flex-col flex-1 gap-2">
                   <div className="flex flex-row items-center flex-1 gap-2">
-                    <BadgeRoundedIcon className="text-primary" />
+                    <BadgeRounded className="text-primary" />
                     <label htmlFor="firstName">First Name:</label>
                   </div>
                   <TextInput
@@ -122,7 +136,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col flex-1 gap-2">
                   <div className="flex flex-row items-center flex-1 gap-2">
-                    <BadgeRoundedIcon className="text-primary" />
+                    <BadgeRounded className="text-primary" />
                     <label htmlFor="lastName">Last Name:</label>
                   </div>
                   <TextInput
@@ -139,7 +153,7 @@ export default function Home() {
               <div className="flex flex-row items-center justify-stretch gap-4 w-full">
                 <div className="flex flex-col flex-1 gap-2">
                   <div className="flex flex-row items-center flex-1 gap-2">
-                    <BadgeRoundedIcon className="text-primary" />
+                    <BadgeRounded className="text-primary" />
                     <label htmlFor="age">Age:</label>
                   </div>
                   <TextInput
@@ -154,7 +168,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col flex-1 gap-2">
                   <div className="flex flex-row items-center flex-1 gap-2">
-                    <WorkRoundedIcon className="text-primary" />
+                    <WorkRounded className="text-primary" />
                     <label htmlFor="designation">Designation:</label>
                   </div>
                   <TextInput
@@ -172,7 +186,7 @@ export default function Home() {
               <div className="flex flex-row items-center justify-stretch gap-4 w-full">
                 <div className="flex flex-col flex-1 gap-2">
                   <div className="flex flex-row items-center flex-1 gap-2">
-                    <EmailRoundedIcon className="text-primary" />
+                    <EmailRounded className="text-primary" />
                     <label htmlFor="email">Email Address:</label>
                   </div>
                   <TextInput
@@ -187,7 +201,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col flex-1 gap-2">
                   <div className="flex flex-row items-center flex-1 gap-2">
-                    <PhoneRoundedIcon className="text-primary" />
+                    <PhoneRounded className="text-primary" />
                     <label htmlFor="phone">Phone Number:</label>
                   </div>
                   <TextInput
@@ -204,7 +218,7 @@ export default function Home() {
 
               <div className="flex flex-col flex-1 gap-2">
                 <div className="flex flex-row items-center flex-1 gap-2">
-                  <AnnouncementRoundedIcon className="text-primary" />
+                  <AnnouncementRounded className="text-primary" />
                   <label htmlFor="bio">Bio / Headline:</label>
                 </div>
                 <TextInput
@@ -220,7 +234,7 @@ export default function Home() {
               <div className="flex flex-row items-center justify-stretch gap-4 w-full">
                 <div className="flex flex-col flex-1 items-stretch justify-center gap-2">
                   <div className="flex flex-row items-center flex-1 gap-2">
-                    <LinkedInIcon className="text-primary" />
+                    <LinkedIn className="text-primary" />
                     <label htmlFor="socialLinkedIn">LinkedIn Profile:</label>
                   </div>
                   <TextInput
@@ -235,7 +249,7 @@ export default function Home() {
 
                 <div className="flex flex-col flex-1 items-stretch justify-center gap-2">
                   <div className="flex flex-row items-center flex-1 gap-2">
-                    <LanguageRoundedIcon className="text-primary" />
+                    <LanguageRounded className="text-primary" />
                     <label htmlFor="socialWebsite">Website:</label>
                   </div>
                   <TextInput
@@ -250,7 +264,7 @@ export default function Home() {
 
                 <div className="flex flex-col flex-1 items-stretch justify-center gap-2">
                   <div className="flex flex-row items-center flex-1 gap-2">
-                    <GitHubIcon className="text-primary"/>
+                    <GitHub className="text-primary" />
                     <label htmlFor="socialGitHub">GitHub Profile:</label>
                   </div>
                   <TextInput
@@ -276,13 +290,10 @@ export default function Home() {
                   Clear
                 </Button>
               </div>
-
             </form>
           )}
         </Formik>
       </Card>
-
-      <div className="m-4" />
 
       <div className="m-2 flex flex-col gap-2">
         <p>Components Demo:</p>
@@ -292,8 +303,6 @@ export default function Home() {
         <Header2>This is an example of Header 2.</Header2>
         <p>Header 3</p>
         <Header3>This is an example of Header 3.</Header3>
-
-        <div className="m-4" />
 
         <p>Card Component</p>
         <Card variant="surface">
@@ -311,8 +320,6 @@ export default function Home() {
         <Card variant="outlined-primary">
           <p>Card outlined-primary variant</p>
         </Card>
-
-        <div className="m-4" />
 
         <p>Button Component</p>
         <Card>
@@ -339,12 +346,8 @@ export default function Home() {
           </Button>
         </Card>
 
-        <div className="m-4" />
-
         <p>Divider Component</p>
         <Divider />
-
-        <div className="m-4" />
 
         <p>Custom Single Line TextInput Component</p>
         <TextInput placeholder="Please Enter Text..." />

@@ -17,7 +17,7 @@ const variantClasses: { [key: string]: string } = {
 const Card = ({ key, children, variant = "surface", className }: Props) => {
   return (
     <div key={key}
-      className={`flex flex-col items-start justify-start gap-2 rounded-lg p-4 ${variantClasses[variant]} ${className}`}
+      className={`flex flex-col gap-2 rounded-lg p-4 ${variantClasses[variant]} ${className}`}
     >
       {children}
     </div>
