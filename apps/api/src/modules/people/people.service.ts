@@ -16,7 +16,7 @@ export class PeopleService {
     const startIndex = (page - 1) * limit; // every page jump by *limit
     const data = this.allPeople.slice(startIndex, startIndex + limit); // 0-19, 20-39, 40-59...
     return {
-      data: this.allPeople,
+      data,
       meta: {
         total: total,
         limit: limit,
