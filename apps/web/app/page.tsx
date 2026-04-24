@@ -36,7 +36,7 @@ export default function Home() {
       )}
       {people && (
         <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {people.map((People, i) => (
+          {people.data.map((People, i) => (
             <PeopleCard People={People} key={People.id ?? i} />
           ))}
         </div>

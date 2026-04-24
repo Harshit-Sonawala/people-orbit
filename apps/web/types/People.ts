@@ -18,3 +18,13 @@ export type People = {
   profilePic?: string;
   bgImage?: string;
 };
+
+export type PaginatedPeople = {
+  data: People[];
+  meta: {
+    total: number;
+    limit: number;
+    totalPages: number;
+    currentPage: number;
+  };
+};
