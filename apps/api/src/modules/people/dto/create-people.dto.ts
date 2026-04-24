@@ -1,7 +1,7 @@
 import {
   IsString,
   IsNotEmpty,
-  IsNumber,
+  IsInt,
   IsEmail,
   IsPhoneNumber,
   Max,
@@ -40,8 +40,9 @@ export class CreatePeopleDto implements Omit<People, 'id'> {
   @MaxLength(40)
   lastName!: string;
 
+  @Type(() => Number)
+  @IsInt()
   @IsOptional()
-  @IsNumber()
   @Min(0)
   @Max(120)
   age?: number;
