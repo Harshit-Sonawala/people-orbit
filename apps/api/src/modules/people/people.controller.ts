@@ -5,20 +5,20 @@ import { CreatePeopleDto } from './dto/create-people.dto';
 
 @Controller('people') // for URL: /people
 export class PeopleController {
-    constructor(private readonly peopleService: PeopleService) {}
+  constructor(private readonly peopleService: PeopleService) {}
 
-    @Get()
-    getAllPeople(): People[] {
-        return this.peopleService.getAll();
-    }
+  @Get()
+  getAllPeople(): People[] {
+    return this.peopleService.getAll();
+  }
 
-    @Get(':id')
-    getPeople(@Param('id') id: number): People | undefined {
-        return this.peopleService.getOne(Number(id));
-    }
+  @Get(':id')
+  getPeople(@Param('id') id: number): People | undefined {
+    return this.peopleService.getOne(Number(id));
+  }
 
-    @Post()
-    createPeople(@Body() createPeopleDto: CreatePeopleDto): People {
-        return this.peopleService.create(createPeopleDto);
-    }
+  @Post()
+  createPeople(@Body() createPeopleDto: CreatePeopleDto): People {
+    return this.peopleService.create(createPeopleDto);
+  }
 }

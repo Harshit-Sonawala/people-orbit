@@ -5,24 +5,25 @@ import { CreatePeopleDto } from './dto/create-people.dto';
 
 @Injectable()
 export class PeopleService {
-    allPeople: People[] = dummyData;
+  allPeople: People[] = dummyData;
 
-    getAll(): People[] {
-        return this.allPeople;
-    }
+  getAll(): People[] {
+    return this.allPeople;
+  }
 
-    getOne(id: number): People | undefined {
-        return this.allPeople.find(person => person.id === id);
-    }
+  getOne(id: number): People | undefined {
+    return this.allPeople.find((person) => person.id === id);
+  }
 
-    create(createPeopleDto: CreatePeopleDto): People {
-        const newPerson: People = {
-            id: this.allPeople.length > 0 
-                ? Math.max(...this.allPeople.map(p => p.id)) + 1 
-                : 1,
-            ...createPeopleDto
-        };
-        this.allPeople.push(newPerson);
-        return newPerson;
-    }
+  create(createPeopleDto: CreatePeopleDto): People {
+    const newPerson: People = {
+      id:
+        this.allPeople.length > 0
+          ? Math.max(...this.allPeople.map((p) => p.id)) + 1
+          : 1,
+      ...createPeopleDto,
+    };
+    this.allPeople.push(newPerson);
+    return newPerson;
+  }
 }
