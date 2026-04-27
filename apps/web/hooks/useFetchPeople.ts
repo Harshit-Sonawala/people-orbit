@@ -6,9 +6,10 @@ export const useFetchPeople = (page: number = 1, limit: number = 12) =>
     queryKey: ["people", page, limit],
     queryFn: async (): Promise<PaginatedPeople> => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_GET_ALL_PEOPLE_URL}?page=${page}&limit=${limit}`,
+        `${process.env.NEXT_PUBLIC_PEOPLE_URL}?page=${page}&limit=${limit}`,
       );
       if (!res.ok) throw new Error("Failed to fetch people");
-      return res.json();
+      const data = await res.json();
+      return data as PaginatedPeople;
     },
   });

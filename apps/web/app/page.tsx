@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { Formik } from "formik"; // Formik forms
 import * as Yup from "yup"; // Yup Schema Validation
-import { useFetchPeople } from "../hooks/useFetchPeople"; // Tanstack Query
+import { useFetchPeople } from "../hooks/useFetchPeople"; // Tanstack Query fetch hook
+import { useCreatePeople } from "../hooks/useCreatePeople"; // Tanstack Query POST people hook
 
 import Card from "../components/Card";
 import Header1 from "../components/Header1";
@@ -29,7 +30,13 @@ import {
 export default function Home() {
   const [page, setPage] = useState(1);
   const limit = 12;
-  const { data: people, isLoading, isError, error } = useFetchPeople(page, limit);
+  const {
+    data: people,
+    isLoading,
+    isError,
+    error,
+  } = useFetchPeople(page, limit);
+  const { mutate: createPeople, isPending: createPeopleIsPending } = useCreatePeople();
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -47,7 +54,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="flex flex-row items-center justify-center w-[80%] mx-auto">
+          <div className="flex flex-row items-center justify-center mx-auto">
             <Card className="flex flex-row items-center justify-start gap-4 w-full">
               <div className="flex flex-row items-center justify-center gap-4 w-full">
                 <Button
@@ -80,7 +87,8 @@ export default function Home() {
                         variant="outlined-rounded"
                         className="w-9 h-9"
                         onClick={() => {
-                          if (eachPage !== page) { // prevent unnecessary fetch
+                          if (eachPage !== page) {
+                            // prevent unnecessary fetch
                             setPage(eachPage);
                           }
                         }}
@@ -94,7 +102,9 @@ export default function Home() {
                   variant="rounded"
                   onClick={() => {
                     if (page < people.meta.totalPages) {
-                      setPage((oldPage) => Math.min(people.meta.totalPages, oldPage + 1));
+                      setPage((oldPage) =>
+                        Math.min(people.meta.totalPages, oldPage + 1),
+                      );
                     }
                   }}
                 >
@@ -107,22 +117,20 @@ export default function Home() {
         </div>
       )}
 
-      <Card className="flex flex-col items-stretch justify-center gap-2 md:w-[80%] mx-auto">
+      <Card className="flex flex-col items-stretch justify-center gap-2 md:w-[80%] lg:w-[60%] mx-auto">
         <Header3>Post People information</Header3>
         <Divider variant="primary" />
         <Formik
           initialValues={{
             firstName: "",
             lastName: "",
-            age: 0,
+            age: "",
             designation: "",
             email: "",
             phone: "",
             bio: "",
             skills: "",
-            socialLinkedIn: "",
-            socialWebsite: "",
-            socialGitHub: "",
+            socialLinks: { linkedIn: "", website: "", github: "" },
             profilePic: "",
             bgImage: "",
           }}
@@ -133,6 +141,10 @@ export default function Home() {
             lastName: Yup.string()
               .max(40, "Last name must be 40 characters or less")
               .required("Required Field"),
+            age: Yup.number()
+              .integer("Age must be a positive number")
+              .min(0, "Age must be a valid number")
+              .max(120, "Age must be a valid number"),
             designation: Yup.string()
               .max(40, "Designation must be 40 characters or less")
               .required("Required Field"),
@@ -144,15 +156,38 @@ export default function Home() {
               .required("Required Field"),
             bio: Yup.string().max(140, "Bio must be 140 characters or less"),
             skills: Yup.string(),
-            socialLinkedIn: Yup.string().url("Please enter a valid url"),
-            socialWebsite: Yup.string().url("Please enter a valid url"),
-            socialGitHub: Yup.string().url("Please enter a valid url"),
+            socialLinks: Yup.object({
+              linkedIn: Yup.string().url("Please enter a valid url"),
+              website: Yup.string().url("Please enter a valid url"),
+              github: Yup.string().url("Please enter a valid url"),
+            }),
           })}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
+          onSubmit={(values, { resetForm }) => {
+            const formattedData = {
+              ...values,
+              age: values.age === "" ? undefined : Number(values.age),
+              skills: values.skills
+                ? values.skills
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean)
+                : [],
+              bio: values.bio || undefined,
+              profilePic: values.profilePic || undefined,
+              bgImage: values.bgImage || undefined,
+              socialLinks: {
+                linkedIn: values.socialLinks.linkedIn || undefined,
+                website: values.socialLinks.website || undefined,
+                github: values.socialLinks.github || undefined,
+              },
+            };
+            createPeople(formattedData, {
+              onSuccess: () => {
+                console.log("Form submitted successfully");
+                resetForm();
+              },
+              onError: () => console.error(`Form submit error: ${error}`),
+            });
           }}
         >
           {(formik) => (
@@ -199,7 +234,7 @@ export default function Home() {
                   </div>
                   <TextInput
                     variant="filled"
-                    id="designation"
+                    id="age"
                     type="number"
                     placeholder="20"
                     className="w-full"
@@ -281,10 +316,10 @@ export default function Home() {
                   <TextInput
                     id="socialLinkedIn"
                     type="text"
-                    placeholder="www.linkedin.com/john-doe-09"
+                    placeholder="https://www.linkedin.com/john-doe-09"
                     className="w-full"
-                    error={formik.errors.socialLinkedIn}
-                    {...formik.getFieldProps("socialLinkedIn")}
+                    error={formik.errors.socialLinks?.linkedIn}
+                    {...formik.getFieldProps("socialLinks.linkedIn")}
                   />
                 </div>
 
@@ -296,10 +331,10 @@ export default function Home() {
                   <TextInput
                     id="socialWebsite"
                     type="text"
-                    placeholder="www.my-website.com"
+                    placeholder="https://www.my-website.com"
                     className="w-full"
-                    error={formik.errors.socialWebsite}
-                    {...formik.getFieldProps("socialWebsite")}
+                    error={formik.errors.socialLinks?.website}
+                    {...formik.getFieldProps("socialLinks.website")}
                   />
                 </div>
 
@@ -311,10 +346,10 @@ export default function Home() {
                   <TextInput
                     id="socialGitHub"
                     type="text"
-                    placeholder="www.github.com/My-Github"
+                    placeholder="https://www.github.com/My-Github"
                     className="w-full"
-                    error={formik.errors.socialGitHub}
-                    {...formik.getFieldProps("socialGitHub")}
+                    error={formik.errors.socialLinks?.github}
+                    {...formik.getFieldProps("socialLinks.github")}
                   />
                 </div>
               </div>

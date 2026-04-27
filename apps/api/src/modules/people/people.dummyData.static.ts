@@ -17,7 +17,7 @@ export const dummyData: People[] = [
       linkedIn: 'https://linkedin.com/in/arjunmehta',
       github: 'https://github.com/arjunm',
     },
-    createdOn: new Date(),
+    createdOn: new Date("2025-08-14T09:30:00.000Z"),
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ export const dummyData: People[] = [
       linkedIn: 'https://linkedin.com/in/psharma',
       website: 'https://priyasharma.design',
     },
-    createdOn: new Date(),
+    createdOn: new Date("2026-01-10T18:45:12.500Z"),
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ export const dummyData: People[] = [
     bio: 'Automating everything that can be automated. Cloud native enthusiast.',
     skills: ['AWS', 'Terraform', 'Docker'],
     socialLinks: { github: 'https://github.com/rohan-devops' },
-    createdOn: new Date(),
+    createdOn: new Date("2024-09-03T18:45:12.500Z"),
   },
   {
     id: 4,
