@@ -21,7 +21,7 @@ const TopBar = () => {
       <div className="hidden sm:block">
         <div className="flex flex-row gap-2 relative">
           <TextInput variant="rounded" placeholder="Search..." className="md:w-sm lg:w-md"/>
-          <Button variant="rounded" className="absolute right-1 top-1"><SearchRoundedIcon /></Button>
+          <Button variant="rounded" className="absolute right-0.5 top-0.5 px-4"><SearchRoundedIcon /></Button>
         </div>
 
       </div>

@@ -65,22 +65,27 @@ export default function Home() {
                   {Array.from(
                     { length: people.meta.totalPages },
                     (_, i) => i + 1,
-                  ).map((pageNumber) =>
-                    people.meta.currentPage === pageNumber ? (
+                  ).map((eachPage) =>
+                    people.meta.currentPage === eachPage ? (
                       <Button
-                        key={pageNumber}
+                        key={eachPage}
                         variant="rounded"
                         className="w-9 h-9"
                       >
-                        {pageNumber}
+                        {eachPage}
                       </Button>
                     ) : (
                       <Button
-                        key={pageNumber}
+                        key={eachPage}
                         variant="outlined-rounded"
                         className="w-9 h-9"
+                        onClick={() => {
+                          if (eachPage !== page) { // prevent unnecessary fetch
+                            setPage(eachPage);
+                          }
+                        }}
                       >
-                        {pageNumber}
+                        {eachPage}
                       </Button>
                     ),
                   )}
