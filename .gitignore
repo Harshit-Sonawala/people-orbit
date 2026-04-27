@@ -44,3 +44,6 @@ next-env.d.ts
 # coding agent files
 AGENTS.md
 CLAUDE.md
+
+*storybook.log
+storybook-static
