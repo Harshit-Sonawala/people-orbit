@@ -25,7 +25,7 @@ export const useCreatePeople = () => {
       return data as People;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["people"] });
+      queryClient.invalidateQueries({ queryKey: ["people"] }); // automatically refresh the data
     },
     onError: (error) => {
       console.error("useCreatePeople error:", error.message);

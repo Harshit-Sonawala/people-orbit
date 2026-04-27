@@ -1,21 +1,20 @@
 import React from "react";
 
-type Props = React.InputHTMLAttributes<HTMLInputElement> & {
+type Props = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   variant?: "filled" | "outlined" | "rounded" | "outlined-primary";
   error?: string;
-  className?: string;
 };
 
 const variantClasses: { [key: string]: string } = {
   filled: "rounded-md bg-surface-top font-medium text-foreground",
   outlined:
     "rounded-md bg-transparent border-2 border-foreground font-medium text-foreground",
-  rounded: "rounded-full bg-surface-top font-medium text-foreground",
+  rounded: "rounded-2xl bg-surface-top font-medium text-foreground",
   "outlined-primary":
     "rounded-md bg-transparent border-2 border-primary font-medium text-primary",
 };
 
-const TextInput = ({
+const TextArea = ({
   variant = "filled",
   error = "",
   className = "",
@@ -38,8 +37,8 @@ const TextInput = ({
 
   return (
     <div className="flex flex-col">
-      <input
-        className={`py-1.5 px-2.5 ${variantClasses[variant]}
+      <textarea
+        className={`py-1.5 px-2.5 resize-none ${variantClasses[variant]}
           focus:outline-none focus:ring-0
           ${placeholderClasses}
           ${textClasses}
@@ -52,4 +51,4 @@ const TextInput = ({
   );
 };
 
-export default TextInput;
+export default TextArea;

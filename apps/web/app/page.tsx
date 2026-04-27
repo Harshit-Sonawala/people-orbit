@@ -12,10 +12,12 @@ import Header3 from "../components/Header3";
 import Button from "../components/Button";
 import Divider from "../components/Divider";
 import TextInput from "../components/TextInput";
+import TextArea from "../components/TextArea";
 import PeopleCard from "../components/PeopleCard";
 
 import {
   BadgeRounded,
+  PersonRounded,
   WorkRounded,
   EmailRounded,
   PhoneRounded,
@@ -183,7 +185,7 @@ export default function Home() {
             };
             createPeople(formattedData, {
               onSuccess: () => {
-                console.log("Form submitted successfully");
+                console.log(`Data for ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`);
                 resetForm();
               },
               onError: () => console.error(`Form submit error: ${error}`),
@@ -229,7 +231,7 @@ export default function Home() {
               <div className="flex flex-row items-center justify-stretch gap-4 w-full">
                 <div className="flex flex-col flex-1 gap-2">
                   <div className="flex flex-row items-center flex-1 gap-2">
-                    <BadgeRounded className="text-primary" />
+                    <PersonRounded className="text-primary" />
                     <label htmlFor="age">Age:</label>
                   </div>
                   <TextInput
@@ -297,10 +299,9 @@ export default function Home() {
                   <AnnouncementRounded className="text-primary" />
                   <label htmlFor="bio">Bio / Headline:</label>
                 </div>
-                <TextInput
+                <TextArea
                   variant="filled"
                   id="bio"
-                  type="text"
                   placeholder="Tell us a bit about yourself in 140 characters or less..."
                   error={formik.errors.bio}
                   {...formik.getFieldProps("bio")}
@@ -431,6 +432,14 @@ export default function Home() {
         <TextInput
           placeholder="TextInput with error"
           error="Please enter a valid email id."
+        />
+
+        <p>Custom Multi Line TextArea Component</p>
+        <TextArea placeholder="Please Enter Bio..." />
+        <TextArea disabled={true} placeholder="Disabled Text Area" />
+        <TextArea
+          placeholder="TextArea with error"
+          error="Bio must be less than 140 characters."
         />
       </div>
     </div>
