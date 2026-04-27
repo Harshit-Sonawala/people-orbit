@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { Formik } from "formik"; // Formik forms
 import * as Yup from "yup"; // Yup Schema Validation
 import { useFetchPeople } from "../hooks/useFetchPeople"; // Tanstack Query
@@ -26,13 +27,15 @@ import {
 } from "@mui/icons-material";
 
 export default function Home() {
-  const { data: people, isLoading, isError, error } = useFetchPeople();
+  const [page, setPage] = useState(1);
+  const limit = 12;
+  const { data: people, isLoading, isError, error } = useFetchPeople(page, limit);
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[90%] mx-auto">
-      {isLoading && <p className="text-center py-8">Loading...</p>}
+      {isLoading && <p className="text-center py-8">Loading People Data...</p>}
       {isError && (
         <p className="text-center text-error py-8">Error: {error.message}</p>
       )}
@@ -47,18 +50,51 @@ export default function Home() {
           <div className="flex flex-row items-center justify-center w-[80%] mx-auto">
             <Card className="flex flex-row items-center justify-start gap-4 w-full">
               <div className="flex flex-row items-center justify-center gap-4 w-full">
-                <Button variant="rounded">
-                  <ArrowBackRounded />PREV
+                <Button
+                  variant="rounded"
+                  onClick={() => {
+                    if (page > 1) {
+                      setPage((oldPage) => Math.max(oldPage - 1, 1));
+                    }
+                  }}
+                >
+                  <ArrowBackRounded />
+                  PREV
                 </Button>
                 <div className="flex flex-row gap-4">
-                  {Array.from({ length: people.meta.totalPages }, (_, i) => i + 1).map((pageNumber) => (
-                    <Button key={pageNumber} variant={people.meta.currentPage === pageNumber ? "rounded" : "outlined-rounded"} className="w-9 h-9">
-                      {pageNumber}
-                    </Button>
-                  ))}
+                  {Array.from(
+                    { length: people.meta.totalPages },
+                    (_, i) => i + 1,
+                  ).map((pageNumber) =>
+                    people.meta.currentPage === pageNumber ? (
+                      <Button
+                        key={pageNumber}
+                        variant="rounded"
+                        className="w-9 h-9"
+                      >
+                        {pageNumber}
+                      </Button>
+                    ) : (
+                      <Button
+                        key={pageNumber}
+                        variant="outlined-rounded"
+                        className="w-9 h-9"
+                      >
+                        {pageNumber}
+                      </Button>
+                    ),
+                  )}
                 </div>
-                <Button variant="rounded">
-                  NEXT<ArrowForwardRounded />
+                <Button
+                  variant="rounded"
+                  onClick={() => {
+                    if (page < people.meta.totalPages) {
+                      setPage((oldPage) => Math.min(people.meta.totalPages, oldPage + 1));
+                    }
+                  }}
+                >
+                  NEXT
+                  <ArrowForwardRounded />
                 </Button>
               </div>
             </Card>

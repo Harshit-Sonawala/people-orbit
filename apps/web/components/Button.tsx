@@ -9,9 +9,11 @@ type Props = {
 };
 
 const variantClasses: { [key: string]: string } = {
-  filled: "rounded-md bg-primary border-2 border-primary font-semibold text-white",
+  filled:
+    "rounded-md bg-primary border-2 border-primary font-semibold text-white",
   outlined: "rounded-md border-2 border-primary font-semibold text-primary",
-  rounded: "rounded-full bg-primary border-2 border-primary font-semibold text-white",
+  rounded:
+    "rounded-full bg-primary border-2 border-primary font-semibold text-white",
   "outlined-rounded":
     "rounded-full border-2 border-primary font-semibold text-primary",
 };
@@ -22,6 +24,7 @@ const Button = ({
   type,
   onClick,
   className = "",
+  ...rest
 }: Props) => {
   return (
     <button
@@ -31,6 +34,7 @@ const Button = ({
       hover:bg-primary-light hover:text-white hover:border-transparent hover:cursor-pointer
       active:bg-secondary active:border-transparent transform active:scale-[0.98] transition-transform
       ${className}`}
+      {...rest}
     >
       {children}
     </button>
