@@ -17,6 +17,7 @@ export type People = {
   socialLinks: SocialLinks;
   profilePic?: string;
   bgImage?: string;
+  createdOn: Date;
 };
 
 export type PaginatedPeople = {

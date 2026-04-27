@@ -1,8 +1,8 @@
 import React from "react";
 import Header3 from "./Header3";
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
-import WorkIcon from "@mui/icons-material/Work";
+import WorkRounded from "@mui/icons-material/WorkRounded";
+import EmailRounded from "@mui/icons-material/EmailRounded";
+import PhoneRounded from "@mui/icons-material/PhoneRounded";
 import { People } from "../types/People";
 import Image from "next/image";
 import profilePic from "../public/dummy_profilePic.jpg";
@@ -33,16 +33,19 @@ const PeopleCard = ({ People, className = "" }: Props) => {
         <Header3>
           {People.firstName} {People.lastName}
         </Header3>
+
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
-          <WorkIcon
+          <WorkRounded
             fontSize="inherit"
             className="icon-md text-primary shrink-0"
           />
-          <p className="text-sm text-foreground truncate">{People.designation}</p>
+          <p className="text-sm text-foreground truncate">
+            {People.designation}
+          </p>
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
-          <EmailIcon
+          <EmailRounded
             fontSize="inherit"
             className="icon-md text-primary shrink-0"
           />
@@ -50,11 +53,22 @@ const PeopleCard = ({ People, className = "" }: Props) => {
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
-          <PhoneIcon
+          <PhoneRounded
             fontSize="inherit"
             className="icon-md text-primary shrink-0"
           />
           <p className="text-sm text-foreground truncate">{People.phone}</p>
+        </div>
+
+        <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
+          <p className="text-xs text-surface-top-dark truncate">
+            Member since{" "}
+            {new Date(People.createdOn).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </p>
         </div>
       </div>
     </div>

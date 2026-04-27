@@ -22,7 +22,7 @@ export class PeopleService {
         limit: limit,
         totalPages: totalPages,
         currentPage: page,
-      }
+      },
     };
   }
 
@@ -36,6 +36,7 @@ export class PeopleService {
         this.allPeople.length > 0
           ? Math.max(...this.allPeople.map((p) => p.id)) + 1
           : 1,
+      createdOn: new Date(),
       ...createPeopleDto,
     };
     this.allPeople.push(newPerson);

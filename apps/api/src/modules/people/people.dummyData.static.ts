@@ -17,6 +17,7 @@ export const dummyData: People[] = [
       linkedIn: 'https://linkedin.com/in/arjunmehta',
       github: 'https://github.com/arjunm',
     },
+    createdOn: new Date(),
   },
   {
     id: 2,
@@ -34,6 +35,7 @@ export const dummyData: People[] = [
       linkedIn: 'https://linkedin.com/in/psharma',
       website: 'https://priyasharma.design',
     },
+    createdOn: new Date(),
   },
   {
     id: 3,
@@ -48,6 +50,7 @@ export const dummyData: People[] = [
     bio: 'Automating everything that can be automated. Cloud native enthusiast.',
     skills: ['AWS', 'Terraform', 'Docker'],
     socialLinks: { github: 'https://github.com/rohan-devops' },
+    createdOn: new Date(),
   },
   {
     id: 4,
@@ -62,6 +65,7 @@ export const dummyData: People[] = [
     bio: 'Building the next generation of web interfaces with Next.js and WebGL.',
     skills: ['TypeScript', 'Three.js', 'Next.js'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/ananyaiyer' },
+    createdOn: new Date(),
   },
   {
     id: 5,
@@ -76,6 +80,7 @@ export const dummyData: People[] = [
     bio: 'Java and NestJS expert. I enjoy optimizing SQL queries for fun.',
     skills: ['NestJS', 'PostgreSQL', 'Redis'],
     socialLinks: { github: 'https://github.com/vikram-s' },
+    createdOn: new Date(),
   },
   {
     id: 6,
@@ -90,6 +95,7 @@ export const dummyData: People[] = [
     bio: "Breaking code so you don't have to. Cypress and Playwright expert.",
     skills: ['Cypress', 'Selenium', 'Jest'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/ishitaverma' },
+    createdOn: new Date(),
   },
   {
     id: 7,
@@ -104,6 +110,7 @@ export const dummyData: People[] = [
     bio: 'Leading teams to build impactful products. Advocate for agile and mental health.',
     skills: ['Leadership', 'Agile', 'Strategy'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/sidmalhotra' },
+    createdOn: new Date(),
   },
   {
     id: 8,
@@ -118,6 +125,7 @@ export const dummyData: People[] = [
     bio: 'React Native enthusiast. Building seamless cross-platform experiences.',
     skills: ['React Native', 'Swift', 'Kotlin'],
     socialLinks: { github: 'https://github.com/kavyareddy' },
+    createdOn: new Date(),
   },
   {
     id: 9,
@@ -132,6 +140,7 @@ export const dummyData: People[] = [
     bio: 'Finding patterns in chaos. Python, PyTorch, and a bit of magic.',
     skills: ['Python', 'PyTorch', 'Pandas'],
     socialLinks: { website: 'https://adityachopra.ai' },
+    createdOn: new Date(),
   },
   {
     id: 10,
@@ -146,6 +155,7 @@ export const dummyData: People[] = [
     bio: 'Understanding why users do what they do. Research is my superpower.',
     skills: ['User Interviews', 'Hotjar', 'Usability Testing'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/sanakhan' },
+    createdOn: new Date(),
   },
   {
     id: 11,
@@ -160,6 +170,7 @@ export const dummyData: People[] = [
     bio: 'Securing the perimeter. Ethical hacker by day, gamer by night.',
     skills: ['Penetration Testing', 'OAuth', 'WAF'],
     socialLinks: { github: 'https://github.com/rahulsec' },
+    createdOn: new Date(),
   },
   {
     id: 12,
@@ -174,6 +185,7 @@ export const dummyData: People[] = [
     bio: 'Translating complex code into human-readable documentation.',
     skills: ['Markdown', 'Docusaurus', 'Technical Writing'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/meeranair' },
+    createdOn: new Date(),
   },
   {
     id: 13,
@@ -188,6 +200,7 @@ export const dummyData: People[] = [
     bio: 'Turning Figma dreams into CSS reality. Animation enthusiast.',
     skills: ['SASS', 'Framer Motion', 'GSAP'],
     socialLinks: { github: 'https://github.com/zoya-ui' },
+    createdOn: new Date(),
   },
   {
     id: 14,
@@ -202,6 +215,7 @@ export const dummyData: People[] = [
     bio: 'Maintaining 99.99% uptime while drinking 100% Arabica coffee.',
     skills: ['Prometheus', 'Grafana', 'Go'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/kabirbahl' },
+    createdOn: new Date(),
   },
   {
     id: 15,
@@ -216,6 +230,7 @@ export const dummyData: People[] = [
     bio: 'Training models to understand the world, one epoch at a time.',
     skills: ['TensorFlow', 'Scikit-learn', 'KServe'],
     socialLinks: { website: 'https://tara-ml.io' },
+    createdOn: new Date(),
   },
   {
     id: 16,
@@ -230,6 +245,7 @@ export const dummyData: People[] = [
     bio: 'Fresh out of bootcamp and ready to push to production (carefully).',
     skills: ['JavaScript', 'HTML5', 'CSS3'],
     socialLinks: { github: 'https://github.com/aryan-dev' },
+    createdOn: new Date(),
   },
   {
     id: 17,
@@ -244,6 +260,7 @@ export const dummyData: People[] = [
     bio: 'Designing scalable data schemas for complex enterprise needs.',
     skills: ['Snowflake', 'BigQuery', 'dbt'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/nandinirao' },
+    createdOn: new Date(),
   },
   {
     id: 18,
@@ -258,6 +275,7 @@ export const dummyData: People[] = [
     bio: 'Connecting business requirements with robust technical blueprints.',
     skills: ['Azure', 'Microservices', 'Kafka'],
     socialLinks: { website: 'https://joshi-architect.com' },
+    createdOn: new Date(),
   },
   {
     id: 19,
@@ -269,9 +287,10 @@ export const dummyData: People[] = [
     phone: '+91 83210 98765',
     profilePic: 'https://i.pravatar.cc/300?u=19',
     bgImage: 'https://images.unsplash.com/photo-1484417894907-623942c8ee29',
-    bio: 'The cloud is just someone else\'s computer, and I manage it.',
+    bio: "The cloud is just someone else's computer, and I manage it.",
     skills: ['GCP', 'CloudFormation', 'Python'],
     socialLinks: { github: 'https://github.com/riya-cloud' },
+    createdOn: new Date(),
   },
   {
     id: 20,
@@ -286,6 +305,7 @@ export const dummyData: People[] = [
     bio: 'Native Android purist. Living the life of Jetpack Compose.',
     skills: ['Kotlin', 'Coroutines', 'Retrofit'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/arnavandroid' },
+    createdOn: new Date(),
   },
   {
     id: 21,
@@ -300,6 +320,7 @@ export const dummyData: People[] = [
     bio: 'From the database to the DOM, I build it all.',
     skills: ['Vue.js', 'Express', 'MongoDB'],
     socialLinks: { github: 'https://github.com/kriti-codes' },
+    createdOn: new Date(),
   },
   {
     id: 22,
@@ -314,6 +335,7 @@ export const dummyData: People[] = [
     bio: 'Encryption is the name of the game. Zero trust advocate.',
     skills: ['IAM', 'VPC Security', 'Burp Suite'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/devsecurity' },
+    createdOn: new Date(),
   },
   {
     id: 23,
@@ -328,6 +350,7 @@ export const dummyData: People[] = [
     bio: 'Bridging the gap between users and engineers.',
     skills: ['Jira', 'Roadmapping', 'User Feedback'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/anjalibose' },
+    createdOn: new Date(),
   },
   {
     id: 24,
@@ -342,6 +365,7 @@ export const dummyData: People[] = [
     bio: 'Decentralizing the future with Solidity and smart contracts.',
     skills: ['Solidity', 'Web3.js', 'Ethereum'],
     socialLinks: { github: 'https://github.com/varun-crypto' },
+    createdOn: new Date(),
   },
   {
     id: 25,
@@ -356,6 +380,7 @@ export const dummyData: People[] = [
     bio: 'Visualizing stories hidden in the noise of big data.',
     skills: ['Tableau', 'SQL', 'Power BI'],
     socialLinks: { website: 'https://nikita-data.com' },
+    createdOn: new Date(),
   },
   {
     id: 26,
@@ -370,6 +395,7 @@ export const dummyData: People[] = [
     bio: 'Lover of Swift, SwiftUI, and Apple ecosystem aesthetics.',
     skills: ['SwiftUI', 'CoreData', 'Combine'],
     socialLinks: { github: 'https://github.com/rishabh-ios' },
+    createdOn: new Date(),
   },
   {
     id: 27,
@@ -384,6 +410,7 @@ export const dummyData: People[] = [
     bio: 'Words are UI too. Helping products speak clearly.',
     skills: ['UX Writing', 'Content Strategy', 'Copywriting'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/amritadas' },
+    createdOn: new Date(),
   },
   {
     id: 28,
@@ -395,9 +422,10 @@ export const dummyData: People[] = [
     phone: '+91 74321 09876',
     profilePic: 'https://i.pravatar.cc/300?u=28',
     bgImage: 'https://images.unsplash.com/photo-1618401471353-b98aadebc248',
-    bio: 'If it\'s not in Git, it doesn\'t exist. Jenkins lover.',
+    bio: "If it's not in Git, it doesn't exist. Jenkins lover.",
     skills: ['Jenkins', 'Ansible', 'Bash'],
     socialLinks: { github: 'https://github.com/tushar-ops' },
+    createdOn: new Date(),
   },
   {
     id: 29,
@@ -412,6 +440,7 @@ export const dummyData: People[] = [
     bio: 'Ensuring quality at scale. Manager of bugs and people.',
     skills: ['TestRail', 'JMeter', 'Team Leadership'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/snehakulkarni' },
+    createdOn: new Date(),
   },
   {
     id: 30,
@@ -426,6 +455,7 @@ export const dummyData: People[] = [
     bio: 'Guardian of the data. Master of performance tuning.',
     skills: ['Oracle', 'MySQL', 'Query Optimization'],
     socialLinks: { github: 'https://github.com/manish-db' },
+    createdOn: new Date(),
   },
   {
     id: 31,
@@ -440,6 +470,7 @@ export const dummyData: People[] = [
     bio: 'Creating interactive interfaces with React and Redux.',
     skills: ['React', 'Redux', 'Material UI'],
     socialLinks: { github: 'https://github.com/pooja-b' },
+    createdOn: new Date(),
   },
   {
     id: 32,
@@ -454,6 +485,7 @@ export const dummyData: People[] = [
     bio: 'Defining the technology vision for the next decade.',
     skills: ['Innovation', 'Architecture', 'Public Speaking'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/kunwarsingh' },
+    createdOn: new Date(),
   },
   {
     id: 33,
@@ -468,6 +500,7 @@ export const dummyData: People[] = [
     bio: 'Learning the ropes and coding until 3 AM.',
     skills: ['Python', 'C++', 'Algorithms'],
     socialLinks: { github: 'https://github.com/isha-n' },
+    createdOn: new Date(),
   },
   {
     id: 34,
@@ -482,6 +515,7 @@ export const dummyData: People[] = [
     bio: 'Linux lover and shell scripting pro.',
     skills: ['Linux', 'Shell', 'Nginx'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/yashv' },
+    createdOn: new Date(),
   },
   {
     id: 35,
@@ -496,6 +530,7 @@ export const dummyData: People[] = [
     bio: 'Integrating tech stack for high-performance marketing.',
     skills: ['Hubspot', 'Segment', 'Analytics'],
     socialLinks: { website: 'https://diya.marketing' },
+    createdOn: new Date(),
   },
   {
     id: 36,
@@ -510,6 +545,7 @@ export const dummyData: People[] = [
     bio: 'Bridging the gap between ML models and production.',
     skills: ['Kubeflow', 'MLflow', 'Docker'],
     socialLinks: { github: 'https://github.com/pranav-ml' },
+    createdOn: new Date(),
   },
   {
     id: 37,
@@ -524,6 +560,7 @@ export const dummyData: People[] = [
     bio: 'Creating the visual identity of ExampleSoft.',
     skills: ['Illustrator', 'Photoshop', 'Branding'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/avnisarin' },
+    createdOn: new Date(),
   },
   {
     id: 38,
@@ -538,6 +575,7 @@ export const dummyData: People[] = [
     bio: 'Helping companies fix vulnerabilities before hackers find them.',
     skills: ['Ethical Hacking', 'Compliance', 'Audit'],
     socialLinks: { github: 'https://github.com/zaidsec' },
+    createdOn: new Date(),
   },
   {
     id: 39,
@@ -552,6 +590,7 @@ export const dummyData: People[] = [
     bio: 'Optimizing employee experience through software.',
     skills: ['BambooHR', 'CultureAmp', 'Communication'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/tanvim' },
+    createdOn: new Date(),
   },
   {
     id: 40,
@@ -566,6 +605,7 @@ export const dummyData: People[] = [
     bio: 'Building the foundation for developer productivity.',
     skills: ['K8s', 'Helm', 'Terraform'],
     socialLinks: { github: 'https://github.com/kabir-plat' },
+    createdOn: new Date(),
   },
   {
     id: 41,
@@ -580,6 +620,7 @@ export const dummyData: People[] = [
     bio: 'A/B testing my way to higher conversion rates.',
     skills: ['Amplitude', 'Optimizely', 'Node.js'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/bhavnag' },
+    createdOn: new Date(),
   },
   {
     id: 42,
@@ -594,6 +635,7 @@ export const dummyData: People[] = [
     bio: 'Ensuring smooth deployments on every release Tuesday.',
     skills: ['CI/CD', 'GitLab', 'Planning'],
     socialLinks: { github: 'https://github.com/skhan-rel' },
+    createdOn: new Date(),
   },
   {
     id: 43,
@@ -608,6 +650,7 @@ export const dummyData: People[] = [
     bio: 'Animating the micro-interactions that delight users.',
     skills: ['After Effects', 'Lottie', 'Principle'],
     socialLinks: { website: 'https://mehak.design' },
+    createdOn: new Date(),
   },
   {
     id: 44,
@@ -622,6 +665,7 @@ export const dummyData: People[] = [
     bio: 'Solving the hardest technical problems in the company.',
     skills: ['System Design', 'Rust', 'Mentorship'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/arjunbakshi' },
+    createdOn: new Date(),
   },
   {
     id: 45,
@@ -636,6 +680,7 @@ export const dummyData: People[] = [
     bio: 'Making the web usable for everyone, regardless of ability.',
     skills: ['WCAG', 'ARIA', 'Screen Readers'],
     socialLinks: { github: 'https://github.com/leila-a11y' },
+    createdOn: new Date(),
   },
   {
     id: 46,
@@ -650,6 +695,7 @@ export const dummyData: People[] = [
     bio: 'Pipelines, ETL, and lots of Spark.',
     skills: ['Airflow', 'Spark', 'Hadoop'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/neilchoudhury' },
+    createdOn: new Date(),
   },
   {
     id: 47,
@@ -664,6 +710,7 @@ export const dummyData: People[] = [
     bio: 'Solving technical issues and keeping our clients happy.',
     skills: ['Zendesk', 'SQL', 'Debugging'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/simrank' },
+    createdOn: new Date(),
   },
   {
     id: 48,
@@ -678,6 +725,7 @@ export const dummyData: People[] = [
     bio: 'Shaving milliseconds off page loads.',
     skills: ['Lighthouse', 'Web Vitals', 'Caching'],
     socialLinks: { github: 'https://github.com/rohan-perf' },
+    createdOn: new Date(),
   },
   {
     id: 49,
@@ -692,6 +740,7 @@ export const dummyData: People[] = [
     bio: 'Facilitating teams to achieve their best sprint ever.',
     skills: ['Scrum', 'Kanban', 'Facilitation'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/kiaraa' },
+    createdOn: new Date(),
   },
   {
     id: 50,
@@ -706,5 +755,6 @@ export const dummyData: People[] = [
     bio: 'Managing the physical and virtual hardware that runs it all.',
     skills: ['Data Centers', 'Networking', 'Security'],
     socialLinks: { linkedIn: 'https://linkedin.com/in/amitmishra' },
-  }
+    createdOn: new Date(),
+  },
 ];

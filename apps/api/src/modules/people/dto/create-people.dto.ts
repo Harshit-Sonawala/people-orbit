@@ -11,53 +11,54 @@ import {
   IsArray,
   ValidateNested,
   Min,
+  IsDate,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { People } from '../types/people.type';
 
 class SocialLinks {
-  @IsUrl()
   @IsOptional()
+  @IsUrl()
   linkedIn?: string;
 
-  @IsUrl()
   @IsOptional()
+  @IsUrl()
   website?: string;
 
-  @IsUrl()
   @IsOptional()
+  @IsUrl()
   github?: string;
 }
 
-export class CreatePeopleDto implements Omit<People, 'id'> {
-  @IsString()
+export class CreatePeopleDto implements Omit<People, 'id' | 'createdOn'> {
   @IsNotEmpty()
+  @IsString()
   @MaxLength(40)
   firstName!: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   @MaxLength(40)
   lastName!: string;
 
-  @Type(() => Number)
-  @IsInt()
   @IsOptional()
+  @Type(() => Number) // Convert into number if string was passed
+  @IsInt() // ensures whole integer
   @Min(0)
   @Max(120)
   age?: number;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   @MaxLength(40)
   designation!: string;
 
-  @IsEmail()
   @IsNotEmpty()
+  @IsEmail()
   email!: string;
 
-  @IsPhoneNumber()
   @IsNotEmpty()
+  @IsPhoneNumber()
   phone!: string;
 
   @IsOptional()
@@ -75,11 +76,16 @@ export class CreatePeopleDto implements Omit<People, 'id'> {
   @Type(() => SocialLinks)
   socialLinks!: SocialLinks;
 
+  @IsOptional()
   @IsUrl()
-  @IsNotEmpty()
-  profilePic!: string;
+  profilePic?: string;
+  
+  @IsOptional()
+  @IsUrl()
+  bgImage?: string;
 
-  @IsUrl()
-  @IsNotEmpty()
-  bgImage!: string;
+  // @IsNotEmpty()
+  // @Type(() => Date) // Convert ISO string into Date obj
+  // @IsDate()
+  // createdOn!: Date;
 }
