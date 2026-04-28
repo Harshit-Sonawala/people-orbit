@@ -1,12 +1,13 @@
 import React from "react";
-import Header3 from "./Header3";
+import Header3 from "@/components/Header3";
 import WorkRounded from "@mui/icons-material/WorkRounded";
 import EmailRounded from "@mui/icons-material/EmailRounded";
 import PhoneRounded from "@mui/icons-material/PhoneRounded";
-import { People } from "../types/People";
+import { People } from "@/types/People";
 import Image from "next/image";
-import profilePic from "../public/dummy_profilePic.jpg";
-import bgImage from "../public/dummy_bgImage.jpg";
+import Link from "next/link";
+import profilePic from "@/public/dummy_profilePic.jpg";
+import bgImage from "@/public/dummy_bgImage.jpg";
 
 type Props = {
   People: People;
@@ -15,14 +16,17 @@ type Props = {
 
 const PeopleCard = ({ People, className = "" }: Props) => {
   return (
-    <div className="flex flex-col">
+    <Link
+      href={`/people/${People.id}`}
+      className={`flex flex-col group transition-transform duration-200 hover:-translate-y-0.5 ${className}`}
+    >
       <Image
         src={bgImage}
         alt="Background"
         className="bg-primary-light w-full h-32 rounded-tl-lg rounded-tr-lg object-cover"
       />
-      <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-10 pb-6 px-4 bg-surface">
-        <div className="absolute left-8 -top-10 flex items-center justify-center w-18 h-18 rounded-full bg-surface border-4 border-surface-top">
+      <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-10 pb-6 px-4 bg-surface transition-colors duration-200 group-hover:bg-surface-top">
+        <div className="absolute left-8 -top-10 w-18 h-18 rounded-full bg-surface border-4 border-surface-top group-hover:border-primary transition-colors duration-200">
           <Image
             src={profilePic}
             alt={People.firstName.charAt(0)}
@@ -71,7 +75,7 @@ const PeopleCard = ({ People, className = "" }: Props) => {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

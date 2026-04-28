@@ -2,18 +2,16 @@
 import { useState } from "react";
 import { Formik } from "formik"; // Formik forms
 import * as Yup from "yup"; // Yup Schema Validation
-import { useFetchPeople } from "../hooks/useFetchPeople"; // Tanstack Query fetch hook
-import { useCreatePeople } from "../hooks/useCreatePeople"; // Tanstack Query POST people hook
+import { useFetchPeople } from "@/hooks/useFetchPeople"; // Tanstack Query fetch hook
+import { useCreatePeople } from "@/hooks/useCreatePeople"; // Tanstack Query POST people hook
 
-import Card from "../components/Card";
-import Header1 from "../components/Header1";
-import Header2 from "../components/Header2";
-import Header3 from "../components/Header3";
-import Button from "../components/Button";
-import Divider from "../components/Divider";
-import TextInput from "../components/TextInput";
-import TextArea from "../components/TextArea";
-import PeopleCard from "../components/PeopleCard";
+import Card from "@/components/Card";
+import Header2 from "@/components/Header2";
+import Button from "@/components/Button";
+import Divider from "@/components/Divider";
+import TextInput from "@/components/TextInput";
+import TextArea from "@/components/TextArea";
+import PeopleCard from "@/components/PeopleCard";
 
 import {
   BadgeRounded,
