@@ -1,7 +1,7 @@
 import React from "react";
 
 type Props = {
-  variant?: "surface" | "surfaceTop" | "primary";
+  variant?: "surface" | "surface-top" | "primary" | "secondary";
   className?: string;
 };
 
@@ -9,6 +9,7 @@ const variantClasses: { [key: string]: string } = {
   surface: "border-surface",
   "surface-top": "border-surface-top",
   primary: "border-primary",
+  secondary: "border-secondary",
 };
 
 const Divider = ({ variant = "surface", className = "" }: Props) => {
