@@ -21,7 +21,8 @@ import {
   WorkRounded,
   EmailRounded,
   PhoneRounded,
-  AnnouncementRounded,
+  ShortTextRounded,
+  ConstructionRounded,
   LinkedIn,
   LanguageRounded,
   GitHub,
@@ -38,12 +39,17 @@ export default function Home() {
     isError,
     error,
   } = useFetchPeople(page, limit);
-  const { mutate: createPeople, isPending: createPeopleIsPending } = useCreatePeople();
+  const { mutate: createPeople, isPending: createPeopleIsPending } =
+  useCreatePeople();
   const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto my-2">
+      <div className="flex flex-col gap-2">
+        <Header2>Browse all records</Header2>
+        <Divider variant="secondary"/>
+      </div>
       {isLoading && <p className="text-center py-8">Loading People Data...</p>}
       {isError && (
         <p className="text-center text-error py-8">Error: {error.message}</p>
@@ -119,9 +125,11 @@ export default function Home() {
         </div>
       )}
 
+      <div className="flex flex-col gap-2">
+        <Header2>Post a new person's information</Header2>
+        <Divider variant="secondary" />
+      </div>
       <Card className="flex flex-col items-stretch justify-center gap-2 md:w-[80%] lg:w-[60%] mx-auto">
-        <Header3>Post People information</Header3>
-        <Divider variant="primary" />
         <Formik
           initialValues={{
             firstName: "",
@@ -185,7 +193,9 @@ export default function Home() {
             };
             createPeople(formattedData, {
               onSuccess: () => {
-                console.log(`Data for ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`);
+                console.log(
+                  `Data for ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
+                );
                 resetForm();
               },
               onError: () => console.error(`Form submit error: ${error}`),
@@ -296,7 +306,7 @@ export default function Home() {
 
               <div className="flex flex-col flex-1 gap-2">
                 <div className="flex flex-row items-center flex-1 gap-2">
-                  <AnnouncementRounded className="text-primary" />
+                  <ShortTextRounded className="text-primary" />
                   <label htmlFor="bio">Bio / Headline:</label>
                 </div>
                 <TextArea
@@ -305,6 +315,20 @@ export default function Home() {
                   placeholder="Tell us a bit about yourself in 140 characters or less..."
                   error={formik.errors.bio}
                   {...formik.getFieldProps("bio")}
+                />
+              </div>
+
+              <div className="flex flex-col flex-1 gap-2">
+                <div className="flex flex-row items-center flex-1 gap-2">
+                  <ConstructionRounded className="text-primary" />
+                  <label htmlFor="skills">Skills:</label>
+                </div>
+                <TextArea
+                  variant="filled"
+                  id="skills"
+                  placeholder="Please enter comma separated skills like: Next.js, Nestjs, Tailwind, TypeScript"
+                  error={formik.errors.skills}
+                  {...formik.getFieldProps("skills")}
                 />
               </div>
 
@@ -356,13 +380,13 @@ export default function Home() {
               </div>
 
               <div className="flex flex-row gap-4">
-                <Button type="submit" className="flex-1">
+                <Button type="submit" className="flex-1 py-2">
                   Submit
                 </Button>
                 <Button
                   variant="outlined"
                   onClick={formik.handleReset}
-                  className="flex-1"
+                  className="flex-1 py-2"
                 >
                   Clear
                 </Button>

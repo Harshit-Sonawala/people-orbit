@@ -8,12 +8,15 @@ import Divider from "@/components/Divider";
 import Button from "@/components/Button";
 import TextInput from "@/components/TextInput";
 import TextArea from "@/components/TextArea";
+import CustomLink from "@/components/CustomLink";
 
 export default function Demo() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-10 w-[60%] mx-auto">
-      <Header1>Components Demo Page</Header1>
-      <Divider variant="primary" />
+      <div className="flex flex-col gap-2">
+        <Header1>Components Demo Page</Header1>
+        <Divider variant="primary" />
+      </div>
 
       <div className="flex flex-col gap-2">
         <Header3 className="text-secondary">Headers</Header3>
@@ -97,6 +100,13 @@ export default function Demo() {
           placeholder="TextArea with error"
           error="Bio must be less than 140 characters."
         />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Header3 className="text-secondary">CustomLinks</Header3>
+        <CustomLink href="#">Click Here</CustomLink>
+        <CustomLink href="#">Click Here</CustomLink>
+        <CustomLink href="#">Click Here</CustomLink>
       </div>
     </div>
   );
