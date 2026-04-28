@@ -3,10 +3,10 @@ import Header3 from "./Header3";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import WorkIcon from "@mui/icons-material/Work";
-import { People } from "../types/People";
+import { People } from "@/types/People";
 import Image from "next/image";
-import profilePic from "../public/dummy_profilePic.jpg";
-import bgImage from "../public/dummy_bgImage.jpg";
+import profilePic from "@/public/dummy_profilePic.jpg";
+import bgImage from "@/public/dummy_bgImage.jpg";
 
 type Props = {
   People: People;

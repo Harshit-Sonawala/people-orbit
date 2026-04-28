@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { People } from "../types/People";
+import { People } from "@/types/People";
 
 export const useFetchPeopleSingle = ( id: string | number ) => useQuery({
   queryKey: ["peopleSingle", id],

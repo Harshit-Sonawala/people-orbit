@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { PaginatedPeople } from "../types/People";
+import { PaginatedPeople } from "@/types/People";
 
 export const useFetchPeople = (page: number = 1, limit: number = 12) =>
   useQuery({
