@@ -63,51 +63,52 @@ function PeopleDetails() {
             </div>
           </div>
           <Card className="gap-8 p-6">
-            <div className="flex flex-row items-center justify-between gap-4">
-              <div className="flex flex-col gap-2">
-                <Header1>
-                  {peopleSingle.firstName} {peopleSingle.lastName}
-                </Header1>
-                <Header3 className="text-primary">
-                  {peopleSingle.designation}
-                </Header3>
-              </div>
-
+            <div className="flex flex-col gap-4">
               <div className="flex flex-row items-center justify-between gap-4">
-                {peopleSingle.socialLinks.linkedIn && (
-                  <a
-                    href={peopleSingle.socialLinks.linkedIn}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 rounded-full bg-surface-top hover:bg-primary-light transition-colors"
-                  >
-                    <LinkedIn className="text-primary" />
-                  </a>
-                )}
-                {peopleSingle.socialLinks.website && (
-                  <a
-                    href={peopleSingle.socialLinks.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 rounded-full bg-surface-top hover:bg-primary-light transition-colors"
-                  >
-                    <LanguageRounded className="text-primary" />
-                  </a>
-                )}
-                {peopleSingle.socialLinks.github && (
-                  <a
-                    href={peopleSingle.socialLinks.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 rounded-full bg-surface-top hover:bg-primary-light transition-colors"
-                  >
-                    <GitHub className="text-primary" />
-                  </a>
-                )}
-              </div>
-            </div>
+                <div className="flex flex-col gap-2">
+                  <Header1>
+                    {peopleSingle.firstName} {peopleSingle.lastName}
+                  </Header1>
+                  <Header3 className="text-primary">
+                    {peopleSingle.designation}
+                  </Header3>
+                </div>
 
-            <Divider variant="surface-top"/>
+                <div className="flex flex-row items-center justify-between gap-4">
+                  {peopleSingle.socialLinks.linkedIn && (
+                    <a
+                      href={peopleSingle.socialLinks.linkedIn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-surface-top hover:bg-primary-light transition-colors"
+                    >
+                      <LinkedIn className="text-primary" />
+                    </a>
+                  )}
+                  {peopleSingle.socialLinks.website && (
+                    <a
+                      href={peopleSingle.socialLinks.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-surface-top hover:bg-primary-light transition-colors"
+                    >
+                      <LanguageRounded className="text-primary" />
+                    </a>
+                  )}
+                  {peopleSingle.socialLinks.github && (
+                    <a
+                      href={peopleSingle.socialLinks.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-surface-top hover:bg-primary-light transition-colors"
+                    >
+                      <GitHub className="text-primary" />
+                    </a>
+                  )}
+                </div>
+              </div>
+              <Divider variant="surface-top"/>
+            </div>
 
             <div className="flex flex-col gap-2">
               <Header3>About Me</Header3>
@@ -175,143 +176,3 @@ function PeopleDetails() {
 }
 
 export default PeopleDetails;
-
-// "use client";
-// import React from "react";
-// import { useParams, useRouter } from "next/navigation";
-// import { useFetchPerson } from "../../../hooks/useFetchPerson";
-// import Image from "next/image";
-// import Header1 from "../../../components/Header1";
-// import Header2 from "../../../components/Header2";
-// import Divider from "../../../components/Divider";
-// import Card from "../../../components/Card";
-// import Button from "../../../components/Button";
-// import {
-//   ArrowBackRounded,
-//   WorkRounded,
-//   EmailRounded,
-//   PhoneRounded,
-//   LinkedIn,
-//   LanguageRounded,
-//   GitHub,
-//   CakeRounded,
-// } from "@mui/icons-material";
-// import profilePic from "../../../public/dummy_profilePic.jpg";
-// import bgImage from "../../../public/dummy_bgImage.jpg";
-
-// const PersonDetailsPage = () => {
-//   const { id } = useParams();
-//   const router = useRouter();
-//   const { data: person, isLoading, isError, error } = useFetchPerson(id as string);
-
-//   if (isLoading) return <div className="p-8 text-center">Loading details...</div>;
-//   if (isError) return <div className="p-8 text-center text-error">Error: {error.message}</div>;
-//   if (!person) return <div className="p-8 text-center">Person not found</div>;
-
-//   return (
-//     <div className="flex flex-col flex-1 items-stretch justify-start gap-6 w-[80%] mx-auto my-6">
-//       <div className="flex flex-row items-center gap-4">
-//         <Button variant="outlined-rounded" onClick={() => router.back()}>
-//           <ArrowBackRounded />
-//           Back
-//         </Button>
-//         <Header1>Person Profile</Header1>
-//       </div>
-
-//       <Card className="p-0 overflow-hidden">
-//         <div className="relative w-full h-48 md:h-64">
-//           <Image
-//             src={bgImage}
-//             alt="Background"
-//             fill
-//             className="bg-primary-light object-cover"
-//           />
-//         </div>
-
-//         <div className="relative px-8 pb-8">
-//           <div className="absolute -top-16 left-8 flex items-center justify-center w-32 h-32 rounded-full bg-surface border-4 border-surface-top overflow-hidden">
-//             <Image
-//               src={profilePic}
-//               alt={person.firstName}
-//               fill
-//               className="object-cover"
-//             />
-//           </div>
-
-//           <div className="pt-20 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-//             <div className="flex flex-col gap-1">
-//               <Header1 className="text-3xl">
-//                 {person.firstName} {person.lastName}
-//               </Header1>
-//               <div className="flex items-center gap-2 text-primary font-medium">
-//                 <WorkRounded fontSize="small" />
-//                 <span>{person.designation}</span>
-//               </div>
-//             </div>
-
-//           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-//             <div className="md:col-span-2 flex flex-col gap-6">
-//               <section>
-//                 <Header2>About</Header2>
-//                 <Divider className="my-2" />
-//                 <p className="text-foreground-muted leading-relaxed">
-//                   {person.bio || "No bio provided."}
-//                 </p>
-//               </section>
-
-//               {person.skills && person.skills.length > 0 && (
-//                 <section>
-//                   <Header2>Skills</Header2>
-//                   <Divider className="my-2" />
-//                   <div className="flex flex-wrap gap-2 mt-2">
-//                     {person.skills.map((skill) => (
-//                       <span key={skill} className="px-3 py-1 bg-primary-light text-primary text-sm rounded-full">
-//                         {skill}
-//                       </span>
-//                     ))}
-//                   </div>
-//                 </section>
-//               )}
-//             </div>
-
-//             <div className="flex flex-col gap-6">
-//               <section>
-//                 <Header2>Contact Information</Header2>
-//                 <Divider className="my-2" />
-//                 <div className="flex flex-col gap-4 mt-3">
-//                   <div className="flex items-center gap-3">
-//                     <EmailRounded className="text-primary" />
-//                     <span className="text-sm">{person.email}</span>
-//                   </div>
-//                   <div className="flex items-center gap-3">
-//                     <PhoneRounded className="text-primary" />
-//                     <span className="text-sm">{person.phone}</span>
-//                   </div>
-//                   {person.age && (
-//                     <div className="flex items-center gap-3">
-//                       <CakeRounded className="text-primary" />
-//                       <span className="text-sm">{person.age} years old</span>
-//                     </div>
-//                   )}
-//                 </div>
-//               </section>
-
-//               <section>
-//                 <Header2>Meta</Header2>
-//                 <Divider className="my-2" />
-//                 <p className="text-xs text-foreground-muted mt-2">
-//                   Member since {new Date(person.createdOn).toLocaleDateString()}
-//                 </p>
-//                 <p className="text-xs text-foreground-muted">
-//                   Record ID: {person.id}
-//                 </p>
-//               </section>
-//             </div>
-//           </div>
-//         </div>
-//       </Card>
-//     </div>
-//   );
-// };
-
-// export default PersonDetailsPage;

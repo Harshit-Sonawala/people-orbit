@@ -18,15 +18,15 @@ const PeopleCard = ({ People, className = "" }: Props) => {
   return (
     <Link
       href={`/people/${People.id}`}
-      className={`flex flex-col group transition-transform duration-200 hover:-translate-y-0.5 ${className}`}
+      className={`flex flex-col group transition-transform duration-200 hover:-translate-y-1 ${className}`}
     >
       <Image
         src={bgImage}
         alt="Background"
         className="bg-primary-light w-full h-32 rounded-tl-lg rounded-tr-lg object-cover"
       />
-      <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-10 pb-6 px-4 bg-surface transition-colors duration-200 group-hover:bg-surface-top">
-        <div className="absolute left-8 -top-10 w-18 h-18 rounded-full bg-surface border-4 border-surface-top group-hover:border-primary transition-colors duration-200">
+      <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-10 pb-6 px-4 bg-surface duration-200 group-hover:bg-surface-top">
+        <div className="absolute left-8 -top-10 w-18 h-18 rounded-full bg-surface border-4 border-surface-top transition-colors duration-200">
           <Image
             src={profilePic}
             alt={People.firstName.charAt(0)}
