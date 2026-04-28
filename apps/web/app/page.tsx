@@ -43,7 +43,7 @@ export default function Home() {
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[90%] mx-auto">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto my-2">
       {isLoading && <p className="text-center py-8">Loading People Data...</p>}
       {isError && (
         <p className="text-center text-error py-8">Error: {error.message}</p>
@@ -371,77 +371,6 @@ export default function Home() {
           )}
         </Formik>
       </Card>
-
-      <div className="m-2 flex flex-col gap-2">
-        <p>Components Demo:</p>
-        <p>Header 1</p>
-        <Header1>This is an example of Header 1.</Header1>
-        <p>Header 2</p>
-        <Header2>This is an example of Header 2.</Header2>
-        <p>Header 3</p>
-        <Header3>This is an example of Header 3.</Header3>
-
-        <p>Card Component</p>
-        <Card variant="surface">
-          <p>Card surface variant</p>
-        </Card>
-        <Card>
-          <p className="py-4">Parent Card</p>
-          <Card variant="surface-top">
-            <p>Child Card surface-top variant</p>
-          </Card>
-        </Card>
-        <Card variant="outlined">
-          <p>Card outlined variant</p>
-        </Card>
-        <Card variant="outlined-primary">
-          <p>Card outlined-primary variant</p>
-        </Card>
-
-        <p>Button Component</p>
-        <Card>
-          <Button onClick={() => console.log("Filled button pressed.")}>
-            Filled Button
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => console.log("Outlined button pressed.")}
-          >
-            Outlined Button
-          </Button>
-          <Button
-            variant="rounded"
-            onClick={() => console.log("Rounded button pressed.")}
-          >
-            Rounded Button
-          </Button>
-          <Button
-            variant="outlined-rounded"
-            onClick={() => console.log("Outlined Rounded button pressed.")}
-          >
-            Outlined Rounded Button
-          </Button>
-        </Card>
-
-        <p>Divider Component</p>
-        <Divider />
-
-        <p>Custom Single Line TextInput Component</p>
-        <TextInput placeholder="Please Enter Text..." />
-        <TextInput disabled={true} placeholder="Disabled Text Input" />
-        <TextInput
-          placeholder="TextInput with error"
-          error="Please enter a valid email id."
-        />
-
-        <p>Custom Multi Line TextArea Component</p>
-        <TextArea placeholder="Please Enter Bio..." />
-        <TextArea disabled={true} placeholder="Disabled Text Area" />
-        <TextArea
-          placeholder="TextArea with error"
-          error="Bio must be less than 140 characters."
-        />
-      </div>
     </div>
   );
 }
