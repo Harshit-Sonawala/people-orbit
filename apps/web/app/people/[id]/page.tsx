@@ -2,12 +2,7 @@
 import React from "react";
 import { useParams } from "next/navigation";
 import { useFetchPeopleSingle } from "@/hooks/useFetchPeopleSingle";
-import Header1 from "@/components/Header1";
-import Header2 from "@/components/Header2";
-import Header3 from "@/components/Header3";
-import Card from "@/components/Card";
-import Divider from "@/components/Divider";
-import Button from "@/components/Button";
+import { Header1, Header2, Header3, Card, Divider, Button } from "@/components";
 import {
   PersonRounded,
   BadgeRounded,

@@ -1,14 +1,6 @@
 "use client";
 import React from "react";
-import Header1 from "@/components/Header1";
-import Header2 from "@/components/Header2";
-import Header3 from "@/components/Header3";
-import Card from "@/components/Card";
-import Divider from "@/components/Divider";
-import Button from "@/components/Button";
-import TextInput from "@/components/TextInput";
-import TextArea from "@/components/TextArea";
-import CustomLink from "@/components/CustomLink";
+import {Header1, Header2, Header3, Card, Divider, Button, TextInput, TextArea, CustomLink} from "@/components";
 
 export default function Demo() {
   return (

@@ -5,13 +5,15 @@ import * as Yup from "yup"; // Yup Schema Validation
 import { useFetchPeople } from "@/hooks/useFetchPeople"; // Tanstack Query fetch hook
 import { useCreatePeople } from "@/hooks/useCreatePeople"; // Tanstack Query POST people hook
 
-import Card from "@/components/Card";
-import Header2 from "@/components/Header2";
-import Button from "@/components/Button";
-import Divider from "@/components/Divider";
-import TextInput from "@/components/TextInput";
-import TextArea from "@/components/TextArea";
-import PeopleCard from "@/components/PeopleCard";
+import {
+  Card,
+  Header2,
+  Button,
+  Divider,
+  TextInput,
+  TextArea,
+  PeopleCard,
+} from "@/components";
 
 import {
   BadgeRounded,
@@ -38,15 +40,15 @@ export default function Home() {
     error,
   } = useFetchPeople(page, limit);
   const { mutate: createPeople, isPending: createPeopleIsPending } =
-  useCreatePeople();
+    useCreatePeople();
   const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-  
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto my-2">
       <div className="flex flex-col gap-2">
         <Header2>Browse all records</Header2>
-        <Divider variant="secondary"/>
+        <Divider variant="secondary" />
       </div>
       {isLoading && <p className="text-center py-8">Loading People Data...</p>}
       {isError && (

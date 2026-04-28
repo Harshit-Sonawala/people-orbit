@@ -1,6 +1,5 @@
 import React from "react";
-import Header1 from "@/components/Header1";
-import Divider from "@/components/Divider";
+import { Header1, Divider } from "@/components";
 
 type Props = {};
 

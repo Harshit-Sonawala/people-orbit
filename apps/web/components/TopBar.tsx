@@ -1,11 +1,8 @@
 "use client";
-import CustomLink from "@/components/CustomLink";
 import SatelliteAltRoundedIcon from "@mui/icons-material/SatelliteAltRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import TextInput from "@/components/TextInput";
-import Button from "@/components/Button";
-import Header3 from "@/components/Header3";
+import { CustomLink, TextInput, Button, Header3 } from "@/components";
 
 const TopBar = () => {
   return (
