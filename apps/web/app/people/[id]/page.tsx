@@ -1,8 +1,9 @@
-"use client";
 import React from "react";
-import { useParams, useRouter } from "next/navigation";
-import { useFetchPeopleSingle } from "@/hooks/useFetchPeopleSingle";
-import { Header1, Header2, Header3, Card, Divider, Button } from "@/components";
+import { People } from "@/types/People";
+import { Header1, Header3, Card, Divider } from "@/components";
+import Image from "next/image";
+import profilePic from "@/public/dummy_profilePic.jpg";
+import bgImage from "@/public/dummy_bgImage.jpg";
 import {
   PersonRounded,
   BadgeRounded,
@@ -13,38 +14,27 @@ import {
   LinkedIn,
   LanguageRounded,
   GitHub,
-  ArrowBackRounded,
 } from "@mui/icons-material";
-import Image from "next/image";
-import profilePic from "@/public/dummy_profilePic.jpg";
-import bgImage from "@/public/dummy_bgImage.jpg";
 
-function PeopleDetails() {
-  const { id } = useParams();
-  const router = useRouter();
-  const {
-    data: peopleSingle,
-    isLoading,
-    isError,
-    error,
-  } = useFetchPeopleSingle(id as string);
+export default async function PeopleDetails({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_PEOPLE_URL}/${id}`, { cache: "no-store" });
+  
+  if (!response.ok) {
+    return (
+      <div className="flex flex-col flex-1 items-center justify-center py-8">
+        <Header3 className="text-error">Error: Failed to fetch person details</Header3>
+      </div>
+    );
+  }
+
+  const peopleSingle: People = await response.json();
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
-      {isLoading && (
-        <p className="text-center py-8">Loading Person Details...</p>
-      )}
-      {isError && (
-        <p className="text-center text-error py-8">Error: {error.message}</p>
-      )}
       {peopleSingle && (
         <div className="flex flex-col items-stretch gap-4 justify-center">
-          <div className="flex flex-row items-center gap-4">
-            <Button onClick={() => { router.back(); }}>
-              <ArrowBackRounded />
-            </Button>
-            <Header2>{`All People / ${peopleSingle.firstName}'s Profile`}</Header2>
-          </div>
           <div className="relative rounded-lg">
             <Image
               src={bgImage}
@@ -175,5 +165,3 @@ function PeopleDetails() {
     </div>
   );
 }
-
-export default PeopleDetails;
