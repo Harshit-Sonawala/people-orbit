@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useFetchPeopleSingle } from "@/hooks/useFetchPeopleSingle";
 import { Header1, Header2, Header3, Card, Divider, Button } from "@/components";
 import {
@@ -10,13 +10,10 @@ import {
   WorkRounded,
   EmailRounded,
   PhoneRounded,
-  ShortTextRounded,
-  ConstructionRounded,
   LinkedIn,
   LanguageRounded,
   GitHub,
   ArrowBackRounded,
-  ArrowForwardRounded,
 } from "@mui/icons-material";
 import Image from "next/image";
 import profilePic from "@/public/dummy_profilePic.jpg";
@@ -24,6 +21,7 @@ import bgImage from "@/public/dummy_bgImage.jpg";
 
 function PeopleDetails() {
   const { id } = useParams();
+  const router = useRouter();
   const {
     data: peopleSingle,
     isLoading,
@@ -41,7 +39,12 @@ function PeopleDetails() {
       )}
       {peopleSingle && (
         <div className="flex flex-col items-stretch gap-4 justify-center">
-          <Header2>Person Details</Header2>
+          <div className="flex flex-row items-center gap-4">
+            <Button onClick={() => { router.back(); }}>
+              <ArrowBackRounded />
+            </Button>
+            <Header2>{`All People / ${peopleSingle.firstName}'s Profile`}</Header2>
+          </div>
           <div className="relative rounded-lg">
             <Image
               src={bgImage}
@@ -64,9 +67,12 @@ function PeopleDetails() {
                   <Header1>
                     {peopleSingle.firstName} {peopleSingle.lastName}
                   </Header1>
-                  <Header3 className="text-primary">
-                    {peopleSingle.designation}
-                  </Header3>
+                  <div className="flex flex-row items-center gap-2">
+                    <WorkRounded className="text-primary" />
+                    <Header3 className="text-primary">
+                      {peopleSingle.designation}
+                    </Header3>
+                  </div>
                 </div>
 
                 <div className="flex flex-row items-center justify-between gap-4">
@@ -102,7 +108,7 @@ function PeopleDetails() {
                   )}
                 </div>
               </div>
-              <Divider variant="surface-top"/>
+              <Divider variant="surface-top" />
             </div>
 
             <div className="flex flex-col gap-2">
@@ -138,31 +144,31 @@ function PeopleDetails() {
               </div>
             </div>
             <div
-                className="flex flex-col items-stretch justify-center w-full gap-2"
-              >
-                <Header3>Other</Header3>
-                {peopleSingle.age && (
-                  <div className="flex flex-row items-center gap-2">
-                    <CakeRounded />
-                    <p>{`Age: ${peopleSingle.age}`}</p>
-                  </div>
-                )}
+              className="flex flex-col items-stretch justify-center w-full gap-2"
+            >
+              <Header3>Other</Header3>
+              {peopleSingle.age && (
                 <div className="flex flex-row items-center gap-2">
-                  <PersonRounded />
-                  <p>{`Member since ${new Date(
-                    peopleSingle.createdOn,
-                  ).toLocaleDateString("en-US", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })}`}</p>
-                </ div>
+                  <CakeRounded />
+                  <p>{`Age: ${peopleSingle.age}`}</p>
+                </div>
+              )}
+              <div className="flex flex-row items-center gap-2">
+                <PersonRounded />
+                <p>{`Member since ${new Date(
+                  peopleSingle.createdOn,
+                ).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}`}</p>
+              </ div>
 
-                <div className="flex flex-row items-center gap-2">
-                  <BadgeRounded />
-                  <p>{`User ID: ${peopleSingle.id}`}</p>
-                </ div>
-              </div>
+              <div className="flex flex-row items-center gap-2">
+                <BadgeRounded />
+                <p>{`User ID: ${peopleSingle.id}`}</p>
+              </ div>
+            </div>
           </Card>
         </div>
       )}
