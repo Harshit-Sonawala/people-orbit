@@ -1,19 +1,8 @@
 "use client";
 import { useState } from "react";
 import { usePeople } from "@/hooks/usePeople";
-
-import {
-  Card,
-  Header2,
-  Button,
-  Divider,
-  PeopleCard,
-} from "@/components";
-
-import {
-  ArrowBackRounded,
-  ArrowForwardRounded,
-} from "@mui/icons-material";
+import { Header2, Button, Divider, PeopleCard } from "@/components";
+import { ArrowBackRounded, ArrowForwardRounded } from "@mui/icons-material";
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -32,9 +21,13 @@ export default function Home() {
         <Header2>Browse All People Records</Header2>
         <Divider variant="surface" />
       </div>
-      {peopleIsLoading && <p className="text-center py-8">Loading People Data...</p>}
+      {peopleIsLoading && (
+        <p className="text-center py-8">Loading People Data...</p>
+      )}
       {peopleIsError && (
-        <p className="text-center text-error py-8">Error: {peopleError.message}</p>
+        <p className="text-center text-error py-8">
+          Error: {peopleError.message}
+        </p>
       )}
       {people && (
         <div className="flex flex-col gap-6">

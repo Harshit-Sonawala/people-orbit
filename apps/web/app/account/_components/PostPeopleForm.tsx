@@ -1,8 +1,6 @@
 "use client";
-import React from "react";
 import { Formik } from "formik"; // Formik forms
 import * as Yup from "yup"; // Yup Schema Validation
-// import { useCreatePeople } from "@/hooks/useCreatePeople"; // Tanstack Query POST people hook
 import { usePeople } from "@/hooks/usePeople";
 
 import {
@@ -34,10 +32,8 @@ const PostPeopleForm = (props: Props) => {
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
 
-  const {
-    mutate: createPeople,
-    isPending: createPeopleIsPending,
-  } = usePeople().create;
+  const { mutate: createPeople, isPending: createPeopleIsPending } =
+    usePeople().create;
 
   return (
     <Card className="flex flex-col items-stretch justify-center gap-4">
@@ -99,9 +95,9 @@ const PostPeopleForm = (props: Props) => {
             age: values.age === "" ? undefined : Number(values.age),
             skills: values.skills
               ? values.skills
-                .split(",")
-                .map((s) => s.trim())
-                .filter(Boolean)
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean)
               : [],
             bio: values.bio || undefined,
             profilePic: values.profilePic || undefined,
@@ -300,7 +296,11 @@ const PostPeopleForm = (props: Props) => {
             </div>
 
             <div className="flex flex-row gap-4">
-              <Button disabled={createPeopleIsPending} type="submit" className="flex-1 py-2">
+              <Button
+                disabled={createPeopleIsPending}
+                type="submit"
+                className="flex-1 py-2"
+              >
                 {createPeopleIsPending ? `Saving...` : `Submit`}
               </Button>
               <Button

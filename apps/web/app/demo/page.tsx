@@ -1,6 +1,15 @@
 "use client";
-import React from "react";
-import {Header1, Header2, Header3, Card, Divider, Button, TextInput, TextArea, CustomLink} from "@/components";
+import {
+  Header1,
+  Header2,
+  Header3,
+  Card,
+  Divider,
+  Button,
+  TextInput,
+  TextArea,
+  CustomLink,
+} from "@/components";
 
 export default function Demo() {
   return (

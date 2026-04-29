@@ -1,13 +1,11 @@
 import React from "react";
 import Header3 from "@/components/Header3";
-import WorkRounded from "@mui/icons-material/WorkRounded";
-import EmailRounded from "@mui/icons-material/EmailRounded";
-import PhoneRounded from "@mui/icons-material/PhoneRounded";
 import { People } from "@/types/People";
 import Image from "next/image";
 import Link from "next/link";
 import profilePic from "@/public/dummy_profilePic.jpg";
 import bgImage from "@/public/dummy_bgImage.jpg";
+import { WorkRounded, EmailRounded, PhoneRounded } from "@mui/icons-material";
 
 type Props = {
   People: People;

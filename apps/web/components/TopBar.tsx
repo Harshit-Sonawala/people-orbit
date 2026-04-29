@@ -1,8 +1,5 @@
-"use client";
 import SatelliteAltRoundedIcon from "@mui/icons-material/SatelliteAltRounded";
-import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { CustomLink, TextInput, Button, Header3 } from "@/components";
+import { CustomLink, SearchInput } from "@/components";
 
 const TopBar = () => {
   return (
@@ -19,25 +16,12 @@ const TopBar = () => {
         </div>
       </CustomLink>
       <div className="hidden sm:block">
-        <div className="flex flex-row gap-2 relative">
-          <TextInput
-            variant="rounded"
-            placeholder="Search..."
-            className="md:w-sm lg:w-md"
-          />
-          <Button variant="rounded" className="absolute right-0.5 top-0.5 px-4">
-            <SearchRoundedIcon />
-          </Button>
-        </div>
+        <SearchInput />
       </div>
 
       <div className="flex flex-row items-center justify-center gap-4 rounded-md">
-        <CustomLink href="/about">
-          About
-        </CustomLink>
-        <CustomLink href="/demo">
-          Demo
-        </CustomLink>
+        <CustomLink href="/about">About</CustomLink>
+        <CustomLink href="/demo">Demo</CustomLink>
         <CustomLink href="/account" className="border-2 border-primary">
           Signup
         </CustomLink>
