@@ -59,7 +59,7 @@ export class CreatePeopleDto implements Omit<People, 'id' | 'createdOn'> {
 
   @IsNotEmpty()
   @IsString()
-  @MaxLength(13)
+  @MaxLength(20)
   phone!: string;
 
   @IsOptional()
