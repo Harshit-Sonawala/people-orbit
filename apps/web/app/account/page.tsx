@@ -1,6 +1,6 @@
 import React from "react";
 import { Header1, Header3, Divider } from "@/components";
-import PostPersonForm from "@/app/account/_components/PostPersonForm";
+import PostPersonForm from "@/app/account/_components/PostPeopleForm";
 
 type Props = {};
 

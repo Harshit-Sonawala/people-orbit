@@ -8,22 +8,10 @@ import {
   Header2,
   Button,
   Divider,
-  TextInput,
-  TextArea,
   PeopleCard,
 } from "@/components";
 
 import {
-  BadgeRounded,
-  PersonRounded,
-  WorkRounded,
-  EmailRounded,
-  PhoneRounded,
-  ShortTextRounded,
-  ConstructionRounded,
-  LinkedIn,
-  LanguageRounded,
-  GitHub,
   ArrowBackRounded,
   ArrowForwardRounded,
 } from "@mui/icons-material";

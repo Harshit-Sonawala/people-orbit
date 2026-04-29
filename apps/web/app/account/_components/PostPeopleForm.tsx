@@ -28,7 +28,7 @@ import {
 
 type Props = {};
 
-const PostPersonForm = (props: Props) => {
+const PostPeopleForm = (props: Props) => {
   const nameRegex = /^[A-Za-z\s'-]+$/;
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
@@ -316,4 +316,4 @@ const PostPersonForm = (props: Props) => {
   );
 };
 
-export default PostPersonForm;
+export default PostPeopleForm;
