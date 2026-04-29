@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-
-import { useFetchPeople } from "@/hooks/useFetchPeople"; // Tanstack Query fetch hook
+import { usePeople } from "@/hooks/usePeople";
 
 import {
   Card,
@@ -19,12 +18,13 @@ import {
 export default function Home() {
   const [page, setPage] = useState(1);
   const limit = 12;
+
   const {
     data: people,
-    isLoading,
-    isError,
-    error,
-  } = useFetchPeople(page, limit);
+    isLoading: peopleIsLoading,
+    isError: peopleIsError,
+    error: peopleError,
+  } = usePeople(undefined, page, limit).getAll;
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 my-2">
@@ -32,9 +32,9 @@ export default function Home() {
         <Header2>Browse All People Records</Header2>
         <Divider variant="surface" />
       </div>
-      {isLoading && <p className="text-center py-8">Loading People Data...</p>}
-      {isError && (
-        <p className="text-center text-error py-8">Error: {error.message}</p>
+      {peopleIsLoading && <p className="text-center py-8">Loading People Data...</p>}
+      {peopleIsError && (
+        <p className="text-center text-error py-8">Error: {peopleError.message}</p>
       )}
       {people && (
         <div className="flex flex-col gap-6">
