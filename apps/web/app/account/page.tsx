@@ -4,7 +4,7 @@ import PostPersonForm from "@/app/account/_components/PostPeopleForm";
 
 type Props = {};
 
-function Account({ }: Props) {
+export default function Account({ }: Props) {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       <div className="flex flex-col gap-2">
@@ -17,5 +17,3 @@ function Account({ }: Props) {
     </div>
   );
 }
-
-export default Account;

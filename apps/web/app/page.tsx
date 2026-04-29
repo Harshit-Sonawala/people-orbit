@@ -29,8 +29,8 @@ export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 my-2">
       <div className="flex flex-col gap-2">
-        <Header2>Browse all records</Header2>
-        <Divider variant="secondary" />
+        <Header2>Browse All People Records</Header2>
+        <Divider variant="surface" />
       </div>
       {isLoading && <p className="text-center py-8">Loading People Data...</p>}
       {isError && (
