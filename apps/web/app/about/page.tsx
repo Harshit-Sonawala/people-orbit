@@ -5,7 +5,7 @@ type Props = {};
 
 function About({}: Props) {
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-4 w-[60%] mx-auto">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       <Header1>About</Header1>
       <Divider variant="primary" />
     </div>

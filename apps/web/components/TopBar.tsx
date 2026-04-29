@@ -6,7 +6,7 @@ import { CustomLink, TextInput, Button, Header3 } from "@/components";
 
 const TopBar = () => {
   return (
-    <div className="flex flex-row items-center justify-between p-2 w-[90%] mx-auto mb-2">
+    <div className="flex flex-row items-center justify-evenly py-1 px-2 w-[90%] mx-auto mb-2">
       <CustomLink href="/">
         <div className="flex flex-row items-center justify-center px-2">
           <SatelliteAltRoundedIcon
@@ -39,7 +39,7 @@ const TopBar = () => {
           Demo
         </CustomLink>
         <CustomLink href="/account" className="border-2 border-primary">
-          Login / Signup
+          Signup
         </CustomLink>
         {/* <div className="flex items-center justify-center w-12 h-12 rounded-full bg-surface border-2 border-primary">
           <AccountCircleRoundedIcon

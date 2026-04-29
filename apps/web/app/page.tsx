@@ -27,7 +27,7 @@ export default function Home() {
   } = useFetchPeople(page, limit);
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto my-2">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-6 my-2">
       <div className="flex flex-col gap-2">
         <Header2>Browse all records</Header2>
         <Divider variant="secondary" />
@@ -38,7 +38,7 @@ export default function Home() {
       )}
       {people && (
         <div className="flex flex-col gap-6">
-          <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {people.data.map((eachPeople, i) => (
               <PeopleCard People={eachPeople} key={eachPeople.id ?? i} />
             ))}

@@ -18,7 +18,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="min-h-full flex flex-col pb-48">
         <Providers>
           <TopBar />
-          {children}
+          <div className="w-[90%] lg:w-[80%] mx-auto">
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

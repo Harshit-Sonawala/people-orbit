@@ -4,7 +4,7 @@ import {Header1, Header2, Header3, Card, Divider, Button, TextInput, TextArea, C
 
 export default function Demo() {
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-10 w-[60%] mx-auto">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-10">
       <div className="flex flex-col gap-2">
         <Header1>Components Demo Page</Header1>
         <Divider variant="primary" />

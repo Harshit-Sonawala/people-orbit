@@ -30,7 +30,7 @@ function PeopleDetails() {
   } = useFetchPeopleSingle(id as string);
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-4 w-[80%] mx-auto">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       {isLoading && (
         <p className="text-center py-8">Loading Person Details...</p>
       )}
@@ -51,7 +51,7 @@ function PeopleDetails() {
               alt="Background"
               className="bg-primary-light w-full h-72 rounded-lg object-cover"
             />
-            <div className="absolute left-8 bottom-8 xs:w-24 xs:h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top">
+            <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top">
               <Image
                 src={profilePic}
                 alt={peopleSingle.firstName.charAt(0)}

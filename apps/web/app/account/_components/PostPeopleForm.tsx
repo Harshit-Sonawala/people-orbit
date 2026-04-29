@@ -38,7 +38,7 @@ const PostPeopleForm = (props: Props) => {
   } = useCreatePeople();
 
   return (
-    <Card className="flex flex-col items-stretch justify-center gap-4 md:w-[90%] lg:w-[80%] mx-auto">
+    <Card className="flex flex-col items-stretch justify-center gap-4">
       <Header2>Post Person Information</Header2>
       <Divider variant="surface-top" />
       <Formik
