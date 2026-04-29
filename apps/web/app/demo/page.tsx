@@ -63,6 +63,7 @@ export default function Demo() {
           >
             Outlined Rounded Button
           </Button>
+          <Button disabled={true}>Disabled Button</Button>
         </Card>
       </div>
 

@@ -45,64 +45,64 @@ export default function Home() {
           </div>
 
           <div className="flex flex-row items-center justify-center mx-auto">
-            <Card className="flex flex-row items-center justify-start gap-4 w-full">
-              <div className="flex flex-row items-center justify-center gap-4 w-full">
-                <Button
-                  variant="rounded"
-                  onClick={() => {
-                    if (page > 1) {
-                      setPage((oldPage) => Math.max(oldPage - 1, 1));
-                    }
-                  }}
-                >
-                  <ArrowBackRounded />
-                  PREV
-                </Button>
-                <div className="flex flex-row gap-4">
-                  {Array.from(
-                    { length: people.meta.totalPages },
-                    (_, i) => i + 1,
-                  ).map((eachPage) =>
-                    people.meta.currentPage === eachPage ? (
-                      <Button
-                        key={eachPage}
-                        variant="rounded"
-                        className="w-9 h-9"
-                      >
-                        {eachPage}
-                      </Button>
-                    ) : (
-                      <Button
-                        key={eachPage}
-                        variant="outlined-rounded"
-                        className="w-9 h-9"
-                        onClick={() => {
-                          if (eachPage !== page) {
-                            // prevent unnecessary fetch
-                            setPage(eachPage);
-                          }
-                        }}
-                      >
-                        {eachPage}
-                      </Button>
-                    ),
-                  )}
-                </div>
-                <Button
-                  variant="rounded"
-                  onClick={() => {
-                    if (page < people.meta.totalPages) {
-                      setPage((oldPage) =>
-                        Math.min(people.meta.totalPages, oldPage + 1),
-                      );
-                    }
-                  }}
-                >
-                  NEXT
-                  <ArrowForwardRounded />
-                </Button>
+            <div className="flex flex-row items-center justify-center gap-4 w-full">
+              <Button
+                disabled={page === 1}
+                variant="rounded"
+                onClick={() => {
+                  if (page > 1) {
+                    setPage((oldPage) => Math.max(oldPage - 1, 1));
+                  }
+                }}
+              >
+                <ArrowBackRounded />
+                PREV
+              </Button>
+              <div className="flex flex-row gap-4">
+                {Array.from(
+                  { length: people.meta.totalPages },
+                  (_, i) => i + 1,
+                ).map((eachPage) =>
+                  people.meta.currentPage === eachPage ? (
+                    <Button
+                      key={eachPage}
+                      variant="rounded"
+                      className="w-9 h-9"
+                    >
+                      {eachPage}
+                    </Button>
+                  ) : (
+                    <Button
+                      key={eachPage}
+                      variant="outlined-rounded"
+                      className="w-9 h-9"
+                      onClick={() => {
+                        if (eachPage !== page) {
+                          // prevent unnecessary fetch
+                          setPage(eachPage);
+                        }
+                      }}
+                    >
+                      {eachPage}
+                    </Button>
+                  ),
+                )}
               </div>
-            </Card>
+              <Button
+                disabled={page === people.meta.totalPages}
+                variant="rounded"
+                onClick={() => {
+                  if (page < people.meta.totalPages) {
+                    setPage((oldPage) =>
+                      Math.min(people.meta.totalPages, oldPage + 1),
+                    );
+                  }
+                }}
+              >
+                NEXT
+                <ArrowForwardRounded />
+              </Button>
+            </div>
           </div>
         </div>
       )}

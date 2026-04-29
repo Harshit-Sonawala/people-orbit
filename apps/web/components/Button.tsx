@@ -1,10 +1,8 @@
 import React from "react";
 
-type Props = {
+type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   variant?: "filled" | "outlined" | "rounded" | "outlined-rounded";
-  type?: "submit" | "reset";
-  onClick?: () => void;
   className?: string;
 };
 
@@ -21,19 +19,16 @@ const variantClasses: { [key: string]: string } = {
 const Button = ({
   children,
   variant = "filled",
-  type,
-  onClick,
   className = "",
   ...rest
 }: Props) => {
+  const disabledClasses = rest.disabled
+    ? "bg-surface-top text-surface-top-dark border-surface-top cursor-default pointer-events-none"
+    : "hover:bg-primary-light hover:text-white hover:border-transparent hover:cursor-pointer active:bg-secondary active:border-transparent transform active:scale-[0.98]";
+
   return (
     <button
-      type={type}
-      onClick={onClick}
-      className={`flex flex-row items-center justify-center py-1 px-2 ${variantClasses[variant]}
-      hover:bg-primary-light hover:text-white hover:border-transparent hover:cursor-pointer
-      active:bg-secondary active:border-transparent transform active:scale-[0.98] transition-transform
-      ${className}`}
+      className={`flex flex-row items-center justify-center py-1 px-2 transition-transform ${variantClasses[variant]} ${disabledClasses} ${className}`}
       {...rest}
     >
       {children}
