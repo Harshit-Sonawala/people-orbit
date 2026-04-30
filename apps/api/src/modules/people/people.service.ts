@@ -55,6 +55,7 @@ export class PeopleService {
     const newDate: Date = new Date();
     const newPeople: People = {
       ...replacePeopleDto,
+      id: replaceId,
       createdOn: newDate, // replace created date as new person record
       updatedOn: newDate,
     };
