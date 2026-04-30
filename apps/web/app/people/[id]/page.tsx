@@ -78,9 +78,9 @@ export default async function PeopleDetails({
                       href={peopleSingle.socialLinks.linkedIn}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-surface-top hover:bg-primary-light transition-colors"
+                      className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-light hover:text-surface transition-colors"
                     >
-                      <LinkedIn className="text-primary" />
+                      <LinkedIn />
                     </a>
                   )}
                   {peopleSingle.socialLinks.website && (
@@ -88,9 +88,9 @@ export default async function PeopleDetails({
                       href={peopleSingle.socialLinks.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-surface-top hover:bg-primary-light transition-colors"
+                      className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-light hover:text-surface transition-colors"
                     >
-                      <LanguageRounded className="text-surface-top" />
+                      <LanguageRounded />
                     </a>
                   )}
                   {peopleSingle.socialLinks.github && (
@@ -98,9 +98,9 @@ export default async function PeopleDetails({
                       href={peopleSingle.socialLinks.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-surface-top hover:bg-primary-light transition-colors"
+                      className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-light hover:text-surface transition-colors"
                     >
-                      <GitHub className="text-primary" />
+                      <GitHub />
                     </a>
                   )}
                 </div>
