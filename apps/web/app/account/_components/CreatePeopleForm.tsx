@@ -27,7 +27,7 @@ import {
 
 type Props = {};
 
-const PostPeopleForm = (props: Props) => {
+const CreatePeopleForm = (props: Props) => {
   const nameRegex = /^[A-Za-z\s'-]+$/;
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
@@ -37,8 +37,6 @@ const PostPeopleForm = (props: Props) => {
 
   return (
     <Card className="flex flex-col items-stretch justify-center gap-4">
-      <Header2>Post a New User's Information</Header2>
-      <Divider variant="surface-top" />
       <Formik
         initialValues={{
           firstName: "",
@@ -318,4 +316,4 @@ const PostPeopleForm = (props: Props) => {
   );
 };
 
-export default PostPeopleForm;
+export default CreatePeopleForm;

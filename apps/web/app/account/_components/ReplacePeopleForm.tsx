@@ -39,8 +39,6 @@ const ReplacePeopleForm = (props: Props) => {
 
   return (
     <Card className="flex flex-col items-stretch justify-center gap-4">
-      <Header2>Replace a User's Information</Header2>
-      <Divider variant="surface-top" />
       <Formik
         initialValues={{
           id: "",
@@ -136,7 +134,7 @@ const ReplacePeopleForm = (props: Props) => {
             className="flex flex-col items-stretch align-center gap-6"
             onSubmit={formik.handleSubmit}
           >
-            <div className="flex flex-row items-center justify-center flex-1 gap-2">
+            <div className="flex flex-row items-center flex-1 gap-2">
               <AlternateEmailRounded className="text-primary" />
               <label htmlFor="id">User ID:</label>
               <TextInput
