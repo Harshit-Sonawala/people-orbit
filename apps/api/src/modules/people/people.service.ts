@@ -28,7 +28,11 @@ export class PeopleService {
   }
 
   getOne(getId: string): People | undefined {
-    return this.allPeople.find((p) => p.id === getId);
+    const foundPerson = this.allPeople.find((p) => p.id === getId);
+    if (!foundPerson) {
+      throw new NotFoundException(`Person with ID ${getId} not found`);
+    }
+    return foundPerson;
   }
 
   create(createPeopleDto: CreatePeopleDto): People {
