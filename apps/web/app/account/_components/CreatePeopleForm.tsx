@@ -14,7 +14,7 @@ import {
 
 import {
   BadgeRounded,
-  PersonRounded,
+  CakeRounded,
   WorkRounded,
   EmailRounded,
   PhoneRounded,
@@ -37,7 +37,7 @@ const PostPeopleForm = (props: Props) => {
 
   return (
     <Card className="flex flex-col items-stretch justify-center gap-4">
-      <Header2>Post a New Person's Information</Header2>
+      <Header2>Post a New User's Information</Header2>
       <Divider variant="surface-top" />
       <Formik
         initialValues={{
@@ -157,7 +157,7 @@ const PostPeopleForm = (props: Props) => {
             <div className="flex flex-row items-center justify-stretch gap-4 w-full">
               <div className="flex flex-col flex-1 gap-2">
                 <div className="flex flex-row items-center flex-1 gap-2">
-                  <PersonRounded className="text-primary" />
+                  <CakeRounded className="text-primary" />
                   <label htmlFor="age">Age:</label>
                 </div>
                 <TextInput

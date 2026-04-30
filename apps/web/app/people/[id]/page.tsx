@@ -1,30 +1,37 @@
-import React from "react";
 import { People } from "@/types/People";
 import { Header1, Header3, Card, Divider } from "@/components";
 import Image from "next/image";
 import profilePic from "@/public/dummy_profilePic.jpg";
 import bgImage from "@/public/dummy_bgImage.jpg";
 import {
-  PersonRounded,
-  BadgeRounded,
+  LinkedIn,
+  LanguageRounded,
+  GitHub,
   CakeRounded,
   WorkRounded,
   EmailRounded,
   PhoneRounded,
-  LinkedIn,
-  LanguageRounded,
-  GitHub,
+  AlternateEmailRounded,
+  VerifiedRounded,
 } from "@mui/icons-material";
 
-export default async function PeopleDetails({ params }: { params: Promise<{ id: string }> }) {
+export default async function PeopleDetails({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
-  
-  const response = await fetch(`${process.env.NEXT_PUBLIC_PEOPLE_URL}/${id}`, { cache: "no-store" });
-  
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_PEOPLE_URL}/${id}`, {
+    cache: "no-store",
+  });
+
   if (!response.ok) {
     return (
       <div className="flex flex-col flex-1 items-center justify-center py-8">
-        <Header3 className="text-error">Error: Failed to fetch person details</Header3>
+        <Header3 className="text-error">
+          Error: Failed to fetch person details
+        </Header3>
       </div>
     );
   }
@@ -83,7 +90,7 @@ export default async function PeopleDetails({ params }: { params: Promise<{ id: 
                       rel="noopener noreferrer"
                       className="p-2 rounded-full bg-surface-top hover:bg-primary-light transition-colors"
                     >
-                      <LanguageRounded className="text-primary" />
+                      <LanguageRounded className="text-surface-top" />
                     </a>
                   )}
                   {peopleSingle.socialLinks.github && (
@@ -111,7 +118,10 @@ export default async function PeopleDetails({ params }: { params: Promise<{ id: 
               <div className="flex flex-row gap-4">
                 {peopleSingle.skills &&
                   peopleSingle.skills.map((eachSkill, i) => (
-                    <p key={i} className="bg-surface-top text-primary font-semibold rounded-full py-1 px-2">
+                    <p
+                      key={i}
+                      className="bg-surface-top text-primary font-semibold rounded-full py-1 px-2"
+                    >
                       {eachSkill}
                     </p>
                   ))}
@@ -119,32 +129,28 @@ export default async function PeopleDetails({ params }: { params: Promise<{ id: 
             </div>
 
             <div className="flex flex-row items-center justify-stretch gap-4">
-              <div
-                className="flex flex-col items-stretch justify-center w-full gap-2"
-              >
+              <div className="flex flex-col items-stretch justify-center w-full gap-2">
                 <Header3>Contact</Header3>
                 <div className="flex flex-row items-center gap-2">
-                  <EmailRounded />
+                  <EmailRounded className="text-surface-top-dark" />
                   <p>{`Email: ${peopleSingle.email}`}</p>
                 </div>
                 <div className="flex flex-row items-center gap-2">
-                  <PhoneRounded />
+                  <PhoneRounded className="text-surface-top-dark" />
                   <p>{`Phone: ${peopleSingle.phone}`}</p>
                 </div>
               </div>
             </div>
-            <div
-              className="flex flex-col items-stretch justify-center w-full gap-2"
-            >
+            <div className="flex flex-col items-stretch justify-center w-full gap-2">
               <Header3>Other</Header3>
               {peopleSingle.age && (
                 <div className="flex flex-row items-center gap-2">
-                  <CakeRounded />
+                  <CakeRounded className="text-surface-top-dark" />
                   <p>{`Age: ${peopleSingle.age}`}</p>
                 </div>
               )}
               <div className="flex flex-row items-center gap-2">
-                <PersonRounded />
+                <VerifiedRounded className="text-surface-top-dark" />
                 <p>{`Member since ${new Date(
                   peopleSingle.createdOn,
                 ).toLocaleDateString("en-US", {
@@ -152,12 +158,12 @@ export default async function PeopleDetails({ params }: { params: Promise<{ id: 
                   month: "short",
                   year: "numeric",
                 })}`}</p>
-              </ div>
+              </div>
 
               <div className="flex flex-row items-center gap-2">
-                <BadgeRounded />
+                <AlternateEmailRounded className="text-surface-top-dark" />
                 <p>{`User ID: ${peopleSingle.id}`}</p>
-              </ div>
+              </div>
             </div>
           </Card>
         </div>
