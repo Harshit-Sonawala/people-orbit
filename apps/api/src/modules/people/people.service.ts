@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import type { People } from './types/people.type';
-import { dummyData } from './people.dummyData.static';
+import type { PaginatedPeople } from './types/people.type';
 import { CreatePeopleDto } from './dto/create-people.dto';
 import { PaginationDto } from './dto/pagination.dto';
-import { PaginatedPeople } from './types/people.type';
+import { dummyData } from './people.dummyData.static';
+import { ReplacePeopleDto } from './dto/replace-people.dto';
 
 @Injectable()
 export class PeopleService {
@@ -26,20 +27,52 @@ export class PeopleService {
     };
   }
 
-  getOne(id: number): People | undefined {
-    return this.allPeople.find((person) => person.id === id);
+  getOne(getId: string): People | undefined {
+    return this.allPeople.find((p) => p.id === getId);
   }
 
   create(createPeopleDto: CreatePeopleDto): People {
-    const newPerson: People = {
+    const newDate: Date = new Date();
+    const newPeople: People = {
+      ...createPeopleDto,
       id:
         this.allPeople.length > 0
-          ? Math.max(...this.allPeople.map((p) => p.id)) + 1
-          : 1,
-      createdOn: new Date(),
-      ...createPeopleDto,
+          ? (Math.max(...this.allPeople.map((p) => Number(p.id))) + 1).toString()
+          : "1",
+      createdOn: newDate,
+      updatedOn: newDate,
     };
-    this.allPeople.push(newPerson);
-    return newPerson;
+    this.allPeople.push(newPeople);
+    return newPeople;
   }
+
+  // Replace person on an id with a new person
+  replace(replaceId: string, replacePeopleDto: ReplacePeopleDto): People {
+    const newDate: Date = new Date();
+    const newPeople: People = {
+      ...replacePeopleDto,
+      createdOn: newDate, // replace created date as new person record
+      updatedOn: newDate,
+    };
+
+    // dummy replace logic
+    const replaceIndex = this.allPeople.findIndex((p) => p.id === replaceId);
+    if (replaceIndex === -1) throw new NotFoundException(`Person with ID ${replaceId} not found`);
+    this.allPeople[replaceIndex] = newPeople;
+
+    return newPeople;
+  }
+
+  // update(updateId: string, updatePeopleDto: UpdatePeopleDto): People | undefined {
+  //   const updatedPeople: People = updatePeopleDto;
+  //   return undefined;
+  // }
+
+  // delete(replaceId: string): People | undefined {
+  //   const deleteIndex = this.allPeople.findIndex((p) => p.id === id);
+  //   if (deleteIndex === -1) return undefined;
+  //   const deletedPeople = this.allPeople.splice(deleteIndex, 1)[0];
+
+  //   return deletedPeople;
+  // }
 }

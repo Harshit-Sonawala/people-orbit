@@ -5,7 +5,7 @@ export type SocialLinks = {
 };
 
 export type People = {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   age?: number;
@@ -18,6 +18,7 @@ export type People = {
   profilePic?: string;
   bgImage?: string;
   createdOn: Date;
+  updatedOn: Date;
 };
 
 export type PaginatedPeople = {

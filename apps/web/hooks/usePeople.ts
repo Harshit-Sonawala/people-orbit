@@ -46,5 +46,14 @@ export const usePeople = (id?: string, page: number = 1, limit: number = 12) => 
     },
   });
 
+  // const update = useMutation({
+  //   mutationFn: async (id:string, updatedPeople: Omit<People, "id" | "createdOn">): Promise<People> => {
+  //     const res = await fetch(`${PEOPLE_URL}/${id}`, {
+  //       method: "PUT",
+
+  //     })
+  //   }
+  // })
+
   return { getAll, getById, create };
 };

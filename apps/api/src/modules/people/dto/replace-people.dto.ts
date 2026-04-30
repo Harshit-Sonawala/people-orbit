@@ -9,13 +9,18 @@ import {
   IsUrl,
   IsArray,
   ValidateNested,
+  IsDate,
   Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { People } from '../types/people.type';
 import { SocialLinksDto } from './social-links.dto';
 
-export class CreatePeopleDto implements Omit<People, 'id' | 'createdOn' | 'updatedOn'> {
+export class ReplacePeopleDto {
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(16)
+  id!: string;
+
   @IsNotEmpty()
   @IsString()
   @MaxLength(40)
@@ -69,4 +74,14 @@ export class CreatePeopleDto implements Omit<People, 'id' | 'createdOn' | 'updat
   @IsOptional()
   @IsUrl()
   bgImage?: string;
+
+  @IsNotEmpty()
+  @Type(() => Date) // Convert ISO string into Date obj
+  @IsDate()
+  createdOn!: Date;
+
+  @IsNotEmpty()
+  @Type(() => Date) // Convert ISO string into Date obj
+  @IsDate()
+  updatedOn!: Date;
 }
