@@ -13,8 +13,9 @@ import {
 } from "@/components";
 
 import {
+  AlternateEmailRounded,
   BadgeRounded,
-  PersonRounded,
+  CakeRounded,
   WorkRounded,
   EmailRounded,
   PhoneRounded,
@@ -31,16 +32,18 @@ const ReplacePeopleForm = (props: Props) => {
   const nameRegex = /^[A-Za-z\s'-]+$/;
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
+  const idRegex = /^[a-z0-9]+$/;
 
   const { mutate: replacePeople, isPending: replacePeopleIsPending } =
     usePeople().replaceById;
 
   return (
     <Card className="flex flex-col items-stretch justify-center gap-4">
-      <Header2>Post a New Person's Information</Header2>
+      <Header2>Replace a User's Information</Header2>
       <Divider variant="surface-top" />
       <Formik
         initialValues={{
+          id: "",
           firstName: "",
           lastName: "",
           age: "",
@@ -54,17 +57,24 @@ const ReplacePeopleForm = (props: Props) => {
           bgImage: "",
         }}
         validationSchema={Yup.object({
+          id: Yup.string()
+            .matches(
+              idRegex,
+              "Id can only contain lowercase letters or numbers",
+            )
+            .max(16, "Must be within 16 characters")
+            .required("Required Field"),
           firstName: Yup.string()
             .matches(
               nameRegex,
-              "First name Can only contain letters, spaces, hyphens, or apostrophes",
+              "First name can only contain letters, spaces, hyphens, or apostrophes",
             )
             .max(30, "Must be 30 characters or less")
             .required("Required Field"),
           lastName: Yup.string()
             .matches(
               nameRegex,
-              "Last name Can only contain letters, spaces, hyphens, or apostrophes",
+              "Last name can only contain letters, spaces, hyphens, or apostrophes",
             )
             .max(30, "Must be 30 characters or less")
             .required("Required Field"),
@@ -109,11 +119,11 @@ const ReplacePeopleForm = (props: Props) => {
             },
           };
           replacePeople(
-            { replaceId: "1", replaceData: formattedData },
+            { replaceId: formattedData.id, replaceData: formattedData },
             {
               onSuccess: () => {
                 console.log(
-                  `Data for ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
+                  `Data for ID: ${formattedData.id}, ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
                 );
                 resetForm();
               },
@@ -126,6 +136,18 @@ const ReplacePeopleForm = (props: Props) => {
             className="flex flex-col items-stretch align-center gap-6"
             onSubmit={formik.handleSubmit}
           >
+            <div className="flex flex-row items-center justify-center flex-1 gap-2">
+              <AlternateEmailRounded className="text-primary" />
+              <label htmlFor="id">User ID:</label>
+              <TextInput
+                id="id"
+                type="text"
+                placeholder="10"
+                className="w-full"
+                error={formik.errors.id}
+                {...formik.getFieldProps("id")}
+              />
+            </div>
             <div className="flex flex-row items-center justify-stretch gap-4 w-full">
               <div className="flex flex-col flex-1 gap-2">
                 <div className="flex flex-row items-center flex-1 gap-2">
@@ -160,7 +182,7 @@ const ReplacePeopleForm = (props: Props) => {
             <div className="flex flex-row items-center justify-stretch gap-4 w-full">
               <div className="flex flex-col flex-1 gap-2">
                 <div className="flex flex-row items-center flex-1 gap-2">
-                  <PersonRounded className="text-primary" />
+                  <CakeRounded className="text-primary" />
                   <label htmlFor="age">Age:</label>
                 </div>
                 <TextInput
