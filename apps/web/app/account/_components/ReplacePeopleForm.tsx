@@ -60,7 +60,7 @@ const ReplacePeopleForm = (props: Props) => {
           id: Yup.string()
             .matches(
               idRegex,
-              "Id can only contain lowercase letters or numbers",
+              "ID can only contain lowercase letters and numbers",
             )
             .max(16, "Must be within 16 characters")
             .required("Required Field"),

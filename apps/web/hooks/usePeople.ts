@@ -55,7 +55,7 @@ export const usePeople = (id?: string, page: number = 1, limit: number = 12) => 
         body: JSON.stringify(replaceData),
       });
 
-      const data = await res.json()
+      const data = await res.json();
       if (!res.ok) throw new Error(data.message || `usePeople replace error: Failed to replace record for ID: ${replaceId}`);
       return data;
     },
@@ -78,5 +78,25 @@ export const usePeople = (id?: string, page: number = 1, limit: number = 12) => 
   //   }
   // })
 
-  return { getAll, getById, create, replaceById };
+  const deleteById = useMutation({
+    mutationFn: async (deleteId: string): Promise<People> => {
+      const res = await fetch(`${PEOPLE_URL}/${deleteId}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || `usePeople replace error: Failed to replace record for ID: ${deleteId}`);
+      return data;
+    },
+    onSuccess: (result, deleteId) => {
+      queryClient.invalidateQueries({ queryKey: ["people"] });
+      queryClient.invalidateQueries({ queryKey: ["peopleSingle", deleteId] });
+      console.log(`Replaced person record at ID: ${deleteId} with data: ${JSON.stringify(result)}`);
+    },
+    onError: (error) => {
+      console.error("usePeople replace error: ", error.message);
+    },
+  })
+
+  return { getAll, getById, create, replaceById, deleteById };
 };
