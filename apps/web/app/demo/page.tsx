@@ -16,7 +16,7 @@ export default function Demo() {
     <div className="flex flex-col flex-1 items-stretch justify-center gap-10">
       <div className="flex flex-col gap-2">
         <Header1>Components Demo Page</Header1>
-        <Divider variant="primary" />
+        <Divider />
       </div>
 
       <div className="flex flex-col gap-2">

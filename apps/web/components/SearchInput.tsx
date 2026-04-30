@@ -6,11 +6,11 @@ type Props = {};
 
 const SearchInput = (props: Props) => {
   return (
-    <div className="flex flex-row gap-2 relative">
+    <div className="hidden md:block flex flex-row items-center gap-2 relative">
       <TextInput
         variant="rounded"
         placeholder="Search..."
-        className="md:w-sm lg:w-md"
+        className="sm:w-64 md:w-72 lg:w-84"
       />
       <Button variant="rounded" className="absolute right-0.5 top-0.5 px-4">
         <SearchRounded />

@@ -15,9 +15,7 @@ const TopBar = () => {
           </h1>
         </div>
       </CustomLink>
-      <div className="hidden sm:block">
-        <SearchInput />
-      </div>
+      <SearchInput />
 
       <div className="flex flex-row items-center justify-center gap-4 rounded-md">
         <CustomLink href="/about">About</CustomLink>

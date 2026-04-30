@@ -19,7 +19,7 @@ export default function Home() {
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 my-2">
       <div className="flex flex-col gap-2">
         <Header2>Browse All People Records</Header2>
-        <Divider variant="surface" />
+        <Divider />
       </div>
       {peopleIsLoading && (
         <p className="text-center py-8">Loading People Data...</p>
