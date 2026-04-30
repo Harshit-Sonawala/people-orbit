@@ -1,18 +1,28 @@
 import React from "react";
 import { Header1, Header3, Divider } from "@/components";
-import PostPersonForm from "@/app/account/_components/PostPeopleForm";
+import CreatePersonForm from "@/app/account/_components/CreatePeopleForm";
+import ReplacePersonForm from "@/app/account/_components/ReplacePeopleForm";
 
 type Props = {};
 
-export default function Account({ }: Props) {
+export default function Account({}: Props) {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       <div className="flex flex-col gap-2">
         <Header1>Account</Header1>
         <Divider variant="primary" />
       </div>
+
+      <Header3 className="text-secondary">
+        POST - Create New Person Record
+      </Header3>
       <div className="flex flex-col gap-2">
-        <PostPersonForm />
+        <CreatePersonForm />
+      </div>
+
+      <Header3 className="text-secondary">PUT - Replace Person Record</Header3>
+      <div className="flex flex-col gap-2">
+        <ReplacePersonForm />
       </div>
     </div>
   );

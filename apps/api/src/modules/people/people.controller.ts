@@ -4,7 +4,6 @@ import { PaginationDto } from './dto/pagination.dto';
 import { CreatePeopleDto } from './dto/create-people.dto';
 import type { People } from './types/people.type';
 import type { PaginatedPeople } from './types/people.type';
-import { ReplacePeopleDto } from './dto/replace-people.dto';
 
 @Controller('people') // for URL: /api/people
 export class PeopleController {
@@ -26,7 +25,7 @@ export class PeopleController {
   }
 
   @Put(':id')
-  replacePeople(@Param('id') id: string, @Body() replacePeopleDto: ReplacePeopleDto): People {
+  replacePeople(@Param('id') id: string, @Body() replacePeopleDto: CreatePeopleDto): People {
     return this.peopleService.replace(id, replacePeopleDto);
   }
 

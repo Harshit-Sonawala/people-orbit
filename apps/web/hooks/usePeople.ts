@@ -28,21 +28,44 @@ export const usePeople = (id?: string, page: number = 1, limit: number = 12) => 
   });
 
   const create = useMutation({
-    mutationFn: async (newPeople: Omit<People, "id" | "createdOn">): Promise<People> => {
+    mutationFn: async (createData: Omit<People, "id" | "createdOn" | "updatedOn">): Promise<People> => {
       const res = await fetch(PEOPLE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPeople),
+        body: JSON.stringify(createData),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "usePeople createPeople error: Failed to create person");
+      if (!res.ok) throw new Error(data.message || "usePeople create error: Failed to create person");
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (result, input) => {
       queryClient.invalidateQueries({ queryKey: ["people"] });
+      console.log(`Created new person record: ${JSON.stringify(result)}`);
     },
     onError: (error) => {
       console.error("usePeople create error: ", error.message);
+    },
+  });
+
+  const replaceById = useMutation({
+    mutationFn: async ({ replaceId, replaceData }: { replaceId: string, replaceData: Omit<People, "id" | "createdOn" | "updatedOn"> }): Promise<People> => {
+      const res = await fetch(`${PEOPLE_URL}/${replaceId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(replaceData),
+      });
+
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.message || `usePeople replace error: Failed to replace record for ID: ${replaceId}`);
+      return data;
+    },
+    onSuccess: (result, input) => {
+      queryClient.invalidateQueries({ queryKey: ["people"] });
+      queryClient.invalidateQueries({ queryKey: ["peopleSingle", input.replaceId] });
+      console.log(`Replaced person record at ID: ${input.replaceId} with data: ${JSON.stringify(result)}`);
+    },
+    onError: (error) => {
+      console.error("usePeople replace error: ", error.message);
     },
   });
 
@@ -55,5 +78,5 @@ export const usePeople = (id?: string, page: number = 1, limit: number = 12) => 
   //   }
   // })
 
-  return { getAll, getById, create };
+  return { getAll, getById, create, replaceById };
 };

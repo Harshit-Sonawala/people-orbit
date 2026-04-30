@@ -4,14 +4,13 @@ import type { PaginatedPeople } from './types/people.type';
 import { CreatePeopleDto } from './dto/create-people.dto';
 import { PaginationDto } from './dto/pagination.dto';
 import { dummyData } from './people.dummyData.static';
-import { ReplacePeopleDto } from './dto/replace-people.dto';
 
 @Injectable()
 export class PeopleService {
   allPeople: People[] = dummyData;
 
-  getAll(paginationDto: PaginationDto): PaginatedPeople {
-    const { page = 1, limit = 20 } = paginationDto; // get query params, take default as 1 & 20.
+  getAll(pageData: PaginationDto): PaginatedPeople {
+    const { page = 1, limit = 20 } = pageData; // get query params, take default as 1 & 20.
     const total = this.allPeople.length;
     const totalPages = Math.ceil(total / limit);
     const startIndex = (page - 1) * limit; // every page jump by *limit
@@ -35,10 +34,10 @@ export class PeopleService {
     return foundPerson;
   }
 
-  create(createPeopleDto: CreatePeopleDto): People {
+  create(createData: CreatePeopleDto): People {
     const newDate: Date = new Date();
     const newPeople: People = {
-      ...createPeopleDto,
+      ...createData,
       id:
         this.allPeople.length > 0
           ? (Math.max(...this.allPeople.map((p) => Number(p.id))) + 1).toString()
@@ -51,10 +50,10 @@ export class PeopleService {
   }
 
   // Replace person on an id with a new person
-  replace(replaceId: string, replacePeopleDto: ReplacePeopleDto): People {
+  replace(replaceId: string, replaceData: CreatePeopleDto): People {
     const newDate: Date = new Date();
-    const newPeople: People = {
-      ...replacePeopleDto,
+    const replacedPeople: People = {
+      ...replaceData,
       id: replaceId,
       createdOn: newDate, // replace created date as new person record
       updatedOn: newDate,
@@ -63,9 +62,9 @@ export class PeopleService {
     // dummy replace logic
     const replaceIndex = this.allPeople.findIndex((p) => p.id === replaceId);
     if (replaceIndex === -1) throw new NotFoundException(`Person with ID ${replaceId} not found`);
-    this.allPeople[replaceIndex] = newPeople;
+    this.allPeople[replaceIndex] = replacedPeople;
 
-    return newPeople;
+    return replacedPeople;
   }
 
   // update(updateId: string, updatePeopleDto: UpdatePeopleDto): People | undefined {
