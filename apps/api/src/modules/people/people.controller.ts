@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Query, Put, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Put, Patch, Delete } from '@nestjs/common';
 import { PeopleService } from './people.service';
 import { PaginationDto } from './dto/pagination.dto';
 import { CreatePeopleDto } from './dto/create-people.dto';
@@ -33,4 +33,9 @@ export class PeopleController {
   // updatePeople(@Body() updatePeopleDto: UpdatePeopleDto): People {
   //   return this.peopleService.update(updatePeopleDto);
   // }
+
+  @Delete(':id')
+  deletePeople(@Param('id') id: string): People | undefined {
+    return this.peopleService.delete(id);
+  }
 }

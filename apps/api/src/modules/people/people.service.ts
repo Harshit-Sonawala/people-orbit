@@ -9,6 +9,7 @@ import { dummyData } from './people.dummyData.static';
 export class PeopleService {
   allPeople: People[] = dummyData;
 
+  // GET all records
   getAll(pageData: PaginationDto): PaginatedPeople {
     const { page = 1, limit = 20 } = pageData; // get query params, take default as 1 & 20.
     const total = this.allPeople.length;
@@ -26,6 +27,7 @@ export class PeopleService {
     };
   }
 
+  // GET record by ID
   getOne(getId: string): People | undefined {
     const foundPerson = this.allPeople.find((p) => p.id === getId);
     if (!foundPerson) {
@@ -34,6 +36,7 @@ export class PeopleService {
     return foundPerson;
   }
 
+  // POST create new record
   create(createData: CreatePeopleDto): People {
     const newDate: Date = new Date();
     const newPeople: People = {
@@ -49,7 +52,7 @@ export class PeopleService {
     return newPeople;
   }
 
-  // Replace person on an id with a new person
+  // PUT Replace entire record based on id with a new person
   replace(replaceId: string, replaceData: CreatePeopleDto): People {
     const newDate: Date = new Date();
     const replacedPeople: People = {
@@ -58,12 +61,10 @@ export class PeopleService {
       createdOn: newDate, // replace created date as new person record
       updatedOn: newDate,
     };
-
     // dummy replace logic
     const replaceIndex = this.allPeople.findIndex((p) => p.id === replaceId);
     if (replaceIndex === -1) throw new NotFoundException(`Person with ID ${replaceId} not found`);
     this.allPeople[replaceIndex] = replacedPeople;
-
     return replacedPeople;
   }
 
@@ -72,11 +73,12 @@ export class PeopleService {
   //   return undefined;
   // }
 
-  // delete(replaceId: string): People | undefined {
-  //   const deleteIndex = this.allPeople.findIndex((p) => p.id === id);
-  //   if (deleteIndex === -1) return undefined;
-  //   const deletedPeople = this.allPeople.splice(deleteIndex, 1)[0];
-
-  //   return deletedPeople;
-  // }
+  // DELETE record by ID
+  delete(deleteId: string): People | undefined {
+    const deleteIndex = this.allPeople.findIndex((p) => p.id === deleteId);
+    if (deleteIndex === -1) throw new NotFoundException(`Person with ID ${deleteId} not found`);
+    //dummy delete logic
+    const deletedPeople = this.allPeople.splice(deleteIndex, 1)[0];
+    return deletedPeople;
+  }
 }
