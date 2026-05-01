@@ -35,6 +35,9 @@ import {
 export default function Profile() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const loggedInId = "1";
+  const nameRegex = /^[A-Za-z\s'-]+$/;
+  const phoneRegex =
+    /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
 
   const {
     data: peopleSingle,
@@ -43,12 +46,8 @@ export default function Profile() {
     error: peopleSingleError,
   } = usePeople(loggedInId).getById;
 
-  const nameRegex = /^[A-Za-z\s'-]+$/;
-  const phoneRegex =
-    /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
-
-  const { mutate: updatePeople, isPending: updatePeopleIsPending } =
-    usePeople().updateById;
+  const { mutate: replacePeople, isPending: replacePeopleIsPending } =
+    usePeople().replaceById;
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
@@ -125,14 +124,15 @@ export default function Profile() {
               github: values.socialLinks.github || undefined,
             },
           };
-          updatePeople(
-            { updateId: loggedInId, updateData: formattedData },
+          replacePeople(
+            { replaceId: loggedInId, replaceData: formattedData },
             {
               onSuccess: () => {
                 console.log(
                   `Data for ID: ${loggedInId}, ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
                 );
                 resetForm();
+                setIsEdit((prev) => !prev);
               },
             },
           );
@@ -158,13 +158,23 @@ export default function Profile() {
                   </Button>
                 ) : (
                   <div className="flex flex-row items-center justify-center gap-2">
-                    <Button onClick={() => setIsEdit((prev) => !prev)}>
+                    <Button disabled={replacePeopleIsPending} type="submit">
                       <div className="flex flex-row items-center justify-center gap-2 px-4">
                         <SaveRounded className="icon-md" />
-                        <p>Save Changes</p>
+                        <p>
+                          {replacePeopleIsPending
+                            ? `Saving...`
+                            : `Save Changes`}
+                        </p>
                       </div>
                     </Button>
-                    <Button onClick={() => setIsEdit((prev) => !prev)}>
+                    <Button
+                      variant="outlined"
+                      onClick={(e) => {
+                        setIsEdit(false);
+                        formik.handleReset(e);
+                      }}
+                    >
                       <div className="flex flex-row items-center justify-center gap-2 px-4">
                         <HistoryRounded className="icon-md" />
                         <p>Revert Changes</p>
