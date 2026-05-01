@@ -44,6 +44,7 @@ const TextInput = ({
           ${placeholderClasses}
           ${textClasses}
           ${borderClasses}
+          ${!error ? `mb-5` : ``} // prevent misalignment on !error
           ${className}`}
         {...rest} // spread out rest parameters
       />
