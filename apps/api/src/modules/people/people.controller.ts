@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Param, Query, Put, Patch, Delete } from '@
 import { PeopleService } from './people.service';
 import { PaginationDto } from './dto/pagination.dto';
 import { CreatePeopleDto } from './dto/create-people.dto';
+import { UpdatePeopleDto } from './dto/update-people.dto';
 import type { People } from './types/people.type';
 import type { PaginatedPeople } from './types/people.type';
 
@@ -29,10 +30,10 @@ export class PeopleController {
     return this.peopleService.replace(id, replacePeopleDto);
   }
 
-  // @Patch(':id')
-  // updatePeople(@Body() updatePeopleDto: UpdatePeopleDto): People {
-  //   return this.peopleService.update(updatePeopleDto);
-  // }
+  @Patch(':id')
+  updatePeople(@Param('id') id: string, @Body() updatePeopleDto: UpdatePeopleDto): People {
+    return this.peopleService.update(id, updatePeopleDto);
+  }
 
   @Delete(':id')
   deletePeople(@Param('id') id: string): People | undefined {

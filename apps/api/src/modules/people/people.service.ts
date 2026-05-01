@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import type { People } from './types/people.type';
 import type { PaginatedPeople } from './types/people.type';
-import { CreatePeopleDto } from './dto/create-people.dto';
 import { PaginationDto } from './dto/pagination.dto';
+import { CreatePeopleDto } from './dto/create-people.dto';
+import { UpdatePeopleDto } from './dto/update-people.dto';
 import { dummyData } from './people.dummyData.static';
 
 @Injectable()
@@ -68,17 +69,28 @@ export class PeopleService {
     return replacedPeople;
   }
 
-  // update(updateId: string, updatePeopleDto: UpdatePeopleDto): People | undefined {
-  //   const updatedPeople: People = updatePeopleDto;
-  //   return undefined;
-  // }
+  // PATCH Update records partially
+  update(updateId: string, updateData: UpdatePeopleDto): People {
+    const updateIndex = this.allPeople.findIndex((p) => p.id === updateId);
+    if (updateIndex === -1) throw new NotFoundException(`Person with ID ${updateId} not found`);
+
+    const updatedPeople: People = {
+      ...this.allPeople[updateIndex], // id: updateIndex
+      ...updateData,
+      updatedOn: new Date(),
+    }
+
+    // dummy update logic
+    this.allPeople[updateIndex] = updatedPeople;
+    return updatedPeople;
+  }
 
   // DELETE record by ID
   delete(deleteId: string): People | undefined {
     const deleteIndex = this.allPeople.findIndex((p) => p.id === deleteId);
     if (deleteIndex === -1) throw new NotFoundException(`Person with ID ${deleteId} not found`);
     //dummy delete logic
-    const deletedPeople = this.allPeople.splice(deleteIndex, 1)[0];
+    const deletedPeople = this.allPeople.splice(deleteIndex, 1)[0]; // splice and return
     return deletedPeople;
   }
 }

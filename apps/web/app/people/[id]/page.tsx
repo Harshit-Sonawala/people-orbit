@@ -22,9 +22,7 @@ export default async function PeopleDetails({
 }) {
   const { id } = await params;
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_PEOPLE_URL}/${id}`, {
-    cache: "no-store",
-  });
+  const response = await fetch(`${process.env.NEXT_PUBLIC_PEOPLE_URL}/${id}`);
 
   if (!response.ok) {
     return (
@@ -108,25 +106,29 @@ export default async function PeopleDetails({
               <Divider variant="surface-top" />
             </div>
 
-            <div className="flex flex-col gap-2">
-              <Header3>About Me</Header3>
-              <p>{peopleSingle.bio}</p>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <Header3>Skills</Header3>
-              <div className="flex flex-row gap-4">
-                {peopleSingle.skills &&
-                  peopleSingle.skills.map((eachSkill, i) => (
-                    <p
-                      key={i}
-                      className="bg-surface-top text-primary font-semibold rounded-full py-1 px-2"
-                    >
-                      {eachSkill}
-                    </p>
-                  ))}
+            {peopleSingle.bio && (
+              <div className="flex flex-col gap-2">
+                <Header3>About Me</Header3>
+                <p>{peopleSingle.bio}</p>
               </div>
-            </div>
+            )}
+
+            {peopleSingle.skills !== undefined &&
+              peopleSingle.skills?.length > 0 && (
+                <div className="flex flex-col gap-2">
+                  <Header3>Skills</Header3>
+                  <div className="flex flex-row gap-4">
+                    {peopleSingle.skills.map((eachSkill, i) => (
+                      <p
+                        key={i}
+                        className="bg-surface-top text-primary font-semibold rounded-full py-1 px-3"
+                      >
+                        {eachSkill}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
 
             <div className="flex flex-row items-center justify-stretch gap-4">
               <div className="flex flex-col items-stretch justify-center w-full gap-2">
