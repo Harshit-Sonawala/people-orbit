@@ -1,9 +1,5 @@
-import { Header1, Header3, Divider } from "@/components";
-import {
-  CreatePeopleForm,
-  ReplacePeopleForm,
-  DeletePeopleForm,
-} from "@/app/account/_components/";
+"use client";
+import { Header1, Header3, Divider, CustomLink } from "@/components";
 
 type Props = {};
 
@@ -16,24 +12,18 @@ export default function Account({}: Props) {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Header3 className="text-secondary">
-          POST - Create New Person Record
-        </Header3>
-        <CreatePeopleForm />
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Header3 className="text-secondary">
-          PUT - Replace Person Record
-        </Header3>
-        <ReplacePeopleForm />
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Header3 className="text-secondary">
-          DELETE - Delete Person Record
-        </Header3>
-        <DeletePeopleForm />
+        <CustomLink
+          href={`/account/profile`}
+          className="text-md font-semibold py-3"
+        >
+          View your profile
+        </CustomLink>
+        <CustomLink
+          href="/account/manage-users"
+          className="text-md font-semibold py-3"
+        >
+          Manage users
+        </CustomLink>
       </div>
     </div>
   );
