@@ -69,14 +69,27 @@ export const usePeople = (id?: string, page: number = 1, limit: number = 12) => 
     },
   });
 
-  // const update = useMutation({
-  //   mutationFn: async (id:string, updatedPeople: Omit<People, "id" | "createdOn">): Promise<People> => {
-  //     const res = await fetch(`${PEOPLE_URL}/${id}`, {
-  //       method: "PUT",
+  const updateById = useMutation({
+    mutationFn: async ({ updateId, updateData }: { updateId: string, updateData: Omit<People, "id" | "createdOn" | "updatedOn"> }): Promise<People> => {
+      const res = await fetch(`${PEOPLE_URL}/${updateId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updateData),
+      });
 
-  //     })
-  //   }
-  // })
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || `usePeople update error: Failed to update record for ID: ${updateId}`);
+      return data;
+    },
+    onSuccess: (result, input) => {
+      queryClient.invalidateQueries({ queryKey: ["people"] });
+      queryClient.invalidateQueries({ queryKey: ["peopleSingle", input.updateId] });
+      console.log(`Updated person record at ID: ${input.updateId} with data: ${JSON.stringify(result)}`);
+    },
+    onError: (error) => {
+      console.error("usePeople update error: ", error.message);
+    },
+  });
 
   const deleteById = useMutation({
     mutationFn: async (deleteId: string): Promise<People> => {
@@ -98,5 +111,5 @@ export const usePeople = (id?: string, page: number = 1, limit: number = 12) => 
     },
   })
 
-  return { getAll, getById, create, replaceById, deleteById };
+  return { getAll, getById, create, replaceById, updateById, deleteById };
 };
