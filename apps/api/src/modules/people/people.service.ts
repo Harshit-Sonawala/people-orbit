@@ -40,12 +40,10 @@ export class PeopleService {
   // POST create new record
   create(createData: CreatePeopleDto): People {
     const newDate: Date = new Date();
+    const idSlug = `${createData.firstName.toLowerCase().replace(/\s+/g, '-')}-${createData.lastName.toLowerCase().replace(/\s+/g, '-')}-${newDate.getTime()}`;
     const newPeople: People = {
       ...createData,
-      id:
-        this.allPeople.length > 0
-          ? (Math.max(...this.allPeople.map((p) => Number(p.id))) + 1).toString()
-          : "1",
+      id: idSlug,
       createdOn: newDate,
       updatedOn: newDate,
     };
