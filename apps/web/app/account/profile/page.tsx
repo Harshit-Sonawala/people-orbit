@@ -407,7 +407,7 @@ export default function Profile() {
                       <Heading3>Contact</Heading3>
                       <div className="flex flex-row items-center gap-2">
                         <EmailRounded
-                          className={`text-surface-top-dark ${isEdit ? "mb-5" : ""}`}
+                          className={`text-on-surface-top ${isEdit ? "mb-5" : ""}`}
                         />
                         <label
                           htmlFor="email"
@@ -432,7 +432,7 @@ export default function Profile() {
 
                       <div className="flex flex-row items-center gap-2">
                         <PhoneRounded
-                          className={`text-surface-top-dark ${isEdit ? "mb-5" : ""}`}
+                          className={`text-on-surface-top ${isEdit ? "mb-5" : ""}`}
                         />
                         <label
                           htmlFor="phone"
@@ -462,7 +462,7 @@ export default function Profile() {
                     {(isEdit || peopleSingle.age) && (
                       <div className="flex flex-row items-center gap-2">
                         <CakeRounded
-                          className={`text-surface-top-dark ${isEdit ? "mb-5" : ""}`}
+                          className={`text-on-surface-top ${isEdit ? "mb-5" : ""}`}
                         />
                         <label
                           htmlFor="age"
@@ -487,7 +487,7 @@ export default function Profile() {
                     )}
 
                     <div className="flex flex-row items-center gap-2">
-                      <VerifiedRounded className="text-surface-top-dark" />
+                      <VerifiedRounded className="text-on-surface-top" />
                       <p>{`Member since ${new Date(
                         peopleSingle.createdOn,
                       ).toLocaleDateString("en-US", {
@@ -498,7 +498,7 @@ export default function Profile() {
                     </div>
 
                     <div className="flex flex-row items-center gap-2">
-                      <HistoryRounded className="text-surface-top-dark" />
+                      <HistoryRounded className="text-on-surface-top" />
                       <p>{`Last updated on ${new Date(
                         peopleSingle.updatedOn,
                       ).toLocaleDateString("en-US", {
@@ -509,7 +509,7 @@ export default function Profile() {
                     </div>
 
                     <div className="flex flex-row items-center gap-2">
-                      <AlternateEmailRounded className="text-surface-top-dark" />
+                      <AlternateEmailRounded className="text-on-surface-top" />
                       <p>{`User ID: ${peopleSingle.id}`}</p>
                     </div>
                   </div>

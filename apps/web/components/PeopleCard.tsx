@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading3 } from "@/components/Heading3";
+import { Heading3 } from "@/components";
 import { People } from "@/types/People";
 import Image from "next/image";
 import Link from "next/link";
@@ -63,7 +63,7 @@ export const PeopleCard = ({ People, className = "" }: Props) => {
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
-          <p className="text-xs text-surface-top-dark truncate">
+          <p className="text-xs text-on-surface-top truncate">
             Member since{" "}
             {new Date(People.createdOn).toLocaleDateString("en-US", {
               day: "numeric",

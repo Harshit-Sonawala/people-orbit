@@ -23,7 +23,7 @@ export const Button = ({
   ...rest
 }: Props) => {
   const disabledClasses = rest.disabled
-    ? "bg-surface-top text-surface-top-dark border-surface-top cursor-default pointer-events-none"
+    ? "bg-surface-top text-on-surface-top border-surface-top cursor-default pointer-events-none"
     : "hover:bg-primary-alt hover:text-white hover:border-transparent hover:cursor-pointer active:bg-secondary active:border-transparent transform active:scale-[0.98] transition-all duration-200";
 
   return (

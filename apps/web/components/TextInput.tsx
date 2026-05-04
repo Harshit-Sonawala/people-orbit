@@ -26,7 +26,7 @@ export const TextInput = ({
   let borderClasses: string = "border-2 border-surface-top";
 
   if (rest.disabled) {
-    placeholderClasses = "text-surface-top-dark";
+    placeholderClasses = "text-on-surface-top";
     textClasses = "text-foreground";
   }
 

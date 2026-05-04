@@ -62,6 +62,12 @@ export default async function PeopleDetails({
                   <Heading1>
                     {peopleSingle.firstName} {peopleSingle.lastName}
                   </Heading1>
+
+                  <div className="flex flex-row items-center gap-2">
+                    <AlternateEmailRounded className="text-on-surface-top" />
+                    <p className="text-on-surface-top">{peopleSingle.id}</p>
+                  </div>
+
                   <div className="flex flex-row items-center gap-2">
                     <WorkRounded className="text-primary" />
                     <Heading3 className="text-primary">
@@ -134,11 +140,11 @@ export default async function PeopleDetails({
               <div className="flex flex-col items-stretch justify-center w-full gap-2">
                 <Heading3>Contact</Heading3>
                 <div className="flex flex-row items-center gap-2">
-                  <EmailRounded className="text-surface-top-dark" />
+                  <EmailRounded className="text-on-surface-top" />
                   <p>{`Email: ${peopleSingle.email}`}</p>
                 </div>
                 <div className="flex flex-row items-center gap-2">
-                  <PhoneRounded className="text-surface-top-dark" />
+                  <PhoneRounded className="text-on-surface-top" />
                   <p>{`Phone: ${peopleSingle.phone}`}</p>
                 </div>
               </div>
@@ -147,12 +153,12 @@ export default async function PeopleDetails({
               <Heading3>Other</Heading3>
               {peopleSingle.age && (
                 <div className="flex flex-row items-center gap-2">
-                  <CakeRounded className="text-surface-top-dark" />
+                  <CakeRounded className="text-on-surface-top" />
                   <p>{`Age: ${peopleSingle.age}`}</p>
                 </div>
               )}
               <div className="flex flex-row items-center gap-2">
-                <VerifiedRounded className="text-surface-top-dark" />
+                <VerifiedRounded className="text-on-surface-top" />
                 <p>{`Member since ${new Date(
                   peopleSingle.createdOn,
                 ).toLocaleDateString("en-US", {
@@ -160,11 +166,6 @@ export default async function PeopleDetails({
                   month: "short",
                   year: "numeric",
                 })}`}</p>
-              </div>
-
-              <div className="flex flex-row items-center gap-2">
-                <AlternateEmailRounded className="text-surface-top-dark" />
-                <p>{`User ID: ${peopleSingle.id}`}</p>
               </div>
             </div>
           </Card>
