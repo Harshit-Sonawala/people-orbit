@@ -25,7 +25,7 @@ export const TextArea = ({
   let borderClasses: string = "border-2 border-surface-top";
 
   if (rest.disabled) {
-    placeholderClasses = "text-on-surface-top";
+    placeholderClasses = "text-foreground-alt";
     textClasses = "text-foreground";
   }
 

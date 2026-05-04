@@ -34,7 +34,7 @@ import {
 
 export default function Profile() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const loggedInId = "1";
+  const loggedInId = "arjun-mehta-1755163800000";
   const nameRegex = /^[A-Za-z\s'-]+$/;
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
@@ -407,7 +407,7 @@ export default function Profile() {
                       <Heading3>Contact</Heading3>
                       <div className="flex flex-row items-center gap-2">
                         <EmailRounded
-                          className={`text-on-surface-top ${isEdit ? "mb-5" : ""}`}
+                          className={`text-foreground-alt ${isEdit ? "mb-5" : ""}`}
                         />
                         <label
                           htmlFor="email"
@@ -432,7 +432,7 @@ export default function Profile() {
 
                       <div className="flex flex-row items-center gap-2">
                         <PhoneRounded
-                          className={`text-on-surface-top ${isEdit ? "mb-5" : ""}`}
+                          className={`text-foreground-alt ${isEdit ? "mb-5" : ""}`}
                         />
                         <label
                           htmlFor="phone"
@@ -462,7 +462,7 @@ export default function Profile() {
                     {(isEdit || peopleSingle.age) && (
                       <div className="flex flex-row items-center gap-2">
                         <CakeRounded
-                          className={`text-on-surface-top ${isEdit ? "mb-5" : ""}`}
+                          className={`text-foreground-alt ${isEdit ? "mb-5" : ""}`}
                         />
                         <label
                           htmlFor="age"
@@ -487,7 +487,7 @@ export default function Profile() {
                     )}
 
                     <div className="flex flex-row items-center gap-2">
-                      <VerifiedRounded className="text-on-surface-top" />
+                      <VerifiedRounded className="text-foreground-alt" />
                       <p>{`Member since ${new Date(
                         peopleSingle.createdOn,
                       ).toLocaleDateString("en-US", {
@@ -498,7 +498,7 @@ export default function Profile() {
                     </div>
 
                     <div className="flex flex-row items-center gap-2">
-                      <HistoryRounded className="text-on-surface-top" />
+                      <HistoryRounded className="text-foreground-alt" />
                       <p>{`Last updated on ${new Date(
                         peopleSingle.updatedOn,
                       ).toLocaleDateString("en-US", {
@@ -509,7 +509,7 @@ export default function Profile() {
                     </div>
 
                     <div className="flex flex-row items-center gap-2">
-                      <AlternateEmailRounded className="text-on-surface-top" />
+                      <AlternateEmailRounded className="text-foreground-alt" />
                       <p>{`User ID: ${peopleSingle.id}`}</p>
                     </div>
                   </div>

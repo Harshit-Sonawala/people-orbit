@@ -64,15 +64,15 @@ export default async function PeopleDetails({
                   </Heading1>
 
                   <div className="flex flex-row items-center gap-2">
-                    <AlternateEmailRounded className="text-on-surface-top" />
-                    <p className="text-on-surface-top">{peopleSingle.id}</p>
-                  </div>
-
-                  <div className="flex flex-row items-center gap-2">
                     <WorkRounded className="text-primary" />
                     <Heading3 className="text-primary">
                       {peopleSingle.designation}
                     </Heading3>
+                  </div>
+
+                  <div className="flex flex-row items-center gap-1">
+                    <AlternateEmailRounded className="text-foreground-alt icon-sm" />
+                    <p className="text-foreground-alt p-1">{peopleSingle.id}</p>
                   </div>
                 </div>
 
@@ -140,11 +140,11 @@ export default async function PeopleDetails({
               <div className="flex flex-col items-stretch justify-center w-full gap-2">
                 <Heading3>Contact</Heading3>
                 <div className="flex flex-row items-center gap-2">
-                  <EmailRounded className="text-on-surface-top" />
+                  <EmailRounded className="text-foreground-alt" />
                   <p>{`Email: ${peopleSingle.email}`}</p>
                 </div>
                 <div className="flex flex-row items-center gap-2">
-                  <PhoneRounded className="text-on-surface-top" />
+                  <PhoneRounded className="text-foreground-alt" />
                   <p>{`Phone: ${peopleSingle.phone}`}</p>
                 </div>
               </div>
@@ -153,12 +153,12 @@ export default async function PeopleDetails({
               <Heading3>Other</Heading3>
               {peopleSingle.age && (
                 <div className="flex flex-row items-center gap-2">
-                  <CakeRounded className="text-on-surface-top" />
+                  <CakeRounded className="text-foreground-alt" />
                   <p>{`Age: ${peopleSingle.age}`}</p>
                 </div>
               )}
               <div className="flex flex-row items-center gap-2">
-                <VerifiedRounded className="text-on-surface-top" />
+                <VerifiedRounded className="text-foreground-alt" />
                 <p>{`Member since ${new Date(
                   peopleSingle.createdOn,
                 ).toLocaleDateString("en-US", {

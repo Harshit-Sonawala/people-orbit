@@ -63,7 +63,7 @@ export const PeopleCard = ({ People, className = "" }: Props) => {
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
-          <p className="text-xs text-on-surface-top truncate">
+          <p className="text-xs text-foreground-alt truncate">
             Member since{" "}
             {new Date(People.createdOn).toLocaleDateString("en-US", {
               day: "numeric",
