@@ -10,3 +10,4 @@ export * from "./TextArea";
 export * from "./TextInput";
 export * from "./TopBar";
 export * from "./SearchInput";
+export * from "./DropDown";

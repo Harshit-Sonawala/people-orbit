@@ -1,12 +1,27 @@
 "use client";
 import { useState } from "react";
 import { usePeople } from "@/hooks/usePeople";
-import { Heading2, Button, Divider, PeopleCard } from "@/components";
-import { ArrowBackRounded, ArrowForwardRounded } from "@mui/icons-material";
+import { Heading2, DropDown, Button, Divider, PeopleCard } from "@/components";
+import {
+  ArrowBackRounded,
+  ArrowForwardRounded,
+  ArrowUpwardRounded,
+  ArrowDownwardRounded,
+  SortRounded,
+} from "@mui/icons-material";
 
 export default function Home() {
   const [page, setPage] = useState(1);
+  const [sortBy, setSortBy] = useState(0);
+  const [order, setOrder] = useState("asc");
   const limit = 12;
+
+  const sortOptions = [
+    { label: "First Name", value: "firstName" },
+    { label: "Last Name", value: "lastName" },
+    { label: "Date Created", value: "dateCreated" },
+    { label: "Date Updated", value: "dateUpdated" },
+  ];
 
   const {
     data: people,
@@ -18,7 +33,38 @@ export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
       <div className="flex flex-col gap-2">
-        <Heading2>Browse All People Records</Heading2>
+        <div className="flex flex-row items-center justify-between">
+          <Heading2>Browse All People Records</Heading2>
+          <div className="flex flex-row items-center justify-between gap-4">
+            <p className="font-medium">Sort:</p>
+            <DropDown
+              onSelect={(index) => setSortBy(index)}
+              label={sortOptions[sortBy].label}
+              icon={<SortRounded />}
+              options={sortOptions.map((opt) => ({
+                label: opt.label,
+                icon: <SortRounded />,
+              }))}
+            />
+            <p className="font-medium">Order:</p>
+            <Button
+              variant="rounded"
+              onClick={() => setOrder(order === "asc" ? "desc" : "asc")}
+            >
+              {order === "asc" ? (
+                <div className="flex flex-row items-center justify-center gap-2">
+                  <ArrowUpwardRounded />
+                  <p>ASC</p>
+                </div>
+              ) : (
+                <div className="flex flex-row justify-center gap-2">
+                  <ArrowDownwardRounded />
+                  <p>DESC</p>
+                </div>
+              )}
+            </Button>
+          </div>
+        </div>
         <Divider />
       </div>
       {peopleIsLoading && (
