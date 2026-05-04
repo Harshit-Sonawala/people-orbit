@@ -4,7 +4,7 @@ import { SearchRounded } from "@mui/icons-material";
 
 type Props = {};
 
-const SearchInput = (props: Props) => {
+export const SearchInput = (props: Props) => {
   return (
     <div className="hidden md:block flex flex-row items-center gap-2 relative">
       <TextInput
@@ -18,5 +18,3 @@ const SearchInput = (props: Props) => {
     </div>
   );
 };
-
-export default SearchInput;

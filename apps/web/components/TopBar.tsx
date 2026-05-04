@@ -1,7 +1,7 @@
 import { SatelliteAltRounded, AccountCircleRounded } from "@mui/icons-material";
 import { CustomLink, SearchInput } from "@/components";
 
-const TopBar = () => {
+export const TopBar = () => {
   return (
     <div className="flex flex-row items-center justify-between py-1 px-4 w-[90%] mx-auto mb-2">
       <CustomLink href="/">
@@ -40,5 +40,3 @@ const TopBar = () => {
     </div>
   );
 };
-
-export default TopBar;

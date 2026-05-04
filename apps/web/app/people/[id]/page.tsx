@@ -1,5 +1,5 @@
 import { People } from "@/types/People";
-import { Header1, Header3, Card, Divider } from "@/components";
+import { Heading1, Heading3, Card, Divider } from "@/components";
 import Image from "next/image";
 import profilePic from "@/public/dummy_profilePic.jpg";
 import bgImage from "@/public/dummy_bgImage.jpg";
@@ -27,9 +27,9 @@ export default async function PeopleDetails({
   if (!response.ok) {
     return (
       <div className="flex flex-col flex-1 items-center justify-center py-8">
-        <Header3 className="text-error">
+        <Heading3 className="text-error">
           Error: Failed to fetch person details
-        </Header3>
+        </Heading3>
       </div>
     );
   }
@@ -59,14 +59,14 @@ export default async function PeopleDetails({
             <div className="flex flex-col gap-4">
               <div className="flex flex-row items-center justify-between gap-4">
                 <div className="flex flex-col gap-2">
-                  <Header1>
+                  <Heading1>
                     {peopleSingle.firstName} {peopleSingle.lastName}
-                  </Header1>
+                  </Heading1>
                   <div className="flex flex-row items-center gap-2">
                     <WorkRounded className="text-primary" />
-                    <Header3 className="text-primary">
+                    <Heading3 className="text-primary">
                       {peopleSingle.designation}
-                    </Header3>
+                    </Heading3>
                   </div>
                 </div>
 
@@ -108,7 +108,7 @@ export default async function PeopleDetails({
 
             {peopleSingle.bio && (
               <div className="flex flex-col gap-2">
-                <Header3>About Me</Header3>
+                <Heading3>About Me</Heading3>
                 <p>{peopleSingle.bio}</p>
               </div>
             )}
@@ -116,7 +116,7 @@ export default async function PeopleDetails({
             {peopleSingle.skills !== undefined &&
               peopleSingle.skills?.length > 0 && (
                 <div className="flex flex-col gap-2">
-                  <Header3>Skills</Header3>
+                  <Heading3>Skills</Heading3>
                   <div className="flex flex-row gap-4">
                     {peopleSingle.skills.map((eachSkill, i) => (
                       <p
@@ -132,7 +132,7 @@ export default async function PeopleDetails({
 
             <div className="flex flex-row items-center justify-stretch gap-4">
               <div className="flex flex-col items-stretch justify-center w-full gap-2">
-                <Header3>Contact</Header3>
+                <Heading3>Contact</Heading3>
                 <div className="flex flex-row items-center gap-2">
                   <EmailRounded className="text-surface-top-dark" />
                   <p>{`Email: ${peopleSingle.email}`}</p>
@@ -144,7 +144,7 @@ export default async function PeopleDetails({
               </div>
             </div>
             <div className="flex flex-col items-stretch justify-center w-full gap-2">
-              <Header3>Other</Header3>
+              <Heading3>Other</Heading3>
               {peopleSingle.age && (
                 <div className="flex flex-row items-center gap-2">
                   <CakeRounded className="text-surface-top-dark" />

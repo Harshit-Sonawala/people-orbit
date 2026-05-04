@@ -14,7 +14,7 @@ const variantClasses: { [key: string]: string } = {
     "rounded-md bg-transparent border-2 border-primary font-medium text-primary",
 };
 
-const TextArea = ({
+export const TextArea = ({
   variant = "filled",
   error = "",
   className = "",
@@ -50,5 +50,3 @@ const TextArea = ({
     </div>
   );
 };
-
-export default TextArea;

@@ -6,7 +6,11 @@ interface CustomLinkProps extends LinkProps {
   className?: string;
 }
 
-const CustomLink = ({ children, className = "", ...rest }: CustomLinkProps) => {
+export const CustomLink = ({
+  children,
+  className = "",
+  ...rest
+}: CustomLinkProps) => {
   return (
     <Link
       className={`flex flex-row items-center justify-center py-1 px-2 rounded-md
@@ -18,5 +22,3 @@ const CustomLink = ({ children, className = "", ...rest }: CustomLinkProps) => {
     </Link>
   );
 };
-
-export default CustomLink;

@@ -1,5 +1,5 @@
 "use client";
-import { Header1, Header3, Divider, CustomLink } from "@/components";
+import { Heading1, Heading3, Divider, CustomLink } from "@/components";
 
 type Props = {};
 
@@ -7,7 +7,7 @@ export default function Account({}: Props) {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto">
       <div className="flex flex-col gap-2">
-        <Header1>Account</Header1>
+        <Heading1>Account</Heading1>
         <Divider />
       </div>
 

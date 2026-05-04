@@ -1,5 +1,5 @@
 import React from "react";
-import Header3 from "@/components/Header3";
+import { Heading3 } from "@/components/Heading3";
 import { People } from "@/types/People";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +12,7 @@ type Props = {
   className?: string;
 };
 
-const PeopleCard = ({ People, className = "" }: Props) => {
+export const PeopleCard = ({ People, className = "" }: Props) => {
   return (
     <Link
       href={`/people/${People.id}`}
@@ -32,9 +32,9 @@ const PeopleCard = ({ People, className = "" }: Props) => {
             className="w-16 h-16 rounded-full object-cover"
           />
         </div>
-        <Header3>
+        <Heading3>
           {People.firstName} {People.lastName}
-        </Header3>
+        </Heading3>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <WorkRounded
@@ -76,5 +76,3 @@ const PeopleCard = ({ People, className = "" }: Props) => {
     </Link>
   );
 };
-
-export default PeopleCard;

@@ -3,14 +3,7 @@ import { Formik } from "formik"; // Formik forms
 import * as Yup from "yup"; // Yup Schema Validation
 import { usePeople } from "@/hooks/usePeople";
 
-import {
-  Card,
-  Header2,
-  Button,
-  Divider,
-  TextInput,
-  TextArea,
-} from "@/components";
+import { Card, Button, Divider, TextInput, TextArea } from "@/components";
 
 import {
   BadgeRounded,
@@ -27,7 +20,7 @@ import {
 
 type Props = {};
 
-const CreatePeopleForm = (props: Props) => {
+export const CreatePeopleForm = (props: Props) => {
   const nameRegex = /^[A-Za-z\s'-]+$/;
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
@@ -315,5 +308,3 @@ const CreatePeopleForm = (props: Props) => {
     </Card>
   );
 };
-
-export default CreatePeopleForm;

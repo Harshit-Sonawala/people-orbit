@@ -15,7 +15,7 @@ const variantClasses: { [key: string]: string } = {
     "rounded-md bg-transparent border-2 border-primary font-medium text-primary",
 };
 
-const TextInput = ({
+export const TextInput = ({
   variant = "filled",
   error = "",
   className = "",
@@ -52,5 +52,3 @@ const TextInput = ({
     </div>
   );
 };
-
-export default TextInput;

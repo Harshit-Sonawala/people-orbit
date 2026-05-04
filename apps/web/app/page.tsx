@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { usePeople } from "@/hooks/usePeople";
-import { Header2, Button, Divider, PeopleCard } from "@/components";
+import { Heading2, Button, Divider, PeopleCard } from "@/components";
 import { ArrowBackRounded, ArrowForwardRounded } from "@mui/icons-material";
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
       <div className="flex flex-col gap-2">
-        <Header2>Browse All People Records</Header2>
+        <Heading2>Browse All People Records</Heading2>
         <Divider />
       </div>
       {peopleIsLoading && (

@@ -5,7 +5,7 @@ import { usePeople } from "@/hooks/usePeople";
 
 import {
   Card,
-  Header2,
+  Heading2,
   Button,
   Divider,
   TextInput,
@@ -28,7 +28,7 @@ import {
 
 type Props = {};
 
-const ReplacePeopleForm = (props: Props) => {
+export const ReplacePeopleForm = (props: Props) => {
   const nameRegex = /^[A-Za-z\s'-]+$/;
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
@@ -340,5 +340,3 @@ const ReplacePeopleForm = (props: Props) => {
     </Card>
   );
 };
-
-export default ReplacePeopleForm;

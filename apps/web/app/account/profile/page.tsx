@@ -5,9 +5,9 @@ import * as Yup from "yup";
 import { usePeople } from "@/hooks/usePeople";
 import { People } from "@/types/People";
 import {
-  Header1,
-  Header2,
-  Header3,
+  Heading1,
+  Heading2,
+  Heading3,
   Card,
   Divider,
   Button,
@@ -145,7 +145,7 @@ export default function Profile() {
           >
             <div className="flex flex-col gap-2">
               <div className="flex flex-row items-center justify-between gap-4">
-                <Header2>Your Profile</Header2>
+                <Heading2>Your Profile</Heading2>
                 {!isEdit ? (
                   <Button
                     onClick={() => setIsEdit((prev) => !prev)}
@@ -216,7 +216,7 @@ export default function Profile() {
                       <div className="flex flex-col gap-2">
                         {isEdit ? (
                           <div className="flex flex-row items-center gap-2">
-                            <Header1 className="mb-5">Name:</Header1>
+                            <Heading1 className="mb-5">Name:</Heading1>
                             <TextInput
                               id="firstName"
                               type="text"
@@ -235,9 +235,9 @@ export default function Profile() {
                             />
                           </div>
                         ) : (
-                          <Header1>
+                          <Heading1>
                             {peopleSingle.firstName} {peopleSingle.lastName}
-                          </Header1>
+                          </Heading1>
                         )}
                         <div className="flex flex-row items-center gap-2">
                           <WorkRounded
@@ -245,9 +245,9 @@ export default function Profile() {
                           />
                           {isEdit ? (
                             <div className="flex flex-row items-center gap-2">
-                              <Header3 className="text-primary mb-5">
+                              <Heading3 className="text-primary mb-5">
                                 Designation:
-                              </Header3>
+                              </Heading3>
                               <TextInput
                                 variant="filled"
                                 id="designation"
@@ -259,9 +259,9 @@ export default function Profile() {
                               />
                             </div>
                           ) : (
-                            <Header3 className="text-primary">
+                            <Heading3 className="text-primary">
                               {peopleSingle.designation}
-                            </Header3>
+                            </Heading3>
                           )}
                         </div>
                       </div>
@@ -359,7 +359,7 @@ export default function Profile() {
 
                   {(isEdit || peopleSingle.bio) && (
                     <div className="flex flex-col gap-2">
-                      <Header3>About Me</Header3>
+                      <Heading3>About Me</Heading3>
                       {isEdit ? (
                         <TextArea
                           variant="filled"
@@ -378,7 +378,7 @@ export default function Profile() {
                     (peopleSingle.skills !== undefined &&
                       peopleSingle.skills?.length > 0)) && (
                     <div className="flex flex-col gap-2">
-                      <Header3>Skills</Header3>
+                      <Heading3>Skills</Heading3>
                       {isEdit ? (
                         <TextArea
                           variant="filled"
@@ -404,7 +404,7 @@ export default function Profile() {
 
                   <div className="flex flex-row items-center justify-stretch gap-4">
                     <div className="flex flex-col items-stretch justify-center w-full gap-2">
-                      <Header3>Contact</Header3>
+                      <Heading3>Contact</Heading3>
                       <div className="flex flex-row items-center gap-2">
                         <EmailRounded
                           className={`text-surface-top-dark ${isEdit ? "mb-5" : ""}`}
@@ -457,7 +457,7 @@ export default function Profile() {
                     </div>
                   </div>
                   <div className="flex flex-col items-stretch justify-center w-full gap-2">
-                    <Header3>Other</Header3>
+                    <Heading3>Other</Heading3>
 
                     {(isEdit || peopleSingle.age) && (
                       <div className="flex flex-row items-center gap-2">

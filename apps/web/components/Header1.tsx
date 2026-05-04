@@ -5,8 +5,6 @@ type Props = {
   className?: string;
 };
 
-const Header1 = ({ children, className = "" }: Props) => {
+export const Heading1 = ({ children, className = "" }: Props) => {
   return <h1 className={`text-4xl font-bold ${className}`}>{children}</h1>;
 };
-
-export default Header1;

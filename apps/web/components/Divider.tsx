@@ -12,12 +12,10 @@ const variantClasses: { [key: string]: string } = {
   secondary: "border-secondary",
 };
 
-const Divider = ({ variant = "surface", className = "" }: Props) => {
+export const Divider = ({ variant = "surface", className = "" }: Props) => {
   return (
     <div
       className={`w-full px-8 border-b-2 ${variantClasses[variant]} ${className}`}
     />
   );
 };
-
-export default Divider;

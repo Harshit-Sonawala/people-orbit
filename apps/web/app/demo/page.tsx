@@ -1,8 +1,8 @@
 "use client";
 import {
-  Header1,
-  Header2,
-  Header3,
+  Heading1,
+  Heading2,
+  Heading3,
   Card,
   Divider,
   Button,
@@ -15,22 +15,22 @@ export default function Demo() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-10">
       <div className="flex flex-col gap-2">
-        <Header1>Components Demo Page</Header1>
+        <Heading1>Components Demo Page</Heading1>
         <Divider />
       </div>
 
       <div className="flex flex-col gap-2">
-        <Header3 className="text-secondary">Headers</Header3>
+        <Heading3 className="text-secondary">Headers</Heading3>
         <p>Header 1</p>
-        <Header1>This is an example of Header 1.</Header1>
+        <Heading1>This is an example of Header 1.</Heading1>
         <p>Header 2</p>
-        <Header2>This is an example of Header 2.</Header2>
+        <Heading2>This is an example of Header 2.</Heading2>
         <p>Header 3</p>
-        <Header3>This is an example of Header 3.</Header3>
+        <Heading3>This is an example of Header 3.</Heading3>
       </div>
 
       <div className="flex flex-col gap-2">
-        <Header3 className="text-secondary">Cards</Header3>
+        <Heading3 className="text-secondary">Cards</Heading3>
         <Card variant="surface">
           <p>Card default surface variant</p>
         </Card>
@@ -49,7 +49,7 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Header3 className="text-secondary">Buttons</Header3>
+        <Heading3 className="text-secondary">Buttons</Heading3>
         <Card>
           <Button onClick={() => console.log("Filled button pressed.")}>
             Filled Button
@@ -77,7 +77,7 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <Header3 className="text-secondary">Dividers</Header3>
+        <Heading3 className="text-secondary">Dividers</Heading3>
         <Divider />
         <Divider variant="surface-top" />
         <Divider variant="primary" />
@@ -85,7 +85,7 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Header3 className="text-secondary">TextInputs</Header3>
+        <Heading3 className="text-secondary">TextInputs</Heading3>
         <TextInput placeholder="Please Enter Text..." />
         <TextInput disabled={true} placeholder="Disabled Text Input" />
         <TextInput
@@ -95,7 +95,7 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Header3 className="text-secondary">TextAreas</Header3>
+        <Heading3 className="text-secondary">TextAreas</Heading3>
         <TextArea placeholder="Please Enter Bio..." />
         <TextArea disabled={true} placeholder="Disabled Text Area" />
         <TextArea
@@ -105,7 +105,7 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Header3 className="text-secondary">CustomLinks</Header3>
+        <Heading3 className="text-secondary">CustomLinks</Heading3>
         <CustomLink href="#">Click Here</CustomLink>
         <CustomLink href="#">Click Here</CustomLink>
         <CustomLink href="#">Click Here</CustomLink>

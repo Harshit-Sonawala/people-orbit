@@ -14,14 +14,18 @@ const variantClasses: { [key: string]: string } = {
   "outlined-primary": "border-2 border-primary bg-transparent",
 };
 
-const Card = ({ key, children, variant = "surface", className }: Props) => {
+export const Card = ({
+  key,
+  children,
+  variant = "surface",
+  className,
+}: Props) => {
   return (
-    <div key={key}
+    <div
+      key={key}
       className={`flex flex-col gap-2 rounded-lg p-4 ${variantClasses[variant]} ${className}`}
     >
       {children}
     </div>
   );
 };
-
-export default Card;

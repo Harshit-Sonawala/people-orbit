@@ -7,7 +7,7 @@ import { AlternateEmailRounded } from "@mui/icons-material";
 
 type Props = {};
 
-const DeletePeopleForm = (props: Props) => {
+export const DeletePeopleForm = (props: Props) => {
   const { mutate: deletePeople, isPending: deletePeopleIsPending } =
     usePeople().deleteById;
 
@@ -68,5 +68,3 @@ const DeletePeopleForm = (props: Props) => {
     </Card>
   );
 };
-
-export default DeletePeopleForm;

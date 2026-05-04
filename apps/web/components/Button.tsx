@@ -16,7 +16,7 @@ const variantClasses: { [key: string]: string } = {
     "rounded-full border-2 border-primary font-semibold text-primary",
 };
 
-const Button = ({
+export const Button = ({
   children,
   variant = "filled",
   className = "",
@@ -35,5 +35,3 @@ const Button = ({
     </button>
   );
 };
-
-export default Button;

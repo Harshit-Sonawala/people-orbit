@@ -1,5 +1,5 @@
 import React from "react";
-import Header3 from "./Header3";
+import Heading3 from "./Heading3";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import WorkIcon from "@mui/icons-material/Work";
@@ -30,15 +30,17 @@ const PeopleCard = ({ People, className = "" }: Props) => {
             className="w-16 h-16 rounded-full object-cover"
           />
         </div>
-        <Header3>
+        <Heading3>
           {People.firstName} {People.lastName}
-        </Header3>
+        </Heading3>
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <WorkIcon
             fontSize="inherit"
             className="icon-md text-primary shrink-0"
           />
-          <p className="text-sm text-foreground truncate">{People.designation}</p>
+          <p className="text-sm text-foreground truncate">
+            {People.designation}
+          </p>
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">

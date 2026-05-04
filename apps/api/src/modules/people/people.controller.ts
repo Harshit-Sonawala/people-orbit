@@ -1,10 +1,7 @@
 import { Controller, Get, Post, Body, Param, Query, Put, Patch, Delete } from '@nestjs/common';
 import { PeopleService } from './people.service';
-import { PaginationDto } from './dto/pagination.dto';
-import { CreatePeopleDto } from './dto/create-people.dto';
-import { UpdatePeopleDto } from './dto/update-people.dto';
-import type { People } from './types/people.type';
-import type { PaginatedPeople } from './types/people.type';
+import { PaginationDto, CreatePeopleDto, UpdatePeopleDto } from './dto';
+import type { People, PaginatedPeople } from './types/people.type';
 
 @Controller('people') // for URL: /api/people
 export class PeopleController {
