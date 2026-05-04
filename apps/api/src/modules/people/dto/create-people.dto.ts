@@ -29,7 +29,7 @@ export class CreatePeopleDto implements Omit<People, 'id' | 'createdOn' | 'updat
   @IsOptional()
   @Type(() => Number) // Convert into number if string was passed
   @IsInt() // ensures whole integer
-  @Min(0)
+  @Min(16, { message: "User must be atleast 16 years of age to join." })
   @Max(120)
   age?: number;
 

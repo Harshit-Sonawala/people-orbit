@@ -3,7 +3,7 @@ import { Formik } from "formik"; // Formik forms
 import * as Yup from "yup"; // Yup Schema Validation
 import { usePeople } from "@/hooks/usePeople";
 
-import { Card, Button, Divider, TextInput, TextArea } from "@/components";
+import { Card, Button, TextInput, TextArea } from "@/components";
 
 import {
   BadgeRounded,
