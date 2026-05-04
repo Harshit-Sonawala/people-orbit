@@ -21,9 +21,9 @@ export const PeopleCard = ({ People, className = "" }: Props) => {
       <Image
         src={bgImage}
         alt="Background"
-        className="bg-primary-light w-full h-32 rounded-tl-lg rounded-tr-lg object-cover"
+        className="bg-primary-alt w-full h-32 rounded-tl-lg rounded-tr-lg object-cover"
       />
-      <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-10 pb-6 px-4 bg-surface duration-200 group-hover:bg-surface-top">
+      <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-10 pb-6 px-4 bg-surface transition-all duration-200 group-hover:bg-surface-top">
         <div className="absolute left-8 -top-10 w-18 h-18 rounded-full bg-surface border-4 border-surface-top transition-colors duration-200">
           <Image
             src={profilePic}

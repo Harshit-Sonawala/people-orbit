@@ -19,7 +19,7 @@ const PeopleCard = ({ People, className = "" }: Props) => {
       <Image
         src={bgImage}
         alt="Background"
-        className="bg-primary-light w-full h-32 rounded-tl-lg rounded-tr-lg object-cover"
+        className="bg-primary-alt w-full h-32 rounded-tl-lg rounded-tr-lg object-cover"
       />
       <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-10 pb-6 px-4 bg-surface">
         <div className="absolute left-4 -top-8 flex items-center justify-center w-16 h-16 rounded-full bg-surface border-2 border-primary">

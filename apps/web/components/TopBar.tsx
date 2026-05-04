@@ -24,7 +24,7 @@ export const TopBar = () => {
         <a
           href="/account"
           rel="noopener noreferrer"
-          className="p-1 rounded-full bg-surface-top text-primary hover:bg-primary-light hover:text-surface transition-colors"
+          className="p-1 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
         >
           <AccountCircleRounded className="icon-xl" />
         </a>

@@ -44,7 +44,7 @@ export default async function PeopleDetails({
             <Image
               src={bgImage}
               alt="Background"
-              className="bg-primary-light w-full h-72 rounded-lg object-cover"
+              className="bg-primary-alt w-full h-72 rounded-lg object-cover"
             />
             <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top">
               <Image
@@ -76,7 +76,7 @@ export default async function PeopleDetails({
                       href={peopleSingle.socialLinks.linkedIn}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-light hover:text-surface transition-colors"
+                      className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
                     >
                       <LinkedIn />
                     </a>
@@ -86,7 +86,7 @@ export default async function PeopleDetails({
                       href={peopleSingle.socialLinks.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-light hover:text-surface transition-colors"
+                      className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
                     >
                       <LanguageRounded />
                     </a>
@@ -96,7 +96,7 @@ export default async function PeopleDetails({
                       href={peopleSingle.socialLinks.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-light hover:text-surface transition-colors"
+                      className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
                     >
                       <GitHub />
                     </a>
