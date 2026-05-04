@@ -1,14 +1,14 @@
 import { IsOptional, IsInt, Min, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
 
-enum SortBy {
+export enum SortBy {
   CREATED = 'dateCreated',
   UPDATED = 'dateUpdated',
   FIRST_NAME = 'firstName',
   LAST_NAME = 'lastName',
 }
 
-enum SortOrder {
+export enum Order {
   ASC = 'asc',
   DESC = 'desc',
 }
@@ -31,6 +31,6 @@ export class GetAllQueryOptionsDto { // For Query parameters like page & limit
   sortBy?: SortBy = SortBy.FIRST_NAME;
 
   @IsOptional()
-  @IsEnum(SortOrder)
-  order?: SortOrder = SortOrder.ASC;
+  @IsEnum(Order)
+  order?: Order = Order.ASC;
 }

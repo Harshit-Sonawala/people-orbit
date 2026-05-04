@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { GetAllQueryOptionsDto, CreatePeopleDto, UpdatePeopleDto } from './dto';
+import { SortBy, Order } from './dto';
 import type { People, PaginatedPeople } from './types';
 import { dummyData } from './people.dummyData.static';
 
@@ -9,11 +10,41 @@ export class PeopleService {
 
   // GET all records
   getAll(pageData: GetAllQueryOptionsDto): PaginatedPeople {
-    const { page = 1, limit = 20 } = pageData; // get query params, take default as 1 & 20.
-    const total = this.allPeople.length;
+    const { page = 1, limit = 20, sortBy = SortBy.FIRST_NAME, order = Order.ASC } = pageData; // get query params, take default as 1 & 20.
+
+    const sortedData = [...this.allPeople].sort((a, b) => {
+      if (sortBy === SortBy.FIRST_NAME) {
+        if (order === Order.ASC) {
+          return a.firstName.localeCompare(b.firstName);
+        } else {
+          return b.firstName.localeCompare(a.firstName);
+        }
+      } else if (sortBy === SortBy.LAST_NAME) {
+        if (order === Order.ASC) {
+          return a.lastName.localeCompare(b.lastName);
+        } else {
+          return b.lastName.localeCompare(a.lastName);
+        }
+      } else if (sortBy === SortBy.UPDATED) {
+        if (order === Order.ASC) {
+          return a.updatedOn.getTime() - b.updatedOn.getTime();
+        } else {
+          return b.updatedOn.getTime() - a.updatedOn.getTime();
+        }
+      } else {
+        if (order === Order.ASC) {
+          return a.createdOn.getTime() - b.createdOn.getTime();
+        } else {
+          return b.createdOn.getTime() - a.createdOn.getTime();
+        }
+      }
+    });
+
+    const total = sortedData.length;
     const totalPages = Math.ceil(total / limit);
     const startIndex = (page - 1) * limit; // every page jump by *limit
-    const data = this.allPeople.slice(startIndex, startIndex + limit); // 0-19, 20-39, 40-59...
+    const data = sortedData.slice(startIndex, startIndex + limit); // 0-19, 20-39, 40-59...
+
     return {
       data,
       meta: {
