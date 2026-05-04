@@ -1,9 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import type { People } from './types/people.type';
-import type { PaginatedPeople } from './types/people.type';
-import { PaginationDto } from './dto/pagination.dto';
-import { CreatePeopleDto } from './dto/create-people.dto';
-import { UpdatePeopleDto } from './dto/update-people.dto';
+import { GetAllQueryOptionsDto, CreatePeopleDto, UpdatePeopleDto } from './dto';
+import type { People, PaginatedPeople } from './types';
 import { dummyData } from './people.dummyData.static';
 
 @Injectable()
@@ -11,7 +8,7 @@ export class PeopleService {
   allPeople: People[] = dummyData;
 
   // GET all records
-  getAll(pageData: PaginationDto): PaginatedPeople {
+  getAll(pageData: GetAllQueryOptionsDto): PaginatedPeople {
     const { page = 1, limit = 20 } = pageData; // get query params, take default as 1 & 20.
     const total = this.allPeople.length;
     const totalPages = Math.ceil(total / limit);

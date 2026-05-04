@@ -1,14 +1,14 @@
 import { Controller, Get, Post, Body, Param, Query, Put, Patch, Delete } from '@nestjs/common';
 import { PeopleService } from './people.service';
-import { PaginationDto, CreatePeopleDto, UpdatePeopleDto } from './dto';
-import type { People, PaginatedPeople } from './types/people.type';
+import { GetAllQueryOptionsDto, CreatePeopleDto, UpdatePeopleDto } from './dto';
+import type { People, PaginatedPeople } from './types';
 
 @Controller('people') // for URL: /api/people
 export class PeopleController {
   constructor(private readonly peopleService: PeopleService) { }
 
   @Get()
-  getAllPeople(@Query() paginationDto: PaginationDto): PaginatedPeople {
+  getAllPeople(@Query() paginationDto: GetAllQueryOptionsDto): PaginatedPeople {
     return this.peopleService.getAll(paginationDto);
   }
 

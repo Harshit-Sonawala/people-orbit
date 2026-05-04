@@ -1,8 +1,4 @@
-export type SocialLinks = {
-  linkedIn?: string;
-  website?: string;
-  github?: string;
-};
+import { SocialLinks } from "./";
 
 export type People = {
   id: string;
@@ -19,14 +15,4 @@ export type People = {
   bgImage?: string;
   createdOn: Date;
   updatedOn: Date;
-};
-
-export type PaginatedPeople = {
-  data: People[];
-  meta: {
-    total: number;
-    limit: number;
-    totalPages: number;
-    currentPage: number;
-  };
 };

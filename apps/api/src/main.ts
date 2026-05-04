@@ -8,13 +8,13 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const PORT = configService.get<number>('PORT') || 4000;
-  
+
   app.enableCors({
     origin: "http://localhost:3000",
   });
   app.setGlobalPrefix('api'); // routes become /api/people...
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true, }));
 
   await app.listen(PORT);
   console.log(`Nestjs app running on http://localhost:${PORT}`);
