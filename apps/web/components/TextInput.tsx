@@ -36,6 +36,7 @@ export const TextInput = ({
     borderClasses = "border-2 border-error";
   }
 
+  // ${!error ? `mb-5` : ``} // prevent misalignment on !error
   return (
     <div className="flex flex-col">
       <input
@@ -44,7 +45,6 @@ export const TextInput = ({
           ${placeholderClasses}
           ${textClasses}
           ${borderClasses}
-          ${!error ? `mb-5` : ``} // prevent misalignment on !error
           ${className}`}
         {...rest} // spread out rest parameters
       />

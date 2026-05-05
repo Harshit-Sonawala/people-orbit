@@ -183,7 +183,7 @@ export default function Profile() {
                   </div>
                 )}
               </div>
-              <Divider />
+              <Divider variant="surface-top" />
             </div>
             {peopleSingleIsLoading && (
               <p className="text-center py-8">Loading Data...</p>
@@ -199,7 +199,7 @@ export default function Profile() {
                   <Image
                     src={bgImage}
                     alt="Background"
-                    className="bg-primary-alt w-full h-72 rounded-lg object-cover"
+                    className="bg-primary-alt w-full h-84 rounded-lg object-cover"
                   />
                   <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top">
                     <Image
@@ -213,67 +213,65 @@ export default function Profile() {
                 <Card className="gap-6 p-6">
                   <div className="flex flex-col gap-4">
                     <div className="flex flex-row items-center justify-between gap-4">
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-4">
                         {isEdit ? (
-                          <div className="flex flex-row items-center gap-2">
-                            <Heading1 className="mb-5">Name:</Heading1>
-                            <TextInput
-                              id="firstName"
-                              type="text"
-                              placeholder="Firstname"
-                              className="font-bold w-full"
-                              error={formik.errors.firstName}
-                              {...formik.getFieldProps("firstName")}
-                            />
-                            <TextInput
-                              id="lastName"
-                              type="text"
-                              placeholder="Lastname"
-                              className="w-full"
-                              error={formik.errors.lastName}
-                              {...formik.getFieldProps("lastName")}
-                            />
+                          <div className="flex flex-col items-start justify-center gap-2">
+                            <Heading2>Full Name:</Heading2>
+                            <div className="flex flex-row items-center justify-center gap-2">
+                              <TextInput
+                                id="firstName"
+                                type="text"
+                                placeholder="Firstname"
+                                className={`font-bold w-full`}
+                                error={formik.errors.firstName}
+                                {...formik.getFieldProps("firstName")}
+                              />
+                              <TextInput
+                                id="lastName"
+                                type="text"
+                                placeholder="Lastname"
+                                className="w-full"
+                                error={formik.errors.lastName}
+                                {...formik.getFieldProps("lastName")}
+                              />
+                            </div>
                           </div>
                         ) : (
                           <Heading1>
                             {peopleSingle.firstName} {peopleSingle.lastName}
                           </Heading1>
                         )}
-                        <div className="flex flex-row items-center gap-2">
-                          <WorkRounded
-                            className={`text-primary ${isEdit ? "mb-5" : ""}`}
-                          />
+                        <div className="flex flex-col items-start justify-center gap-2">
                           {isEdit ? (
-                            <div className="flex flex-row items-center gap-2">
-                              <Heading3 className="text-primary mb-5">
-                                Designation:
-                              </Heading3>
-                              <TextInput
-                                variant="filled"
-                                id="designation"
-                                type="text"
-                                placeholder="Full Stack Developer"
-                                className="w-full"
-                                error={formik.errors.designation}
-                                {...formik.getFieldProps("designation")}
-                              />
-                            </div>
+                            <Heading2>Designation:</Heading2>
                           ) : (
-                            <Heading3 className="text-primary">
-                              {peopleSingle.designation}
-                            </Heading3>
+                            <div className="flex flex-row items-center gap-2">
+                              <WorkRounded className={`text-primary`} />
+                              <Heading3 className="text-primary">
+                                {peopleSingle.designation}
+                              </Heading3>
+                            </div>
+                          )}
+                          {isEdit && (
+                            <TextInput
+                              variant="filled"
+                              id="designation"
+                              type="text"
+                              placeholder="Full Stack Developer"
+                              className="w-full"
+                              error={formik.errors.designation}
+                              {...formik.getFieldProps("designation")}
+                            />
                           )}
                         </div>
                       </div>
 
                       {isEdit ? (
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col items-center justify-evenly gap-2">
                           <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <div className="flex flex-row items-center justify-stretch gap-2">
-                              <LinkedIn className="text-primary mb-5" />
-                              <label htmlFor="socialLinkedIn" className="mb-5">
-                                LinkedIn:
-                              </label>
+                              <LinkedIn className="text-primary" />
+                              <label htmlFor="socialLinkedIn">LinkedIn:</label>
                             </div>
                             <TextInput
                               id="socialLinkedIn"
@@ -287,10 +285,8 @@ export default function Profile() {
 
                           <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <div className="flex flex-row items-center justify-stretch gap-2">
-                              <LanguageRounded className="text-primary mb-5" />
-                              <label htmlFor="socialWebsite" className="mb-5">
-                                Website:
-                              </label>
+                              <LanguageRounded className="text-primary" />
+                              <label htmlFor="socialWebsite">Website:</label>
                             </div>
                             <TextInput
                               id="socialWebsite"
@@ -304,10 +300,8 @@ export default function Profile() {
 
                           <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <div className="flex flex-row items-center justify-stretch gap-2">
-                              <GitHub className="text-primary mb-5" />
-                              <label htmlFor="socialGitHub" className="mb-5">
-                                GitHub:
-                              </label>
+                              <GitHub className="text-primary" />
+                              <label htmlFor="socialGitHub">GitHub:</label>
                             </div>
                             <TextInput
                               id="socialGitHub"
@@ -326,7 +320,7 @@ export default function Profile() {
                               href={peopleSingle.socialLinks.linkedIn}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
+                              className="p-2 h-10 w-10 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
                             >
                               <LinkedIn />
                             </a>
@@ -354,7 +348,7 @@ export default function Profile() {
                         </div>
                       )}
                     </div>
-                    {!isEdit && <Divider />}
+                    <Divider variant="surface-top" />
                   </div>
 
                   {(isEdit || peopleSingle.bio) && (
@@ -406,15 +400,8 @@ export default function Profile() {
                     <div className="flex flex-col items-stretch justify-center w-full gap-2">
                       <Heading3>Contact</Heading3>
                       <div className="flex flex-row items-center gap-2">
-                        <EmailRounded
-                          className={`text-foreground-alt ${isEdit ? "mb-5" : ""}`}
-                        />
-                        <label
-                          htmlFor="email"
-                          className={`${isEdit ? "mb-5" : ""}`}
-                        >
-                          Email Address:
-                        </label>
+                        <EmailRounded className={`text-foreground-alt`} />
+                        <label htmlFor="email">Email Address:</label>
                         {isEdit ? (
                           <TextInput
                             variant="filled"
@@ -431,15 +418,8 @@ export default function Profile() {
                       </div>
 
                       <div className="flex flex-row items-center gap-2">
-                        <PhoneRounded
-                          className={`text-foreground-alt ${isEdit ? "mb-5" : ""}`}
-                        />
-                        <label
-                          htmlFor="phone"
-                          className={`${isEdit ? "mb-5" : ""}`}
-                        >
-                          Phone Number:
-                        </label>
+                        <PhoneRounded className={`text-foreground-alt`} />
+                        <label htmlFor="phone">Phone Number:</label>
                         {isEdit ? (
                           <TextInput
                             variant="filled"
@@ -461,15 +441,8 @@ export default function Profile() {
 
                     {(isEdit || peopleSingle.age) && (
                       <div className="flex flex-row items-center gap-2">
-                        <CakeRounded
-                          className={`text-foreground-alt ${isEdit ? "mb-5" : ""}`}
-                        />
-                        <label
-                          htmlFor="age"
-                          className={`${isEdit ? "mb-5" : ""}`}
-                        >
-                          Age:
-                        </label>
+                        <CakeRounded className={`text-foreground-alt`} />
+                        <label htmlFor="age">Age:</label>
                         {isEdit ? (
                           <TextInput
                             variant="filled"

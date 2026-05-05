@@ -8,19 +8,21 @@ import {
   ArrowUpwardRounded,
   ArrowDownwardRounded,
   SortRounded,
+  HistoryRounded,
+  SortByAlphaRounded,
 } from "@mui/icons-material";
 
 export default function Home() {
   const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState(0);
-  const [order, setOrder] = useState("asc");
+  const [order, setOrder] = useState("desc");
   const limit = 12;
 
   const sortOptions = [
-    { label: "First Name", value: "firstName" },
-    { label: "Last Name", value: "lastName" },
     { label: "Date Created", value: "dateCreated" },
     { label: "Date Updated", value: "dateUpdated" },
+    { label: "First Name", value: "firstName" },
+    { label: "Last Name", value: "lastName" },
   ];
 
   const {
@@ -28,38 +30,41 @@ export default function Home() {
     isLoading: peopleIsLoading,
     isError: peopleIsError,
     error: peopleError,
-  } = usePeople(undefined, page, limit).getAll;
+  } = usePeople(
+    undefined,
+    page,
+    limit,
+    sortOptions[sortBy].value,
+    order,
+  ).getAll;
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
           <Heading2>Browse All People Records</Heading2>
-          <div className="flex flex-row items-center justify-between gap-4">
-            <p className="font-medium">Sort:</p>
+          <div className="flex flex-row items-center justify-between gap-2">
             <DropDown
               onSelect={(index) => setSortBy(index)}
               label={sortOptions[sortBy].label}
               icon={<SortRounded />}
-              options={sortOptions.map((opt) => ({
-                label: opt.label,
-                icon: <SortRounded />,
-              }))}
+              options={[
+                { label: "Date Created", icon: <HistoryRounded /> },
+                { label: "Date Updated", icon: <HistoryRounded /> },
+                { label: "First Name", icon: <SortByAlphaRounded /> },
+                { label: "Last Name", icon: <SortByAlphaRounded /> },
+              ]}
             />
-            <p className="font-medium">Order:</p>
-            <Button
-              variant="rounded"
-              onClick={() => setOrder(order === "asc" ? "desc" : "asc")}
-            >
+            <Button onClick={() => setOrder(order === "asc" ? "desc" : "asc")}>
               {order === "asc" ? (
                 <div className="flex flex-row items-center justify-center gap-2">
                   <ArrowUpwardRounded />
-                  <p>ASC</p>
+                  <p>Ascending</p>
                 </div>
               ) : (
                 <div className="flex flex-row justify-center gap-2">
                   <ArrowDownwardRounded />
-                  <p>DESC</p>
+                  <p>Descending</p>
                 </div>
               )}
             </Button>

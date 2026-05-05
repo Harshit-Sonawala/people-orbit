@@ -1,12 +1,7 @@
 "use client";
 import React, { useState, useRef, type ReactNode } from "react";
-import {
-  Button,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { Button } from "@/components";
+import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
 
 type MenuOption = {
   label: string;
@@ -37,31 +32,32 @@ export const DropDown = ({
     <div>
       <Button
         ref={anchorRef}
-        variant="contained"
         onClick={() => setMenuOpen(true)}
-        startIcon={icon}
-        className={className}
-        disableElevation
+        className={`px-1 gap-2 ${className}`}
+      >
+        {icon && icon}
+        {label}
+      </Button>
+      <Menu
+        anchorEl={anchorRef.current}
+        open={menuOpen}
+        onClose={handleClose}
         sx={{
-          paddingx: 1,
-          margin: 0,
-          borderRadius: "9999px",
-          backgroundColor: "var(--primary)",
-          fontWeight: 500,
-          fontFamily: "Inter",
-          fontSize: 18,
-          color: "white",
-          textTransform: "none",
-          "&:hover": {
-            backgroundColor: "var(--primary)",
-            opacity: 0.9,
-            borderColor: "var(--primary)",
+          borderRadius: "4rem",
+          paddingX: "1rem",
+        }}
+        slotProps={{
+          paper: {
+            elevation: 0,
+            sx: {
+              backgroundColor: "var(--surface)",
+              borderRadius: "0.4rem",
+              paddingX: "0.4rem",
+              filter: "none", // remove any filter-based shadows
+            },
           },
         }}
       >
-        {label}
-      </Button>
-      <Menu anchorEl={anchorRef.current} open={menuOpen} onClose={handleClose}>
         {options.map((option, index) => {
           const isString = typeof option === "string";
           const text = isString ? option : option.label;
@@ -74,9 +70,23 @@ export const DropDown = ({
                 onSelect(index);
                 handleClose();
               }}
+              sx={{
+                borderRadius: "0.4rem",
+                paddingX: 1,
+                paddingY: "0.4rem",
+                fontWeight: 600,
+                fontFamily: "Inter",
+                "&:hover": {
+                  backgroundColor: "var(--surface-top)",
+                  color: "var(--primary)",
+                  "& .MuiListItemIcon-root": {
+                    color: "var(--primary)",
+                  },
+                },
+              }}
             >
               {icon && <ListItemIcon>{icon}</ListItemIcon>}
-              <ListItemText>{text}</ListItemText>
+              <ListItemText disableTypography>{text}</ListItemText>
             </MenuItem>
           );
         })}

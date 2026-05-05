@@ -13,6 +13,7 @@ import {
   PhoneRounded,
   AlternateEmailRounded,
   VerifiedRounded,
+  HistoryRounded,
 } from "@mui/icons-material";
 
 export default async function PeopleDetails({
@@ -44,7 +45,7 @@ export default async function PeopleDetails({
             <Image
               src={bgImage}
               alt="Background"
-              className="bg-primary-alt w-full h-72 rounded-lg object-cover"
+              className="bg-primary-alt w-full h-84 rounded-lg object-cover"
             />
             <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top">
               <Image
@@ -157,10 +158,22 @@ export default async function PeopleDetails({
                   <p>{`Age: ${peopleSingle.age}`}</p>
                 </div>
               )}
+
               <div className="flex flex-row items-center gap-2">
                 <VerifiedRounded className="text-foreground-alt" />
                 <p>{`Member since ${new Date(
                   peopleSingle.createdOn,
+                ).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}`}</p>
+              </div>
+
+              <div className="flex flex-row items-center gap-2">
+                <HistoryRounded className="text-foreground-alt" />
+                <p>{`Last updated on ${new Date(
+                  peopleSingle.updatedOn,
                 ).toLocaleDateString("en-US", {
                   day: "numeric",
                   month: "short",

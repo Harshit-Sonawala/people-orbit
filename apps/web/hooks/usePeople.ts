@@ -3,13 +3,13 @@ import { People, PaginatedPeople } from "@/types/People";
 
 const PEOPLE_URL = process.env.NEXT_PUBLIC_PEOPLE_URL ?? "http://localhost:4000/api/people";
 
-export const usePeople = (id?: string, page: number = 1, limit: number = 12) => {
+export const usePeople = (id?: string, page: number = 1, limit: number = 12, sortBy = "dateCreated", order = "asc") => {
   const queryClient = useQueryClient();
 
   const getAll = useQuery({
-    queryKey: ["people", page, limit],
+    queryKey: ["people", page, limit, sortBy, order],
     queryFn: async (): Promise<PaginatedPeople> => {
-      const res = await fetch(`${PEOPLE_URL}?page=${page}&limit=${limit}`);
+      const res = await fetch(`${PEOPLE_URL}?page=${page}&limit=${limit}&sortBy=${sortBy}&order=${order}`);
       if (!res.ok) throw new Error("usePeople getAll error: Failed to fetch people");
       const data = await res.json();
       return data;
