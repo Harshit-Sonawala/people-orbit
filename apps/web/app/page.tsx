@@ -45,7 +45,7 @@ export default function Home() {
           <Heading2>Browse All People Records</Heading2>
           <div className="flex flex-row items-center justify-between gap-2">
             <DropDown
-              onSelect={(index) => setSortBy(index)}
+              onSelectAction={(index) => setSortBy(index)}
               label={sortOptions[sortBy].label}
               icon={<SortRounded />}
               options={[

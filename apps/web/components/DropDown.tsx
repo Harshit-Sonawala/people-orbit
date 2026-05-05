@@ -12,7 +12,7 @@ type Props = {
   label: string;
   icon?: ReactNode;
   options: MenuOption[] | string[];
-  onSelect: (index: number) => void;
+  onSelectAction: (index: number) => void;
   className?: string;
 };
 
@@ -20,7 +20,7 @@ export const DropDown = ({
   label,
   icon,
   options,
-  onSelect,
+  onSelectAction,
   className,
 }: Props) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -67,7 +67,7 @@ export const DropDown = ({
             <MenuItem
               key={text}
               onClick={() => {
-                onSelect(index);
+                onSelectAction(index);
                 handleClose();
               }}
               sx={{
