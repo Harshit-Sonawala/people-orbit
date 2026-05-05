@@ -1,4 +1,4 @@
-import { IsOptional, IsInt, Min, IsEnum } from 'class-validator';
+import { IsOptional, IsInt, Min, IsEnum, ValidateIf, IsNotEmpty } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export enum SortBy {
@@ -18,19 +18,23 @@ export class GetAllQueryOptionsDto { // For Query parameters like page & limit
   @Type(() => Number) // transform into number
   @IsInt()
   @Min(1)
-  page?: number = 1;
+  page?: number;
 
   @IsOptional()
   @Type(() => Number)
   @IsInt()
   @Min(1)
-  limit?: number = 20;
+  limit?: number;
 
-  @IsOptional()
   @IsEnum(SortBy)
-  sortBy?: SortBy = SortBy.FIRST_NAME;
+  // If order present, sortBy is mandatory
+  @ValidateIf(o => o.order !== undefined)
+  @IsNotEmpty({ message: 'sortBy is required when order is provided' })
+  sortBy?: SortBy;
 
-  @IsOptional()
   @IsEnum(Order)
-  order?: Order = Order.ASC;
+  // If sortBy is present, order becomes mandatory
+  @ValidateIf(o => o.sortBy !== undefined)
+  @IsNotEmpty({ message: 'order is required when sortBy is provided' })
+  order?: Order;
 }
