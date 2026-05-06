@@ -78,9 +78,9 @@ export default async function PeopleDetails({
                 </div>
 
                 <div className="flex flex-row items-center justify-between gap-4">
-                  {peopleSingle.socialLinks.linkedIn && (
+                  {peopleSingle.socialLinks?.linkedIn && (
                     <a
-                      href={peopleSingle.socialLinks.linkedIn}
+                      href={peopleSingle.socialLinks?.linkedIn}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -88,9 +88,9 @@ export default async function PeopleDetails({
                       <LinkedIn />
                     </a>
                   )}
-                  {peopleSingle.socialLinks.website && (
+                  {peopleSingle.socialLinks?.website && (
                     <a
-                      href={peopleSingle.socialLinks.website}
+                      href={peopleSingle.socialLinks?.website}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -98,9 +98,9 @@ export default async function PeopleDetails({
                       <LanguageRounded />
                     </a>
                   )}
-                  {peopleSingle.socialLinks.github && (
+                  {peopleSingle.socialLinks?.github && (
                     <a
-                      href={peopleSingle.socialLinks.github}
+                      href={peopleSingle.socialLinks?.github}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"

@@ -14,7 +14,7 @@ export type People = {
   phone: string;
   bio?: string;
   skills?: string[];
-  socialLinks: SocialLinks;
+  socialLinks?: SocialLinks;
   profilePic?: string;
   bgImage?: string;
   createdOn: Date;

@@ -61,10 +61,10 @@ export default function Profile() {
           phone: peopleSingle?.phone ?? "",
           bio: peopleSingle?.bio ?? "",
           skills: peopleSingle?.skills?.join(", ") ?? "",
-          socialLinks: peopleSingle?.socialLinks ?? {
-            linkedIn: "",
-            website: "",
-            github: "",
+          socialLinks: {
+            linkedIn: peopleSingle?.socialLinks?.linkedIn ?? "",
+            website: peopleSingle?.socialLinks?.website ?? "",
+            github: peopleSingle?.socialLinks?.github ?? "",
           },
           profilePic: peopleSingle?.profilePic ?? "",
           bgImage: peopleSingle?.bgImage ?? "",
@@ -106,6 +106,9 @@ export default function Profile() {
           }),
         })}
         onSubmit={(values, { resetForm }) => {
+          const { linkedIn, website, github } = values.socialLinks;
+          const hasLinks = linkedIn || website || github;
+
           const formattedData = {
             ...values,
             age: values.age === "" ? undefined : Number(values.age),
@@ -118,11 +121,13 @@ export default function Profile() {
             bio: values.bio || undefined,
             profilePic: values.profilePic || undefined,
             bgImage: values.bgImage || undefined,
-            socialLinks: {
-              linkedIn: values.socialLinks.linkedIn || undefined,
-              website: values.socialLinks.website || undefined,
-              github: values.socialLinks.github || undefined,
-            },
+            socialLinks: hasLinks
+              ? {
+                  linkedIn: linkedIn || undefined,
+                  website: website || undefined,
+                  github: github || undefined,
+                }
+              : undefined,
           };
           replacePeople(
             { replaceId: loggedInId, replaceData: formattedData },
@@ -315,9 +320,9 @@ export default function Profile() {
                         </div>
                       ) : (
                         <div className="flex flex-row items-center justify-between gap-4">
-                          {peopleSingle.socialLinks.linkedIn && (
+                          {peopleSingle.socialLinks?.linkedIn && (
                             <a
-                              href={peopleSingle.socialLinks.linkedIn}
+                              href={peopleSingle.socialLinks?.linkedIn}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 h-10 w-10 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -325,9 +330,9 @@ export default function Profile() {
                               <LinkedIn />
                             </a>
                           )}
-                          {peopleSingle.socialLinks.website && (
+                          {peopleSingle.socialLinks?.website && (
                             <a
-                              href={peopleSingle.socialLinks.website}
+                              href={peopleSingle.socialLinks?.website}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -335,9 +340,9 @@ export default function Profile() {
                               <LanguageRounded />
                             </a>
                           )}
-                          {peopleSingle.socialLinks.github && (
+                          {peopleSingle.socialLinks?.github && (
                             <a
-                              href={peopleSingle.socialLinks.github}
+                              href={peopleSingle.socialLinks?.github}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"

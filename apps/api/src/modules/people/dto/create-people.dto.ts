@@ -57,7 +57,7 @@ export class CreatePeopleDto implements Omit<People, 'id' | 'createdOn' | 'updat
   @IsString({ each: true })
   skills?: string[];
 
-  @IsNotEmpty()
+  @IsOptional()
   @ValidateNested()
   @Type(() => SocialLinksDto)
   socialLinks!: SocialLinksDto;

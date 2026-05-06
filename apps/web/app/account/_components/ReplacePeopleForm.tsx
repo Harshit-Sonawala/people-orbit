@@ -98,6 +98,9 @@ export const ReplacePeopleForm = (props: Props) => {
           }),
         })}
         onSubmit={(values, { resetForm }) => {
+          const { linkedIn, website, github } = values.socialLinks;
+          const hasLinks = linkedIn || website || github;
+
           const formattedData = {
             ...values,
             age: values.age === "" ? undefined : Number(values.age),
@@ -110,11 +113,13 @@ export const ReplacePeopleForm = (props: Props) => {
             bio: values.bio || undefined,
             profilePic: values.profilePic || undefined,
             bgImage: values.bgImage || undefined,
-            socialLinks: {
-              linkedIn: values.socialLinks.linkedIn || undefined,
-              website: values.socialLinks.website || undefined,
-              github: values.socialLinks.github || undefined,
-            },
+            socialLinks: hasLinks
+              ? {
+                  linkedIn: linkedIn || undefined,
+                  website: website || undefined,
+                  github: github || undefined,
+                }
+              : undefined,
           };
           replacePeople(
             { replaceId: formattedData.id, replaceData: formattedData },
