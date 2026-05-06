@@ -18,9 +18,7 @@ import {
   GitHub,
 } from "@mui/icons-material";
 
-type Props = {};
-
-export const CreatePeopleForm = (props: Props) => {
+export const CreatePeopleForm = () => {
   const nameRegex = /^[A-Za-z\s'-]+$/;
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;

@@ -15,6 +15,6 @@ export class SocialLinksDto {
 
   // atleast one is present
   @ValidateIf(o => !o.linkedIn && !o.website && !o.github)
-  @IsNotEmpty({ message: 'Atleast one social link must be provided if socialLinks is defined' })
+  @IsNotEmpty({ message: 'Atleast one social link must be provided in the socialLinks object' })
   _atLeastOne?: string;
 }

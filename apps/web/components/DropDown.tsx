@@ -23,25 +23,28 @@ export const DropDown = ({
   onSelectAction,
   className,
 }: Props) => {
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const anchorRef = useRef<HTMLButtonElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const menuOpen = Boolean(anchorEl);
 
-  const handleClose = () => setMenuOpen(false);
+  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => setAnchorEl(null);
 
   return (
     <div>
       <Button
-        ref={anchorRef}
-        onClick={() => setMenuOpen(true)}
+        onClick={handleOpen}
         className={`px-1 gap-2 ${className}`}
       >
         {icon && icon}
         {label}
       </Button>
       <Menu
-        anchorEl={anchorRef.current}
+        anchorEl={anchorEl}
         open={menuOpen}
         onClose={handleClose}
+
         sx={{
           borderRadius: "4rem",
           paddingX: "1rem",
