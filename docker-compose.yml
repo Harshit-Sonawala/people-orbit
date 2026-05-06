@@ -21,6 +21,8 @@ services:
     env_file:
       - apps/api/.env
     environment:
+      - PORT=4000
+      - FRONTEND_URL=http://localhost:3000
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
     command: npm run dev:api
@@ -47,7 +49,8 @@ services:
     env_file:
       - apps/web/.env
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:4000
+      - NEXT_PUBLIC_PEOPLE_URL=http://localhost:4000/api/people
+      - INTERNAL_PEOPLE_URL=http://api:4000/api/people
       - NODE_ENV=development
       - WATCHPACK_POLLING=true
     command: npm run dev:web

@@ -6,7 +6,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { PeopleModule } from './modules/people/people.module';
 
 @Module({
-  imports: [PeopleModule, ConfigModule.forRoot({ isGlobal: true, })],
+  imports: [PeopleModule, ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env', }),],
   controllers: [AppController],
   providers: [AppService],
 })

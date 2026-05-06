@@ -23,7 +23,9 @@ export default async function PeopleDetails({
 }) {
   const { id } = await params;
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_PEOPLE_URL}/${id}`);
+  const response = await fetch(
+    `${process.env.INTERNAL_PEOPLE_URL || process.env.NEXT_PUBLIC_PEOPLE_URL}/${id}`,
+  );
 
   if (!response.ok) {
     return (
