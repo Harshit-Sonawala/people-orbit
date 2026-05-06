@@ -52,6 +52,7 @@ export default function Profile() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
       <Formik
+        enableReinitialize
         initialValues={{
           firstName: peopleSingle?.firstName ?? "",
           lastName: peopleSingle?.lastName ?? "",
