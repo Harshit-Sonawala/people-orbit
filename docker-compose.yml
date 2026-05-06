@@ -6,14 +6,23 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - .:/app
       - /app/node_modules
       - /app/apps/api/node_modules
       - /app/apps/web/node_modules
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/api
+          target: /app/apps/api
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
     env_file:
       - apps/api/.env
     environment:
       - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
     command: npm run dev:api
 
   web:
@@ -23,15 +32,24 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/app
       - /app/node_modules
       - /app/apps/api/node_modules
       - /app/apps/web/node_modules
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/web
+          target: /app/apps/web
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
     env_file:
       - apps/web/.env
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:4000
       - NODE_ENV=development
+      - WATCHPACK_POLLING=true
     command: npm run dev:web
     depends_on:
       - api
