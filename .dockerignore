@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+**/node_modules
+
+# Next.js & NestJS Build Outputs
+.next
+**/.next
+dist
+**/dist
+out
+build
+
+# Debug logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Git
+.git
+.gitignore
+
+# Env
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
