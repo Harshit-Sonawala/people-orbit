@@ -201,18 +201,22 @@ export default function Profile() {
             )}
             {peopleSingle && (
               <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
-                <div className="relative rounded-lg">
+                <div className="relative h-84 rounded-lg overflow-hidden">
                   <Image
                     src={bgImage}
                     alt="Background"
-                    className="bg-primary-alt w-full h-84 rounded-lg object-cover"
+                    fill
+                    sizes="(max-width: 1024px) 90vw, 80vw"
+                    className="bg-primary-alt object-cover"
+                    priority
                   />
-                  <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top">
+                  <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top overflow-hidden">
                     <Image
                       src={profilePic}
                       alt={peopleSingle.firstName.charAt(0)}
                       fill
-                      className="rounded-full object-cover"
+                      sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
+                      className="object-cover"
                     />
                   </div>
                 </div>

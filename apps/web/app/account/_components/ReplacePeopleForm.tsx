@@ -32,7 +32,7 @@ export const ReplacePeopleForm = (props: Props) => {
   const nameRegex = /^[A-Za-z\s'-]+$/;
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
-  const idRegex = /^[a-z0-9]+$/;
+  const idRegex = /^[a-z0-9-]+$/;
 
   const { mutate: replacePeople, isPending: replacePeopleIsPending } =
     usePeople().replaceById;
@@ -60,7 +60,7 @@ export const ReplacePeopleForm = (props: Props) => {
               idRegex,
               "ID can only contain lowercase letters and numbers",
             )
-            .max(16, "Must be within 16 characters")
+            .max(100, "Must be within 100 characters")
             .required("Required Field"),
           firstName: Yup.string()
             .matches(

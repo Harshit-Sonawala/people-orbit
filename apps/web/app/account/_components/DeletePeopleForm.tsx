@@ -20,10 +20,10 @@ export const DeletePeopleForm = (props: Props) => {
         validationSchema={Yup.object({
           id: Yup.string()
             .matches(
-              /^[a-z0-9]+$/,
+              /^[a-z0-9-]+$/,
               "ID can only contain lowercase letters and numbers",
             )
-            .max(16, "Must be within 16 characters")
+            .max(100, "Must be within 100 characters")
             .required("Required Field"),
         })}
         onSubmit={(values, { resetForm }) => {
