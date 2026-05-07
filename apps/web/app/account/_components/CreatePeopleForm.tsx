@@ -63,7 +63,7 @@ export const CreatePeopleForm = () => {
             .required("Required Field"),
           age: Yup.number()
             .integer("Must be a positive number")
-            .min(0, "Please enter a valid number")
+            .min(16, "Must be atleast 16 years of age to join")
             .max(120, "Please enter a valid number"),
           designation: Yup.string()
             .max(30, "Must be 30 characters or less")
