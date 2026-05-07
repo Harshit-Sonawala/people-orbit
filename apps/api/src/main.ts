@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
-  const PORT = configService.get<number>('PORT') || 4000;
-  const FRONTEND_URL = configService.get<string>('FRONTEND_URL');
+  const PORT = configService.get<number>('PORT', 4000);
+  const FRONTEND_URL = configService.get<string>('FRONTEND_URL', 'http://localhost:3000');
 
   app.enableCors({
     origin: FRONTEND_URL,
