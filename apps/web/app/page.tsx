@@ -39,7 +39,10 @@ export default function Home() {
           <Heading2>Browse All Records</Heading2>
           <div className="flex flex-row items-center justify-between gap-2">
             <DropDown
-              onSelectAction={(index) => setSortBy(index)}
+              onSelectAction={(index) => {
+                setSortBy(index);
+                setPage(1);
+              }}
               label={sortOptions[sortBy].label}
               icon={<SortRounded />}
               options={[
@@ -49,7 +52,12 @@ export default function Home() {
                 { label: "Last Name", icon: <SortByAlphaRounded /> },
               ]}
             />
-            <Button onClick={() => setOrder(order === "asc" ? "desc" : "asc")}>
+            <Button
+              onClick={() => {
+                setOrder(order === "asc" ? "desc" : "asc");
+                setPage(1);
+              }}
+            >
               {order === "asc" ? (
                 <div className="flex flex-row items-center justify-center gap-2">
                   <ArrowUpwardRounded />
