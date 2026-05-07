@@ -12,10 +12,10 @@ import {
   Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { People } from '../types/people.type';
+import { User } from '../types/user.type';
 import { SocialLinksDto } from './social-links.dto';
 
-export class CreatePeopleDto implements Omit<People, 'id' | 'createdOn' | 'updatedOn'> {
+export class CreateUserDto implements Omit<User, 'id' | 'createdOn' | 'updatedOn'> {
   @IsNotEmpty()
   @IsString()
   @MaxLength(40)

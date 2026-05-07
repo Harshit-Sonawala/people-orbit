@@ -1,3 +1,3 @@
-export * from "./CreatePeopleForm";
-export * from "./ReplacePeopleForm";
-export * from "./DeletePeopleForm";
+export * from "./CreateUserForm";
+export * from "./ReplaceUserForm";
+export * from "./DeleteUserForm";

@@ -5,7 +5,7 @@ export * from "./Divider";
 export * from "./Heading1";
 export * from "./Heading2";
 export * from "./Heading3";
-export * from "./PeopleCard";
+export * from "./UserCard";
 export * from "./TextArea";
 export * from "./TextInput";
 export * from "./TopBar";

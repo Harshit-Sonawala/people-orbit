@@ -1,7 +1,7 @@
-import { People } from "./";
+import { User } from ".";
 
-export type PaginatedPeople = {
-  data: People[];
+export type PaginatedUsers = {
+  data: User[];
   meta: {
     total: number;
     limit: number;

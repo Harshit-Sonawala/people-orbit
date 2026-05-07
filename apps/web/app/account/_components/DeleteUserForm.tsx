@@ -1,15 +1,15 @@
 "use client";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { usePeople } from "@/hooks/usePeople";
+import { useUsers } from "@/hooks/useUsers";
 import { Button, TextInput, Card } from "@/components";
 import { AlternateEmailRounded } from "@mui/icons-material";
 
 type Props = {};
 
-export const DeletePeopleForm = (props: Props) => {
-  const { mutate: deletePeople, isPending: deletePeopleIsPending } =
-    usePeople().deleteById;
+export const DeleteUserForm = (props: Props) => {
+  const { mutate: deleteUser, isPending: deleteUserIsPending } =
+    useUsers().deleteById;
 
   return (
     <Card className="flex flex-col items-stretch justify-center gap-4 w-[60%]">
@@ -27,7 +27,7 @@ export const DeletePeopleForm = (props: Props) => {
             .required("Required Field"),
         })}
         onSubmit={(values, { resetForm }) => {
-          deletePeople(values.id, {
+          deleteUser(values.id, {
             onSuccess: () => {
               console.log(
                 `User data for ID: ${values.id} Deleted Successfully`,
@@ -56,11 +56,11 @@ export const DeletePeopleForm = (props: Props) => {
             />
 
             <Button
-              disabled={deletePeopleIsPending}
+              disabled={deleteUserIsPending}
               type="submit"
               className="flex-1"
             >
-              {deletePeopleIsPending ? `Saving...` : `Delete`}
+              {deleteUserIsPending ? `Saving...` : `Delete`}
             </Button>
           </form>
         )}

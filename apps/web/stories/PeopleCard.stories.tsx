@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-import PeopleCard from './PeopleCard';
+import UserCard from "./UserCard";
 
 const meta = {
-  component: PeopleCard,
-} satisfies Meta<typeof PeopleCard>;
+  component: UserCard,
+} satisfies Meta<typeof UserCard>;
 
 export default meta;
 
@@ -12,46 +12,44 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    "People": {
-      "id": 0,
-      "firstName": "firstName",
-      "lastName": "lastName",
-      "age": 0,
-      "designation": "designation",
-      "email": "storybook@example.com",
-      "phone": "1234567890",
-      "bio": "bio",
-      "skills": [
-        "skills"
-      ],
-      "socialLinks": {
-        "linkedIn": "linkedIn",
-        "website": "website",
-        "github": "github"
+    People: {
+      id: 0,
+      firstName: "firstName",
+      lastName: "lastName",
+      age: 0,
+      designation: "designation",
+      email: "storybook@example.com",
+      phone: "1234567890",
+      bio: "bio",
+      skills: ["skills"],
+      socialLinks: {
+        linkedIn: "linkedIn",
+        website: "website",
+        github: "github",
       },
-      "profilePic": "profilePic",
-      "bgImage": "#ff4785"
+      profilePic: "profilePic",
+      bgImage: "#ff4785",
     },
 
     People: {
-      "id": 0,
-      "firstName": "Harshit",
-      "lastName": "Sonawala",
-      "age": 0,
-      "designation": "Full Stack Developer",
-      "email": "storybook@example.com",
-      "phone": "1234567890",
-      "bio": "bio",
-      "skills": ["skills"],
+      id: 0,
+      firstName: "Harshit",
+      lastName: "Sonawala",
+      age: 0,
+      designation: "Full Stack Developer",
+      email: "storybook@example.com",
+      phone: "1234567890",
+      bio: "bio",
+      skills: ["skills"],
 
-      "socialLinks": {
-        "linkedIn": "linkedIn",
-        "website": "website",
-        "github": "github"
+      socialLinks: {
+        linkedIn: "linkedIn",
+        website: "website",
+        github: "github",
       },
 
-      "profilePic": "profilePic",
-      "bgImage": "#ff4785"
-    }
+      profilePic: "profilePic",
+      bgImage: "#ff4785",
+    },
   },
 };

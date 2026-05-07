@@ -1,6 +1,6 @@
-import { SocialLinks } from "./";
+import { SocialLinks } from ".";
 
-export type People = {
+export type User = {
   id: string;
   firstName: string;
   lastName: string;

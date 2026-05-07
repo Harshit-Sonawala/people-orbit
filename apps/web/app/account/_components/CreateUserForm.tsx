@@ -1,19 +1,11 @@
 "use client";
 import { Formik } from "formik"; // Formik forms
 import * as Yup from "yup"; // Yup Schema Validation
-import { usePeople } from "@/hooks/usePeople";
+import { useUsers } from "@/hooks/useUsers";
+
+import { Card, Button, TextInput, TextArea } from "@/components";
 
 import {
-  Card,
-  Heading2,
-  Button,
-  Divider,
-  TextInput,
-  TextArea,
-} from "@/components";
-
-import {
-  AlternateEmailRounded,
   BadgeRounded,
   CakeRounded,
   WorkRounded,
@@ -26,22 +18,18 @@ import {
   GitHub,
 } from "@mui/icons-material";
 
-type Props = {};
-
-export const ReplacePeopleForm = (props: Props) => {
+export const CreateUserForm = () => {
   const nameRegex = /^[A-Za-z\s'-]+$/;
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
-  const idRegex = /^[a-z0-9-]+$/;
 
-  const { mutate: replacePeople, isPending: replacePeopleIsPending } =
-    usePeople().replaceById;
+  const { mutate: createUser, isPending: createUserIsPending } =
+    useUsers().create;
 
   return (
     <Card className="flex flex-col items-stretch justify-center gap-4">
       <Formik
         initialValues={{
-          id: "",
           firstName: "",
           lastName: "",
           age: "",
@@ -50,35 +38,32 @@ export const ReplacePeopleForm = (props: Props) => {
           phone: "",
           bio: "",
           skills: "",
-          socialLinks: { linkedIn: "", website: "", github: "" },
+          socialLinks: {
+            linkedIn: "",
+            website: "",
+            github: "",
+          },
           profilePic: "",
           bgImage: "",
         }}
         validationSchema={Yup.object({
-          id: Yup.string()
-            .matches(
-              idRegex,
-              "ID can only contain lowercase letters and numbers",
-            )
-            .max(100, "Must be within 100 characters")
-            .required("Required Field"),
           firstName: Yup.string()
             .matches(
               nameRegex,
-              "First name can only contain letters, spaces, hyphens, or apostrophes",
+              "First name Can only contain letters, spaces, hyphens, or apostrophes",
             )
             .max(30, "Must be 30 characters or less")
             .required("Required Field"),
           lastName: Yup.string()
             .matches(
               nameRegex,
-              "Last name can only contain letters, spaces, hyphens, or apostrophes",
+              "Last name Can only contain letters, spaces, hyphens, or apostrophes",
             )
             .max(30, "Must be 30 characters or less")
             .required("Required Field"),
           age: Yup.number()
             .integer("Must be a positive number")
-            .min(16, "Must be atleast 16 years of age")
+            .min(16, "Must be atleast 16 years of age to join")
             .max(120, "Please enter a valid number"),
           designation: Yup.string()
             .max(30, "Must be 30 characters or less")
@@ -121,17 +106,14 @@ export const ReplacePeopleForm = (props: Props) => {
                 }
               : undefined,
           };
-          replacePeople(
-            { replaceId: formattedData.id, replaceData: formattedData },
-            {
-              onSuccess: () => {
-                console.log(
-                  `Data for ID: ${formattedData.id}, ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
-                );
-                resetForm();
-              },
+          createUser(formattedData, {
+            onSuccess: () => {
+              console.log(
+                `Data for ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
+              );
+              resetForm();
             },
-          );
+          });
         }}
       >
         {(formik) => (
@@ -139,18 +121,6 @@ export const ReplacePeopleForm = (props: Props) => {
             className="flex flex-col items-stretch align-center gap-6"
             onSubmit={formik.handleSubmit}
           >
-            <div className="flex flex-row items-center flex-1 gap-2">
-              <AlternateEmailRounded className="text-primary" />
-              <label htmlFor="id">User ID:</label>
-              <TextInput
-                id="id"
-                type="text"
-                placeholder="10"
-                className="w-full"
-                error={formik.errors.id}
-                {...formik.getFieldProps("id")}
-              />
-            </div>
             <div className="flex flex-row items-center justify-stretch gap-4 w-full">
               <div className="flex flex-col flex-1 gap-2">
                 <div className="flex flex-row items-center flex-1 gap-2">
@@ -325,11 +295,11 @@ export const ReplacePeopleForm = (props: Props) => {
 
             <div className="flex flex-row gap-4">
               <Button
-                disabled={replacePeopleIsPending}
+                disabled={createUserIsPending}
                 type="submit"
                 className="flex-1 py-2"
               >
-                {replacePeopleIsPending ? `Saving...` : `Submit`}
+                {createUserIsPending ? `Saving...` : `Submit`}
               </Button>
               <Button
                 variant="outlined"

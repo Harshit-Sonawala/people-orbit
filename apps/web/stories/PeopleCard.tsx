@@ -3,7 +3,7 @@ import Heading3 from "./Heading3";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import WorkIcon from "@mui/icons-material/Work";
-import { People } from "@/types/People";
+import { People } from "@/types/User";
 import Image from "next/image";
 import profilePic from "@/public/dummy_profilePic.jpg";
 import bgImage from "@/public/dummy_bgImage.jpg";
@@ -13,7 +13,7 @@ type Props = {
   className?: string;
 };
 
-const PeopleCard = ({ People, className = "" }: Props) => {
+const UserCard = ({ People, className = "" }: Props) => {
   return (
     <div className="flex flex-col min-w-20">
       <Image
@@ -63,4 +63,4 @@ const PeopleCard = ({ People, className = "" }: Props) => {
   );
 };
 
-export default PeopleCard;
+export default UserCard;

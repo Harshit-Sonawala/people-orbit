@@ -1,4 +1,4 @@
-import { People } from "@/types/People";
+import { User } from "@/types/User";
 import { Heading1, Heading3, Card, Divider } from "@/components";
 import Image from "next/image";
 import profilePic from "@/public/dummy_profilePic.jpg";
@@ -16,7 +16,7 @@ import {
   HistoryRounded,
 } from "@mui/icons-material";
 
-export default async function PeopleDetails({
+export default async function UserDetails({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -24,7 +24,7 @@ export default async function PeopleDetails({
   const { id } = await params;
 
   const response = await fetch(
-    `${process.env.INTERNAL_PEOPLE_URL || process.env.NEXT_PUBLIC_PEOPLE_URL}/${id}`,
+    `${process.env.INTERNAL_USER_URL || process.env.NEXT_PUBLIC_USERS_URL}/${id}`,
   );
 
   if (!response.ok) {
@@ -37,11 +37,11 @@ export default async function PeopleDetails({
     );
   }
 
-  const peopleSingle: People = await response.json();
+  const user: User = await response.json();
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
-      {peopleSingle && (
+      {user && (
         <div className="flex flex-col items-stretch gap-4 justify-center">
           <div className="relative h-84 rounded-lg overflow-hidden">
             <Image
@@ -55,7 +55,7 @@ export default async function PeopleDetails({
             <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top overflow-hidden">
               <Image
                 src={profilePic}
-                alt={peopleSingle.firstName.charAt(0)}
+                alt={user.firstName.charAt(0)}
                 fill
                 sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
                 className="object-cover"
@@ -67,26 +67,26 @@ export default async function PeopleDetails({
               <div className="flex flex-row items-center justify-between gap-4">
                 <div className="flex flex-col gap-2">
                   <Heading1>
-                    {peopleSingle.firstName} {peopleSingle.lastName}
+                    {user.firstName} {user.lastName}
                   </Heading1>
 
                   <div className="flex flex-row items-center gap-2">
                     <WorkRounded className="text-primary" />
                     <Heading3 className="text-primary">
-                      {peopleSingle.designation}
+                      {user.designation}
                     </Heading3>
                   </div>
 
                   <div className="flex flex-row items-center gap-1">
                     <AlternateEmailRounded className="text-foreground-alt icon-sm" />
-                    <p className="text-foreground-alt p-1">{peopleSingle.id}</p>
+                    <p className="text-foreground-alt p-1">{user.id}</p>
                   </div>
                 </div>
 
                 <div className="flex flex-row items-center justify-between gap-4">
-                  {peopleSingle.socialLinks?.linkedIn && (
+                  {user.socialLinks?.linkedIn && (
                     <a
-                      href={peopleSingle.socialLinks?.linkedIn}
+                      href={user.socialLinks?.linkedIn}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -94,9 +94,9 @@ export default async function PeopleDetails({
                       <LinkedIn />
                     </a>
                   )}
-                  {peopleSingle.socialLinks?.website && (
+                  {user.socialLinks?.website && (
                     <a
-                      href={peopleSingle.socialLinks?.website}
+                      href={user.socialLinks?.website}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -104,9 +104,9 @@ export default async function PeopleDetails({
                       <LanguageRounded />
                     </a>
                   )}
-                  {peopleSingle.socialLinks?.github && (
+                  {user.socialLinks?.github && (
                     <a
-                      href={peopleSingle.socialLinks?.github}
+                      href={user.socialLinks?.github}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -119,67 +119,67 @@ export default async function PeopleDetails({
               <Divider variant="surface-top" />
             </div>
 
-            {peopleSingle.bio && (
+            {user.bio && (
               <div className="flex flex-col gap-2">
                 <Heading3>About Me</Heading3>
-                <p>{peopleSingle.bio}</p>
+                <p>{user.bio}</p>
               </div>
             )}
 
-            {peopleSingle.skills !== undefined &&
-              peopleSingle.skills?.length > 0 && (
-                <div className="flex flex-col gap-2">
-                  <Heading3>Skills</Heading3>
-                  <div className="flex flex-row gap-4">
-                    {peopleSingle.skills.map((eachSkill, i) => (
-                      <p
-                        key={i}
-                        className="bg-surface-top text-primary font-semibold rounded-full py-1 px-3"
-                      >
-                        {eachSkill}
-                      </p>
-                    ))}
-                  </div>
+            {user.skills !== undefined && user.skills?.length > 0 && (
+              <div className="flex flex-col gap-2">
+                <Heading3>Skills</Heading3>
+                <div className="flex flex-row gap-4">
+                  {user.skills.map((eachSkill, i) => (
+                    <p
+                      key={i}
+                      className="bg-surface-top text-primary font-semibold rounded-full py-1 px-3"
+                    >
+                      {eachSkill}
+                    </p>
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
 
             <div className="flex flex-row items-center justify-stretch gap-4">
               <div className="flex flex-col items-stretch justify-center w-full gap-2">
                 <Heading3>Contact</Heading3>
                 <div className="flex flex-row items-center gap-2">
                   <EmailRounded className="text-foreground-alt" />
-                  <p>{`Email: ${peopleSingle.email}`}</p>
+                  <p>{`Email: ${user.email}`}</p>
                 </div>
                 <div className="flex flex-row items-center gap-2">
                   <PhoneRounded className="text-foreground-alt" />
-                  <p>{`Phone: ${peopleSingle.phone}`}</p>
+                  <p>{`Phone: ${user.phone}`}</p>
                 </div>
               </div>
             </div>
             <div className="flex flex-col items-stretch justify-center w-full gap-2">
               <Heading3>Other</Heading3>
-              {peopleSingle.age && (
+              {user.age && (
                 <div className="flex flex-row items-center gap-2">
                   <CakeRounded className="text-foreground-alt" />
-                  <p>{`Age: ${peopleSingle.age}`}</p>
+                  <p>{`Age: ${user.age}`}</p>
                 </div>
               )}
 
               <div className="flex flex-row items-center gap-2">
                 <VerifiedRounded className="text-foreground-alt" />
-                <p>{`Member since ${new Date(
-                  peopleSingle.createdOn,
-                ).toLocaleDateString("en-US", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
-                })}`}</p>
+                <p>{`Member since ${new Date(user.createdOn).toLocaleDateString(
+                  "en-US",
+                  {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  },
+                )}`}</p>
               </div>
 
               <div className="flex flex-row items-center gap-2">
                 <HistoryRounded className="text-foreground-alt" />
                 <p>{`Last updated on ${new Date(
-                  peopleSingle.updatedOn,
+                  user.updatedOn,
                 ).toLocaleDateString("en-US", {
                   day: "numeric",
                   month: "short",

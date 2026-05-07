@@ -1,6 +1,6 @@
 import React from "react";
 import { Heading3 } from "@/components";
-import { People } from "@/types/People";
+import { User } from "@/types/User";
 import Image from "next/image";
 import Link from "next/link";
 import profilePic from "@/public/dummy_profilePic.jpg";
@@ -8,14 +8,14 @@ import bgImage from "@/public/dummy_bgImage.jpg";
 import { WorkRounded, EmailRounded, PhoneRounded } from "@mui/icons-material";
 
 type Props = {
-  People: People;
+  User: User;
   className?: string;
 };
 
-export const PeopleCard = ({ People, className = "" }: Props) => {
+export const UserCard = ({ User, className = "" }: Props) => {
   return (
     <Link
-      href={`/people/${People.id}`}
+      href={`/users/${User.id}`}
       className={`flex flex-col group transition-transform duration-200 hover:-translate-y-1 ${className}`}
     >
       <div className="relative w-full h-32 rounded-tl-lg rounded-tr-lg overflow-hidden">
@@ -32,14 +32,14 @@ export const PeopleCard = ({ People, className = "" }: Props) => {
         <div className="absolute left-8 -top-10 w-18 h-18 rounded-full bg-surface border-4 border-surface-top transition-colors duration-200 overflow-hidden">
           <Image
             src={profilePic}
-            alt={People.firstName.charAt(0)}
+            alt={User.firstName.charAt(0)}
             fill
             sizes="72px"
             className="object-cover"
           />
         </div>
         <Heading3>
-          {People.firstName} {People.lastName}
+          {User.firstName} {User.lastName}
         </Heading3>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
@@ -47,9 +47,7 @@ export const PeopleCard = ({ People, className = "" }: Props) => {
             fontSize="inherit"
             className="icon-md text-primary shrink-0"
           />
-          <p className="text-sm text-foreground truncate">
-            {People.designation}
-          </p>
+          <p className="text-sm text-foreground truncate">{User.designation}</p>
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
@@ -57,7 +55,7 @@ export const PeopleCard = ({ People, className = "" }: Props) => {
             fontSize="inherit"
             className="icon-md text-primary shrink-0"
           />
-          <p className="text-sm text-foreground truncate">{People.email}</p>
+          <p className="text-sm text-foreground truncate">{User.email}</p>
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
@@ -65,13 +63,13 @@ export const PeopleCard = ({ People, className = "" }: Props) => {
             fontSize="inherit"
             className="icon-md text-primary shrink-0"
           />
-          <p className="text-sm text-foreground truncate">{People.phone}</p>
+          <p className="text-sm text-foreground truncate">{User.phone}</p>
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <p className="text-xs text-foreground-alt truncate">
             Member since{" "}
-            {new Date(People.createdOn).toLocaleDateString("en-US", {
+            {new Date(User.createdOn).toLocaleDateString("en-US", {
               day: "numeric",
               month: "short",
               year: "numeric",

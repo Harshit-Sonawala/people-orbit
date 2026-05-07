@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { usePeople } from "@/hooks/usePeople";
-import { People } from "@/types/People";
+import { useUsers } from "@/hooks/useUsers";
 import {
   Heading1,
   Heading2,
@@ -40,35 +39,35 @@ export default function Profile() {
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
 
   const {
-    data: peopleSingle,
-    isLoading: peopleSingleIsLoading,
-    isError: peopleSingleIsError,
-    error: peopleSingleError,
-  } = usePeople(loggedInId).getById;
+    data: user,
+    isLoading: userIsLoading,
+    isError: userIsError,
+    error: userError,
+  } = useUsers(loggedInId).getById;
 
-  const { mutate: replacePeople, isPending: replacePeopleIsPending } =
-    usePeople().replaceById;
+  const { mutate: replaceUsers, isPending: replaceUsersIsPending } =
+    useUsers().replaceById;
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
       <Formik
         enableReinitialize
         initialValues={{
-          firstName: peopleSingle?.firstName ?? "",
-          lastName: peopleSingle?.lastName ?? "",
-          age: peopleSingle?.age ?? "",
-          designation: peopleSingle?.designation ?? "",
-          email: peopleSingle?.email ?? "",
-          phone: peopleSingle?.phone ?? "",
-          bio: peopleSingle?.bio ?? "",
-          skills: peopleSingle?.skills?.join(", ") ?? "",
+          firstName: user?.firstName ?? "",
+          lastName: user?.lastName ?? "",
+          age: user?.age ?? "",
+          designation: user?.designation ?? "",
+          email: user?.email ?? "",
+          phone: user?.phone ?? "",
+          bio: user?.bio ?? "",
+          skills: user?.skills?.join(", ") ?? "",
           socialLinks: {
-            linkedIn: peopleSingle?.socialLinks?.linkedIn ?? "",
-            website: peopleSingle?.socialLinks?.website ?? "",
-            github: peopleSingle?.socialLinks?.github ?? "",
+            linkedIn: user?.socialLinks?.linkedIn ?? "",
+            website: user?.socialLinks?.website ?? "",
+            github: user?.socialLinks?.github ?? "",
           },
-          profilePic: peopleSingle?.profilePic ?? "",
-          bgImage: peopleSingle?.bgImage ?? "",
+          profilePic: user?.profilePic ?? "",
+          bgImage: user?.bgImage ?? "",
         }}
         validationSchema={Yup.object({
           firstName: Yup.string()
@@ -130,7 +129,7 @@ export default function Profile() {
                 }
               : undefined,
           };
-          replacePeople(
+          replaceUsers(
             { replaceId: loggedInId, replaceData: formattedData },
             {
               onSuccess: () => {
@@ -164,13 +163,11 @@ export default function Profile() {
                   </Button>
                 ) : (
                   <div className="flex flex-row items-center justify-center gap-2">
-                    <Button disabled={replacePeopleIsPending} type="submit">
+                    <Button disabled={replaceUsersIsPending} type="submit">
                       <div className="flex flex-row items-center justify-center gap-2 px-4">
                         <SaveRounded className="icon-md" />
                         <p>
-                          {replacePeopleIsPending
-                            ? `Saving...`
-                            : `Save Changes`}
+                          {replaceUsersIsPending ? `Saving...` : `Save Changes`}
                         </p>
                       </div>
                     </Button>
@@ -191,15 +188,15 @@ export default function Profile() {
               </div>
               <Divider variant="surface-top" />
             </div>
-            {peopleSingleIsLoading && (
+            {userIsLoading && (
               <p className="text-center py-8">Loading Data...</p>
             )}
-            {peopleSingleIsError && (
+            {userIsError && (
               <p className="text-center text-error py-8">
-                Error: {peopleSingleError.message}
+                Error: {userError.message}
               </p>
             )}
-            {peopleSingle && (
+            {user && (
               <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
                 <div className="relative h-84 rounded-lg overflow-hidden">
                   <Image
@@ -213,7 +210,7 @@ export default function Profile() {
                   <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top overflow-hidden">
                     <Image
                       src={profilePic}
-                      alt={peopleSingle.firstName.charAt(0)}
+                      alt={user.firstName.charAt(0)}
                       fill
                       sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
                       className="object-cover"
@@ -248,7 +245,7 @@ export default function Profile() {
                           </div>
                         ) : (
                           <Heading1>
-                            {peopleSingle.firstName} {peopleSingle.lastName}
+                            {user.firstName} {user.lastName}
                           </Heading1>
                         )}
                         <div className="flex flex-col items-start justify-center gap-2">
@@ -258,7 +255,7 @@ export default function Profile() {
                             <div className="flex flex-row items-center gap-2">
                               <WorkRounded className={`text-primary`} />
                               <Heading3 className="text-primary">
-                                {peopleSingle.designation}
+                                {user.designation}
                               </Heading3>
                             </div>
                           )}
@@ -325,9 +322,9 @@ export default function Profile() {
                         </div>
                       ) : (
                         <div className="flex flex-row items-center justify-between gap-4">
-                          {peopleSingle.socialLinks?.linkedIn && (
+                          {user.socialLinks?.linkedIn && (
                             <a
-                              href={peopleSingle.socialLinks?.linkedIn}
+                              href={user.socialLinks?.linkedIn}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 h-10 w-10 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -335,9 +332,9 @@ export default function Profile() {
                               <LinkedIn />
                             </a>
                           )}
-                          {peopleSingle.socialLinks?.website && (
+                          {user.socialLinks?.website && (
                             <a
-                              href={peopleSingle.socialLinks?.website}
+                              href={user.socialLinks?.website}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -345,9 +342,9 @@ export default function Profile() {
                               <LanguageRounded />
                             </a>
                           )}
-                          {peopleSingle.socialLinks?.github && (
+                          {user.socialLinks?.github && (
                             <a
-                              href={peopleSingle.socialLinks?.github}
+                              href={user.socialLinks?.github}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -361,7 +358,7 @@ export default function Profile() {
                     <Divider variant="surface-top" />
                   </div>
 
-                  {(isEdit || peopleSingle.bio) && (
+                  {(isEdit || user.bio) && (
                     <div className="flex flex-col gap-2">
                       <Heading3>About Me</Heading3>
                       {isEdit ? (
@@ -373,14 +370,13 @@ export default function Profile() {
                           {...formik.getFieldProps("bio")}
                         />
                       ) : (
-                        <p>{peopleSingle.bio}</p>
+                        <p>{user.bio}</p>
                       )}
                     </div>
                   )}
 
                   {(isEdit ||
-                    (peopleSingle.skills !== undefined &&
-                      peopleSingle.skills?.length > 0)) && (
+                    (user.skills !== undefined && user.skills?.length > 0)) && (
                     <div className="flex flex-col gap-2">
                       <Heading3>Skills</Heading3>
                       {isEdit ? (
@@ -393,7 +389,7 @@ export default function Profile() {
                         />
                       ) : (
                         <div className="flex flex-row gap-4">
-                          {peopleSingle.skills?.map((eachSkill, i) => (
+                          {user.skills?.map((eachSkill, i) => (
                             <p
                               key={i}
                               className="bg-surface-top text-primary font-semibold rounded-full py-1 px-3"
@@ -423,7 +419,7 @@ export default function Profile() {
                             {...formik.getFieldProps("email")}
                           />
                         ) : (
-                          <p>{peopleSingle.email}</p>
+                          <p>{user.email}</p>
                         )}
                       </div>
 
@@ -441,7 +437,7 @@ export default function Profile() {
                             {...formik.getFieldProps("phone")}
                           />
                         ) : (
-                          <p>{peopleSingle.phone}</p>
+                          <p>{user.phone}</p>
                         )}
                       </div>
                     </div>
@@ -449,7 +445,7 @@ export default function Profile() {
                   <div className="flex flex-col items-stretch justify-center w-full gap-2">
                     <Heading3>Other</Heading3>
 
-                    {(isEdit || peopleSingle.age) && (
+                    {(isEdit || user.age) && (
                       <div className="flex flex-row items-center gap-2">
                         <CakeRounded className={`text-foreground-alt`} />
                         <label htmlFor="age">Age:</label>
@@ -464,7 +460,7 @@ export default function Profile() {
                             {...formik.getFieldProps("age")}
                           />
                         ) : (
-                          <p>{peopleSingle.age}</p>
+                          <p>{user.age}</p>
                         )}
                       </div>
                     )}
@@ -472,7 +468,7 @@ export default function Profile() {
                     <div className="flex flex-row items-center gap-2">
                       <VerifiedRounded className="text-foreground-alt" />
                       <p>{`Member since ${new Date(
-                        peopleSingle.createdOn,
+                        user.createdOn,
                       ).toLocaleDateString("en-US", {
                         day: "numeric",
                         month: "short",
@@ -483,7 +479,7 @@ export default function Profile() {
                     <div className="flex flex-row items-center gap-2">
                       <HistoryRounded className="text-foreground-alt" />
                       <p>{`Last updated on ${new Date(
-                        peopleSingle.updatedOn,
+                        user.updatedOn,
                       ).toLocaleDateString("en-US", {
                         day: "numeric",
                         month: "short",
@@ -493,7 +489,7 @@ export default function Profile() {
 
                     <div className="flex flex-row items-center gap-2">
                       <AlternateEmailRounded className="text-foreground-alt" />
-                      <p>{`User ID: ${peopleSingle.id}`}</p>
+                      <p>{`User ID: ${user.id}`}</p>
                     </div>
                   </div>
                 </Card>

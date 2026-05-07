@@ -1,8 +1,8 @@
 import { Heading1, Heading3, Divider } from "@/components";
 import {
-  CreatePeopleForm,
-  ReplacePeopleForm,
-  DeletePeopleForm,
+  CreateUserForm,
+  ReplaceUserForm,
+  DeleteUserForm,
 } from "@/app/account/_components/";
 
 type Props = {};
@@ -19,21 +19,21 @@ export default function Account({}: Props) {
         <Heading3 className="text-secondary">
           POST - Create New Person Record
         </Heading3>
-        <CreatePeopleForm />
+        <CreateUserForm />
       </div>
 
       <div className="flex flex-col gap-2">
         <Heading3 className="text-secondary">
           PUT - Replace Person Record
         </Heading3>
-        <ReplacePeopleForm />
+        <ReplaceUserForm />
       </div>
 
       <div className="flex flex-col gap-2">
         <Heading3 className="text-secondary">
           DELETE - Delete Person Record
         </Heading3>
-        <DeletePeopleForm />
+        <DeleteUserForm />
       </div>
     </div>
   );

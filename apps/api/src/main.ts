@@ -13,7 +13,7 @@ async function bootstrap() {
   app.enableCors({
     origin: FRONTEND_URL,
   });
-  app.setGlobalPrefix('api'); // routes become /api/people...
+  app.setGlobalPrefix('api'); // routes become /api/users...
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true, }));
 

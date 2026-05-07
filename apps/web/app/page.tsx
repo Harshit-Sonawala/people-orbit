@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { usePeople } from "@/hooks/usePeople";
-import { Heading2, DropDown, Button, Divider, PeopleCard } from "@/components";
+import { useUsers } from "@/hooks/useUsers";
+import { Heading2, DropDown, Button, Divider, UserCard } from "@/components";
 import {
   ArrowBackRounded,
   ArrowForwardRounded,
@@ -26,23 +26,17 @@ export default function Home() {
   ];
 
   const {
-    data: people,
-    isLoading: peopleIsLoading,
-    isError: peopleIsError,
-    error: peopleError,
-  } = usePeople(
-    undefined,
-    page,
-    limit,
-    sortOptions[sortBy].value,
-    order,
-  ).getAll;
+    data: users,
+    isLoading: usersIsLoading,
+    isError: usersIsError,
+    error: usersError,
+  } = useUsers(undefined, page, limit, sortOptions[sortBy].value, order).getAll;
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
-          <Heading2>Browse All People Records</Heading2>
+          <Heading2>Browse All Records</Heading2>
           <div className="flex flex-row items-center justify-between gap-2">
             <DropDown
               onSelectAction={(index) => setSortBy(index)}
@@ -72,19 +66,19 @@ export default function Home() {
         </div>
         <Divider />
       </div>
-      {peopleIsLoading && (
-        <p className="text-center py-8">Loading People Data...</p>
+      {usersIsLoading && (
+        <p className="text-center py-8">Loading User Data...</p>
       )}
-      {peopleIsError && (
+      {usersIsError && (
         <p className="text-center text-error py-8">
-          Error: {peopleError.message}
+          Error: {usersError.message}
         </p>
       )}
-      {people && (
+      {users && (
         <div className="flex flex-col gap-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {people.data.map((eachPeople, i) => (
-              <PeopleCard People={eachPeople} key={eachPeople.id ?? i} />
+            {users.data.map((eachUser, i) => (
+              <UserCard User={eachUser} key={eachUser.id ?? i} />
             ))}
           </div>
 
@@ -104,10 +98,10 @@ export default function Home() {
               </Button>
               <div className="flex flex-row gap-4">
                 {Array.from(
-                  { length: people.meta.totalPages },
+                  { length: users.meta.totalPages },
                   (_, i) => i + 1,
                 ).map((eachPage) =>
-                  people.meta.currentPage === eachPage ? (
+                  users.meta.currentPage === eachPage ? (
                     <Button
                       key={eachPage}
                       variant="rounded"
@@ -133,12 +127,12 @@ export default function Home() {
                 )}
               </div>
               <Button
-                disabled={page === people.meta.totalPages}
+                disabled={page === users.meta.totalPages}
                 variant="rounded"
                 onClick={() => {
-                  if (page < people.meta.totalPages) {
+                  if (page < users.meta.totalPages) {
                     setPage((oldPage) =>
-                      Math.min(people.meta.totalPages, oldPage + 1),
+                      Math.min(users.meta.totalPages, oldPage + 1),
                     );
                   }
                 }}
