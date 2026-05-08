@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
 import type { User, PaginatedUsers } from './types';
 import { GetAllQueryOptionsDto, CreateUserDto, UpdateUserDto } from './dto';
 import { SortBy, Order } from './dto';
@@ -8,12 +8,26 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class UsersService {
-
+export class UsersService implements OnModuleInit {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) { }
+
+  async onModuleInit() {
+    await this.seedUsers();
+  }
+
+  private async seedUsers() {
+    const count = await this.userRepository.count();
+    if (count === 0) {
+      console.log('Seeding dummy data into Postgres...');
+      await this.userRepository.save(dummyData);
+      console.log(`Successfully seeded ${dummyData.length} users.`);
+    } else {
+      console.log("Database already contains data. skipping seed.")
+    }
+  }
 
   allUsers: User[] = dummyData;
 

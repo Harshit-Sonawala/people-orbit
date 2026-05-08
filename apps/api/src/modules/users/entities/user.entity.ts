@@ -24,7 +24,7 @@ export class UserEntity {
   @Column({ type: "varchar", length: 20 })
   phone: string;
 
-  @Column({ type: "text", length: 140, nullable: true })
+  @Column({ type: "varchar", length: 140, nullable: true })
   bio?: string;
 
   @Column({ type: "text", array: true, nullable: true })
