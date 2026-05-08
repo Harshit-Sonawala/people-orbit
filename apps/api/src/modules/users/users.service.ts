@@ -1,87 +1,20 @@
-import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import type { User, PaginatedUsers } from './types';
 import { GetAllQueryOptionsDto, CreateUserDto, UpdateUserDto } from './dto';
-import { SortBy, Order } from './dto';
-import { UserEntity } from './entities';
-import { dummyData } from './users.dummyData.static';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
-export class UsersService implements OnModuleInit {
-  constructor(
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
-  ) { }
-
-  async onModuleInit() {
-    await this.seedUsers();
-  }
-
-  private async seedUsers() {
-    const count = await this.userRepository.count();
-    if (count === 0) {
-      console.log('Seeding dummy data into Postgres...');
-      await this.userRepository.save(dummyData);
-      console.log(`Successfully seeded ${dummyData.length} users.`);
-    } else {
-      console.log("Database already contains data. skipping seed.")
-    }
-  }
-
-  allUsers: User[] = dummyData;
+export class UsersService {
+  constructor(private readonly usersRepository: UsersRepository) { }
 
   // GET all records
-  getAll(pageData: GetAllQueryOptionsDto): PaginatedUsers {
-    const { page = 1, limit = 20, sortBy = SortBy.FIRST_NAME, order = Order.ASC } = pageData; // get query params, take default as 1 & 20.
-
-    const sortedData = [...this.allUsers].sort((a, b) => {
-      if (sortBy === SortBy.FIRST_NAME) {
-        if (order === Order.ASC) {
-          return a.firstName.localeCompare(b.firstName);
-        } else {
-          return b.firstName.localeCompare(a.firstName);
-        }
-      } else if (sortBy === SortBy.LAST_NAME) {
-        if (order === Order.ASC) {
-          return a.lastName.localeCompare(b.lastName);
-        } else {
-          return b.lastName.localeCompare(a.lastName);
-        }
-      } else if (sortBy === SortBy.UPDATED) {
-        if (order === Order.ASC) {
-          return a.updatedOn.getTime() - b.updatedOn.getTime();
-        } else {
-          return b.updatedOn.getTime() - a.updatedOn.getTime();
-        }
-      } else {
-        if (order === Order.ASC) {
-          return a.createdOn.getTime() - b.createdOn.getTime();
-        } else {
-          return b.createdOn.getTime() - a.createdOn.getTime();
-        }
-      }
-    });
-
-    const total = sortedData.length;
-    const totalPages = Math.ceil(total / limit);
-    const startIndex = (page - 1) * limit; // every page jump by *limit
-    const data = sortedData.slice(startIndex, startIndex + limit); // 0-19, 20-39, 40-59...
-
-    return {
-      data,
-      meta: {
-        total: total,
-        limit: limit,
-        totalPages: totalPages,
-        currentPage: page,
-      },
-    };
+  async getAll(pageData: GetAllQueryOptionsDto): Promise<PaginatedUsers> {
+    return this.usersRepository.findAll(pageData);
   }
 
   // GET record by ID
-  getOne(getId: string): User | undefined {
-    const foundPerson = this.allUsers.find((p) => p.id === getId);
+  async getOne(getId: string): Promise<User> {
+    const foundPerson = await this.usersRepository.findOne(getId);
     if (!foundPerson) {
       throw new NotFoundException(`Person with ID ${getId} not found`);
     }
@@ -89,57 +22,38 @@ export class UsersService implements OnModuleInit {
   }
 
   // POST create new record
-  create(createData: CreateUserDto): User {
-    const newDate: Date = new Date();
-    const idSlug = `${createData.firstName.toLowerCase().replace(/\s+/g, '-')}-${createData.lastName.toLowerCase().replace(/\s+/g, '-')}-${newDate.getTime()}`;
-    const newUser: User = {
-      ...createData,
-      id: idSlug,
-      createdOn: newDate,
-      updatedOn: newDate,
-    };
-    this.allUsers.push(newUser);
-    return newUser;
+  async create(createData: CreateUserDto): Promise<User> {
+    return this.usersRepository.create(createData);
   }
 
   // PUT Replace entire record based on id with a new person
-  replace(replaceId: string, replaceData: CreateUserDto): User {
-    const newDate: Date = new Date();
-    const replacedUser: User = {
-      ...replaceData,
-      id: replaceId,
-      createdOn: this.allUsers[replaceId].createdOn, // keep existing createdOn date
-      updatedOn: newDate,
-    };
-    // dummy replace logic
-    const replaceIndex = this.allUsers.findIndex((p) => p.id === replaceId);
-    if (replaceIndex === -1) throw new NotFoundException(`Person with ID ${replaceId} not found`);
-    this.allUsers[replaceIndex] = replacedUser;
+  async replace(replaceId: string, replaceData: CreateUserDto): Promise<User> {
+    const replacedUser = await this.usersRepository.replace(replaceId, replaceData);
+    if (!replacedUser) {
+      throw new NotFoundException(`Person with ID ${replaceId} not found`);
+    }
     return replacedUser;
   }
 
   // PATCH Update records partially
-  update(updateId: string, updateData: UpdateUserDto): User {
-    const updateIndex = this.allUsers.findIndex((p) => p.id === updateId);
-    if (updateIndex === -1) throw new NotFoundException(`Person with ID ${updateId} not found`);
-
-    const updatedUser: User = {
-      ...this.allUsers[updateIndex], // id: updateIndex
-      ...updateData,
-      updatedOn: new Date(),
+  async update(updateId: string, updateData: UpdateUserDto): Promise<User> {
+    const updatedUser = await this.usersRepository.update(updateId, updateData);
+    if (!updatedUser) {
+      throw new NotFoundException(`Person with ID ${updateId} not found`);
     }
-
-    // dummy update logic
-    this.allUsers[updateIndex] = updatedUser;
     return updatedUser;
   }
 
   // DELETE record by ID
-  delete(deleteId: string): User | undefined {
-    const deleteIndex = this.allUsers.findIndex((p) => p.id === deleteId);
-    if (deleteIndex === -1) throw new NotFoundException(`Person with ID ${deleteId} not found`);
-    //dummy delete logic
-    const deletedUser = this.allUsers.splice(deleteIndex, 1)[0]; // splice and return
+  async delete(deleteId: string): Promise<User> {
+    const deletedUser = await this.usersRepository.delete(deleteId);
+    if (!deletedUser) {
+      throw new NotFoundException(`Person with ID ${deleteId} not found`);
+    }
     return deletedUser;
+  }
+
+  async seed(): Promise<void> {
+    return this.usersRepository.seed();
   }
 }

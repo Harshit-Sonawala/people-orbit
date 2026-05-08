@@ -2,8 +2,8 @@ import { IsOptional, IsInt, Min, IsEnum, ValidateIf, IsNotEmpty } from 'class-va
 import { Type } from 'class-transformer';
 
 export enum SortBy {
-  CREATED = 'dateCreated',
-  UPDATED = 'dateUpdated',
+  CREATED = 'createdOn',
+  UPDATED = 'updatedOn',
   FIRST_NAME = 'firstName',
   LAST_NAME = 'lastName',
 }

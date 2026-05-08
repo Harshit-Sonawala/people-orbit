@@ -8,32 +8,38 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Get()
-  getAllUsers(@Query() paginationDto: GetAllQueryOptionsDto): PaginatedUsers {
+  async getAllUsers(@Query() paginationDto: GetAllQueryOptionsDto): Promise<PaginatedUsers> {
     return this.usersService.getAll(paginationDto);
   }
 
   @Get(':id')
-  getUsers(@Param('id') id: string): User | undefined {
+  async getUsers(@Param('id') id: string): Promise<User> {
     return this.usersService.getOne(id);
   }
 
   @Post()
-  createUser(@Body() createUserDto: CreateUserDto): User {
+  async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
   }
 
   @Put(':id')
-  replaceUser(@Param('id') id: string, @Body() replaceUserDto: CreateUserDto): User {
+  async replaceUser(@Param('id') id: string, @Body() replaceUserDto: CreateUserDto): Promise<User> {
     return this.usersService.replace(id, replaceUserDto);
   }
 
   @Patch(':id')
-  updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): User {
+  async updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  deleteUser(@Param('id') id: string): User | undefined {
+  async deleteUser(@Param('id') id: string): Promise<User> {
     return this.usersService.delete(id);
+  }
+
+  @Post('seed')
+  async seedUsers(): Promise<{ message: string }> {
+    await this.usersService.seed();
+    return { message: 'Database seeding process completed' };
   }
 }
