@@ -3,7 +3,7 @@ import { User, PaginatedUsers } from "@/types";
 
 const USERS_URL = process.env.NEXT_PUBLIC_USERS_URL ?? "http://localhost:4000/api/users";
 
-export const useUsers = (id?: string, page: number = 1, limit: number = 12, sortBy = "dateCreated", order = "asc") => {
+export const useUsers = (id?: string, page: number = 1, limit: number = 12, sortBy = "createdOn", order = "asc") => {
   const queryClient = useQueryClient();
 
   const getAll = useQuery({
@@ -109,7 +109,7 @@ export const useUsers = (id?: string, page: number = 1, limit: number = 12, sort
     onError: (error) => {
       console.error("useUsers replace error: ", error.message);
     },
-  })
+  });
 
   return { getAll, getById, create, replaceById, updateById, deleteById };
 };

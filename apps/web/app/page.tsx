@@ -19,8 +19,8 @@ export default function Home() {
   const limit = 12;
 
   const sortOptions = [
-    { label: "Date Created", value: "dateCreated" },
-    { label: "Date Updated", value: "dateUpdated" },
+    { label: "Date Created", value: "createdOn" },
+    { label: "Date Updated", value: "updatedOn" },
     { label: "First Name", value: "firstName" },
     { label: "Last Name", value: "lastName" },
   ];
