@@ -1,11 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import type { User, PaginatedUsers } from './types';
 import { GetAllQueryOptionsDto, CreateUserDto, UpdateUserDto } from './dto';
 import { SortBy, Order } from './dto';
-import type { User, PaginatedUsers } from './types';
+import { UserEntity } from './entities';
 import { dummyData } from './users.dummyData.static';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
+
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+  ) { }
+
   allUsers: User[] = dummyData;
 
   // GET all records
@@ -85,7 +94,7 @@ export class UsersService {
     const replacedUser: User = {
       ...replaceData,
       id: replaceId,
-      createdOn: newDate, // replace created date as new person record
+      createdOn: this.allUsers[replaceId].createdOn, // keep existing createdOn date
       updatedOn: newDate,
     };
     // dummy replace logic
