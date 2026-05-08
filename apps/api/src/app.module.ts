@@ -22,9 +22,9 @@ import { UsersModule } from './modules/users/users.module';
         username: configService.get<string>('DB_USERNAME', 'postgres'),
         password: configService.get<string>('DB_PASSWORD', 'postgres'),
         logging: true,
-        migrationsRun: true,
         autoLoadEntities: true,
-        synchronize: true, // Note: Set to false in production
+        synchronize: false,
+        migrationsRun: false,
       }),
       inject: [ConfigService],
     }),
