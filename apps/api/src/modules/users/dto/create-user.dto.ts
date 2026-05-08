@@ -18,12 +18,12 @@ import { SocialLinksDto } from './social-links.dto';
 export class CreateUserDto implements Omit<User, 'id' | 'createdOn' | 'updatedOn'> {
   @IsNotEmpty()
   @IsString()
-  @MaxLength(40)
+  @MaxLength(30)
   firstName!: string;
 
   @IsNotEmpty()
   @IsString()
-  @MaxLength(40)
+  @MaxLength(30)
   lastName!: string;
 
   @IsOptional()

@@ -21,6 +21,7 @@ import { UsersModule } from './modules/users/users.module';
         database: configService.get<string>('DB_NAME', 'people-orbit-db'),
         username: configService.get<string>('DB_USERNAME', 'postgres'),
         password: configService.get<string>('DB_PASSWORD', 'postgres'),
+        logging: true,
         autoLoadEntities: true,
         synchronize: true, // Note: Set to false in production
       }),
