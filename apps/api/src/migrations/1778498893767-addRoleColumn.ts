@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class AddRoleColumn1778495554301 implements MigrationInterface {
+export class AddRoleColumn1778498893767 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TYPE "role_enum" AS ENUM('user', 'manager', 'admin')`);
