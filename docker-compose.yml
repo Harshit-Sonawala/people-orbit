@@ -18,6 +18,8 @@ services:
             - node_modules/
         - action: rebuild
           path: package.json
+        - action: rebuild
+          path: apps/api/package.json
     env_file:
       - apps/api/.env
     environment:
@@ -47,6 +49,8 @@ services:
             - node_modules/
         - action: rebuild
           path: package.json
+        - action: rebuild
+          path: apps/web/package.json
     env_file:
       - apps/web/.env
     environment:
