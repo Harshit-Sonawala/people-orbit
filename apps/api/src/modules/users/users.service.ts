@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import type { User, PaginatedUsers } from './types';
-import { GetAllQueryOptionsDto, CreateUserDto, UpdateUserDto } from './dto';
+import { GetAllQueryOptionsDto, CreateUserDto, UpdateUserDto, SortBy, Order } from "./dto";
+
 import { UsersRepository } from './users.repository';
 
 @Injectable()
@@ -9,7 +10,31 @@ export class UsersService {
 
   // GET all records
   async getAll(pageData: GetAllQueryOptionsDto): Promise<PaginatedUsers> {
-    return this.usersRepository.findAll(pageData);
+    const { page = 1, limit = 20, sortBy = SortBy.CREATED, order = Order.ASC } = pageData;
+
+    const sortFieldMap: Record<SortBy, string> = {
+      [SortBy.CREATED]: 'createdOn',
+      [SortBy.UPDATED]: 'updatedOn',
+      [SortBy.FIRST_NAME]: 'firstName',
+      [SortBy.LAST_NAME]: 'lastName',
+    };
+    const orderMap: Record<Order, string> = {
+      [Order.ASC]: 'ASC',
+      [Order.DESC]: 'DESC',
+    }
+
+    const [data, total] = await this.usersRepository.findAll(page, limit, sortFieldMap[sortBy], orderMap[order]);
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data,
+      meta: {
+        total,
+        limit,
+        totalPages,
+        currentPage: page,
+      },
+    };
   }
 
   // GET record by ID
@@ -23,25 +48,46 @@ export class UsersService {
 
   // POST create new record
   async create(createData: CreateUserDto): Promise<User> {
-    return this.usersRepository.create(createData);
+    const newDate = new Date();
+    const idSlug = `${createData.firstName.toLowerCase().replace(/\s+/g, '-')}-${createData.lastName.toLowerCase().replace(/\s+/g, '-')}-${newDate.getTime()}`;
+    const newUser = {
+      ...createData,
+      id: idSlug,
+      createdOn: newDate,
+      updatedOn: newDate,
+    }
+    return await this.usersRepository.createOrReplace(newUser);
   }
 
-  // PUT Replace entire record based on id with a new person
+  // PUT Replace entire record based on id with a new person.
   async replace(replaceId: string, replaceData: CreateUserDto): Promise<User> {
-    const replacedUser = await this.usersRepository.replace(replaceId, replaceData);
-    if (!replacedUser) {
+    const existingUser = await this.usersRepository.findOne(replaceId);
+    if (!existingUser) {
       throw new NotFoundException(`Person with ID ${replaceId} not found`);
+    } else {
+      const newDate = new Date();
+      const newUser = {
+        ...replaceData,
+        id: existingUser?.id,
+        createdOn: existingUser?.createdOn || newDate,
+        updatedOn: newDate,
+      }
+      return await this.usersRepository.createOrReplace(newUser);
     }
-    return replacedUser;
   }
 
   // PATCH Update records partially
-  async update(updateId: string, updateData: UpdateUserDto): Promise<User> {
-    const updatedUser = await this.usersRepository.update(updateId, updateData);
-    if (!updatedUser) {
+  async update(updateId: string, updateData: UpdateUserDto): Promise<User | null> {
+    const existingUser = await this.usersRepository.findOne(updateId);
+    if (!existingUser) {
       throw new NotFoundException(`Person with ID ${updateId} not found`);
     }
-    return updatedUser;
+    const newDate = new Date();
+    const partialUpdatedUser: Partial<User> = { // building a partial user payload
+      ...updateData,
+      updatedOn: newDate,
+    };
+    return await this.usersRepository.update(updateId, partialUpdatedUser);
   }
 
   // DELETE record by ID
@@ -54,6 +100,6 @@ export class UsersService {
   }
 
   async seed(): Promise<void> {
-    return this.usersRepository.seed();
+    return await this.usersRepository.seed();
   }
 }
