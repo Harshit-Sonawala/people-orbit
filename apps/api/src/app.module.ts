@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { UsersModule } from './modules/users/users.module';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UsersModule } from './modules/users/users.module';
         autoLoadEntities: true,
         synchronize: false,
         migrationsRun: true,
+        migrations: [join(__dirname, 'migrations', '*{.ts,.js}')],
       }),
       inject: [ConfigService],
     }),
