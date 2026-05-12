@@ -99,6 +99,7 @@ export class UsersService {
     return deletedUser;
   }
 
+  // POST seed initial data to the db
   async seed(): Promise<void> {
     return await this.usersRepository.seed();
   }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column } from "typeorm";
+import { Entity, PrimaryColumn, Column, Index } from "typeorm";
 import { type SocialLinks } from '../types';
 
 @Entity('users') // table name users
@@ -7,15 +7,18 @@ export class UserEntity {
   id: string;
 
   @Column({ type: "varchar", length: 30 })
+  @Index()
   firstName: string;
 
   @Column({ type: "varchar", length: 30 })
+  @Index()
   lastName: string;
 
   @Column({ type: "smallint", nullable: true })
   age?: number;
 
   @Column({ type: "varchar", length: 40 })
+  @Index()
   designation: string;
 
   @Column({ type: "varchar", unique: true })
