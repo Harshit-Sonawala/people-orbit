@@ -9,9 +9,23 @@ import {
   TextInput,
   TextArea,
   CustomLink,
+  UserCard,
+  SearchResultCard,
 } from "@/components";
+import { User } from "@/types";
 
 export default function Demo() {
+  const dummyUser: User = {
+    id: "harshit-sonawala-1755163806000",
+    firstName: "Harshit",
+    lastName: "Sonawala",
+    designation: "Full Stack Developer",
+    email: "harshit@getaltadx.com",
+    phone: "+919137183812",
+    createdOn: new Date("2021-02-28T12:00:00.000Z"),
+    updatedOn: new Date("2021-02-28T12:00:00.000Z"),
+  };
+
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-10">
       <div className="flex flex-col gap-2">
@@ -31,6 +45,10 @@ export default function Demo() {
 
       <div className="flex flex-col gap-2">
         <Heading3 className="text-secondary">Cards</Heading3>
+
+        <UserCard User={dummyUser} />
+        <SearchResultCard User={dummyUser} />
+
         <Card variant="surface">
           <p>Card default surface variant</p>
         </Card>

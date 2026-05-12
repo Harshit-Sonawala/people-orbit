@@ -11,3 +11,4 @@ export * from "./TextInput";
 export * from "./TopBar";
 export * from "./SearchInput";
 export * from "./DropDown";
+export * from "./SearchResultCard";
