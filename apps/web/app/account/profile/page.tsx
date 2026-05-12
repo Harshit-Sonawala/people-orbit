@@ -150,7 +150,7 @@ export default function Profile() {
           >
             <div className="flex flex-col gap-2">
               <div className="flex flex-row items-center justify-between gap-4">
-                <Heading2>Your Profile</Heading2>
+                <Heading2>My Profile</Heading2>
                 {!isEdit ? (
                   <Button
                     onClick={() => setIsEdit((prev) => !prev)}
@@ -223,7 +223,7 @@ export default function Profile() {
                       <div className="flex flex-col gap-4">
                         {isEdit ? (
                           <div className="flex flex-col items-start justify-center gap-2">
-                            <Heading2>Full Name</Heading2>
+                            <Heading3>Full Name</Heading3>
                             <div className="flex flex-row items-center justify-center gap-2">
                               <TextInput
                                 id="firstName"
@@ -250,7 +250,7 @@ export default function Profile() {
                         )}
                         <div className="flex flex-col items-start justify-center gap-2">
                           {isEdit ? (
-                            <Heading2>Designation</Heading2>
+                            <Heading3>Designation</Heading3>
                           ) : (
                             <div className="flex flex-row items-center gap-2">
                               <WorkRounded className={`text-primary`} />

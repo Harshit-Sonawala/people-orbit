@@ -12,10 +12,15 @@ type Props = {
 
 export const SearchResultCard = ({ User, className = "" }: Props) => {
   return (
-    <Link href={`/users/${User.id}`} className={`flex flex-row`}>
-      <Card className="flex flex-row items-center gap-4">
-        <div className="bg-primary p-1 rounded-lg">
-          <div className="w-22 h-22 rounded-full bg-surface border-4 border-surface-top transition-colors duration-200 overflow-hidden">
+    <Link
+      href={`/users/${User.id}`}
+      className={`flex flex-row items-stretch group transition-transform duration-200 hover:-translate-y-1 ${className}`}
+    >
+      <div className="flex flex-row items-stretch justify-center rounded-lg">
+        <div className="bg-primary rounded-l-lg px-7 py-12"></div>
+
+        <div className="relative flex flex-row items-center justify-center gap-1 bg-surface pl-4 pr-6 rounded-r-lg">
+          <div className="absolute -left-10 w-20 h-20 rounded-full bg-surface border-4 border-surface-top transition-colors duration-200 overflow-hidden">
             <Image
               src={profilePic}
               alt={User.firstName.charAt(0)}
@@ -23,14 +28,18 @@ export const SearchResultCard = ({ User, className = "" }: Props) => {
               className="object-cover"
             />
           </div>
+          <div className="flex flex-col gap-1 pl-10 py-2 pr-2">
+            <Heading3>{`${User.firstName} ${User.lastName}`}</Heading3>
+            <p className="text-md font-semibold text-secondary">
+              {User.designation}
+            </p>
+            <div className="flex flex-row items-center justify-center gap-4">
+              <p className="text-sm text-foreground truncate">{User.email}</p>
+              <p className="text-sm text-foreground truncate">{User.phone}</p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <Heading3>{`${User.firstName} ${User.lastName}`}</Heading3>
-          <p>{User.designation}</p>
-          <p>{User.email}</p>
-          <p>{User.id}</p>
-        </div>
-      </Card>
+      </div>
     </Link>
   );
 };

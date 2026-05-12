@@ -16,14 +16,23 @@ import { User } from "@/types";
 
 export default function Demo() {
   const dummyUser: User = {
-    id: "harshit-sonawala-1755163806000",
-    firstName: "Harshit",
-    lastName: "Sonawala",
-    designation: "Full Stack Developer",
-    email: "harshit@getaltadx.com",
-    phone: "+919137183812",
-    createdOn: new Date("2021-02-28T12:00:00.000Z"),
-    updatedOn: new Date("2021-02-28T12:00:00.000Z"),
+    id: "arjun-mehta-1755163800000",
+    firstName: "Arjun",
+    lastName: "Mehta",
+    age: 32,
+    designation: "Senior Software Engineer",
+    email: "arjun.mehta@examplesoft.com",
+    phone: "+919876543210",
+    profilePic: "https://i.pravatar.cc/300?u=1",
+    bgImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+    bio: "Full-stack wizard with a love for distributed systems and filter coffee.",
+    skills: ["React", "Node.js", "Kubernetes"],
+    socialLinks: {
+      linkedIn: "https://linkedin.com/in/arjunmehta",
+      github: "https://github.com/arjunm",
+    },
+    createdOn: new Date("2025-08-14T09:30:00.000Z"),
+    updatedOn: new Date("2025-08-14T09:30:00.000Z"),
   };
 
   return (
@@ -33,17 +42,7 @@ export default function Demo() {
         <Divider />
       </div>
 
-      <div className="flex flex-col gap-2">
-        <Heading3 className="text-secondary">Headers</Heading3>
-        <p>Header 1</p>
-        <Heading1>This is an example of Header 1.</Heading1>
-        <p>Header 2</p>
-        <Heading2>This is an example of Header 2.</Heading2>
-        <p>Header 3</p>
-        <Heading3>This is an example of Header 3.</Heading3>
-      </div>
-
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
         <Heading3 className="text-secondary">Cards</Heading3>
 
         <UserCard User={dummyUser} />
@@ -127,6 +126,16 @@ export default function Demo() {
         <CustomLink href="#">Click Here</CustomLink>
         <CustomLink href="#">Click Here</CustomLink>
         <CustomLink href="#">Click Here</CustomLink>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Heading3 className="text-secondary">Headings</Heading3>
+        <p>Heading 1</p>
+        <Heading1>This is Heading 1.</Heading1>
+        <p>Heading 2</p>
+        <Heading2>This is Heading 2.</Heading2>
+        <p>Heading 3</p>
+        <Heading3>This is Heading 3.</Heading3>
       </div>
     </div>
   );

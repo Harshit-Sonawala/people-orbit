@@ -24,7 +24,7 @@ import { UsersModule } from './modules/users/users.module';
         logging: true,
         autoLoadEntities: true,
         synchronize: false,
-        migrationsRun: false,
+        migrationsRun: true,
       }),
       inject: [ConfigService],
     }),
