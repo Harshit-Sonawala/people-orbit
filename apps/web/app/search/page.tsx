@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+// import { useState } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useUsers } from "@/hooks/useUsers";
 import {
   Heading1,
@@ -12,11 +12,22 @@ import {
 import { ArrowBackRounded, ArrowForwardRounded } from "@mui/icons-material";
 
 export default function Search() {
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const query = searchParams.get("q") || "";
 
-  const [page, setPage] = useState(1);
+  const query = searchParams.get("q") || "";
+  const page = Number(searchParams.get("page")) || 1;
+  // const [page, setPage] = useState(1);
   const limit = 30;
+
+  const updateQuery = (updates: Record<string, string | number>) => {
+    const params = new URLSearchParams(searchParams.toString());
+    Object.entries(updates).forEach(([key, value]) => {
+      params.set(key, String(value));
+    });
+    router.push(`${pathname}?${params.toString()}`);
+  };
 
   const {
     data: results,
@@ -26,7 +37,7 @@ export default function Search() {
   } = useUsers(undefined, page, limit, undefined, undefined, query).search;
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
           <Heading2>
@@ -50,7 +61,7 @@ export default function Search() {
         <div className="flex flex-col gap-6">
           {/* Layout and spacing synced with Home.tsx */}
           <div className="flex flex-col gap-2">
-            <p className="text-sm text-secondary">
+            <p className="text-sm text-foreground-alt">
               Found {results.meta.total} result
               {results.meta.total !== 1 ? "s" : ""}
             </p>
@@ -68,7 +79,8 @@ export default function Search() {
                 variant="rounded"
                 onClick={() => {
                   if (page > 1) {
-                    setPage((oldPage) => Math.max(oldPage - 1, 1));
+                    updateQuery({ page: page - 1 });
+                    // setPage((oldPage) => Math.max(oldPage - 1, 1));
                   }
                 }}
               >
@@ -95,7 +107,8 @@ export default function Search() {
                       className="w-9 h-9"
                       onClick={() => {
                         if (eachPage !== page) {
-                          setPage(eachPage);
+                          updateQuery({ page: eachPage });
+                          // setPage(eachPage);
                         }
                       }}
                     >
@@ -109,9 +122,10 @@ export default function Search() {
                 variant="rounded"
                 onClick={() => {
                   if (page < results.meta.totalPages) {
-                    setPage((oldPage) =>
-                      Math.min(results.meta.totalPages, oldPage + 1),
-                    );
+                    updateQuery({ page: page + 1 });
+                    // setPage((oldPage) =>
+                    //   Math.min(results.meta.totalPages, oldPage + 1),
+                    // );
                   }
                 }}
               >
