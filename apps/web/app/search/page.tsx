@@ -16,7 +16,7 @@ export default function Search() {
   const query = searchParams.get("q") || "";
 
   const [page, setPage] = useState(1);
-  const limit = 12;
+  const limit = 30;
 
   const {
     data: results,

@@ -10,7 +10,7 @@ export class UsersService {
 
   // GET all records
   async getAll(pageData: QueryOptionsDto): Promise<PaginatedUsers> {
-    const { page = 1, limit = 20, sortBy = SortBy.CREATED, order = Order.ASC } = pageData;
+    const { page = 1, limit = 30, sortBy = SortBy.CREATED, order = Order.ASC } = pageData;
 
     const sortFieldMap: Record<SortBy, string> = {
       [SortBy.CREATED]: 'createdOn',
@@ -106,7 +106,7 @@ export class UsersService {
 
   // GET search results based on query
   async search(query: string, pageData: QueryOptionsDto): Promise<PaginatedUsers> {
-    const { page = 1, limit = 20 } = pageData;
+    const { page = 1, limit = 30 } = pageData;
     const [data, total] = await this.usersRepository.search(query, page, limit);
     const totalPages = Math.ceil(total / limit);
 

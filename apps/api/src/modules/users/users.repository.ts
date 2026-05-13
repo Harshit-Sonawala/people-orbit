@@ -46,13 +46,9 @@ export class UsersRepository {
 
   async seed() {
     const count = await this.repository.count();
-    if (count === 0) {
-      console.log('Seeding dummy data into Postgres...');
-      await this.repository.save(dummyData);
-      console.log(`Successfully seeded ${dummyData.length} users.`);
-    } else {
-      console.log("Database already contains data. skipping seed.")
-    }
+    console.log('Seeding dummy data into Postgres...');
+    await this.repository.save(dummyData);
+    console.log(`Successfully seeded ${dummyData.length} users.`);
   }
 
   async search(query: string, page: number, limit: number): Promise<[UserEntity[], number]> {

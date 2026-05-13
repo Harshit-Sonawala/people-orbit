@@ -16,7 +16,7 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState(0);
   const [order, setOrder] = useState("desc");
-  const limit = 12;
+  const limit = 30;
 
   const sortOptions = [
     { label: "Date Created", value: "createdOn" },
