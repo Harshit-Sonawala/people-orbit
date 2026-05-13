@@ -117,7 +117,7 @@ export default function Demo() {
         <TextArea disabled={true} placeholder="Disabled Text Area" />
         <TextArea
           placeholder="TextArea with error"
-          error="Bio must be less than 140 characters."
+          error="Bio must be within 140 characters."
         />
       </div>
 

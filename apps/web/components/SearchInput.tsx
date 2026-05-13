@@ -1,20 +1,54 @@
+"use client";
 import React from "react";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import { TextInput, Button } from "@/components";
 import { SearchRounded } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 
-type Props = {};
+export const SearchInput = () => {
+  const router = useRouter();
+  const allowedCharsRegex = /[^A-Za-z0-9\s'.&/@+-]/g;
 
-export const SearchInput = (props: Props) => {
   return (
     <div className="hidden md:block flex flex-row items-center gap-2 relative">
-      <TextInput
-        variant="rounded"
-        placeholder="Search..."
-        className="sm:w-64 md:w-72 lg:w-84"
-      />
-      <Button variant="rounded" className="absolute right-0.5 top-0.5 px-4">
-        <SearchRounded />
-      </Button>
+      <Formik
+        initialValues={{ query: "" }}
+        // validationSchema={Yup.object({
+        //   query: Yup.string().max(40, "Search must be within 40 characters"),
+        // })}
+        onSubmit={(values, { resetForm }) => {
+          const sanitizedQuery = values.query
+            .trim()
+            .replace(allowedCharsRegex, ""); // silently sanitize instead of showing errors
+
+          if (sanitizedQuery) {
+            router.push(`/search?q=${encodeURIComponent(sanitizedQuery)}`);
+            resetForm();
+          }
+        }}
+      >
+        {(formik) => (
+          <form onSubmit={formik.handleSubmit}>
+            <TextInput
+              id="query"
+              type="text"
+              variant="rounded"
+              placeholder="Search..."
+              className="sm:w-64 md:w-72 lg:w-84"
+              // error={formik.errors.query && formik.errors.query}
+              {...formik.getFieldProps("query")}
+            />
+            <Button
+              variant="rounded"
+              className="absolute right-0.5 top-0.5 px-4"
+              type="submit"
+            >
+              <SearchRounded />
+            </Button>
+          </form>
+        )}
+      </Formik>
     </div>
   );
 };

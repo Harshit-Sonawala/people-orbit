@@ -29,10 +29,11 @@ import {
 type Props = {};
 
 export const ReplaceUserForm = (props: Props) => {
+  const idRegex = /^[a-z0-9-]+$/;
   const nameRegex = /^[A-Za-z\s'-]+$/;
+  const designationRegex = /^[A-Za-z0-9\s'-\.&/]+$/;
   const phoneRegex =
     /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
-  const idRegex = /^[a-z0-9-]+$/;
 
   const { mutate: replaceUsers, isPending: replaceUsersIsPending } =
     useUsers().replaceById;
@@ -67,21 +68,25 @@ export const ReplaceUserForm = (props: Props) => {
               nameRegex,
               "First name can only contain letters, spaces, hyphens, or apostrophes",
             )
-            .max(30, "Must be 30 characters or less")
+            .max(30, "Must be within 30 characters")
             .required("Required Field"),
           lastName: Yup.string()
             .matches(
               nameRegex,
               "Last name can only contain letters, spaces, hyphens, or apostrophes",
             )
-            .max(30, "Must be 30 characters or less")
+            .max(30, "Must be within 30 characters")
             .required("Required Field"),
           age: Yup.number()
             .integer("Must be a positive number")
             .min(16, "Must be atleast 16 years of age")
-            .max(120, "Please enter a valid number"),
+            .max(120, "Must be within 120 years of age"),
           designation: Yup.string()
-            .max(30, "Must be 30 characters or less")
+            .matches(
+              designationRegex,
+              "Designation can only contain letters, numbers, spaces, and standard symbols (&, /, ., -, ')",
+            )
+            .max(30, "Must be within 30 characters")
             .required("Required Field"),
           email: Yup.string()
             .email("Please enter a valid email address")
@@ -89,7 +94,7 @@ export const ReplaceUserForm = (props: Props) => {
           phone: Yup.string()
             .matches(phoneRegex, "Please enter a valid phone number")
             .required("Required Field"),
-          bio: Yup.string().max(140, "Must be 140 characters or less"),
+          bio: Yup.string().max(140, "Must be within 140 characters"),
           skills: Yup.string(),
           socialLinks: Yup.object({
             linkedIn: Yup.string().url("Please enter a valid url"),
