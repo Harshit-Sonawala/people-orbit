@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+// import { useState } from "react";
 import { useUsers } from "@/hooks/useUsers";
 import { Heading2, DropDown, Button, Divider, UserCard } from "@/components";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import {
   ArrowBackRounded,
   ArrowForwardRounded,
@@ -13,11 +14,6 @@ import {
 } from "@mui/icons-material";
 
 export default function Home() {
-  const [page, setPage] = useState(1);
-  const [sortBy, setSortBy] = useState(0);
-  const [order, setOrder] = useState("desc");
-  const limit = 30;
-
   const sortOptions = [
     { label: "Date Created", value: "createdOn" },
     { label: "Date Updated", value: "updatedOn" },
@@ -25,25 +21,51 @@ export default function Home() {
     { label: "Last Name", value: "lastName" },
   ];
 
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const page = Number(searchParams.get("page")) || 1;
+  const sortBy = searchParams.get("sortBy") || "createdOn";
+  const currentSortByOption =
+    sortOptions.find((option) => option.value === sortBy) || sortOptions[0];
+  const order = searchParams.get("order") || "desc";
+  // const [page, setPage] = useState(1);
+  // const [sortBy, setSortBy] = useState(0);
+  // const [order, setOrder] = useState("desc");
+  const limit = 30;
+
+  const updateQuery = (updates: Record<string, string | number>) => {
+    const params = new URLSearchParams(searchParams.toString());
+    Object.entries(updates).forEach(([key, value]) => {
+      params.set(key, String(value));
+    });
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   const {
     data: users,
     isLoading: usersIsLoading,
     isError: usersIsError,
     error: usersError,
-  } = useUsers(undefined, page, limit, sortOptions[sortBy].value, order).getAll;
+  } = useUsers(undefined, page, limit, currentSortByOption.value, order).getAll;
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
           <Heading2>Browse All Records</Heading2>
           <div className="flex flex-row items-center justify-between gap-2">
             <DropDown
               onSelectAction={(index) => {
-                setSortBy(index);
-                setPage(1);
+                updateQuery({
+                  sortBy: sortOptions[index].value,
+                  page: 1, // reset to page 1 on new sort
+                });
+                // setSortBy(index);
+                // setPage(1);
               }}
-              label={sortOptions[sortBy].label}
+              label={currentSortByOption.label}
               icon={<SortRounded />}
               options={[
                 { label: "Date Created", icon: <HistoryRounded /> },
@@ -54,8 +76,12 @@ export default function Home() {
             />
             <Button
               onClick={() => {
-                setOrder(order === "asc" ? "desc" : "asc");
-                setPage(1);
+                updateQuery({
+                  order: order === "asc" ? "desc" : "asc",
+                  page: 1,
+                });
+                // setOrder(order === "asc" ? "desc" : "asc");
+                // setPage(1);
               }}
             >
               {order === "asc" ? (
@@ -85,7 +111,7 @@ export default function Home() {
       {users && users.data.length > 0 ? (
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <p className="text-sm text-secondary">
+            <p className="text-sm text-foreground-alt">
               Found {users.meta.total} record
               {users.meta.total !== 1 ? "s" : ""}
             </p>
@@ -103,7 +129,8 @@ export default function Home() {
                 variant="rounded"
                 onClick={() => {
                   if (page > 1) {
-                    setPage((oldPage) => Math.max(oldPage - 1, 1));
+                    updateQuery({ page: page - 1 });
+                    // setPage((oldPage) => Math.max(oldPage - 1, 1));
                   }
                 }}
               >
@@ -130,8 +157,9 @@ export default function Home() {
                       className="w-9 h-9"
                       onClick={() => {
                         if (eachPage !== page) {
+                          updateQuery({ page: eachPage });
                           // prevent unnecessary fetch
-                          setPage(eachPage);
+                          // setPage(eachPage);
                         }
                       }}
                     >
@@ -145,9 +173,10 @@ export default function Home() {
                 variant="rounded"
                 onClick={() => {
                   if (page < users.meta.totalPages) {
-                    setPage((oldPage) =>
-                      Math.min(users.meta.totalPages, oldPage + 1),
-                    );
+                    updateQuery({ page: page + 1 });
+                    // setPage((oldPage) =>
+                    //   Math.min(users.meta.totalPages, oldPage + 1),
+                    // );
                   }
                 }}
               >

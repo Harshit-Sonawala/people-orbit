@@ -14,12 +14,12 @@ export const SearchResultCard = ({ User, className = "" }: Props) => {
   return (
     <Link
       href={`/users/${User.id}`}
-      className={`flex flex-1 flex-row items-stretch group transition-transform duration-200 hover:-translate-y-1 ${className}`}
+      className={`max-w-140 flex flex-1 flex-row items-stretch group transition-transform duration-200 hover:-translate-y-1 ${className}`}
     >
       <div className="flex flex-1 flex-row items-center justify-stretch rounded-lg">
-        <div className="bg-primary rounded-l-lg px-7 py-12"></div>
+        <div className="bg-primary-alt rounded-l-lg px-7 py-12"></div>
 
-        <div className="relative flex flex-1 flex-row items-center justify-center gap-1 bg-surface pl-4 pr-6 rounded-r-lg">
+        <div className="relative flex flex-1 flex-row items-center justify-center gap-1 bg-surface pl-4 pr-6 rounded-r-lg transition-all duration-200 group-hover:bg-surface-top">
           <div className="absolute -left-10 w-20 h-20 rounded-full bg-surface border-4 border-surface-top transition-colors duration-200 overflow-hidden">
             <Image
               src={profilePic}
