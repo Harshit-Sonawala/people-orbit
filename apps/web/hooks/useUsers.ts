@@ -3,7 +3,14 @@ import { User, PaginatedUsers } from "@/types";
 
 const USERS_URL = process.env.NEXT_PUBLIC_USERS_URL ?? "http://localhost:4000/api/users";
 
-export const useUsers = (id?: string, page: number = 1, limit: number = 12, sortBy = "createdOn", order = "asc") => {
+export const useUsers = (
+  id?: string,
+  page: number = 1,
+  limit: number = 12,
+  sortBy: string = "createdOn",
+  order: string = "desc",
+  query?: string
+) => {
   const queryClient = useQueryClient();
 
   const getAll = useQuery({
@@ -111,5 +118,16 @@ export const useUsers = (id?: string, page: number = 1, limit: number = 12, sort
     },
   });
 
-  return { getAll, getById, create, replaceById, updateById, deleteById };
+  const search = useQuery({
+    queryKey: ["users", "search", query, page, limit],
+    queryFn: async (): Promise<PaginatedUsers> => {
+      const res = await fetch(`${USERS_URL}/search?q=${query}&page=${page}&limit=${limit}`);
+      if (!res.ok) throw new Error("useUsers search error: Failed to fetch search results");
+      const data = await res.json();
+      return data;
+    },
+    enabled: !!query, // only search if we have the query
+  });
+
+  return { getAll, getById, create, replaceById, updateById, deleteById, search };
 };

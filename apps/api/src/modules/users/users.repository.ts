@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { ILike, Repository } from "typeorm";
 import { UserEntity } from "./entities";
 import { dummyData } from "./users.dummyData.static";
 import { User } from "./types";
@@ -53,5 +53,22 @@ export class UsersRepository {
     } else {
       console.log("Database already contains data. skipping seed.")
     }
+  }
+
+  async search(query: string, page: number, limit: number): Promise<[UserEntity[], number]> {
+    return await this.repository.findAndCount({
+      where: [
+        { firstName: ILike(`%${query}%`) },
+        { lastName: ILike(`%${query}%`) },
+        { designation: ILike(`%${query}%`) },
+        { email: ILike(`%${query}%`) },
+        { phone: ILike(`%${query}%`) },
+      ],
+      order: {
+        firstName: 'ASC',
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+    })
   }
 }

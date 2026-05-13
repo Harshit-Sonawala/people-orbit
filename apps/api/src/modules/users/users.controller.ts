@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Query, Put, Patch, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { GetAllQueryOptionsDto, CreateUserDto, UpdateUserDto } from './dto';
+import { QueryOptionsDto, CreateUserDto, UpdateUserDto } from './dto';
 import type { User, PaginatedUsers } from './types';
 
 @Controller('users') // for URL: /api/users
@@ -8,8 +8,13 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Get()
-  async getAllUsers(@Query() paginationDto: GetAllQueryOptionsDto): Promise<PaginatedUsers> {
-    return this.usersService.getAll(paginationDto);
+  async getAllUsers(@Query() queryOptionsDto: QueryOptionsDto): Promise<PaginatedUsers> {
+    return this.usersService.getAll(queryOptionsDto);
+  }
+
+  @Get('search')
+  async searchUsers(@Query('q') query: string, @Query() queryOptionsDto: QueryOptionsDto): Promise<PaginatedUsers> {
+    return this.usersService.search(query, queryOptionsDto);
   }
 
   @Get(':id')
@@ -20,6 +25,12 @@ export class UsersController {
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
+  }
+
+  @Post('seed')
+  async seedUsers(): Promise<{ message: string }> {
+    await this.usersService.seed();
+    return { message: 'Database seeding process completed' };
   }
 
   @Put(':id')
@@ -35,11 +46,5 @@ export class UsersController {
   @Delete(':id')
   async deleteUser(@Param('id') id: string): Promise<User> {
     return this.usersService.delete(id);
-  }
-
-  @Post('seed')
-  async seedUsers(): Promise<{ message: string }> {
-    await this.usersService.seed();
-    return { message: 'Database seeding process completed' };
   }
 }

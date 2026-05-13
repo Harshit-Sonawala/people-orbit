@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import type { User, PaginatedUsers } from './types';
-import { GetAllQueryOptionsDto, CreateUserDto, UpdateUserDto, SortBy, Order } from "./dto";
+import { QueryOptionsDto, CreateUserDto, UpdateUserDto, SortBy, Order } from "./dto";
 
 import { UsersRepository } from './users.repository';
 
@@ -9,7 +9,7 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) { }
 
   // GET all records
-  async getAll(pageData: GetAllQueryOptionsDto): Promise<PaginatedUsers> {
+  async getAll(pageData: QueryOptionsDto): Promise<PaginatedUsers> {
     const { page = 1, limit = 20, sortBy = SortBy.CREATED, order = Order.ASC } = pageData;
 
     const sortFieldMap: Record<SortBy, string> = {
@@ -102,5 +102,22 @@ export class UsersService {
   // POST seed initial data to the db
   async seed(): Promise<void> {
     return await this.usersRepository.seed();
+  }
+
+  // GET search results based on query
+  async search(query: string, pageData: QueryOptionsDto): Promise<PaginatedUsers> {
+    const { page = 1, limit = 20 } = pageData;
+    const [data, total] = await this.usersRepository.search(query, page, limit);
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data,
+      meta: {
+        total,
+        limit,
+        totalPages,
+        currentPage: page,
+      },
+    };
   }
 }

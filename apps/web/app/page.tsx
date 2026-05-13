@@ -82,12 +82,18 @@ export default function Home() {
           Error: {usersError.message}
         </p>
       )}
-      {users && (
+      {users && users.data.length > 0 ? (
         <div className="flex flex-col gap-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {users.data.map((eachUser, i) => (
-              <UserCard User={eachUser} key={eachUser.id ?? i} />
-            ))}
+          <div className="flex flex-col gap-2">
+            <p className="text-sm text-secondary">
+              Found {users.meta.total} record
+              {users.meta.total !== 1 ? "s" : ""}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {users.data.map((eachUser, i) => (
+                <UserCard User={eachUser} key={eachUser.id ?? i} />
+              ))}
+            </div>
           </div>
 
           <div className="flex flex-row items-center justify-center mx-auto">
@@ -151,6 +157,20 @@ export default function Home() {
             </div>
           </div>
         </div>
+      ) : (
+        !usersIsLoading &&
+        users && (
+          <div className="flex flex-col items-center justify-center py-20 gap-2">
+            <p className="text-xl font-bold">No Records Found</p>
+            <p className="text-secondary text-center">
+              There seems to be an issue from our side.
+            </p>
+            <p className="text-sm text-secondary-alt mt-4">
+              Please wait for an administrator to load more records to the
+              database.
+            </p>
+          </div>
+        )
       )}
     </div>
   );

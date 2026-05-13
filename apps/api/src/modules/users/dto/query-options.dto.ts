@@ -13,7 +13,7 @@ export enum Order {
   DESC = 'desc',
 }
 
-export class GetAllQueryOptionsDto { // For Query parameters like page & limit
+export class QueryOptionsDto { // For Query parameters like page & limit
   @IsOptional()
   @Type(() => Number) // transform into number
   @IsInt()
