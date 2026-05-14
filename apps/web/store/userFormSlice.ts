@@ -9,7 +9,7 @@ const userFormInitialState: UsersFormState = {
 }
 
 export const userFormSlice = createSlice({
-  name: 'usersForm',
+  name: 'userForm',
   initialState: userFormInitialState,
   reducers: {
     // Update or initialize a form's draft state
