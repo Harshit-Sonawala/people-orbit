@@ -1,4 +1,15 @@
 {
   "postman.settings.dotenv-detection-notification-visibility": false,
-  "js/ts.tsdk.path": "node_modules\\typescript\\lib"
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/.next/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.next": true
+  },
+  "js/ts.tsserver.automaticTypeAcquisition.enabled": true
 }
