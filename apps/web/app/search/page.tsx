@@ -1,7 +1,7 @@
 "use client";
 // import { useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useUsers } from "@/hooks/useUsers";
+import { useUsers } from "@/hooks";
 import {
   Heading1,
   Heading2,
@@ -29,12 +29,15 @@ export default function Search() {
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  const {
-    data: results,
-    isLoading: resultsIsLoading,
-    isError: resultsIsError,
-    error: resultsError,
-  } = useUsers(undefined, page, limit, undefined, undefined, query).search;
+  const { search } = useUsers();
+  const { data: data, isLoading, isError, error } = search(query, page, limit);
+
+  // const {
+  //   data: data,
+  //   isLoading: resultsIsLoading,
+  //   isError: resultsIsError,
+  //   error: resultsError,
+  // } = useUsers(undefined, page, limit, undefined, undefined, query).search;
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
@@ -47,26 +50,24 @@ export default function Search() {
         <Divider />
       </div>
 
-      {resultsIsLoading && (
+      {isLoading && (
         <p className="text-center py-8 text-secondary">Finding people...</p>
       )}
 
-      {resultsIsError && (
-        <p className="text-center text-error py-8">
-          Error: {resultsError.message}
-        </p>
+      {isError && (
+        <p className="text-center text-error py-8">Error: {error.message}</p>
       )}
 
-      {results && results.data.length > 0 ? (
+      {data && data.data.length > 0 ? (
         <div className="flex flex-col gap-6">
           {/* Layout and spacing synced with Home.tsx */}
           <div className="flex flex-col gap-2">
             <p className="text-sm text-foreground-alt">
-              Found {results.meta.total} result
-              {results.meta.total !== 1 ? "s" : ""}
+              Found {data.meta.total} result
+              {data.meta.total !== 1 ? "s" : ""}
             </p>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {results.data.map((eachUser, i) => (
+              {data.data.map((eachUser, i) => (
                 <SearchResultCard User={eachUser} key={eachUser.id ?? i} />
               ))}
             </div>
@@ -89,10 +90,10 @@ export default function Search() {
               </Button>
               <div className="flex flex-row gap-4">
                 {Array.from(
-                  { length: results.meta.totalPages },
+                  { length: data.meta.totalPages },
                   (_, i) => i + 1,
                 ).map((eachPage) =>
-                  results.meta.currentPage === eachPage ? (
+                  data.meta.currentPage === eachPage ? (
                     <Button
                       key={eachPage}
                       variant="rounded"
@@ -118,13 +119,13 @@ export default function Search() {
                 )}
               </div>
               <Button
-                disabled={page === results.meta.totalPages}
+                disabled={page === data.meta.totalPages}
                 variant="rounded"
                 onClick={() => {
-                  if (page < results.meta.totalPages) {
+                  if (page < data.meta.totalPages) {
                     updateQuery({ page: page + 1 });
                     // setPage((oldPage) =>
-                    //   Math.min(results.meta.totalPages, oldPage + 1),
+                    //   Math.min(data.meta.totalPages, oldPage + 1),
                     // );
                   }
                 }}
@@ -136,7 +137,7 @@ export default function Search() {
           </div>
         </div>
       ) : (
-        !resultsIsLoading &&
+        !isLoading &&
         query && (
           <div className="flex flex-col items-stretch justify-center py-10 gap-2">
             <Heading1>No Results Found</Heading1>

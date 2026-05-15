@@ -1,5 +1,6 @@
 "use client";
-// import { useState } from "react";
+import { useEffect } from "react";
+// import { useUsersService } from "@/hooks/users.service";
 import { useUsers } from "@/hooks/useUsers";
 import { Heading2, DropDown, Button, Divider, UserCard } from "@/components";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -12,29 +13,29 @@ import {
   HistoryRounded,
   SortByAlphaRounded,
 } from "@mui/icons-material";
+import { User } from "@/types";
 
 export default function Home() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const page = Number(searchParams.get("page")) || 1;
+  const limit = 30;
+  const sortBy = searchParams.get("sortBy") || "createdOn";
+  const order = searchParams.get("order") || "desc";
+
+  // For Dropdown text
   const sortOptions = [
     { label: "Date Created", value: "createdOn" },
     { label: "Date Updated", value: "updatedOn" },
     { label: "First Name", value: "firstName" },
     { label: "Last Name", value: "lastName" },
   ];
-
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const page = Number(searchParams.get("page")) || 1;
-  const sortBy = searchParams.get("sortBy") || "createdOn";
   const currentSortByOption =
     sortOptions.find((option) => option.value === sortBy) || sortOptions[0];
-  const order = searchParams.get("order") || "desc";
-  // const [page, setPage] = useState(1);
-  // const [sortBy, setSortBy] = useState(0);
-  // const [order, setOrder] = useState("desc");
-  const limit = 30;
 
+  // Updates the URL & routes according to params
   const updateQuery = (updates: Record<string, string | number>) => {
     const params = new URLSearchParams(searchParams.toString());
     Object.entries(updates).forEach(([key, value]) => {
@@ -43,12 +44,13 @@ export default function Home() {
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  const {
-    data: users,
-    isLoading: usersIsLoading,
-    isError: usersIsError,
-    error: usersError,
-  } = useUsers(undefined, page, limit, currentSortByOption.value, order).getAll;
+  const { getAll } = useUsers();
+  const { data, isLoading, isError, error } = getAll(
+    page,
+    limit,
+    sortBy,
+    order,
+  );
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
@@ -62,8 +64,6 @@ export default function Home() {
                   sortBy: sortOptions[index].value,
                   page: 1, // reset to page 1 on new sort
                 });
-                // setSortBy(index);
-                // setPage(1);
               }}
               label={currentSortByOption.label}
               icon={<SortRounded />}
@@ -80,8 +80,6 @@ export default function Home() {
                   order: order === "asc" ? "desc" : "asc",
                   page: 1,
                 });
-                // setOrder(order === "asc" ? "desc" : "asc");
-                // setPage(1);
               }}
             >
               {order === "asc" ? (
@@ -100,23 +98,19 @@ export default function Home() {
         </div>
         <Divider />
       </div>
-      {usersIsLoading && (
-        <p className="text-center py-8">Loading User Data...</p>
+      {isLoading && <p className="text-center py-8">Loading User Data...</p>}
+      {isError && (
+        <p className="text-center text-error py-8">Error: {error.message}</p>
       )}
-      {usersIsError && (
-        <p className="text-center text-error py-8">
-          Error: {usersError.message}
-        </p>
-      )}
-      {users && users.data.length > 0 ? (
+      {data && data.data.length > 0 ? (
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
             <p className="text-sm text-foreground-alt">
-              Found {users.meta.total} record
-              {users.meta.total !== 1 ? "s" : ""}
+              Found {data.meta.total} record
+              {data.meta.total !== 1 ? "s" : ""}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {users.data.map((eachUser, i) => (
+              {data.data.map((eachUser: User, i: number) => (
                 <UserCard User={eachUser} key={eachUser.id ?? i} />
               ))}
             </div>
@@ -139,10 +133,10 @@ export default function Home() {
               </Button>
               <div className="flex flex-row gap-4">
                 {Array.from(
-                  { length: users.meta.totalPages },
+                  { length: data.meta.totalPages },
                   (_, i) => i + 1,
                 ).map((eachPage) =>
-                  users.meta.currentPage === eachPage ? (
+                  data.meta.currentPage === eachPage ? (
                     <Button
                       key={eachPage}
                       variant="rounded"
@@ -169,10 +163,10 @@ export default function Home() {
                 )}
               </div>
               <Button
-                disabled={page === users.meta.totalPages}
+                disabled={page === data.meta.totalPages}
                 variant="rounded"
                 onClick={() => {
-                  if (page < users.meta.totalPages) {
+                  if (page < data.meta.totalPages) {
                     updateQuery({ page: page + 1 });
                     // setPage((oldPage) =>
                     //   Math.min(users.meta.totalPages, oldPage + 1),
@@ -187,8 +181,8 @@ export default function Home() {
           </div>
         </div>
       ) : (
-        !usersIsLoading &&
-        users && (
+        !isLoading &&
+        data && (
           <div className="flex flex-col items-center justify-center py-20 gap-2">
             <p className="text-xl font-bold">No Records Found</p>
             <p className="text-secondary text-center">

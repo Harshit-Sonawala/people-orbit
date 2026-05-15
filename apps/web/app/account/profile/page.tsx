@@ -1,8 +1,13 @@
 "use client";
 import { useState } from "react";
 import { Formik } from "formik";
+import {
+  nameRegex,
+  designationRegex,
+  phoneRegex,
+} from "../_components/formRegexes";
 import * as Yup from "yup";
-import { useUsers } from "@/hooks/useUsers";
+import { useUsers } from "@/hooks";
 import {
   Heading1,
   Heading2,
@@ -34,20 +39,17 @@ import {
 export default function Profile() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const loggedInId = "arjun-mehta-1755163800000";
-  const nameRegex = /^[A-Za-z\s'-]+$/;
-  const designationRegex = /^[A-Za-z0-9\s'-\.&/]+$/;
-  const phoneRegex =
-    /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/;
 
+  const { getById } = useUsers();
   const {
     data: user,
     isLoading: userIsLoading,
     isError: userIsError,
     error: userError,
-  } = useUsers(loggedInId).getById;
+  } = getById(loggedInId);
 
-  const { mutate: replaceUsers, isPending: replaceUsersIsPending } =
-    useUsers().replaceById;
+  const { replaceById } = useUsers();
+  const { mutate, isPending } = replaceById();
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
@@ -120,7 +122,7 @@ export default function Profile() {
             skills: values.skills
               ? values.skills
                   .split(",")
-                  .map((s) => s.trim())
+                  .map((skill: string) => skill.trim())
                   .filter(Boolean)
               : [],
             bio: values.bio || undefined,
@@ -134,7 +136,7 @@ export default function Profile() {
                 }
               : undefined,
           };
-          replaceUsers(
+          mutate(
             { replaceId: loggedInId, replaceData: formattedData },
             {
               onSuccess: () => {
@@ -168,12 +170,10 @@ export default function Profile() {
                   </Button>
                 ) : (
                   <div className="flex flex-row items-center justify-center gap-2">
-                    <Button disabled={replaceUsersIsPending} type="submit">
+                    <Button disabled={isPending} type="submit">
                       <div className="flex flex-row items-center justify-center gap-2 px-4">
                         <SaveRounded className="icon-md" />
-                        <p>
-                          {replaceUsersIsPending ? `Saving...` : `Save Changes`}
-                        </p>
+                        <p>{isPending ? `Saving...` : `Save Changes`}</p>
                       </div>
                     </Button>
                     <Button
@@ -394,12 +394,12 @@ export default function Profile() {
                         />
                       ) : (
                         <div className="flex flex-row gap-4">
-                          {user.skills?.map((eachSkill, i) => (
+                          {user.skills?.map((skill: string, i: number) => (
                             <p
                               key={i}
                               className="bg-surface-top text-primary font-semibold rounded-full py-1 px-3"
                             >
-                              {eachSkill}
+                              {skill}
                             </p>
                           ))}
                         </div>

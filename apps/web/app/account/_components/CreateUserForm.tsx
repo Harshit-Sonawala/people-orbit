@@ -1,12 +1,8 @@
 "use client";
-import { useEffect } from "react";
-import { useUsers } from "@/hooks/useUsers"; // TanstackQuery Hook
+import { useUsers } from "@/hooks";
 import { useFormik } from "formik";
+import { nameRegex, designationRegex, phoneRegex } from "./formRegexes";
 import * as Yup from "yup";
-
-// Redux
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setUserFormDraft, clearUserFormDraft } from "@/store/userFormSlice";
 
 import { Card, Button, TextInput, TextArea } from "@/components";
 import {
@@ -22,42 +18,28 @@ import {
   GitHub,
 } from "@mui/icons-material";
 
-const FORM_KEY = "create-user";
-
 export const CreateUserForm = () => {
-  const nameRegex = /^[A-Za-z\s'-]+$/; // a-z, A-Z, spaces, hyphens
-  const designationRegex = /^[A-Za-z0-9\s'-\.&/]+$/; // above + periods, ampersands, slashes
-  const phoneRegex =
-    /^((\+[1-9]{1,4}[\s\-]*)|([\(][0-9]{2,3}[\)][\s\-]*)|([0-9]{2,4})[\s\-]*)*?[0-9]{3,4}?[\s\-]*[0-9]{3,4}?$/; // complex intl phone regex
-  const defaultValues = {
-    firstName: "",
-    lastName: "",
-    age: "",
-    designation: "",
-    email: "",
-    phone: "",
-    bio: "",
-    skills: "",
-    socialLinks: {
-      linkedIn: "",
-      website: "",
-      github: "",
-    },
-    profilePic: "",
-    bgImage: "",
-  };
+  const { create } = useUsers();
+  const { mutate, isPending } = create();
 
-  // Redux
-  const dispatch = useAppDispatch();
-  const draftValues = useAppSelector((state) => state.userForm.forms[FORM_KEY]);
-
-  // TanstackQuery Hook
-  const { mutate: createUser, isPending: createUserIsPending } =
-    useUsers().create;
-
-  // Formik
   const formik = useFormik({
-    initialValues: draftValues || defaultValues,
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      age: "",
+      designation: "",
+      email: "",
+      phone: "",
+      bio: "",
+      skills: "",
+      socialLinks: {
+        linkedIn: "",
+        website: "",
+        github: "",
+      },
+      profilePic: "",
+      bgImage: "",
+    },
     enableReinitialize: true,
     validationSchema: Yup.object({
       firstName: Yup.string()
@@ -122,24 +104,16 @@ export const CreateUserForm = () => {
             }
           : undefined,
       };
-      createUser(formattedData, {
+      mutate(formattedData, {
         onSuccess: () => {
           // console.log(
           //   `Data for ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
           // );
-          dispatch(clearUserFormDraft(FORM_KEY));
           resetForm();
         },
       });
     },
   });
-
-  // Update Redux side effect
-  useEffect(() => {
-    if (formik.dirty) {
-      dispatch(setUserFormDraft({ key: FORM_KEY, values: formik.values }));
-    }
-  }, [formik.values, formik.dirty, dispatch]);
 
   // Fix error type issue
   const getError = (
@@ -340,12 +314,8 @@ export const CreateUserForm = () => {
         </div>
 
         <div className="flex flex-row gap-4">
-          <Button
-            disabled={createUserIsPending}
-            type="submit"
-            className="flex-1 py-2"
-          >
-            {createUserIsPending ? `Saving...` : `Submit`}
+          <Button disabled={isPending} type="submit" className="flex-1 py-2">
+            {isPending ? `Saving...` : `Submit`}
           </Button>
           <Button
             variant="outlined"

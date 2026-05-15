@@ -11,12 +11,9 @@ export const SearchInput = () => {
   const allowedCharsRegex = /[^A-Za-z0-9\s'.&/@+-]/g;
 
   return (
-    <div className="hidden md:block flex flex-row items-center gap-2 relative">
+    <div className="hidden md:block flex-row items-center gap-2 relative">
       <Formik
         initialValues={{ query: "" }}
-        // validationSchema={Yup.object({
-        //   query: Yup.string().max(40, "Search must be within 40 characters"),
-        // })}
         onSubmit={(values, { resetForm }) => {
           const sanitizedQuery = values.query
             .trim()
