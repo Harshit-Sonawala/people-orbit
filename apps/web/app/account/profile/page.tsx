@@ -41,12 +41,7 @@ export default function Profile() {
   const loggedInId = "arjun-mehta-1755163800000";
 
   const { getById } = useUsers();
-  const {
-    data: user,
-    isLoading: userIsLoading,
-    isError: userIsError,
-    error: userError,
-  } = getById(loggedInId);
+  const { data, isLoading, isError, error } = getById(loggedInId);
 
   const { replaceById } = useUsers();
   const { mutate, isPending } = replaceById();
@@ -56,21 +51,21 @@ export default function Profile() {
       <Formik
         enableReinitialize
         initialValues={{
-          firstName: user?.firstName ?? "",
-          lastName: user?.lastName ?? "",
-          age: user?.age ?? "",
-          designation: user?.designation ?? "",
-          email: user?.email ?? "",
-          phone: user?.phone ?? "",
-          bio: user?.bio ?? "",
-          skills: user?.skills?.join(", ") ?? "",
+          firstName: data?.firstName ?? "",
+          lastName: data?.lastName ?? "",
+          age: data?.age ?? "",
+          designation: data?.designation ?? "",
+          email: data?.email ?? "",
+          phone: data?.phone ?? "",
+          bio: data?.bio ?? "",
+          skills: data?.skills?.join(", ") ?? "",
           socialLinks: {
-            linkedIn: user?.socialLinks?.linkedIn ?? "",
-            website: user?.socialLinks?.website ?? "",
-            github: user?.socialLinks?.github ?? "",
+            linkedIn: data?.socialLinks?.linkedIn ?? "",
+            website: data?.socialLinks?.website ?? "",
+            github: data?.socialLinks?.github ?? "",
           },
-          profilePic: user?.profilePic ?? "",
-          bgImage: user?.bgImage ?? "",
+          profilePic: data?.profilePic ?? "",
+          bgImage: data?.bgImage ?? "",
         }}
         validationSchema={Yup.object({
           firstName: Yup.string()
@@ -193,15 +188,13 @@ export default function Profile() {
               </div>
               <Divider variant="surface-top" />
             </div>
-            {userIsLoading && (
-              <p className="text-center py-8">Loading Data...</p>
-            )}
-            {userIsError && (
+            {isLoading && <p className="text-center py-8">Loading Data...</p>}
+            {isError && (
               <p className="text-center text-error py-8">
-                Error: {userError.message}
+                Error: {error.message}
               </p>
             )}
-            {user && (
+            {data && (
               <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
                 <div className="relative h-84 rounded-lg overflow-hidden">
                   <Image
@@ -215,7 +208,7 @@ export default function Profile() {
                   <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top overflow-hidden">
                     <Image
                       src={profilePic}
-                      alt={user.firstName.charAt(0)}
+                      alt={data.firstName.charAt(0)}
                       fill
                       sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
                       className="object-cover"
@@ -250,7 +243,7 @@ export default function Profile() {
                           </div>
                         ) : (
                           <Heading1>
-                            {user.firstName} {user.lastName}
+                            {data.firstName} {data.lastName}
                           </Heading1>
                         )}
                         <div className="flex flex-col items-start justify-center gap-2">
@@ -260,7 +253,7 @@ export default function Profile() {
                             <div className="flex flex-row items-center gap-2">
                               <WorkRounded className={`text-primary`} />
                               <Heading3 className="text-primary">
-                                {user.designation}
+                                {data.designation}
                               </Heading3>
                             </div>
                           )}
@@ -327,9 +320,9 @@ export default function Profile() {
                         </div>
                       ) : (
                         <div className="flex flex-row items-center justify-between gap-4">
-                          {user.socialLinks?.linkedIn && (
+                          {data.socialLinks?.linkedIn && (
                             <a
-                              href={user.socialLinks?.linkedIn}
+                              href={data.socialLinks?.linkedIn}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 h-10 w-10 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -337,9 +330,9 @@ export default function Profile() {
                               <LinkedIn />
                             </a>
                           )}
-                          {user.socialLinks?.website && (
+                          {data.socialLinks?.website && (
                             <a
-                              href={user.socialLinks?.website}
+                              href={data.socialLinks?.website}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -347,9 +340,9 @@ export default function Profile() {
                               <LanguageRounded />
                             </a>
                           )}
-                          {user.socialLinks?.github && (
+                          {data.socialLinks?.github && (
                             <a
-                              href={user.socialLinks?.github}
+                              href={data.socialLinks?.github}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-2 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
@@ -363,7 +356,7 @@ export default function Profile() {
                     <Divider variant="surface-top" />
                   </div>
 
-                  {(isEdit || user.bio) && (
+                  {(isEdit || data.bio) && (
                     <div className="flex flex-col gap-2">
                       <Heading3>About Me</Heading3>
                       {isEdit ? (
@@ -375,13 +368,13 @@ export default function Profile() {
                           {...formik.getFieldProps("bio")}
                         />
                       ) : (
-                        <p>{user.bio}</p>
+                        <p>{data.bio}</p>
                       )}
                     </div>
                   )}
 
                   {(isEdit ||
-                    (user.skills !== undefined && user.skills?.length > 0)) && (
+                    (data.skills !== undefined && data.skills?.length > 0)) && (
                     <div className="flex flex-col gap-2">
                       <Heading3>Skills</Heading3>
                       {isEdit ? (
@@ -394,7 +387,7 @@ export default function Profile() {
                         />
                       ) : (
                         <div className="flex flex-row gap-4">
-                          {user.skills?.map((skill: string, i: number) => (
+                          {data.skills?.map((skill: string, i: number) => (
                             <p
                               key={i}
                               className="bg-surface-top text-primary font-semibold rounded-full py-1 px-3"
@@ -424,7 +417,7 @@ export default function Profile() {
                             {...formik.getFieldProps("email")}
                           />
                         ) : (
-                          <p>{user.email}</p>
+                          <p>{data.email}</p>
                         )}
                       </div>
 
@@ -442,7 +435,7 @@ export default function Profile() {
                             {...formik.getFieldProps("phone")}
                           />
                         ) : (
-                          <p>{user.phone}</p>
+                          <p>{data.phone}</p>
                         )}
                       </div>
                     </div>
@@ -450,7 +443,7 @@ export default function Profile() {
                   <div className="flex flex-col items-stretch justify-center w-full gap-2">
                     <Heading3>Other</Heading3>
 
-                    {(isEdit || user.age) && (
+                    {(isEdit || data.age) && (
                       <div className="flex flex-row items-center gap-2">
                         <CakeRounded className={`text-foreground-alt`} />
                         <label htmlFor="age">Age:</label>
@@ -465,7 +458,7 @@ export default function Profile() {
                             {...formik.getFieldProps("age")}
                           />
                         ) : (
-                          <p>{user.age}</p>
+                          <p>{data.age}</p>
                         )}
                       </div>
                     )}
@@ -473,7 +466,7 @@ export default function Profile() {
                     <div className="flex flex-row items-center gap-2">
                       <VerifiedRounded className="text-foreground-alt" />
                       <p>{`Member since ${new Date(
-                        user.createdOn,
+                        data.createdOn,
                       ).toLocaleDateString("en-US", {
                         day: "numeric",
                         month: "short",
@@ -484,7 +477,7 @@ export default function Profile() {
                     <div className="flex flex-row items-center gap-2">
                       <HistoryRounded className="text-foreground-alt" />
                       <p>{`Last updated on ${new Date(
-                        user.updatedOn,
+                        data.updatedOn,
                       ).toLocaleDateString("en-US", {
                         day: "numeric",
                         month: "short",
@@ -494,7 +487,7 @@ export default function Profile() {
 
                     <div className="flex flex-row items-center gap-2">
                       <AlternateEmailRounded className="text-foreground-alt" />
-                      <p>{`User ID: ${user.id}`}</p>
+                      <p>{`User ID: ${data.id}`}</p>
                     </div>
                   </div>
                 </Card>
