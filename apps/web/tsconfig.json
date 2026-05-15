@@ -15,20 +15,15 @@
     "incremental": true,
     "plugins": [{ "name": "next" }],
     "paths": {
-      "@/*": ["./*"] // ✅ keep as-is, no src/ folder in web
+      "@/*": ["./*"]
     }
   },
-  "include": [
-    "app", // ✅ Next.js app router directory
-    "components", // ✅ if you have a components/ folder at web root
-    "hooks",
-    "next-env.d.ts"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": [
     "node_modules",
     "dist",
     "build",
-    ".next", // ✅ critical — excludes Next.js build output
+    ".next",
     "coverage",
     "**/*.spec.ts",
     "**/*.test.ts"

@@ -10,6 +10,5 @@
     "**/node_modules": true,
     "**/dist": true,
     "**/.next": true
-  },
-  "js/ts.tsserver.automaticTypeAcquisition.enabled": true
+  }
 }
