@@ -1,26 +1,24 @@
 "use client";
-import React, { useState, useRef, type ReactNode } from "react";
+import React, { useState, type ReactNode } from "react";
 import { Button } from "@/components";
 import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
 
-type MenuOption = {
+export type DropDownOption = {
   label: string;
   icon?: ReactNode;
 };
 
 type Props = {
-  label: string;
-  icon?: ReactNode;
-  options: MenuOption[] | string[];
-  onSelectAction: (index: number) => void;
+  options: Map<string, DropDownOption>;
+  selectedValue: string;
+  onSelect: (key: string) => void;
   className?: string;
 };
 
 export const DropDown = ({
-  label,
-  icon,
   options,
-  onSelectAction,
+  selectedValue,
+  onSelect,
   className,
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -31,20 +29,20 @@ export const DropDown = ({
   };
   const handleClose = () => setAnchorEl(null);
 
+  const selectedOption = options.get(selectedValue);
+  const displayLabel = selectedOption?.label ?? selectedValue;
+  const displayIcon = selectedOption?.icon;
+
   return (
     <div>
-      <Button
-        onClick={handleOpen}
-        className={`px-1 gap-2 ${className}`}
-      >
-        {icon && icon}
-        {label}
+      <Button onClick={handleOpen} className={`px-1 gap-2 ${className}`}>
+        {displayIcon && displayIcon}
+        {displayLabel}
       </Button>
       <Menu
         anchorEl={anchorEl}
         open={menuOpen}
         onClose={handleClose}
-
         sx={{
           borderRadius: "4rem",
           paddingX: "1rem",
@@ -61,16 +59,12 @@ export const DropDown = ({
           },
         }}
       >
-        {options.map((option, index) => {
-          const isString = typeof option === "string";
-          const text = isString ? option : option.label;
-          const icon = isString ? null : option.icon;
-
+        {Array.from(options.entries()).map(([key, option]) => {
           return (
             <MenuItem
-              key={text}
+              key={key}
               onClick={() => {
-                onSelectAction(index);
+                onSelect(key);
                 handleClose();
               }}
               sx={{
@@ -88,8 +82,8 @@ export const DropDown = ({
                 },
               }}
             >
-              {icon && <ListItemIcon>{icon}</ListItemIcon>}
-              <ListItemText disableTypography>{text}</ListItemText>
+              {option.icon && <ListItemIcon>{option.icon}</ListItemIcon>}
+              <ListItemText disableTypography>{option.label}</ListItemText>
             </MenuItem>
           );
         })}

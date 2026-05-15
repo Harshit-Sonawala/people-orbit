@@ -1,19 +1,31 @@
 "use client";
-import { useEffect } from "react";
-// import { useUsersService } from "@/hooks/users.service";
 import { useUsers } from "@/hooks/useUsers";
-import { Heading2, DropDown, Button, Divider, UserCard } from "@/components";
+import {
+  Heading1,
+  Heading2,
+  DropDown,
+  Button,
+  Divider,
+  UserCard,
+  type DropDownOption,
+} from "@/components";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import {
   ArrowBackRounded,
   ArrowForwardRounded,
   ArrowUpwardRounded,
   ArrowDownwardRounded,
-  SortRounded,
   HistoryRounded,
   SortByAlphaRounded,
 } from "@mui/icons-material";
 import { User } from "@/types";
+
+const sortMap = new Map<string, DropDownOption>([
+  ["createdOn", { label: "Date Created", icon: <HistoryRounded /> }],
+  ["updatedOn", { label: "Date Updated", icon: <HistoryRounded /> }],
+  ["firstName", { label: "First Name", icon: <SortByAlphaRounded /> }],
+  ["lastName", { label: "Last Name", icon: <SortByAlphaRounded /> }],
+]);
 
 export default function Home() {
   const router = useRouter();
@@ -25,18 +37,8 @@ export default function Home() {
   const sortBy = searchParams.get("sortBy") || "createdOn";
   const order = searchParams.get("order") || "desc";
 
-  // For Dropdown text
-  const sortOptions = [
-    { label: "Date Created", value: "createdOn" },
-    { label: "Date Updated", value: "updatedOn" },
-    { label: "First Name", value: "firstName" },
-    { label: "Last Name", value: "lastName" },
-  ];
-  const currentSortByOption =
-    sortOptions.find((option) => option.value === sortBy) || sortOptions[0];
-
-  // Updates the URL & routes according to params
-  const updateQuery = (updates: Record<string, string | number>) => {
+  // Updates current page query params based on Tanstack results
+  const updateURLSearchParams = (updates: Record<string, string | number>) => {
     const params = new URLSearchParams(searchParams.toString());
     Object.entries(updates).forEach(([key, value]) => {
       params.set(key, String(value));
@@ -59,24 +61,18 @@ export default function Home() {
           <Heading2>Browse All Records</Heading2>
           <div className="flex flex-row items-center justify-between gap-2">
             <DropDown
-              onSelectAction={(index) => {
-                updateQuery({
-                  sortBy: sortOptions[index].value,
+              options={sortMap}
+              selectedValue={sortBy}
+              onSelect={(key) => {
+                updateURLSearchParams({
+                  sortBy: key,
                   page: 1, // reset to page 1 on new sort
                 });
               }}
-              label={currentSortByOption.label}
-              icon={<SortRounded />}
-              options={[
-                { label: "Date Created", icon: <HistoryRounded /> },
-                { label: "Date Updated", icon: <HistoryRounded /> },
-                { label: "First Name", icon: <SortByAlphaRounded /> },
-                { label: "Last Name", icon: <SortByAlphaRounded /> },
-              ]}
             />
             <Button
               onClick={() => {
-                updateQuery({
+                updateURLSearchParams({
                   order: order === "asc" ? "desc" : "asc",
                   page: 1,
                 });
@@ -123,7 +119,7 @@ export default function Home() {
                 variant="rounded"
                 onClick={() => {
                   if (page > 1) {
-                    updateQuery({ page: page - 1 });
+                    updateURLSearchParams({ page: page - 1 });
                     // setPage((oldPage) => Math.max(oldPage - 1, 1));
                   }
                 }}
@@ -151,7 +147,7 @@ export default function Home() {
                       className="w-9 h-9"
                       onClick={() => {
                         if (eachPage !== page) {
-                          updateQuery({ page: eachPage });
+                          updateURLSearchParams({ page: eachPage });
                           // prevent unnecessary fetch
                           // setPage(eachPage);
                         }
@@ -167,7 +163,7 @@ export default function Home() {
                 variant="rounded"
                 onClick={() => {
                   if (page < data.meta.totalPages) {
-                    updateQuery({ page: page + 1 });
+                    updateURLSearchParams({ page: page + 1 });
                     // setPage((oldPage) =>
                     //   Math.min(users.meta.totalPages, oldPage + 1),
                     // );
@@ -183,13 +179,13 @@ export default function Home() {
       ) : (
         !isLoading &&
         data && (
-          <div className="flex flex-col items-center justify-center py-20 gap-2">
-            <p className="text-xl font-bold">No Records Found</p>
-            <p className="text-secondary text-center">
+          <div className="flex flex-col items-stretch justify-center py-20 gap-2">
+            <Heading1>No Records Found</Heading1>
+            <p className="text-secondary font-semibold">
               There seems to be an issue from our side.
             </p>
-            <p className="text-sm text-secondary-alt mt-4">
-              Please wait for an administrator to load more records to the
+            <p className="text-sm text-foreground-alt">
+              Please wait for an admin to load more user records to the
               database.
             </p>
           </div>

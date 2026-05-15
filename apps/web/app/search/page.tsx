@@ -1,5 +1,4 @@
 "use client";
-// import { useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useUsers } from "@/hooks";
 import {
@@ -31,13 +30,6 @@ export default function Search() {
 
   const { search } = useUsers();
   const { data: data, isLoading, isError, error } = search(query, page, limit);
-
-  // const {
-  //   data: data,
-  //   isLoading: resultsIsLoading,
-  //   isError: resultsIsError,
-  //   error: resultsError,
-  // } = useUsers(undefined, page, limit, undefined, undefined, query).search;
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
@@ -139,13 +131,13 @@ export default function Search() {
       ) : (
         !isLoading &&
         query && (
-          <div className="flex flex-col items-stretch justify-center py-10 gap-2">
+          <div className="flex flex-col items-stretch justify-center py-20 gap-2">
             <Heading1>No Results Found</Heading1>
-            <p className="text-secondary">
-              We couldn't find anyone matching "{query}".
+            <p className="text-secondary font-semibold">
+              We couldn't find any results matching "{query}".
             </p>
             <p className="text-sm text-foreground-alt">
-              Try checking your spelling or searching by different keywords.
+              Try checking your spelling or searching with different keywords.
             </p>
           </div>
         )
