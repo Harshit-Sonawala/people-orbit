@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 import { Formik } from "formik";
 import {
   nameRegex,
@@ -38,7 +40,10 @@ import {
 
 export default function Profile() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const loggedInId = "arjun-mehta-1755163800000";
+  const loggedInUser = useSelector(
+    (state: RootState) => state.auth.loggedInUser,
+  );
+  const loggedInId = loggedInUser?.id ?? "arjun-mehta-1755163800000";
 
   const { getById } = useUsers();
   const { data, isLoading, isError, error } = getById(loggedInId);
