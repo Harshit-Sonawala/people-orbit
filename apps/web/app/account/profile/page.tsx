@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { setUser } from "@/store/authSlice";
 import { Formik } from "formik";
 import {
   nameRegex,
@@ -40,6 +41,7 @@ import {
 
 export default function Profile() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const loggedInUser = useSelector(
     (state: RootState) => state.auth.loggedInUser,
   );
@@ -139,10 +141,11 @@ export default function Profile() {
           mutate(
             { replaceId: loggedInId, replaceData: formattedData },
             {
-              onSuccess: () => {
+              onSuccess: (updatedUser) => {
                 console.log(
                   `Data for ID: ${loggedInId}, ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
                 );
+                dispatch(setUser(updatedUser));
                 resetForm();
                 setIsEdit((prev) => !prev);
               },
