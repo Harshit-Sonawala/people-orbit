@@ -9,14 +9,24 @@
 
 :root {
   --background: #f5f5f5;
-  --foreground: #111111;
-  --primary: #00bbcc;
-  --primary-alt: #03acca;
-  --secondary: #206eea;
+  --foreground: #121212;
+  --primary: #03abc9;
+  --primary-alt: #0ca6de;
+  --secondary: #03aaa5;
   --surface: #ededed;
   --surface-top: #e3e3e3;
   --foreground-alt: #999999;
   --error: #e05454;
+}
+
+.dark {
+  --background: #121212;
+  --foreground: #f5f5f5;
+  --primary: #06a7c3;
+  --primary-alt: #0689b9;
+  --secondary: #0fc1af;
+  --surface: #1d1d1d;
+  --surface-top: #2d2d2d;
 }
 
 @theme {
@@ -59,7 +69,7 @@ label {
   font-size: 1.1rem !important;
 }
 .icon-md {
-  font-size: 1.2rem !important;
+  font-size: 1.4rem !important;
 }
 .icon-lg {
   font-size: 2rem !important;

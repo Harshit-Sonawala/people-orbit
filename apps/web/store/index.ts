@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userFormReducer from "./userFormSlice";
+import themeReducer from "./themeSlice";
 
 export const store = configureStore({
   reducer: {
-    userForm: userFormReducer,
+    theme: themeReducer,
   },
 });
 

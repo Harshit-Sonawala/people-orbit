@@ -1,5 +1,5 @@
 import { SatelliteAltRounded, AccountCircleRounded } from "@mui/icons-material";
-import { CustomLink, SearchInput } from "@/components";
+import { CustomLink, SearchInput, ThemeToggle } from "@/components";
 
 export const TopBar = () => {
   return (
@@ -21,6 +21,7 @@ export const TopBar = () => {
       <div className="flex flex-row items-center justify-center gap-4 rounded-md">
         <CustomLink href="/about">About</CustomLink>
         <CustomLink href="/demo">Demo</CustomLink>
+        <ThemeToggle />
         <a
           href="/account"
           rel="noopener noreferrer"

@@ -115,7 +115,7 @@ export const CreateUserForm = () => {
     },
   });
 
-  // Fix error type issue
+  // Convert error type of string/array/object to string/undefined for passing to the input field.
   const getError = (
     field: keyof typeof formik.values & string,
     nestedField?: string,
@@ -131,7 +131,7 @@ export const CreateUserForm = () => {
       return undefined;
     }
 
-    // Flat case: getError("firstName")
+    // Simple error case: getError("firstName")
     return typeof err === "string" ? err : undefined;
   };
 
