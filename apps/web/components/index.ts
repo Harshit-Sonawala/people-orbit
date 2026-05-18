@@ -13,3 +13,4 @@ export * from "./SearchInput";
 export * from "./DropDown";
 export * from "./SearchResultCard";
 export * from "./ThemeToggle";
+export * from "./ThemeWrapper";
