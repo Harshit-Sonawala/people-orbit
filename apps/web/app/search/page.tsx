@@ -32,7 +32,7 @@ export default function Search() {
   const { data: data, isLoading, isError, error } = search(query, page, limit);
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
           <Heading2>
@@ -58,7 +58,7 @@ export default function Search() {
               Found {data.meta.total} result
               {data.meta.total !== 1 ? "s" : ""}
             </p>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 justify-center gap-4">
               {data.data.map((eachUser, i) => (
                 <SearchResultCard User={eachUser} key={eachUser.id ?? i} />
               ))}

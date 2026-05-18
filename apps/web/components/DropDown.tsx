@@ -68,11 +68,15 @@ export const DropDown = ({
                 handleClose();
               }}
               sx={{
+                color: "var(--foreground)",
                 borderRadius: "0.4rem",
                 paddingX: 1,
                 paddingY: "0.4rem",
                 fontWeight: 600,
                 fontFamily: "Inter",
+                "& .MuiListItemIcon-root": {
+                  color: "var(--foreground)",
+                },
                 "&:hover": {
                   backgroundColor: "var(--surface-top)",
                   color: "var(--primary)",

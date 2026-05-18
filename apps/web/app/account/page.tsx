@@ -1,18 +1,12 @@
 "use client";
-import { Heading1, Heading3, Divider, CustomLink } from "@/components";
+import { Heading1, Divider, CustomLink } from "@/components";
 import { UserCard } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { useUsers } from "@/hooks";
 
 export default function Account() {
   const loggedInUser = useSelector(
     (state: RootState) => state.auth.loggedInUser,
-  );
-
-  const { getById } = useUsers();
-  const { data, isLoading, isError, error } = getById(
-    loggedInUser?.id ?? "arjun-mehta-1755163800000",
   );
 
   return (
@@ -21,29 +15,24 @@ export default function Account() {
         <Heading1>Account</Heading1>
         <Divider />
       </div>
-      {isLoading && <p className="text-center py-8">Loading Data...</p>}
-      {isError && (
-        <p className="text-center text-error py-8">Error: {error.message}</p>
-      )}
-      {data && (
-        <div className="flex flex-row gap-4">
-          <UserCard User={data}></UserCard>
-          <div className="flex flex-col gap-2">
-            <CustomLink
-              href={`/account/profile`}
-              className="text-md font-semibold py-3"
-            >
-              View your profile
-            </CustomLink>
-            <CustomLink
-              href="/account/manage-users"
-              className="text-md font-semibold py-3"
-            >
-              Manage users
-            </CustomLink>
-          </div>
+
+      <div className="flex flex-row items-center justify-stretch gap-4">
+        {loggedInUser && <UserCard User={loggedInUser}></UserCard>}
+        <div className="flex flex-1 flex-col gap-2">
+          <CustomLink href={`/account/profile`} className="py-4">
+            Manage your profile
+          </CustomLink>
+          <CustomLink href="/account/manage-users" className="py-4">
+            Manage users
+          </CustomLink>
+          <CustomLink href="/account" className="py-4">
+            Edit Preferences
+          </CustomLink>
+          <CustomLink href="/account" className="py-4">
+            View Privacy Policy
+          </CustomLink>
         </div>
-      )}
+      </div>
     </div>
   );
 }

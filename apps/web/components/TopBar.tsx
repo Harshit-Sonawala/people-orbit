@@ -1,7 +1,14 @@
+"use client";
+import { useSelector } from "react-redux";
 import { SatelliteAltRounded, AccountCircleRounded } from "@mui/icons-material";
-import { CustomLink, SearchInput, ThemeToggle } from "@/components";
+import { Heading3, CustomLink, SearchInput, ThemeToggle } from "@/components";
+import { RootState } from "@/store";
 
 export const TopBar = () => {
+  const loggedInUser = useSelector(
+    (state: RootState) => state.auth.loggedInUser,
+  );
+
   return (
     <div className="flex flex-row items-center justify-between py-1 px-4 w-[90%] mx-auto mb-2">
       <CustomLink href="/">
@@ -22,21 +29,10 @@ export const TopBar = () => {
         <CustomLink href="/about">About</CustomLink>
         <CustomLink href="/demo">Demo</CustomLink>
         <ThemeToggle />
-        <a
-          href="/account"
-          rel="noopener noreferrer"
-          className="p-1 rounded-full bg-surface-top text-primary hover:bg-primary-alt hover:text-surface transition-colors"
-        >
+        <CustomLink href="/account" className="py-1 px-2 text-primary gap-2">
           <AccountCircleRounded className="icon-xl" />
-        </a>
-        {/* <CustomLink href="/account" className="p-2 rounded-full">
-          <div className="flex items-center justify-center w-12 h-12 rounded-full bg-surface">
-            <AccountCircleRounded
-              fontSize="inherit"
-              className="icon-xl text-primary"
-            />
-          </div>
-        </CustomLink> */}
+          {loggedInUser && loggedInUser.firstName}
+        </CustomLink>
       </div>
     </div>
   );
