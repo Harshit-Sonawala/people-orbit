@@ -1,4 +1,4 @@
-import { SocialLinks } from ".";
+import { SocialLinks } from '.';
 
 export type User = {
   id: string;
@@ -13,6 +13,6 @@ export type User = {
   socialLinks?: SocialLinks;
   profilePic?: string;
   bgImage?: string;
-  createdOn: Date;
-  updatedOn: Date;
+  createdOn: number;
+  updatedOn: number;
 };

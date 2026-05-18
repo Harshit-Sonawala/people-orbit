@@ -22,8 +22,8 @@ const initialState: AuthState = {
       linkedIn: "https://linkedin.com/in/arjunmehta",
       github: "https://github.com/arjunm",
     },
-    createdOn: new Date("2025-08-14T09:30:00.000Z"),
-    updatedOn: new Date("2025-08-14T09:30:00.000Z"),
+    createdOn: Date.parse("2025-08-14T09:30:00.000Z"),
+    updatedOn: Date.parse("2025-08-14T09:30:00.000Z"),
   },
 };
 

@@ -1,50 +1,50 @@
-import { Entity, PrimaryColumn, Column, Index } from "typeorm";
+import { Entity, PrimaryColumn, Column, Index } from 'typeorm';
 import { type SocialLinks } from '../types';
 
 @Entity('users') // table name users
 export class UserEntity {
-  @PrimaryColumn({ type: "varchar" })
+  @PrimaryColumn({ type: 'varchar' })
   id: string;
 
-  @Column({ type: "varchar", length: 30 })
+  @Column({ type: 'varchar', length: 30 })
   @Index()
   firstName: string;
 
-  @Column({ type: "varchar", length: 30 })
+  @Column({ type: 'varchar', length: 30 })
   @Index()
   lastName: string;
 
-  @Column({ type: "smallint", nullable: true })
+  @Column({ type: 'smallint', nullable: true })
   age?: number;
 
-  @Column({ type: "varchar", length: 40 })
+  @Column({ type: 'varchar', length: 40 })
   @Index()
   designation: string;
 
-  @Column({ type: "varchar", unique: true })
+  @Column({ type: 'varchar', unique: true })
   email: string;
 
-  @Column({ type: "varchar", length: 20 })
+  @Column({ type: 'varchar', length: 20 })
   phone: string;
 
-  @Column({ type: "varchar", length: 140, nullable: true })
+  @Column({ type: 'varchar', length: 140, nullable: true })
   bio?: string;
 
-  @Column({ type: "text", array: true, nullable: true })
+  @Column({ type: 'text', array: true, nullable: true })
   skills?: string[];
 
-  @Column({ type: "jsonb", nullable: true })
+  @Column({ type: 'jsonb', nullable: true })
   socialLinks?: SocialLinks;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: 'text', nullable: true })
   profilePic?: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: 'text', nullable: true })
   bgImage?: string;
 
-  @Column({ type: "timestamptz" })
-  createdOn: Date;
+  @Column({ type: 'bigint' })
+  createdOn: number;
 
-  @Column({ type: "timestamptz" })
-  updatedOn: Date;
+  @Column({ type: 'bigint' })
+  updatedOn: number;
 }

@@ -1,16 +1,27 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import type { User, PaginatedUsers } from './types';
-import { QueryOptionsDto, CreateUserDto, UpdateUserDto, SortBy, Order } from "./dto";
+import {
+  QueryOptionsDto,
+  CreateUserDto,
+  UpdateUserDto,
+  SortBy,
+  Order,
+} from './dto';
 
 import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRepository) { }
+  constructor(private readonly usersRepository: UsersRepository) {}
 
   // GET all records
   async getAll(pageData: QueryOptionsDto): Promise<PaginatedUsers> {
-    const { page = 1, limit = 30, sortBy = SortBy.CREATED, order = Order.ASC } = pageData;
+    const {
+      page = 1,
+      limit = 30,
+      sortBy = SortBy.CREATED,
+      order = Order.ASC,
+    } = pageData;
 
     const sortFieldMap: Record<SortBy, string> = {
       [SortBy.CREATED]: 'createdOn',
@@ -21,9 +32,14 @@ export class UsersService {
     const orderMap: Record<Order, string> = {
       [Order.ASC]: 'ASC',
       [Order.DESC]: 'DESC',
-    }
+    };
 
-    const [data, total] = await this.usersRepository.findAll(page, limit, sortFieldMap[sortBy], orderMap[order]);
+    const [data, total] = await this.usersRepository.findAll(
+      page,
+      limit,
+      sortFieldMap[sortBy],
+      orderMap[order],
+    );
     const totalPages = Math.ceil(total / limit);
 
     return {
@@ -48,14 +64,14 @@ export class UsersService {
 
   // POST create new record
   async create(createData: CreateUserDto): Promise<User> {
-    const newDate = new Date();
-    const idSlug = `${createData.firstName.toLowerCase().replace(/\s+/g, '-')}-${createData.lastName.toLowerCase().replace(/\s+/g, '-')}-${newDate.getTime()}`;
+    const newDate = Date.now();
+    const idSlug = `${createData.firstName.toLowerCase().replace(/\s+/g, '-')}-${createData.lastName.toLowerCase().replace(/\s+/g, '-')}-${newDate}`;
     const newUser = {
       ...createData,
       id: idSlug,
       createdOn: newDate,
       updatedOn: newDate,
-    }
+    };
     return await this.usersRepository.createOrReplace(newUser);
   }
 
@@ -65,25 +81,29 @@ export class UsersService {
     if (!existingUser) {
       throw new NotFoundException(`Person with ID ${replaceId} not found`);
     } else {
-      const newDate = new Date();
+      const newDate = Date.now();
       const newUser = {
         ...replaceData,
         id: existingUser?.id,
         createdOn: existingUser?.createdOn || newDate,
         updatedOn: newDate,
-      }
+      };
       return await this.usersRepository.createOrReplace(newUser);
     }
   }
 
   // PATCH Update records partially
-  async update(updateId: string, updateData: UpdateUserDto): Promise<User | null> {
+  async update(
+    updateId: string,
+    updateData: UpdateUserDto,
+  ): Promise<User | null> {
     const existingUser = await this.usersRepository.findOne(updateId);
     if (!existingUser) {
       throw new NotFoundException(`Person with ID ${updateId} not found`);
     }
-    const newDate = new Date();
-    const partialUpdatedUser: Partial<User> = { // building a partial user payload
+    const newDate = Date.now();
+    const partialUpdatedUser: Partial<User> = {
+      // building a partial user payload
       ...updateData,
       updatedOn: newDate,
     };
@@ -105,7 +125,10 @@ export class UsersService {
   }
 
   // GET search results based on query
-  async search(query: string, pageData: QueryOptionsDto): Promise<PaginatedUsers> {
+  async search(
+    query: string,
+    pageData: QueryOptionsDto,
+  ): Promise<PaginatedUsers> {
     const { page = 1, limit = 30 } = pageData;
     const [data, total] = await this.usersRepository.search(query, page, limit);
     const totalPages = Math.ceil(total / limit);
