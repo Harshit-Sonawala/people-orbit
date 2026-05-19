@@ -1,28 +1,41 @@
 # User Authentication / Authorization Flows
 
 - Login Flow:
+  (FRONTEND)
   - User clicks on top right Login button > Redirected to Login page
   - User enters email and password, submits
     - Formik email validation, password rules regex
     - Formik > Tanstack (different useAuth hook?)
     - Tanstack > Axios POST request to auth/login with email, password in JSON request body
-    - NestJS route receives > DTO validated > repository findOne >
-    - password is compared with existing hash
-    - success:
-      - shape of response {user: {...}, accessToken: }
-      - generate JWT access token
-      - generate refresh token, store only its hash in db
-      - Tanstack onSuccess triggers a success notification
-      - store token and user info in Redux
-      - redirect to Profile page
-    - faliure:
-      - Email not matching any entries
-        - only log(email not matching)
-        - common error "provided email or password is incorrect"
-      - Password incorrect
-        - log(password didnt match)
-        - common error "provided email or password is incorrect"
-      - Tanstack onFailure should trigger a faliure notification/modal
+
+  (BACKEND)
+  - NestJS AuthController receives request on POST /auth/login
+  - @Public() decorator makes route exempt from global JwtAuthGuard
+  - LoginDTO validated in controller
+  - DTO validation faliure > 400 Bad Request
+  - Goes into AuthService login method with loginDTO
+    - calls usersRepository.findOne where email matches
+    - Email not matching any entries
+      - throw 401 Error
+      - log(email not found)
+    - bcrypt.compare() password plaintext with stored hash
+    - Password mismatch
+      - throw 401 Error
+      - log(password didnt match)
+    - Generate JWT access token (payload, 15min expiry)
+    - Generate refresh token (crypto random string, 7d expiry)
+      - bcrypt.hash(refreshToken)
+      - save hash, userId, expiresAt into refresh_tokens table
+      - Set refreshToken as httpOnly, Secure, SameSite=Strict cookie on response.
+    - Return shape of response {user: {...}, accessToken }
+
+  (FRONTEND)
+  - Tanstack onSuccess
+    - success notification
+    - store token and user info in Redux
+    - redirect to Profile page
+  - Tanstack onFailure
+    - failure notification
 
 - Signup Flow:
   - User clicks on top right button > Redirected to Login page > Clicks link to Signup page > Signup page
@@ -42,6 +55,34 @@
       - redirect to Profile page
     - faliure:
       - Tanstack onFailure should trigger a faliure notification/modal
+
+- Login Backend Flow
+  - ...
+  - NestJS AuthController receives request on POST /auth/login
+    - @Public() decorator makes route exempt from global JwtAuthGuard
+    - LoginDTO validated in controller
+    - DTO validation faliure > 400 Bad Request
+  - Goes into AuthService login method with loginDTO
+    - calls usersRepository.findOne where email matches
+    - Email not matching any entries
+      - throw 401 Error
+      - log(email not found)
+    - bcrypt.compare() password plaintext with stored hash
+    - Password mismatch
+      - throw 401 Error
+      - log(password didnt match)
+    - Generate JWT access token (payload, 15min expiry)
+    - Generate refresh token (crypto random string, 7d expiry)
+      - bcrypt.hash(refreshToken)
+      - save hash, userId, expiresAt into refresh_tokens table
+      - Set refreshToken as httpOnly, Secure, SameSite=Strict cookie on response.
+    - Return shape of response {user: {...}, accessToken: }
+  - Tanstack onSuccess
+    - success notification
+    - store token and user info in Redux
+    - redirect to Profile page
+  - Tanstack onFailure
+    - failure notification
 
 ### Coding Steps/Tasks
 
