@@ -13,7 +13,7 @@ export const ThemeToggle = () => {
     <Button
       variant="rounded"
       onClick={() => dispatch(toggleTheme())}
-      className="w-10 h-10"
+      className="w-18 h-10"
     >
       {mode === "light" ? (
         <DarkModeRounded className="icon-md" />

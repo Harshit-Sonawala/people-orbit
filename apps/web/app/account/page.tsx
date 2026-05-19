@@ -31,6 +31,9 @@ export default function Account() {
           <CustomLink href="/account" className="py-4">
             View Privacy Policy
           </CustomLink>
+          <CustomLink href="/account" className="py-4">
+            Log Out
+          </CustomLink>
         </div>
       </div>
     </div>

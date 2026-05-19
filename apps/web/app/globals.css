@@ -12,7 +12,7 @@
   --foreground: #121212;
   --primary: #03abc9;
   --primary-alt: #0ca6de;
-  --secondary: #03aaa5;
+  --secondary: #2175e3;
   --surface: #ededed;
   --surface-top: #e3e3e3;
   --foreground-alt: #999999;
@@ -22,9 +22,6 @@
 .dark {
   --background: #121212;
   --foreground: #f5f5f5;
-  --primary: #06a7c3;
-  --primary-alt: #0689b9;
-  --secondary: #0fc1af;
   --surface: #1d1d1d;
   --surface-top: #2d2d2d;
 }
