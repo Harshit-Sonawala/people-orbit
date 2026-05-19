@@ -1,7 +1,7 @@
 "use client";
 import { useSelector } from "react-redux";
 import { SatelliteAltRounded, AccountCircleRounded } from "@mui/icons-material";
-import { CustomLink, SearchInput, ThemeToggle } from "@/components";
+import { CustomLink, SearchInput, ThemeToggleButton } from "@/components";
 import { RootState } from "@/store";
 
 export const TopBar = () => {
@@ -25,10 +25,10 @@ export const TopBar = () => {
 
       <SearchInput />
 
-      <div className="flex flex-row items-center justify-center gap-4 rounded-md">
+      <div className="flex flex-row items-center justify-center gap-4 rounded-lg">
         <CustomLink href="/about">About</CustomLink>
         <CustomLink href="/demo">Demo</CustomLink>
-        <ThemeToggle />
+        <ThemeToggleButton />
         <CustomLink
           href="/account"
           className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-lg gap-2"

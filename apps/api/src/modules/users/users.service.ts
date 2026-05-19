@@ -18,7 +18,7 @@ export class UsersService {
   async getAll(pageData: QueryOptionsDto): Promise<PaginatedUsers> {
     const {
       page = 1,
-      limit = 30,
+      limit = 28,
       sortBy = SortBy.CREATED,
       order = Order.ASC,
     } = pageData;
@@ -129,7 +129,7 @@ export class UsersService {
     query: string,
     pageData: QueryOptionsDto,
   ): Promise<PaginatedUsers> {
-    const { page = 1, limit = 30 } = pageData;
+    const { page = 1, limit = 28 } = pageData;
     const [data, total] = await this.usersRepository.search(query, page, limit);
     const totalPages = Math.ceil(total / limit);
 

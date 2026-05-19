@@ -32,7 +32,7 @@ export default function Home() {
   const searchParams = useSearchParams();
 
   const page = Number(searchParams.get("page")) || 1;
-  const limit = 30;
+  const limit = 28;
   const sortBy = searchParams.get("sortBy") || "createdOn";
   const order = searchParams.get("order") || "desc";
 
@@ -119,7 +119,6 @@ export default function Home() {
                 onClick={() => {
                   if (page > 1) {
                     updateURLSearchParams({ page: page - 1 });
-                    // setPage((oldPage) => Math.max(oldPage - 1, 1));
                   }
                 }}
               >
@@ -142,7 +141,7 @@ export default function Home() {
                   ) : (
                     <Button
                       key={eachPage}
-                      variant="outlined-rounded"
+                      variant="surface-rounded"
                       className="w-9 h-9"
                       onClick={() => {
                         if (eachPage !== page) {

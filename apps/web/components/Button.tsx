@@ -3,18 +3,28 @@ import { cn } from "@/lib/utils";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
-  variant?: "filled" | "outlined" | "rounded" | "outlined-rounded";
+  variant?:
+    | "filled"
+    | "rounded"
+    | "outlined"
+    | "outlined-rounded"
+    | "surface"
+    | "surface-rounded";
   className?: string;
 };
 
 const variantClasses: { [key: string]: string } = {
   filled:
-    "rounded-md bg-primary border-2 border-primary font-semibold text-white",
-  outlined: "rounded-md border-2 border-primary font-semibold text-primary",
+    "rounded-lg bg-primary border-2 border-primary font-semibold text-white",
   rounded:
     "rounded-full bg-primary border-2 border-primary font-semibold text-white",
+  outlined: "rounded-lg border-2 border-primary font-semibold text-primary",
   "outlined-rounded":
     "rounded-full border-2 border-primary font-semibold text-primary",
+  surface:
+    "rounded-lg bg-surface border-2 border-surface font-semibold text-foreground",
+  "surface-rounded":
+    "rounded-full bg-surface border-2 border-surface font-semibold text-foreground",
 };
 
 export const Button = forwardRef<HTMLButtonElement, Props>(
@@ -39,5 +49,3 @@ export const Button = forwardRef<HTMLButtonElement, Props>(
     );
   },
 );
-
-Button.displayName = "Button";

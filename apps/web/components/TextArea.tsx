@@ -7,12 +7,12 @@ type Props = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
 };
 
 const variantClasses: { [key: string]: string } = {
-  filled: "rounded-md bg-surface-top font-medium text-foreground",
+  filled: "rounded-lg bg-surface-top font-medium text-foreground",
   outlined:
-    "rounded-md bg-transparent border-2 border-foreground font-medium text-foreground",
+    "rounded-lg bg-transparent border-2 border-foreground font-medium text-foreground",
   rounded: "rounded-2xl bg-surface-top font-medium text-foreground",
   "outlined-primary":
-    "rounded-md bg-transparent border-2 border-primary font-medium text-primary",
+    "rounded-lg bg-transparent border-2 border-primary font-medium text-primary",
 };
 
 export const TextArea = ({

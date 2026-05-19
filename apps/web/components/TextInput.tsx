@@ -8,12 +8,12 @@ type Props = React.InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const variantClasses: { [key: string]: string } = {
-  filled: "rounded-md bg-surface-top font-medium text-foreground",
+  filled: "rounded-lg bg-surface-top font-medium text-foreground",
   outlined:
-    "rounded-md bg-transparent border-2 border-foreground font-medium text-foreground",
+    "rounded-lg bg-transparent border-2 border-foreground font-medium text-foreground",
   rounded: "rounded-full bg-surface-top font-medium text-foreground",
   "outlined-primary":
-    "rounded-md bg-transparent border-2 border-primary font-medium text-primary",
+    "rounded-lg bg-transparent border-2 border-primary font-medium text-primary",
 };
 
 export const TextInput = ({
@@ -42,7 +42,7 @@ export const TextInput = ({
     <div className="flex flex-col">
       <input
         className={cn(
-          "py-1.5 px-2.5 focus:outline-none focus:ring-0",
+          "py-1.5 px-2.5 focus:outline-none focus:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
           variantClasses[variant],
           placeholderClasses,
           textClasses,
