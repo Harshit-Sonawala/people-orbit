@@ -4,17 +4,21 @@ import { Card, Heading } from "@/components";
 import Link from "next/link";
 import profilePic from "@/public/dummy_profilePic.jpg";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 type Props = {
   User: User;
   className?: string;
 };
 
-export const SearchResultCard = ({ User, className = "" }: Props) => {
+export const SearchResultCard = ({ User, className }: Props) => {
   return (
     <Link
       href={`/users/${User.id}`}
-      className={`max-w-140 flex flex-1 flex-row items-stretch group transition-transform duration-200 hover:-translate-y-1 ${className}`}
+      className={cn(
+        "max-w-140 flex flex-1 flex-row items-stretch group transition-transform duration-200 hover:-translate-y-1",
+        className,
+      )}
     >
       <div className="flex flex-1 flex-row items-center justify-stretch rounded-lg">
         <div className="bg-primary rounded-l-lg px-7 py-12"></div>

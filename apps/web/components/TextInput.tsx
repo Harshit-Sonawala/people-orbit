@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/lib/utils";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   variant?: "filled" | "outlined" | "rounded" | "outlined-primary";
@@ -18,7 +19,7 @@ const variantClasses: { [key: string]: string } = {
 export const TextInput = ({
   variant = "filled",
   error = "",
-  className = "",
+  className,
   ...rest // rest parameters like formik.getFieldProps
 }: Props) => {
   let placeholderClasses: string = "text-foreground";
@@ -40,12 +41,14 @@ export const TextInput = ({
   return (
     <div className="flex flex-col">
       <input
-        className={`py-1.5 px-2.5 ${variantClasses[variant]}
-          focus:outline-none focus:ring-0
-          ${placeholderClasses}
-          ${textClasses}
-          ${borderClasses}
-          ${className}`}
+        className={cn(
+          "py-1.5 px-2.5 focus:outline-none focus:ring-0",
+          variantClasses[variant],
+          placeholderClasses,
+          textClasses,
+          borderClasses,
+          className,
+        )}
         {...rest} // spread out rest parameters
       />
       {error && <p className="ml-2 text-sm text-error">{error}</p>}

@@ -2,7 +2,7 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useUsers } from "@/hooks";
-import { Button, TextInput, Card } from "@/components";
+import { Heading, Divider, Button, TextInput, Card } from "@/components";
 import { AlternateEmailRounded } from "@mui/icons-material";
 
 type Props = {};
@@ -12,7 +12,7 @@ export const DeleteUserForm = (props: Props) => {
   const { mutate, isPending } = deleteById();
 
   return (
-    <Card className="flex flex-col items-stretch justify-center gap-4 w-[60%]">
+    <Card className="flex flex-col items-stretch justify-center gap-4 w-[60%]  py-10 px-12">
       <Formik
         initialValues={{
           id: "",
@@ -42,6 +42,13 @@ export const DeleteUserForm = (props: Props) => {
             className="flex flex-col items-stretch justify-center gap-4"
             onSubmit={formik.handleSubmit}
           >
+            <div className="flex flex-col gap-2">
+              <Heading variant="md" className="text-secondary">
+                Delete User Record
+              </Heading>
+              <Divider variant="surface-top" />
+              <p>Delete the entire user profile based on the specified id.</p>
+            </div>
             <div className="flex flex-row items-center gap-2">
               <AlternateEmailRounded className="text-primary" />
               <label htmlFor="id">User ID:</label>

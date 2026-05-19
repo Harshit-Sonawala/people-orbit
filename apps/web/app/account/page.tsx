@@ -1,6 +1,6 @@
 "use client";
 import { Heading, Divider, CustomLink } from "@/components";
-import { UserCard } from "@/components";
+import { Card, UserCard } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
@@ -17,8 +17,8 @@ export default function Account() {
       </div>
 
       <div className="flex flex-row items-center justify-stretch gap-4">
-        {loggedInUser && <UserCard User={loggedInUser}></UserCard>}
-        <div className="flex flex-1 flex-col gap-2">
+        {loggedInUser && <UserCard User={loggedInUser} className="flex-1" />}
+        <Card variant="outlined" className="flex flex-1 flex-col gap-2">
           <CustomLink href={`/account/profile`} className="py-4">
             Manage your profile
           </CustomLink>
@@ -34,7 +34,7 @@ export default function Account() {
           <CustomLink href="/account" className="py-4">
             Log Out
           </CustomLink>
-        </div>
+        </Card>
       </div>
     </div>
   );

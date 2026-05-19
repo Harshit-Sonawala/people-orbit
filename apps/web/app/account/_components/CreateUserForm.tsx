@@ -4,7 +4,14 @@ import { useFormik } from "formik";
 import { nameRegex, designationRegex, phoneRegex } from "./formRegexes";
 import * as Yup from "yup";
 
-import { Card, Button, TextInput, TextArea } from "@/components";
+import {
+  Heading,
+  Divider,
+  Card,
+  Button,
+  TextInput,
+  TextArea,
+} from "@/components";
 import {
   BadgeRounded,
   CakeRounded,
@@ -136,11 +143,18 @@ export const CreateUserForm = () => {
   };
 
   return (
-    <Card className="flex flex-col items-stretch justify-center gap-4">
+    <Card className="flex flex-col items-stretch justify-center gap-4 py-10 px-12">
       <form
         className="flex flex-col items-stretch align-center gap-6"
         onSubmit={formik.handleSubmit}
       >
+        <div className="flex flex-col gap-2">
+          <Heading variant="md" className="text-secondary">
+            Create a New User Record
+          </Heading>
+          <Divider variant="surface-top" />
+          <p>Auto-assigns an id, created and updated dates.</p>
+        </div>
         <div className="flex flex-row items-center justify-stretch gap-4 w-full">
           <div className="flex flex-col flex-1 gap-2">
             <div className="flex flex-row items-center flex-1 gap-2">

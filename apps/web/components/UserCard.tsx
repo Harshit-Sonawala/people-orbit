@@ -6,17 +6,21 @@ import Link from "next/link";
 import profilePic from "@/public/dummy_profilePic.jpg";
 import bgImage from "@/public/dummy_bgImage.jpg";
 import { WorkRounded, EmailRounded, PhoneRounded } from "@mui/icons-material";
+import { cn } from "@/lib/utils";
 
 type Props = {
   User: User;
   className?: string;
 };
 
-export const UserCard = ({ User, className = "" }: Props) => {
+export const UserCard = ({ User, className }: Props) => {
   return (
     <Link
       href={`/users/${User.id}`}
-      className={`max-w-110 flex flex-col group transition-transform duration-200 hover:-translate-y-1 ${className}`}
+      className={cn(
+        "max-w-110 flex flex-col group transition-transform duration-200 hover:-translate-y-1",
+        className,
+      )}
     >
       <div className="relative w-full h-32 rounded-tl-lg rounded-tr-lg overflow-hidden">
         <Image

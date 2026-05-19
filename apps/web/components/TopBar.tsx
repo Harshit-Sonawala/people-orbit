@@ -31,7 +31,7 @@ export const TopBar = () => {
         <ThemeToggle />
         <CustomLink
           href="/account"
-          className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-full gap-2"
+          className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-lg gap-2"
         >
           <AccountCircleRounded className="icon-xl" />
           {loggedInUser && loggedInUser.firstName}

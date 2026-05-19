@@ -2,6 +2,7 @@
 import React, { useState, type ReactNode } from "react";
 import { Button } from "@/components";
 import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
+import { cn } from "@/lib/utils";
 
 export type DropDownOption = {
   label: string;
@@ -35,7 +36,7 @@ export const DropDown = ({
 
   return (
     <div>
-      <Button onClick={handleOpen} className={`px-1 gap-2 ${className}`}>
+      <Button onClick={handleOpen} className={cn("px-1 gap-2", className)}>
         {displayIcon && displayIcon}
         {displayLabel}
       </Button>

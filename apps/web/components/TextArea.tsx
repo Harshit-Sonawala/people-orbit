@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/lib/utils";
 
 type Props = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   variant?: "filled" | "outlined" | "rounded" | "outlined-primary";
@@ -17,7 +18,7 @@ const variantClasses: { [key: string]: string } = {
 export const TextArea = ({
   variant = "filled",
   error = "",
-  className = "",
+  className,
   ...rest // rest parameters like formik.getFieldProps
 }: Props) => {
   let placeholderClasses: string = "text-foreground";
@@ -38,12 +39,14 @@ export const TextArea = ({
   return (
     <div className="flex flex-col">
       <textarea
-        className={`py-1.5 px-2.5 resize-none ${variantClasses[variant]}
-          focus:outline-none focus:ring-0
-          ${placeholderClasses}
-          ${textClasses}
-          ${borderClasses}
-          ${className}`}
+        className={cn(
+          "py-1.5 px-2.5 resize-none focus:outline-none focus:ring-0",
+          variantClasses[variant],
+          placeholderClasses,
+          textClasses,
+          borderClasses,
+          className,
+        )}
         {...rest} // spread out rest parameters
       />
       {error && <p className="ml-2 text-sm text-error">{error}</p>}

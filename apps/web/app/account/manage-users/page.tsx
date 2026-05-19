@@ -14,27 +14,9 @@ export default function Account({}: Props) {
         <Heading variant="lg">Manage Users</Heading>
         <Divider />
       </div>
-
-      <div className="flex flex-col gap-2">
-        <Heading variant="sm" className="text-secondary">
-          POST - Create New Person Record
-        </Heading>
-        <CreateUserForm />
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Heading variant="sm" className="text-secondary">
-          PUT - Replace Person Record
-        </Heading>
-        <ReplaceUserForm />
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Heading variant="sm" className="text-secondary">
-          DELETE - Delete Person Record
-        </Heading>
-        <DeleteUserForm />
-      </div>
+      <CreateUserForm />
+      <ReplaceUserForm />
+      <DeleteUserForm />
     </div>
   );
 }

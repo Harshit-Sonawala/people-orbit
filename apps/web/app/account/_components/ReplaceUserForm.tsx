@@ -9,7 +9,14 @@ import {
 } from "./formRegexes";
 import * as Yup from "yup";
 
-import { Card, Button, TextInput, TextArea } from "@/components";
+import {
+  Heading,
+  Divider,
+  Card,
+  Button,
+  TextInput,
+  TextArea,
+} from "@/components";
 import {
   AlternateEmailRounded,
   BadgeRounded,
@@ -146,11 +153,18 @@ export const ReplaceUserForm = () => {
   };
 
   return (
-    <Card className="flex flex-col items-stretch justify-center gap-4">
+    <Card className="flex flex-col items-stretch justify-center gap-4  py-10 px-12">
       <form
         className="flex flex-col items-stretch align-center gap-6"
         onSubmit={formik.handleSubmit}
       >
+        <div className="flex flex-col gap-2">
+          <Heading variant="md" className="text-secondary">
+            Replace User Record
+          </Heading>
+          <Divider variant="surface-top" />
+          <p>Keep the existing user id and update the rest of the details.</p>
+        </div>
         <div className="flex flex-row items-center flex-1 gap-2">
           <AlternateEmailRounded className="text-primary" />
           <label htmlFor="id">User ID:</label>
