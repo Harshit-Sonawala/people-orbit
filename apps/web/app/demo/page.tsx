@@ -1,8 +1,6 @@
 "use client";
 import {
-  Heading1,
-  Heading2,
-  Heading3,
+  Heading,
   Card,
   Divider,
   Button,
@@ -38,12 +36,14 @@ export default function Demo() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-10">
       <div className="flex flex-col gap-2">
-        <Heading1>Components Demo Page</Heading1>
+        <Heading variant="lg">Components Demo Page</Heading>
         <Divider />
       </div>
 
       <div className="flex flex-col gap-4">
-        <Heading3 className="text-secondary">Cards</Heading3>
+        <Heading variant="sm" className="text-secondary">
+          Cards
+        </Heading>
 
         <UserCard User={dummyUser} />
         <SearchResultCard User={dummyUser} />
@@ -66,7 +66,9 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Heading3 className="text-secondary">Buttons</Heading3>
+        <Heading variant="sm" className="text-secondary">
+          Buttons
+        </Heading>
         <Card>
           <Button onClick={() => console.log("Filled button pressed.")}>
             Filled Button
@@ -94,7 +96,9 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <Heading3 className="text-secondary">Dividers</Heading3>
+        <Heading variant="sm" className="text-secondary">
+          Dividers
+        </Heading>
         <Divider />
         <Divider variant="surface-top" />
         <Divider variant="primary" />
@@ -102,7 +106,9 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Heading3 className="text-secondary">TextInputs</Heading3>
+        <Heading variant="sm" className="text-secondary">
+          TextInputs
+        </Heading>
         <TextInput placeholder="Please Enter Text..." />
         <TextInput disabled={true} placeholder="Disabled Text Input" />
         <TextInput
@@ -112,7 +118,9 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Heading3 className="text-secondary">TextAreas</Heading3>
+        <Heading variant="sm" className="text-secondary">
+          TextAreas
+        </Heading>
         <TextArea placeholder="Please Enter Bio..." />
         <TextArea disabled={true} placeholder="Disabled Text Area" />
         <TextArea
@@ -122,20 +130,24 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Heading3 className="text-secondary">CustomLinks</Heading3>
+        <Heading variant="sm" className="text-secondary">
+          CustomLinks
+        </Heading>
         <CustomLink href="#">Click Here</CustomLink>
         <CustomLink href="#">Click Here</CustomLink>
         <CustomLink href="#">Click Here</CustomLink>
       </div>
 
       <div className="flex flex-col gap-2">
-        <Heading3 className="text-secondary">Headings</Heading3>
+        <Heading variant="sm" className="text-secondary">
+          Headings
+        </Heading>
         <p>Heading 1</p>
-        <Heading1>This is Heading 1.</Heading1>
+        <Heading variant="lg">This is Heading 1.</Heading>
         <p>Heading 2</p>
-        <Heading2>This is Heading 2.</Heading2>
+        <Heading variant="md">This is Heading 2.</Heading>
         <p>Heading 3</p>
-        <Heading3>This is Heading 3.</Heading3>
+        <Heading variant="sm">This is Heading 3.</Heading>
       </div>
     </div>
   );

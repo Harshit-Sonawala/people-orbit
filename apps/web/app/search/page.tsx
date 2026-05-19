@@ -2,8 +2,7 @@
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useUsers } from "@/hooks";
 import {
-  Heading1,
-  Heading2,
+  Heading,
   Button,
   Divider,
   SearchResultCard,
@@ -35,9 +34,9 @@ export default function Search() {
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
-          <Heading2>
+          <Heading variant="md">
             {query ? `Search Results for "${query}"` : "Search Results"}
-          </Heading2>
+          </Heading>
         </div>
         <Divider />
       </div>
@@ -132,7 +131,7 @@ export default function Search() {
         !isLoading &&
         query && (
           <div className="flex flex-col items-stretch justify-center py-20 gap-2">
-            <Heading1>No Results Found</Heading1>
+            <Heading variant="lg">No Results Found</Heading>
             <p className="text-secondary font-semibold">
               We couldn't find any results matching "{query}".
             </p>

@@ -1,6 +1,6 @@
 import React from "react";
 import { User } from "@/types";
-import { Card, Heading3 } from "@/components";
+import { Card, Heading } from "@/components";
 import Link from "next/link";
 import profilePic from "@/public/dummy_profilePic.jpg";
 import Image from "next/image";
@@ -29,7 +29,7 @@ export const SearchResultCard = ({ User, className = "" }: Props) => {
             />
           </div>
           <div className="flex flex-1 flex-col gap-1 pl-10 py-2 pr-2">
-            <Heading3>{`${User.firstName} ${User.lastName}`}</Heading3>
+            <Heading variant="sm">{`${User.firstName} ${User.lastName}`}</Heading>
             <p className="text-md font-semibold text-secondary">
               {User.designation}
             </p>

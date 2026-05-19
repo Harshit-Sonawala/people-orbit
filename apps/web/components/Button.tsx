@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import { cn } from "@/lib/utils";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
@@ -17,7 +18,7 @@ const variantClasses: { [key: string]: string } = {
 };
 
 export const Button = forwardRef<HTMLButtonElement, Props>(
-  ({ children, variant = "filled", className = "", ...rest }, ref) => {
+  ({ children, variant = "filled", className, ...rest }, ref) => {
     const disabledClasses = rest.disabled
       ? "bg-surface-top text-foreground-alt border-surface-top cursor-default pointer-events-none"
       : "hover:bg-primary-alt hover:text-white hover:border-transparent hover:cursor-pointer active:bg-secondary active:border-transparent transform active:scale-[0.98] transition-all duration-200";
@@ -25,7 +26,12 @@ export const Button = forwardRef<HTMLButtonElement, Props>(
     return (
       <button
         ref={ref}
-        className={`flex flex-row items-center justify-center py-1 px-2 ${variantClasses[variant]} ${disabledClasses} ${className}`}
+        className={cn(
+          "flex flex-row items-center justify-center py-1 px-2",
+          variantClasses[variant],
+          disabledClasses,
+          className,
+        )}
         {...rest}
       >
         {children}

@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/lib/utils";
 
 type Props = {
   variant?: "surface" | "surface-top" | "primary" | "secondary";
@@ -12,10 +13,10 @@ const variantClasses: { [key: string]: string } = {
   secondary: "border-secondary",
 };
 
-export const Divider = ({ variant = "surface", className = "" }: Props) => {
+export const Divider = ({ variant = "surface", className }: Props) => {
   return (
     <div
-      className={`w-full px-8 border-b-2 ${variantClasses[variant]} ${className}`}
+      className={cn("w-full px-8 border-b-2", variantClasses[variant], className)}
     />
   );
 };

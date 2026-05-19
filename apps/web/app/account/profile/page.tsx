@@ -12,9 +12,7 @@ import {
 import * as Yup from "yup";
 import { useUsers } from "@/hooks";
 import {
-  Heading1,
-  Heading2,
-  Heading3,
+  Heading,
   Card,
   Divider,
   Button,
@@ -160,7 +158,7 @@ export default function Profile() {
           >
             <div className="flex flex-col gap-2">
               <div className="flex flex-row items-center justify-between gap-4">
-                <Heading2>My Profile</Heading2>
+                <Heading variant="md">My Profile</Heading>
                 {!isEdit ? (
                   <Button
                     onClick={() => setIsEdit((prev) => !prev)}
@@ -229,7 +227,7 @@ export default function Profile() {
                       <div className="flex flex-col gap-4">
                         {isEdit ? (
                           <div className="flex flex-col items-start justify-center gap-2">
-                            <Heading3>Full Name</Heading3>
+                            <Heading variant="sm">Full Name</Heading>
                             <div className="flex flex-row items-center justify-center gap-2">
                               <TextInput
                                 id="firstName"
@@ -250,19 +248,19 @@ export default function Profile() {
                             </div>
                           </div>
                         ) : (
-                          <Heading1>
+                          <Heading variant="lg">
                             {data.firstName} {data.lastName}
-                          </Heading1>
+                          </Heading>
                         )}
                         <div className="flex flex-col items-start justify-center gap-2">
                           {isEdit ? (
-                            <Heading3>Designation</Heading3>
+                            <Heading variant="sm">Designation</Heading>
                           ) : (
                             <div className="flex flex-row items-center gap-2">
                               <WorkRounded className={`text-primary`} />
-                              <Heading3 className="text-primary">
+                              <Heading variant="sm" className="text-primary">
                                 {data.designation}
-                              </Heading3>
+                              </Heading>
                             </div>
                           )}
                           {isEdit && (
@@ -366,7 +364,7 @@ export default function Profile() {
 
                   {(isEdit || data.bio) && (
                     <div className="flex flex-col gap-2">
-                      <Heading3>About Me</Heading3>
+                      <Heading variant="sm">About Me</Heading>
                       {isEdit ? (
                         <TextArea
                           variant="filled"
@@ -384,7 +382,7 @@ export default function Profile() {
                   {(isEdit ||
                     (data.skills !== undefined && data.skills?.length > 0)) && (
                     <div className="flex flex-col gap-2">
-                      <Heading3>Skills</Heading3>
+                      <Heading variant="sm">Skills</Heading>
                       {isEdit ? (
                         <TextArea
                           variant="filled"
@@ -410,7 +408,7 @@ export default function Profile() {
 
                   <div className="flex flex-row items-center justify-stretch gap-4">
                     <div className="flex flex-col items-stretch justify-center w-full gap-2">
-                      <Heading3>Contact</Heading3>
+                      <Heading variant="sm">Contact</Heading>
                       <div className="flex flex-row items-center gap-2">
                         <EmailRounded className={`text-foreground-alt`} />
                         <label htmlFor="email">Email Address:</label>
@@ -449,7 +447,7 @@ export default function Profile() {
                     </div>
                   </div>
                   <div className="flex flex-col items-stretch justify-center w-full gap-2">
-                    <Heading3>Other</Heading3>
+                    <Heading variant="sm">Other</Heading>
 
                     {(isEdit || data.age) && (
                       <div className="flex flex-row items-center gap-2">

@@ -1,5 +1,5 @@
 "use client";
-import { Heading1, Divider, CustomLink } from "@/components";
+import { Heading, Divider, CustomLink } from "@/components";
 import { UserCard } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
@@ -12,7 +12,7 @@ export default function Account() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto">
       <div className="flex flex-col gap-2">
-        <Heading1>Account</Heading1>
+        <Heading variant="lg">Account</Heading>
         <Divider />
       </div>
 

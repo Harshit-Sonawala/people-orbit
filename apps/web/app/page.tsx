@@ -1,8 +1,7 @@
 "use client";
 import { useUsers } from "@/hooks/useUsers";
 import {
-  Heading1,
-  Heading2,
+  Heading,
   DropDown,
   Button,
   Divider,
@@ -58,7 +57,7 @@ export default function Home() {
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
-          <Heading2>Browse All Records</Heading2>
+          <Heading variant="md">Browse All Records</Heading>
           <div className="flex flex-row items-center justify-between gap-2">
             <DropDown
               options={sortMap}
@@ -180,7 +179,7 @@ export default function Home() {
         !isLoading &&
         data && (
           <div className="flex flex-col items-stretch justify-center py-20 gap-2">
-            <Heading1>No Records Found</Heading1>
+            <Heading variant="lg">No Records Found</Heading>
             <p className="text-secondary font-semibold">
               There seems to be an issue from our side.
             </p>

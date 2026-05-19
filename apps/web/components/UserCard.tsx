@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading3 } from "@/components";
+import { Heading } from "@/components";
 import { User } from "@/types/User";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,9 +38,9 @@ export const UserCard = ({ User, className = "" }: Props) => {
             className="object-cover"
           />
         </div>
-        <Heading3>
+        <Heading variant="sm">
           {User.firstName} {User.lastName}
-        </Heading3>
+        </Heading>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           {/* <WorkRounded

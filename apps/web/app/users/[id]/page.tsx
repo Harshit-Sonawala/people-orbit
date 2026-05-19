@@ -1,5 +1,5 @@
 import { User } from "@/types/User";
-import { Heading1, Heading3, Card, Divider } from "@/components";
+import { Heading, Card, Divider } from "@/components";
 import Image from "next/image";
 import profilePic from "@/public/dummy_profilePic.jpg";
 import bgImage from "@/public/dummy_bgImage.jpg";
@@ -30,9 +30,9 @@ export default async function UserDetails({
   if (!response.ok) {
     return (
       <div className="flex flex-col flex-1 items-center justify-center py-8">
-        <Heading3 className="text-error">
+        <Heading variant="sm" className="text-error">
           Error: Failed to fetch person details
-        </Heading3>
+        </Heading>
       </div>
     );
   }
@@ -66,15 +66,15 @@ export default async function UserDetails({
             <div className="flex flex-col gap-4">
               <div className="flex flex-row items-center justify-between gap-4">
                 <div className="flex flex-col gap-2">
-                  <Heading1>
+                  <Heading variant="lg">
                     {user.firstName} {user.lastName}
-                  </Heading1>
+                  </Heading>
 
                   <div className="flex flex-row items-center gap-2">
                     <WorkRounded className="text-primary" />
-                    <Heading3 className="text-primary">
+                    <Heading variant="sm" className="text-primary">
                       {user.designation}
-                    </Heading3>
+                    </Heading>
                   </div>
 
                   <div className="flex flex-row items-center gap-1">
@@ -121,14 +121,14 @@ export default async function UserDetails({
 
             {user.bio && (
               <div className="flex flex-col gap-2">
-                <Heading3>About Me</Heading3>
+                <Heading variant="sm">About Me</Heading>
                 <p>{user.bio}</p>
               </div>
             )}
 
             {user.skills !== undefined && user.skills?.length > 0 && (
               <div className="flex flex-col gap-2">
-                <Heading3>Skills</Heading3>
+                <Heading variant="sm">Skills</Heading>
                 <div className="flex flex-row gap-4">
                   {user.skills.map((eachSkill, i) => (
                     <p
@@ -144,7 +144,7 @@ export default async function UserDetails({
 
             <div className="flex flex-row items-center justify-stretch gap-4">
               <div className="flex flex-col items-stretch justify-center w-full gap-2">
-                <Heading3>Contact</Heading3>
+                <Heading variant="sm">Contact</Heading>
                 <div className="flex flex-row items-center gap-2">
                   <EmailRounded className="text-foreground-alt" />
                   <p>{`Email: ${user.email}`}</p>
@@ -156,7 +156,7 @@ export default async function UserDetails({
               </div>
             </div>
             <div className="flex flex-col items-stretch justify-center w-full gap-2">
-              <Heading3>Other</Heading3>
+              <Heading variant="sm">Other</Heading>
               {user.age && (
                 <div className="flex flex-row items-center gap-2">
                   <CakeRounded className="text-foreground-alt" />

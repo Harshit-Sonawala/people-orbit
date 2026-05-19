@@ -1,4 +1,4 @@
-import { Heading1, Heading3, Divider } from "@/components";
+import { Heading, Divider } from "@/components";
 import {
   CreateUserForm,
   ReplaceUserForm,
@@ -11,28 +11,28 @@ export default function Account({}: Props) {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto">
       <div className="flex flex-col gap-2">
-        <Heading1>Manage Users</Heading1>
+        <Heading variant="lg">Manage Users</Heading>
         <Divider />
       </div>
 
       <div className="flex flex-col gap-2">
-        <Heading3 className="text-secondary">
+        <Heading variant="sm" className="text-secondary">
           POST - Create New Person Record
-        </Heading3>
+        </Heading>
         <CreateUserForm />
       </div>
 
       <div className="flex flex-col gap-2">
-        <Heading3 className="text-secondary">
+        <Heading variant="sm" className="text-secondary">
           PUT - Replace Person Record
-        </Heading3>
+        </Heading>
         <ReplaceUserForm />
       </div>
 
       <div className="flex flex-col gap-2">
-        <Heading3 className="text-secondary">
+        <Heading variant="sm" className="text-secondary">
           DELETE - Delete Person Record
-        </Heading3>
+        </Heading>
         <DeleteUserForm />
       </div>
     </div>

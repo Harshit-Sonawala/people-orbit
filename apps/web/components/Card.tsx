@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/lib/utils";
 
 type Props = {
   key?: number;
@@ -23,7 +24,11 @@ export const Card = ({
   return (
     <div
       key={key}
-      className={`flex flex-col gap-2 rounded-lg p-4 ${variantClasses[variant]} ${className}`}
+      className={cn(
+        "flex flex-col gap-2 rounded-lg p-4",
+        variantClasses[variant],
+        className,
+      )}
     >
       {children}
     </div>
