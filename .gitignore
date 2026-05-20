@@ -42,6 +42,7 @@ next-env.d.ts
 # coding agent files
 AGENTS.md
 CLAUDE.md
+.antigravitycli
 
 *storybook.log
 storybook-static
