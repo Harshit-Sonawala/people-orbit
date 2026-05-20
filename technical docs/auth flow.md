@@ -76,6 +76,20 @@
   - Tanstack onFailure
     - failure notification
 
+- REFRESH FLOW /auth/refresh
+  (FRONTEND)
+  - Axios interceptor catches 401 Unauthorized
+    - automatically calls POST /auth/refresh
+    - success, gets new accessToken
+      - store new accessToken in Redux
+      - retry request
+    - failure - clear loggedInUser in Redux - redirect to /login
+
+  (BACKEND)
+  - NestJS AuthController receives request on POST /auth/refresh
+  - @Public() decorator makes it exempt from JwtAuthGuard
+  -
+
 ---
 
 ### Coding Steps/Tasks
@@ -95,15 +109,16 @@
   - [ ] Error notification/modal functionality with Redux?
   - [ ] Tanstack Query useAuth hook?
   - [ ] Clear auth state and redirect to login/signup on logout or session expiry
+  - [ ] Once 15min JWT expires, /auth/refresh strategy - axios interceptor?
 
 - [ ] Database
   - [ ] users table
-    - [ ] Add password, role columns
+    - [ ] Add password
     - [ ] Migration
-  - [ ] New refresh_tokens table with:
+    - [ ] New refresh_tokens table with:
     - [ ] id | userId (FK) | tokenHash | expiresAt | createdAt
     - [ ] Migration
-  - [ ] Auth repository with methods to find and compare hash
+    - [ ] refresh_tokens repository methods to find, save, compare hash, etc.
 
 - [ ] Backend
   - [ ] Basic Auth Module, controller, routes
@@ -113,19 +128,18 @@
     - [ ] compare pass with stored hash and success/failure
       - [ ] success:
         - [ ] NestJS JWT Token generation
-        - [ ] Refresh Token generation
+        <!-- - [ ] Refresh Token generation
         - [ ] Refresh token hashing
         - [ ] Refresh token repo save in table,
-        - [ ] Token rotation on each refresh call - invalidate old one
+        - [ ] Token rotation on each refresh call - repo delete old row -->
       - [ ] failure:
         - [ ] throw error
   - [ ] /auth/signup
     - [ ] NestJS signup DTO
     - [ ] hash password with bcrypt
   - [ ] /auth/logout
-    - [ ]
+  - [ ] Guards etc.
 
-  - [ ] Once 15min JWT expires, /auth/refresh strategy - axios interceptor?
   - [ ] refresh token reuse detection — if a token is used twice, it should invalidate the entire family (all tokens for that user)
   - [ ] NestJS Global JWT guard by default. Mark others public explicitly
   - [ ] NestJS Role-based guards
@@ -133,7 +147,7 @@
 ## Other Future Considerations:
 
 - [ ] Every request should send access token in Authorization header
-- [ ] Rate limit login endpoint?
 
 - Handle 401 globally — intercept in Axios/fetch, trigger silent refresh
+- [ ] Rate limit login endpoint?
 - HTTPS? - infrastructure side.
