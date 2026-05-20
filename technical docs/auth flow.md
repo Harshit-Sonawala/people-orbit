@@ -16,11 +16,11 @@
   - Goes into AuthService login method with loginDTO
     - calls usersRepository.findOne where email matches
     - Email not matching any entries
-      - throw 401 Error
+      - throw 401 Unauthorized Error
       - log(email not found)
     - bcrypt.compare() password plaintext with stored hash
     - Password mismatch
-      - throw 401 Error
+      - throw 401 Unauthorized Error
       - log(password didnt match)
     - Generate access token (JWT, 15min expiry)
       - send JWT in response body
@@ -57,19 +57,21 @@
     - Email already exists in table
       - throw 409 Conflict Error
       - log(email already registered)
-    - bcrypt.hash() password plaintext with salt rounds
+    - bcrypt.hash() password plaintext
     - usersRepository.create() and save new user record with name, email, hashed password
-    - Generate JWT access token (payload, 15min expiry)
+    - Generate access token (JWT, 15min expiry)
+      - send JWT in response body
     - Generate refresh token (crypto random string, 7d expiry)
       - bcrypt.hash(refreshToken)
       - save hash, userId, expiresAt into refresh_tokens table
-      - Set refreshToken as httpOnly, Secure, SameSite=Strict cookie on response.
-    - Return shape of response {user: {...}, accessToken}
+      - set refreshToken as httpOnly, Secure, SameSite=Strict, maxAge 7 days as response.cookie
+      - send refresh token
+    - Return shape of response {user: {...}, accessToken }
 
   (FRONTEND)
   - Tanstack onSuccess
+    - store JWT access token and user info in Redux
     - success notification
-    - store token and user info in Redux
     - redirect to Profile page
   - Tanstack onFailure
     - failure notification
@@ -100,7 +102,7 @@
     - [ ] Migration
   - [ ] New refresh_tokens table with:
     - [ ] id | userId (FK) | tokenHash | expiresAt | createdAt
-  - [ ] Migration
+    - [ ] Migration
   - [ ] Auth repository with methods to find and compare hash
 
 - [ ] Backend
@@ -124,25 +126,14 @@
     - [ ]
 
   - [ ] Once 15min JWT expires, /auth/refresh strategy - axios interceptor?
+  - [ ] refresh token reuse detection — if a token is used twice, it should invalidate the entire family (all tokens for that user)
   - [ ] NestJS Global JWT guard by default. Mark others public explicitly
   - [ ] NestJS Role-based guards
 
----
-
 ## Other Future Considerations:
 
-- [ ] refresh token reuse detection — if a token is used twice, it should invalidate the entire family (all tokens for that user)
-
+- [ ] Every request should send access token in Authorization header
 - [ ] Rate limit login endpoint?
 
-- Auth Token Refreshing - automatically renew access token before it expires.
-- Role based access - only allow admin access to manage-users page
-
 - Handle 401 globally — intercept in Axios/fetch, trigger silent refresh
-
-- Short lived access token JWT - store in memory.
-- Long lived refresh token - httpOnly, SameSite cookie.
--
-- refresh token reuse detection - revoke entire family
-
-- HTTPS?
+- HTTPS? - infrastructure side.
