@@ -12,10 +12,13 @@ import {
   Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { User } from '../types/user.type';
+import { User } from '../types';
 import { SocialLinksDto } from './social-links.dto';
 
-export class CreateUserDto implements Omit<User, 'id' | 'createdOn' | 'updatedOn'> {
+export class CreateUserDto implements Omit<
+  User,
+  'id' | 'createdOn' | 'updatedOn'
+> {
   @IsNotEmpty()
   @IsString()
   @MaxLength(30)
@@ -29,7 +32,7 @@ export class CreateUserDto implements Omit<User, 'id' | 'createdOn' | 'updatedOn
   @IsOptional()
   @Type(() => Number) // Convert into number if string was passed
   @IsInt() // ensures whole integer
-  @Min(16, { message: "User must be atleast 16 years of age to join." })
+  @Min(16, { message: 'User must be atleast 16 years of age to join.' })
   @Max(120)
   age?: number;
 
