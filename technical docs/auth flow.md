@@ -27,7 +27,7 @@
     - Generate refresh token (crypto random string, 7d expiry)
       - bcrypt.hash(refreshToken)
       - save hash, userId, expiresAt into refresh_tokens table
-      - set refreshToken as httpOnly, Secure, SameSite=Strict cookie on response.
+      - set refreshToken as httpOnly, Secure, SameSite=Strict, maxAge 7 days as response.cookie
       - send refresh token
     - Return shape of response {user: {...}, accessToken }
 
@@ -54,7 +54,7 @@
   - DTO validation failure > 400 Bad Request
   - Goes into AuthService signup method with signupDTO
     - calls usersRepository.findOne where email matches
-    - Email already exists in DB
+    - Email already exists in table
       - throw 409 Conflict Error
       - log(email already registered)
     - bcrypt.hash() password plaintext with salt rounds
@@ -105,7 +105,7 @@
 
 - [ ] Backend
   - [ ] Basic Auth Module, controller, routes
-  - [ ] auth/login - authService.login()
+  - [ ] /auth/login
     - [ ] NestJS login DTO
     - [ ] repository find one where password matches in users table
     - [ ] compare pass with stored hash and success/failure
@@ -113,14 +113,17 @@
         - [ ] NestJS JWT Token generation
         - [ ] Refresh Token generation
         - [ ] Refresh token hashing
-        - [ ] Refresh token repo save in DB,
+        - [ ] Refresh token repo save in table,
         - [ ] Token rotation on each refresh call - invalidate old one
       - [ ] failure:
         - [ ] throw error
-  - [ ] auth/signup - authService.signup()
+  - [ ] /auth/signup
     - [ ] NestJS signup DTO
     - [ ] hash password with bcrypt
+  - [ ] /auth/logout
+    - [ ]
 
+  - [ ] Once 15min JWT expires, /auth/refresh strategy - axios interceptor?
   - [ ] NestJS Global JWT guard by default. Mark others public explicitly
   - [ ] NestJS Role-based guards
 
@@ -128,7 +131,6 @@
 
 ## Other Future Considerations:
 
-- [ ] Redux storing the access token temporarily, but no silent refresh strategy & when the 15min JWT expires, the user gets logged out unless you implement a refresh interceptor in Axios
 - [ ] refresh token reuse detection — if a token is used twice, it should invalidate the entire family (all tokens for that user)
 
 - [ ] Rate limit login endpoint?
