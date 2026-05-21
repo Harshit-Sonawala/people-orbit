@@ -7,7 +7,6 @@ import {
   SortBy,
   Order,
 } from './dto';
-
 import { UsersRepository } from './users.repository';
 
 @Injectable()
