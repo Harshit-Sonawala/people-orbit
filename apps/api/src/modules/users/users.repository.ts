@@ -36,13 +36,13 @@ export class UsersRepository {
     });
   }
 
-  // async findOneById(id: string): Promise<UserEntity | null> {
-  //   return this.repository.findOneBy({ id });
-  // }
-
-  // async findOneByEmail(email: string): Promise<UserEntity | null> {
-  //   return this.repository.findOneBy({ email });
-  // }
+  async findOneAndGetPassword(email: string): Promise<UserEntity | null> {
+    return this.repository
+      .createQueryBuilder('user')
+      .where('user.email = :email', { email })
+      .addSelect('user.password')
+      .getOne();
+  }
 
   async createOrReplace(newUser: User): Promise<UserEntity> {
     const newUserEntity = this.repository.create(newUser);

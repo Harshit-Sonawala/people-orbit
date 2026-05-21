@@ -1,19 +1,34 @@
-import { Controller, Get, Post, Body, Param, Query, Put, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Query,
+  Put,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { QueryOptionsDto, CreateUserDto, UpdateUserDto } from './dto';
 import type { User, PaginatedUsers } from './types';
 
 @Controller('users') // for URL: /api/users
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  async getAllUsers(@Query() queryOptionsDto: QueryOptionsDto): Promise<PaginatedUsers> {
+  async getAllUsers(
+    @Query() queryOptionsDto: QueryOptionsDto,
+  ): Promise<PaginatedUsers> {
     return this.usersService.getAll(queryOptionsDto);
   }
 
   @Get('search')
-  async searchUsers(@Query('q') query: string, @Query() queryOptionsDto: QueryOptionsDto): Promise<PaginatedUsers> {
+  async searchUsers(
+    @Query('q') query: string,
+    @Query() queryOptionsDto: QueryOptionsDto,
+  ): Promise<PaginatedUsers> {
     return this.usersService.search(query, queryOptionsDto);
   }
 
@@ -34,12 +49,18 @@ export class UsersController {
   }
 
   @Put(':id')
-  async replaceUser(@Param('id') id: string, @Body() replaceUserDto: CreateUserDto): Promise<User> {
+  async replaceUser(
+    @Param('id') id: string,
+    @Body() replaceUserDto: CreateUserDto,
+  ): Promise<User> {
     return this.usersService.replace(id, replaceUserDto);
   }
 
   @Patch(':id')
-  async updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User | null> {
+  async updateUser(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User | null> {
     return this.usersService.update(id, updateUserDto);
   }
 

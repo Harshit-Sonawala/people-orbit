@@ -4,6 +4,7 @@ import {
   IsInt,
   IsEmail,
   Max,
+  MinLength,
   MaxLength,
   IsOptional,
   IsUrl,
@@ -44,6 +45,12 @@ export class CreateUserDto implements Omit<
   @IsNotEmpty()
   @IsEmail()
   email!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(12)
+  @MaxLength(128)
+  password!: string;
 
   @IsNotEmpty()
   @IsString()
