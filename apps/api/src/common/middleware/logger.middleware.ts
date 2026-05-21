@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 
 @Injectable()
-export class LoggerMiddleware implements NestMiddleware {
+export class Logger implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const { method, originalUrl } = req;
 
@@ -14,7 +14,9 @@ export class LoggerMiddleware implements NestMiddleware {
       hour: '2-digit',
       minute: '2-digit',
       hour12: true,
-    }).format(now).replace(',', '');
+    })
+      .format(now)
+      .replace(',', '');
 
     console.log(`LOGGER [${timestamp}]: ${method} ${originalUrl}`);
 
