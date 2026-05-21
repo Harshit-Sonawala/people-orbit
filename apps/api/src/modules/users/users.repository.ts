@@ -1,21 +1,26 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { ILike, Repository } from "typeorm";
-import { UserEntity } from "./entities";
-import { dummyData } from "./users.dummyData.static";
-import { User } from "./types";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ILike, Repository } from 'typeorm';
+import { UserEntity } from '@/entities';
+import { dummyData } from './users.dummyData.static';
+import { User } from './types';
 
 @Injectable()
 export class UsersRepository {
   constructor(
     @InjectRepository(UserEntity)
-    private readonly repository: Repository<UserEntity>
-  ) { }
+    private readonly repository: Repository<UserEntity>,
+  ) {}
 
-  async findAll(page: number, limit: number, sortBy: string, order: string): Promise<[UserEntity[], number]> {
+  async findAll(
+    page: number,
+    limit: number,
+    sortBy: string,
+    order: string,
+  ): Promise<[UserEntity[], number]> {
     return await this.repository.findAndCount({
       order: {
-        [sortBy]: order
+        [sortBy]: order,
       },
       skip: (page - 1) * limit,
       take: limit,
@@ -31,7 +36,10 @@ export class UsersRepository {
     return await this.repository.save(newUserEntity);
   }
 
-  async update(id: string, partialUpdatedUser: Partial<User>): Promise<UserEntity | null> {
+  async update(
+    id: string,
+    partialUpdatedUser: Partial<User>,
+  ): Promise<UserEntity | null> {
     await this.repository.update(id, partialUpdatedUser);
     return await this.findOne(id);
   }
@@ -51,7 +59,11 @@ export class UsersRepository {
     console.log(`Successfully seeded ${dummyData.length} users.`);
   }
 
-  async search(query: string, page: number, limit: number): Promise<[UserEntity[], number]> {
+  async search(
+    query: string,
+    page: number,
+    limit: number,
+  ): Promise<[UserEntity[], number]> {
     return await this.repository.findAndCount({
       where: [
         { firstName: ILike(`%${query}%`) },
@@ -65,6 +77,6 @@ export class UsersRepository {
       },
       skip: (page - 1) * limit,
       take: limit,
-    })
+    });
   }
 }
