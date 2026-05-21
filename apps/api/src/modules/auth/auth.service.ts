@@ -7,6 +7,7 @@ import type { AuthResponse } from './types';
 import { SignupDto, LoginDto } from './dto';
 import { UsersRepository } from '../users/users.repository';
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import { User } from '../users/types';
 import { JwtService } from '@nestjs/jwt';
 
@@ -43,14 +44,15 @@ export class AuthService {
     // Generate JWT accessToken
     const accessToken = this.jwtService.sign(
       { sub: createdUser.id, email: createdUser.email },
-      { expiresIn: '1h', secret: process.env.JWT_SECRET },
+      { expiresIn: '30m', secret: process.env.JWT_SECRET },
     );
-
     // Generate refreshToken
+    const refreshToken = crypto.randomBytes(32).toString('hex');
+    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
     // Save hash, userId, expiresAt into refresh_tokens table
     // Set refreshToken as httpOnly, Secure, SameSite=Strict, maxAge 7 days as response.cookie
 
-    return { user: createdUser, accessToken };
+    return { user: createdUser, accessToken, refreshToken: hashedRefreshToken };
   }
 
   // POST login
@@ -85,17 +87,18 @@ export class AuthService {
         email: foundUser.email,
       },
       {
-        expiresIn: '1h',
+        expiresIn: '30m',
         secret: process.env.JWT_SECRET,
       },
     );
-
     // Generate refreshToken
+    const refreshToken = crypto.randomBytes(32).toString('hex');
+    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
     // Save hash, userId, expiresAt into refresh_tokens table
     // Set refreshToken as httpOnly, Secure, SameSite=Strict, maxAge 7 days as response.cookie
     // already logged in?
 
-    return { user: foundUser, accessToken };
+    return { user: foundUser, accessToken, refreshToken: hashedRefreshToken };
   }
 
   // POST logout. Gets id from JWT payload

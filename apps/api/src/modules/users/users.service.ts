@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import type { User, PaginatedUsers } from './types';
 import {
   QueryOptionsDto,
@@ -8,6 +12,7 @@ import {
   Order,
 } from './dto';
 import { UsersRepository } from './users.repository';
+import bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -63,12 +68,23 @@ export class UsersService {
 
   // POST create new record
   async create(createData: CreateUserDto): Promise<User> {
+    const foundUser = await this.usersRepository.findOne({
+      email: createData.email,
+    });
+    // Already exists: throw 409 Conflict Error
+    if (foundUser) {
+      throw new ConflictException(
+        `User with email ${createData.email} already exists`,
+      );
+    }
+
     const newDate = Date.now();
     const idSlug: string = `${createData.firstName.toLowerCase().replace(/\s+/g, '-')}-${createData.lastName.toLowerCase().replace(/\s+/g, '-')}-${newDate}`;
+    const hashedPassword = await bcrypt.hash(createData.password, 10);
     const newUser: User = {
       ...createData,
       id: idSlug,
-      password: 'PLACEHOLDER_PASS_HASH',
+      password: hashedPassword,
       createdOn: newDate,
       updatedOn: newDate,
     };
