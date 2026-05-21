@@ -26,7 +26,7 @@
       - send JWT in response body
     - Generate refresh token (crypto random string, 7d expiry)
       - bcrypt.hash(refreshToken)
-      - save hash, userId, expiresAt into refresh_tokens table
+      - save hash, userId, expiresAt into sessions table
       - set refreshToken as httpOnly, Secure, SameSite=Strict, maxAge 7 days as response.cookie
       - send refresh token
     - Return shape of response {user: {...}, accessToken }
@@ -63,7 +63,7 @@
       - send JWT in response body
     - Generate refresh token (crypto random string, 7d expiry)
       - bcrypt.hash(refreshToken)
-      - save hash, userId, expiresAt into refresh_tokens table
+      - save hash, userId, expiresAt into sessions table
       - set refreshToken as httpOnly, Secure, SameSite=Strict, maxAge 7 days as response.cookie
       - send refresh token
     - Return shape of response {user: {...}, accessToken }
@@ -98,32 +98,33 @@
   - [ ] users table
     - [x] Add password
     - [x] Migration
-    - [ ] New refresh_tokens table with:
+    - [ ] New sessions table with:
     - [ ] id | userId (FK) | tokenHash | expiresAt | createdAt
     - [ ] Migration
-    - [ ] refresh_tokens repository methods to find, save, compare hash, etc.
+    - [ ] sessions repository methods to find, save, compare hash, etc.
 
 - [ ] Backend
   - [x] Basic Auth Module, controller, routes
   - [x] AuthResponse Type
   - [ ] /auth/login
     - [x] NestJS login DTO
-    - [ ] repository find one where password matches in users table
-    - [ ] compare pass with stored hash and success/failure
-      - [ ] success:
-        - [ ] NestJS JWT Token generation
+    - [x] repository find one where password matches in users table
+    - [x] compare pass with stored hash and success/failure
+      - [x] success:
+        - [x] NestJS JWT Token generation
         <!-- - [ ] Refresh Token generation
         - [ ] Refresh token hashing
         - [ ] Refresh token repo save in table,
         - [ ] Token rotation on each refresh call - repo delete old row -->
-      - [ ] failure:
-        - [ ] throw error
+      - [x] failure:
+        - [x] throw error
   - [ ] /auth/signup
     - [x] NestJS signup DTO
     - [x] hash password with bcrypt
     - [x] Save user to table with idSlug, hashedPassword, createdOn, updatedOn.
     - [x] Generate JWT accessToken
-    - [ ] Generate Refresh Token
+    - [x] Generate Refresh Token
+    - [ ] Store refresh token in session table
     - [x] return AuthResponse type
   - [ ] /auth/logout
   - [ ] @JwtGuard(), @Public declarations
