@@ -66,7 +66,7 @@ export const useUsers = () => {
       },
       onSuccess: (result) => {
         queryClient.invalidateQueries({ queryKey: ["users"] });
-        console.log(`Created new person record: ${JSON.stringify(result)}`);
+        console.log(`Created new User record: ${JSON.stringify(result)}`);
       },
       onError: (error: any) => {
         console.error(
@@ -96,7 +96,7 @@ export const useUsers = () => {
         queryClient.invalidateQueries({ queryKey: ["users"] });
         queryClient.invalidateQueries({ queryKey: ["user", input.replaceId] });
         console.log(
-          `Replaced person record at ID: ${input.replaceId} with data: ${JSON.stringify(result)}`,
+          `Replaced User record at ID: ${input.replaceId} with data: ${JSON.stringify(result)}`,
         );
       },
       onError: (error: any) => {
@@ -140,7 +140,7 @@ export const useUsers = () => {
         queryClient.invalidateQueries({ queryKey: ["users"] });
         queryClient.invalidateQueries({ queryKey: ["user", input.updateId] });
         console.log(
-          `Updated person record at ID: ${input.updateId} with data: ${JSON.stringify(result)}`,
+          `Updated User record at ID: ${input.updateId} with data: ${JSON.stringify(result)}`,
         );
       },
       onError: (error: any) => {
@@ -173,7 +173,7 @@ export const useUsers = () => {
         queryClient.invalidateQueries({ queryKey: ["users"] });
         queryClient.invalidateQueries({ queryKey: ["user", deleteId] });
         console.log(
-          `Replaced person record at ID: ${deleteId} with data: ${JSON.stringify(result)}`,
+          `Replaced User record at ID: ${deleteId} with data: ${JSON.stringify(result)}`,
         );
       },
       onError: (error: any) => {

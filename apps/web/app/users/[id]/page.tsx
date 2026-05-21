@@ -31,7 +31,7 @@ export default async function UserDetails({
     return (
       <div className="flex flex-col flex-1 items-center justify-center py-8">
         <Heading variant="sm" className="text-error">
-          Error: Failed to fetch person details
+          Error: Failed to fetch User details
         </Heading>
       </div>
     );

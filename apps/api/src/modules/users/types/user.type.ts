@@ -7,6 +7,7 @@ export type User = {
   age?: number;
   designation: string;
   email: string;
+  password: string;
   phone: string;
   bio?: string;
   skills?: string[];

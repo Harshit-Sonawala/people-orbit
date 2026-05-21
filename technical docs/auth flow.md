@@ -58,7 +58,7 @@
       - throw 409 Conflict Error
       - log(email already registered)
     - bcrypt.hash() password plaintext
-    - usersRepository.create() and save new user record with name, email, hashed password
+    - save new user record with usersRepository.create(id, name, email, password, ...)
     - Generate access token (JWT, 15min expiry)
       - send JWT in response body
     - Generate refresh token (crypto random string, 7d expiry)
@@ -94,6 +94,44 @@
 
 ### Coding Steps/Tasks
 
+- [ ] Database
+  - [ ] users table
+    - [x] Add password
+    - [x] Migration
+    - [ ] New refresh_tokens table with:
+    - [ ] id | userId (FK) | tokenHash | expiresAt | createdAt
+    - [ ] Migration
+    - [ ] refresh_tokens repository methods to find, save, compare hash, etc.
+
+- [ ] Backend
+  - [x] Basic Auth Module, controller, routes
+  - [x] AuthResponse Type
+  - [ ] /auth/login
+    - [x] NestJS login DTO
+    - [ ] repository find one where password matches in users table
+    - [ ] compare pass with stored hash and success/failure
+      - [ ] success:
+        - [ ] NestJS JWT Token generation
+        <!-- - [ ] Refresh Token generation
+        - [ ] Refresh token hashing
+        - [ ] Refresh token repo save in table,
+        - [ ] Token rotation on each refresh call - repo delete old row -->
+      - [ ] failure:
+        - [ ] throw error
+  - [ ] /auth/signup
+    - [x] NestJS signup DTO
+    - [x] hash password with bcrypt
+    - [x] Save user to table with idSlug, hashedPassword, createdOn, updatedOn.
+    - [x] Generate JWT accessToken
+    - [ ] Generate Refresh Token
+    - [x] return AuthResponse type
+  - [ ] /auth/logout
+  - [ ] @JwtGuard(), @Public declarations
+
+  - [ ] refresh token reuse detection — if a token is used twice, it should invalidate the entire family (all tokens for that user)
+  - [ ] NestJS Global JWT guard by default. Mark others public explicitly
+  - [ ] NestJS Role-based guards
+
 - Frontend
   - [ ] Login Page
     - [ ] Password validation rules - min/max, special chars
@@ -111,41 +149,10 @@
   - [ ] Clear auth state and redirect to login/signup on logout or session expiry
   - [ ] Once 15min JWT expires, /auth/refresh strategy - axios interceptor?
 
-- [ ] Database
-  - [ ] users table
-    - [ ] Add password
-    - [ ] Migration
-    - [ ] New refresh_tokens table with:
-    - [ ] id | userId (FK) | tokenHash | expiresAt | createdAt
-    - [ ] Migration
-    - [ ] refresh_tokens repository methods to find, save, compare hash, etc.
-
-- [ ] Backend
-  - [ ] Basic Auth Module, controller, routes
-  - [ ] /auth/login
-    - [ ] NestJS login DTO
-    - [ ] repository find one where password matches in users table
-    - [ ] compare pass with stored hash and success/failure
-      - [ ] success:
-        - [ ] NestJS JWT Token generation
-        <!-- - [ ] Refresh Token generation
-        - [ ] Refresh token hashing
-        - [ ] Refresh token repo save in table,
-        - [ ] Token rotation on each refresh call - repo delete old row -->
-      - [ ] failure:
-        - [ ] throw error
-  - [ ] /auth/signup
-    - [ ] NestJS signup DTO
-    - [ ] hash password with bcrypt
-  - [ ] /auth/logout
-  - [ ] Guards etc.
-
-  - [ ] refresh token reuse detection — if a token is used twice, it should invalidate the entire family (all tokens for that user)
-  - [ ] NestJS Global JWT guard by default. Mark others public explicitly
-  - [ ] NestJS Role-based guards
-
 ## Other Future Considerations:
 
+- [ ] Update the CreateUserForm and CreateUserDto to accept Password
+- [ ] Add the role column to the FE & BE User type, update DTOs, add the role on UsersService.create
 - [ ] Every request should send access token in Authorization header
 
 - Handle 401 globally — intercept in Axios/fetch, trigger silent refresh

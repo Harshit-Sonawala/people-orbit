@@ -54,36 +54,38 @@ export class UsersService {
 
   // GET record by ID
   async getOne(getId: string): Promise<User> {
-    const foundPerson = await this.usersRepository.findOne(getId);
-    if (!foundPerson) {
-      throw new NotFoundException(`Person with ID ${getId} not found`);
+    const foundUser = await this.usersRepository.findOne({ id: getId });
+    if (!foundUser) {
+      throw new NotFoundException(`User with ID ${getId} not found`);
     }
-    return foundPerson;
+    return foundUser;
   }
 
   // POST create new record
   async create(createData: CreateUserDto): Promise<User> {
     const newDate = Date.now();
-    const idSlug = `${createData.firstName.toLowerCase().replace(/\s+/g, '-')}-${createData.lastName.toLowerCase().replace(/\s+/g, '-')}-${newDate}`;
-    const newUser = {
+    const idSlug: string = `${createData.firstName.toLowerCase().replace(/\s+/g, '-')}-${createData.lastName.toLowerCase().replace(/\s+/g, '-')}-${newDate}`;
+    const newUser: User = {
       ...createData,
       id: idSlug,
+      password: 'PLACEHOLDER_PASS_HASH',
       createdOn: newDate,
       updatedOn: newDate,
     };
     return await this.usersRepository.createOrReplace(newUser);
   }
 
-  // PUT Replace entire record based on id with a new person.
+  // PUT Replace entire record based on id with a new User.
   async replace(replaceId: string, replaceData: CreateUserDto): Promise<User> {
-    const existingUser = await this.usersRepository.findOne(replaceId);
+    const existingUser = await this.usersRepository.findOne({ id: replaceId });
     if (!existingUser) {
-      throw new NotFoundException(`Person with ID ${replaceId} not found`);
+      throw new NotFoundException(`User with ID ${replaceId} not found`);
     } else {
-      const newDate = Date.now();
-      const newUser = {
+      const newDate: number = Date.now();
+      const newUser: User = {
         ...replaceData,
         id: existingUser?.id,
+        password: 'PLACEHOLDER_PASS_HASH',
         createdOn: existingUser?.createdOn || newDate,
         updatedOn: newDate,
       };
@@ -96,11 +98,11 @@ export class UsersService {
     updateId: string,
     updateData: UpdateUserDto,
   ): Promise<User | null> {
-    const existingUser = await this.usersRepository.findOne(updateId);
+    const existingUser = await this.usersRepository.findOne({ id: updateId });
     if (!existingUser) {
-      throw new NotFoundException(`Person with ID ${updateId} not found`);
+      throw new NotFoundException(`User with ID ${updateId} not found`);
     }
-    const newDate = Date.now();
+    const newDate: number = Date.now();
     const partialUpdatedUser: Partial<User> = {
       // building a partial user payload
       ...updateData,
@@ -113,7 +115,7 @@ export class UsersService {
   async delete(deleteId: string): Promise<User> {
     const deletedUser = await this.usersRepository.delete(deleteId);
     if (!deletedUser) {
-      throw new NotFoundException(`Person with ID ${deleteId} not found`);
+      throw new NotFoundException(`User with ID ${deleteId} not found`);
     }
     return deletedUser;
   }

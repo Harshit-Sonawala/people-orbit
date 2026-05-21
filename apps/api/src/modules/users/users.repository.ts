@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
+import { Repository, ILike, FindOptionsWhere } from 'typeorm';
 import { UserEntity } from '@/entities';
 import { dummyData } from './users.dummyData.static';
 import { User } from './types';
@@ -27,9 +27,22 @@ export class UsersRepository {
     });
   }
 
-  async findOne(id: string): Promise<UserEntity | null> {
-    return this.repository.findOneBy({ id });
+  async findOne(
+    criteria: FindOptionsWhere<UserEntity>,
+  ): Promise<UserEntity | null> {
+    return this.repository.findOne({
+      where: criteria,
+      relationLoadStrategy: 'query', // returns all array types too
+    });
   }
+
+  // async findOneById(id: string): Promise<UserEntity | null> {
+  //   return this.repository.findOneBy({ id });
+  // }
+
+  // async findOneByEmail(email: string): Promise<UserEntity | null> {
+  //   return this.repository.findOneBy({ email });
+  // }
 
   async createOrReplace(newUser: User): Promise<UserEntity> {
     const newUserEntity = this.repository.create(newUser);
@@ -41,11 +54,11 @@ export class UsersRepository {
     partialUpdatedUser: Partial<User>,
   ): Promise<UserEntity | null> {
     await this.repository.update(id, partialUpdatedUser);
-    return await this.findOne(id);
+    return await this.findOne({ id });
   }
 
   async delete(id: string): Promise<UserEntity | null> {
-    const user = await this.findOne(id);
+    const user = await this.findOne({ id });
     if (user) {
       await this.repository.delete(id);
     }
