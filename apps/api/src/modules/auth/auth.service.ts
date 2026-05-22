@@ -103,8 +103,9 @@ export class AuthService {
 
   // POST logout. Gets id from JWT payload
   async logout(id: string): Promise<{ message: string }> {
-    // get id from JWT payload
-    // remove refreshToken row from table where id matches
+    // find id in sessions table
+    // no match found > throw error
+    // match found: remove refreshToken row from sessions table where id matches
 
     console.log(`User with id ${id} logged out successfully.`);
     return { message: `User with id ${id} logged out successfully.` };

@@ -39,6 +39,8 @@
   - Tanstack onFailure
     - failure notification
 
+---
+
 - SIGNUP FLOW:  
   (FRONTEND)
   - User clicks on top right Signup button > Redirected to Signup page
@@ -76,6 +78,8 @@
   - Tanstack onFailure
     - failure notification
 
+---
+
 - REFRESH FLOW /auth/refresh
   (FRONTEND)
   - Axios interceptor catches 401 Unauthorized
@@ -91,6 +95,19 @@
   -
 
 ---
+
+- LOGOUT FLOW /auth/logout
+  (BACKEND)
+  - NestJS IsAuthenticated guard added the user from the JWT payload into the Request object
+  - AuthController receives the userId from the Request object
+  - Calls the AuthService.logout function
+    - Compares userId with sessions table userId
+    - No match found
+      - User not logged in > throw which error?
+    - Match found
+      - Remove refreshToken row from sessions table
+      - log(refresh token deleted for userId)
+    - Return response shape {message: "Logged out successfully"}
 
 ### Coding Steps/Tasks
 
@@ -124,14 +141,13 @@
     - [x] Save user to table with idSlug, hashedPassword, createdOn, updatedOn.
     - [x] Generate JWT accessToken
     - [x] Generate Refresh Token
-    - [ ] Store refresh token in session table
+    - [ ] Store refresh token in sessions table
     - [x] return AuthResponse type
   - [ ] /auth/logout
-  - [ ] @JwtGuard(), @Public declarations
+  - [x] @JwtGuard, @UseGuards(IsAuthenticated) guard creation and specfying in routes.
 
   - [ ] refresh token reuse detection — if a token is used twice, it should invalidate the entire family (all tokens for that user)
-  - [ ] NestJS Global JWT guard by default. Mark others public explicitly
-  - [ ] NestJS Role-based guards
+  - [ ] Role column everywhere and NestJS Role-based guards
 
 - Frontend
   - [ ] Login Page
@@ -147,7 +163,7 @@
   - [ ] Next.js Middleware for route protection - private routes (/profile), guest only routes (/login)
   - [ ] Error notification/modal functionality with Redux?
   - [ ] Tanstack Query useAuth hook?
-  - [ ] Clear auth state and redirect to login/signup on logout or session expiry
+  - [ ] Clear auth state and redirect to login/signup on logout or sessions expiry
   - [ ] Once 15min JWT expires, /auth/refresh strategy - axios interceptor?
 
 ## Other Future Considerations:
