@@ -109,6 +109,15 @@
       - log(refresh token deleted for userId)
     - Return response shape {message: "Logged out successfully"}
 
+## TASKS
+
+- [ ] How to cleanly pass the user info stuff from JWT payload to other places
+- [ ] hashing - what it does, salt, salt rounds
+- [ ] How to read payload on the FE
+- [ ] call the backend from the nextjs server - /login route
+- [ ] create the login page, wire it up with above^
+- [ ] banned flag - add column, migration
+
 ### Coding Steps/Tasks
 
 - [ ] Database
