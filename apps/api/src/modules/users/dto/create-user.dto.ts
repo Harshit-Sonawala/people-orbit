@@ -18,7 +18,7 @@ import { SocialLinksDto } from './social-links.dto';
 
 export class CreateUserDto implements Omit<
   User,
-  'id' | 'createdOn' | 'updatedOn'
+  'id' | 'createdOn' | 'updatedOn' | 'isBanned' | 'role'
 > {
   @IsNotEmpty()
   @IsString()

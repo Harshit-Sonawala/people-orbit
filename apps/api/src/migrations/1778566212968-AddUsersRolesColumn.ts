@@ -6,7 +6,7 @@ export class AddUsersRolesColumn1778566212968 implements MigrationInterface {
       `CREATE TYPE "role_enum" AS ENUM('user', 'manager', 'admin')`,
     );
     await queryRunner.query(
-      `ALTER TABLE "users" ADD "role" "role_enum" NOT NULL DEFAULT 'user'`,
+      `ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "role" "role_enum" NOT NULL DEFAULT 'user'`,
     );
   }
 

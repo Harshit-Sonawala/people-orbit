@@ -3,7 +3,7 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
-import type { User, PaginatedUsers } from './types';
+import { type User, type PaginatedUsers, UserRole } from './types';
 import {
   QueryOptionsDto,
   CreateUserDto,
@@ -85,8 +85,10 @@ export class UsersService {
       ...createData,
       id: idSlug,
       password: hashedPassword,
+      role: UserRole.USER,
       createdOn: newDate,
       updatedOn: newDate,
+      isBanned: false,
     };
     return await this.usersRepository.createOrReplace(newUser);
   }
@@ -102,8 +104,10 @@ export class UsersService {
         ...replaceData,
         id: existingUser?.id,
         password: 'PLACEHOLDER_PASS_HASH',
+        role: existingUser?.role || UserRole.USER,
         createdOn: existingUser?.createdOn || newDate,
         updatedOn: newDate,
+        isBanned: existingUser?.isBanned || false,
       };
       return await this.usersRepository.createOrReplace(newUser);
     }

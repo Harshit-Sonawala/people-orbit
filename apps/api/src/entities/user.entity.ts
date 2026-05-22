@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, Column, Index } from 'typeorm';
-import { type SocialLinks } from '../modules/users/types';
+import { type SocialLinks, UserRole } from '../modules/users/types';
 
 @Entity('users') // table name users
 export class UserEntity {
@@ -26,6 +26,13 @@ export class UserEntity {
 
   @Column({ type: 'varchar', length: 128, select: false, nullable: false })
   password!: string;
+
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.USER,
+  })
+  role: UserRole;
 
   @Column({ type: 'varchar', length: 20 })
   phone: string;
@@ -62,4 +69,10 @@ export class UserEntity {
     },
   })
   updatedOn: number;
+
+  @Column({
+    type: 'boolean',
+    default: false,
+  })
+  isBanned: boolean;
 }

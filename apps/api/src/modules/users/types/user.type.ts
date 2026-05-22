@@ -1,4 +1,4 @@
-import { SocialLinks } from '.';
+import { SocialLinks, UserRole } from '.';
 
 export type User = {
   id: string;
@@ -8,6 +8,7 @@ export type User = {
   designation: string;
   email: string;
   password: string;
+  role: UserRole;
   phone: string;
   bio?: string;
   skills?: string[];
@@ -16,4 +17,5 @@ export type User = {
   bgImage?: string;
   createdOn: number;
   updatedOn: number;
+  isBanned: boolean;
 };

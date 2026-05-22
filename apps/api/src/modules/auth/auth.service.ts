@@ -8,7 +8,7 @@ import { SignupDto, LoginDto } from './dto';
 import { UsersRepository } from '../users/users.repository';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
-import { User } from '../users/types';
+import { User, UserRole } from '../users/types';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -51,8 +51,10 @@ export class AuthService {
       ...signupData,
       id: idSlug,
       password: hashedPassword,
+      role: UserRole.USER,
       createdOn: newDate,
       updatedOn: newDate,
+      isBanned: false,
     };
     const createdUser = await this.usersRepository.createOrReplace(newUser);
 
