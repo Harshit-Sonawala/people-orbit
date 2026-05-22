@@ -18,6 +18,20 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  private generateAccessToken(user: User): string {
+    const accessToken = this.jwtService.sign({
+      sub: user.id,
+      email: user.email,
+    });
+    return accessToken;
+  }
+
+  private async generateRefreshToken(): Promise<string> {
+    const refreshToken = crypto.randomBytes(32).toString('hex');
+    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    return hashedRefreshToken;
+  }
+
   // POST signup
   async signup(signupData: SignupDto): Promise<AuthResponse> {
     const foundUser = await this.usersRepository.findOne({
@@ -41,18 +55,15 @@ export class AuthService {
       updatedOn: newDate,
     };
     const createdUser = await this.usersRepository.createOrReplace(newUser);
+
     // Generate JWT accessToken
-    const accessToken = this.jwtService.sign({
-      sub: createdUser.id,
-      email: createdUser.email,
-    });
+    const accessToken = this.generateAccessToken(createdUser);
     // Generate refreshToken
-    const refreshToken = crypto.randomBytes(32).toString('hex');
-    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    const refreshToken = await this.generateRefreshToken();
     // Save hash, userId, expiresAt into refresh_tokens table
     // Set refreshToken as httpOnly, Secure, SameSite=Strict, maxAge 7 days as response.cookie
 
-    return { user: createdUser, accessToken, refreshToken: hashedRefreshToken };
+    return { user: createdUser, accessToken, refreshToken };
   }
 
   // POST login
@@ -81,24 +92,14 @@ export class AuthService {
       );
     }
     // Generate JWT accessToken
-    const accessToken = this.jwtService.sign(
-      {
-        sub: foundUser.id,
-        email: foundUser.email,
-      },
-      {
-        expiresIn: '30m',
-        secret: process.env.JWT_SECRET,
-      },
-    );
+    const accessToken = this.generateAccessToken(foundUser);
     // Generate refreshToken
-    const refreshToken = crypto.randomBytes(32).toString('hex');
-    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    const refreshToken = await this.generateRefreshToken();
     // Save hash, userId, expiresAt into refresh_tokens table
     // Set refreshToken as httpOnly, Secure, SameSite=Strict, maxAge 7 days as response.cookie
     // already logged in?
 
-    return { user: foundUser, accessToken, refreshToken: hashedRefreshToken };
+    return { user: foundUser, accessToken, refreshToken };
   }
 
   // POST logout. Gets id from JWT payload

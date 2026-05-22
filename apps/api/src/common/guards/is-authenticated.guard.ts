@@ -26,7 +26,7 @@ export class IsAuthenticated implements CanActivate {
 
     try {
       const payload = await this.jwtService.verifyAsync(token);
-      request['user'] = payload; // Attach user from JWT payload to request
+      request['user'] = payload; // Attach JWT payload to request["user"]
     } catch {
       throw new UnauthorizedException('Invalid or expired access token.');
     }
