@@ -59,7 +59,7 @@ export const useUsers = () => {
   const create = () => {
     return useMutation({
       mutationFn: async (
-        createData: Omit<User, "id" | "createdOn" | "updatedOn">,
+        createData: Omit<User, "id" | "createdOn" | "updatedOn" | "role" | "isBanned">,
       ): Promise<User> => {
         const { data } = await axios.post<User>(USERS_URL, createData);
         return data;
@@ -84,7 +84,7 @@ export const useUsers = () => {
         replaceData,
       }: {
         replaceId: string;
-        replaceData: Omit<User, "id" | "createdOn" | "updatedOn">;
+        replaceData: Omit<User, "id" | "createdOn" | "updatedOn" | "role" | "isBanned">;
       }): Promise<User> => {
         const { data } = await axios.put<User>(
           `${USERS_URL}/${replaceId}`,
@@ -115,7 +115,7 @@ export const useUsers = () => {
         updateData,
       }: {
         updateId: string;
-        updateData: Omit<User, "id" | "createdOn" | "updatedOn">;
+        updateData: Omit<User, "id" | "createdOn" | "updatedOn" | "role" | "isBanned">;
       }): Promise<User> => {
         // const res = await fetch(`${USERS_URL}/${updateId}`, {
         //   method: "PATCH",

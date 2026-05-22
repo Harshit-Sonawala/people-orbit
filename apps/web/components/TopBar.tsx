@@ -30,7 +30,7 @@ export const TopBar = () => {
         <CustomLink href="/demo">Demo</CustomLink>
         <ThemeToggleButton />
         <CustomLink
-          href="/account"
+          href="/login"
           className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-lg gap-2"
         >
           <AccountCircleRounded className="icon-xl" />

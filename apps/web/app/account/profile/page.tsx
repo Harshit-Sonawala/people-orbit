@@ -8,7 +8,7 @@ import {
   nameRegex,
   designationRegex,
   phoneRegex,
-} from "../_components/formRegexes";
+} from "@/components/forms/formRegexes";
 import * as Yup from "yup";
 import { useUsers } from "@/hooks";
 import {
