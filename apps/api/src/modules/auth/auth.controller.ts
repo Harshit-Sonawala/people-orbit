@@ -1,7 +1,8 @@
-import { Controller, Post, Delete, Param, Body } from '@nestjs/common';
+import { Controller, UseGuards, Post, Param, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthResponse } from './types';
 import { SignupDto, LoginDto } from './dto';
+import { IsAuthenticated } from '@/common/guards/is-authenticated.guard';
 
 @Controller('auth') // /api/auth
 export class AuthController {
@@ -18,12 +19,8 @@ export class AuthController {
   }
 
   @Post('logout/:id')
+  @UseGuards(IsAuthenticated)
   async logout(@Param('id') id: string): Promise<{ message: string }> {
     return this.authService.logout(id);
   }
-
-  // @Delete('delete/:id')
-  // async delete(@Param('id') id: string): Promise<{ message: string }> {
-  //   return this.authService.delete(id);
-  // }
 }

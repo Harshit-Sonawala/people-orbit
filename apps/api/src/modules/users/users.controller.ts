@@ -1,5 +1,6 @@
 import {
   Controller,
+  UseGuards,
   Get,
   Post,
   Body,
@@ -12,6 +13,7 @@ import {
 import { UsersService } from './users.service';
 import { QueryOptionsDto, CreateUserDto, UpdateUserDto } from './dto';
 import type { User, PaginatedUsers } from './types';
+import { IsAuthenticated } from '@/common/guards/is-authenticated.guard';
 
 @Controller('users') // for URL: /api/users
 export class UsersController {
@@ -38,6 +40,7 @@ export class UsersController {
   }
 
   @Post()
+  @UseGuards(IsAuthenticated)
   async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
   }
@@ -49,6 +52,7 @@ export class UsersController {
   }
 
   @Put(':id')
+  @UseGuards(IsAuthenticated)
   async replaceUser(
     @Param('id') id: string,
     @Body() replaceUserDto: CreateUserDto,
@@ -57,6 +61,7 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @UseGuards(IsAuthenticated)
   async updateUser(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -65,6 +70,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @UseGuards(IsAuthenticated)
   async deleteUser(@Param('id') id: string): Promise<User> {
     return this.usersService.delete(id);
   }

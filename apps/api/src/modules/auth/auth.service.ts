@@ -42,10 +42,10 @@ export class AuthService {
     };
     const createdUser = await this.usersRepository.createOrReplace(newUser);
     // Generate JWT accessToken
-    const accessToken = this.jwtService.sign(
-      { sub: createdUser.id, email: createdUser.email },
-      { expiresIn: '30m', secret: process.env.JWT_SECRET },
-    );
+    const accessToken = this.jwtService.sign({
+      sub: createdUser.id,
+      email: createdUser.email,
+    });
     // Generate refreshToken
     const refreshToken = crypto.randomBytes(32).toString('hex');
     const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
@@ -109,9 +109,4 @@ export class AuthService {
     console.log(`User with id ${id} logged out successfully.`);
     return { message: `User with id ${id} logged out successfully.` };
   }
-
-  // async delete(id: string): Promise<{ message: string }> {
-  //   console.log(`User data for id ${id} deleted successfully`);
-  //   return { message: `User data for id ${id} deleted successfully` };
-  // }
 }
