@@ -71,6 +71,7 @@ export class AuthService {
     const foundUser = await this.usersRepository.findOneAndGetPassword(
       loginData.email,
     );
+
     // Email does not exist: throw 401 Unauthorized Error
     if (!foundUser) {
       console.log(`User with email ${loginData.email} not found.`);
@@ -78,6 +79,8 @@ export class AuthService {
         `Provided user email or password is incorrect.`,
       );
     }
+
+    // Add banned flag
     // Compare plaintext password with hash from table
     const isPassHashMatches = await bcrypt.compare(
       loginData.password,

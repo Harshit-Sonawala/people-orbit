@@ -1,8 +1,9 @@
 import { Controller, UseGuards, Post, Body, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthResponse } from './types';
+import { type AuthResponse, type JwtPayload } from './types';
 import { SignupDto, LoginDto } from './dto';
 import { IsAuthenticated } from '@/common/guards/is-authenticated.guard';
+import { CurrentUser } from '@/common/decorators/current-user.decorator';
 
 @Controller('auth') // /api/auth
 export class AuthController {
@@ -20,8 +21,8 @@ export class AuthController {
 
   @Post('logout')
   @UseGuards(IsAuthenticated)
-  async logout(@Req() req: Request): Promise<{ message: string }> {
-    const userId = req['user'].sub; // Get user id from JWT
-    return this.authService.logout(userId);
+  async logout(@CurrentUser() user: JwtPayload): Promise<{ message: string }> {
+    // const userId = req['user'].sub; // Get user id from JWT
+    return this.authService.logout(user.sub); // Get user id from JWT
   }
 }
