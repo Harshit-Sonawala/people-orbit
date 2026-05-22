@@ -111,12 +111,12 @@
 
 ## TASKS
 
-- [ ] How to cleanly pass the user info stuff from JWT payload to other places
-- [ ] hashing - what it does, salt, salt rounds
+- [x] How to cleanly pass the user info stuff from JWT payload to other places - Custom Decorator of CurrentUser, JwtPayload type
+- [x] hashing - what it does, salt, salt rounds
 - [ ] How to read payload on the FE
 - [ ] call the backend from the nextjs server - /login route
 - [ ] create the login page, wire it up with above^
-- [ ] banned flag - add column, migration
+- [x] banned flag - add column, migration
 
 ### Coding Steps/Tasks
 
