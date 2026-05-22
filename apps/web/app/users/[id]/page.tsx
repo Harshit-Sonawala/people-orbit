@@ -1,7 +1,7 @@
 import { User } from "@/types/User";
 import { Heading, Card, Divider } from "@/components";
 import Image from "next/image";
-import profilePic from "@/public/dummy_profilePic.jpg";
+import profilePic from "@/public/placeholder_profile_pic.png";
 import bgImage from "@/public/dummy_bgImage.jpg";
 import {
   LinkedIn,

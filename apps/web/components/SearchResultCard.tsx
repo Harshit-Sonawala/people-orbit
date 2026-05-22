@@ -2,7 +2,7 @@ import React from "react";
 import { User } from "@/types";
 import { Card, Heading } from "@/components";
 import Link from "next/link";
-import profilePic from "@/public/dummy_profilePic.jpg";
+import profilePic from "@/public/placeholder_profile_pic.png";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 

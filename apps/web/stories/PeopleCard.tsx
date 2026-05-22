@@ -5,7 +5,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import WorkIcon from "@mui/icons-material/Work";
 import { People } from "@/types/User";
 import Image from "next/image";
-import profilePic from "@/public/dummy_profilePic.jpg";
+import profilePic from "@/public/placeholder_profile_pic.png";
 import bgImage from "@/public/dummy_bgImage.jpg";
 
 type Props = {

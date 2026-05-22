@@ -3,7 +3,7 @@ import { Heading } from "@/components";
 import { User } from "@/types/User";
 import Image from "next/image";
 import Link from "next/link";
-import profilePic from "@/public/dummy_profilePic.jpg";
+import profilePic from "@/public/placeholder_profile_pic.png";
 import bgImage from "@/public/dummy_bgImage.jpg";
 import { WorkRounded, EmailRounded, PhoneRounded } from "@mui/icons-material";
 import { cn } from "@/lib/utils";
