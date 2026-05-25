@@ -21,7 +21,7 @@ export class UserEntity {
   @Index()
   designation: string;
 
-  @Column({ type: 'varchar', unique: true })
+  @Column({ type: 'varchar', length: 100, unique: true })
   email: string;
 
   @Column({ type: 'varchar', length: 128, select: false, nullable: false })

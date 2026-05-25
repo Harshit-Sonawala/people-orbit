@@ -44,6 +44,7 @@ export class CreateUserDto implements Omit<
 
   @IsNotEmpty()
   @IsEmail()
+  @MaxLength(100)
   email!: string;
 
   @IsNotEmpty()

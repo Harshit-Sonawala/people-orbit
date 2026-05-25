@@ -6,6 +6,7 @@ import {
   emailValidation,
   passwordValidation,
 } from "@/components/forms/formValidations";
+import { getFormError } from "./getFormError";
 import {
   Card,
   Heading,
@@ -33,25 +34,6 @@ export const LoginForm = () => {
     },
   });
 
-  const getError = (
-    field: keyof typeof formik.values & string,
-    nestedField?: string,
-  ): string | undefined => {
-    const err = formik.errors[field];
-
-    // Nested case: getError("socialLinks", "linkedIn")
-    if (nestedField) {
-      if (typeof err === "object" && !Array.isArray(err) && err !== null) {
-        const nestedErr = (err as Record<string, unknown>)[nestedField];
-        return typeof nestedErr === "string" ? nestedErr : undefined;
-      }
-      return undefined;
-    }
-
-    // Simple error case: getError("firstName")
-    return typeof err === "string" ? err : undefined;
-  };
-
   return (
     <Card className="py-10 px-12 w-full self-center max-w-180">
       <form
@@ -76,7 +58,7 @@ export const LoginForm = () => {
             type="text"
             placeholder="johndoe@example.com"
             className="w-full"
-            error={getError("email")}
+            error={getFormError("email", formik.errors, formik.touched)}
             {...formik.getFieldProps("email")}
           />
         </div>
@@ -90,7 +72,7 @@ export const LoginForm = () => {
             id="password"
             type="password"
             className="w-full"
-            error={getError("password")}
+            error={getFormError("password", formik.errors, formik.touched)}
             {...formik.getFieldProps("password")}
           />
         </div>

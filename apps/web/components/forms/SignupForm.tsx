@@ -11,6 +11,7 @@ import {
   passwordValidation,
   confirmPasswordValidation,
 } from "@/components/forms/formValidations";
+import { getFormError } from "./getFormError";
 import {
   Card,
   Heading,
@@ -54,25 +55,6 @@ export const SignupForm = () => {
     },
   });
 
-  const getError = (
-    field: keyof typeof formik.values & string,
-    nestedField?: string,
-  ): string | undefined => {
-    const err = formik.errors[field];
-
-    // Nested case: getError("socialLinks", "linkedIn")
-    if (nestedField) {
-      if (typeof err === "object" && !Array.isArray(err) && err !== null) {
-        const nestedErr = (err as Record<string, unknown>)[nestedField];
-        return typeof nestedErr === "string" ? nestedErr : undefined;
-      }
-      return undefined;
-    }
-
-    // Simple error case: getError("firstName")
-    return typeof err === "string" ? err : undefined;
-  };
-
   return (
     <Card className="py-10 px-12 w-full self-center max-w-200">
       <form
@@ -103,7 +85,7 @@ export const SignupForm = () => {
               type="text"
               placeholder="John"
               className="w-full"
-              error={getError("firstName")}
+              error={getFormError("firstName", formik.errors, formik.touched)}
               {...formik.getFieldProps("firstName")}
             />
           </div>
@@ -117,7 +99,7 @@ export const SignupForm = () => {
               type="text"
               placeholder="Doe"
               className="w-full"
-              error={getError("lastName")}
+              error={getFormError("lastName", formik.errors, formik.touched)}
               {...formik.getFieldProps("lastName")}
             />
           </div>
@@ -133,7 +115,7 @@ export const SignupForm = () => {
             type="text"
             placeholder="Full Stack Developer"
             className="w-full"
-            error={getError("designation")}
+            error={getFormError("designation", formik.errors, formik.touched)}
             {...formik.getFieldProps("designation")}
           />
         </div>
@@ -148,7 +130,7 @@ export const SignupForm = () => {
             type="text"
             placeholder="johndoe@example.com"
             className="w-full"
-            error={getError("email")}
+            error={getFormError("email", formik.errors, formik.touched)}
             {...formik.getFieldProps("email")}
           />
         </div>
@@ -163,7 +145,7 @@ export const SignupForm = () => {
             type="text"
             placeholder="+91 9876543210"
             className="w-full"
-            error={getError("phone")}
+            error={getFormError("phone", formik.errors, formik.touched)}
             {...formik.getFieldProps("phone")}
           />
         </div>
@@ -177,7 +159,7 @@ export const SignupForm = () => {
             id="password"
             type="password"
             className="w-full"
-            error={getError("password")}
+            error={getFormError("password", formik.errors, formik.touched)}
             {...formik.getFieldProps("password")}
           />
         </div>
@@ -191,7 +173,11 @@ export const SignupForm = () => {
             id="confirmPassword"
             type="password"
             className="w-full"
-            error={getError("confirmPassword")}
+            error={getFormError(
+              "confirmPassword",
+              formik.errors,
+              formik.touched,
+            )}
             {...formik.getFieldProps("confirmPassword")}
           />
         </div>

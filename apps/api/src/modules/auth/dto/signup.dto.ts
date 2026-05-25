@@ -19,6 +19,7 @@ export class SignupDto {
 
   @IsNotEmpty()
   @IsEmail()
+  @MaxLength(100)
   email!: string;
 
   @IsNotEmpty()

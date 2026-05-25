@@ -10,7 +10,7 @@ export class CreateUsersTable1778566147890 implements MigrationInterface {
         "lastName" varchar(30) NOT NULL,
         "age" smallint,
         "designation" varchar(40) NOT NULL,
-        "email" varchar NOT NULL,
+        "email" varchar(100) NOT NULL,
         "phone" varchar(20) NOT NULL,
         "bio" varchar(140),
         "skills" text array,

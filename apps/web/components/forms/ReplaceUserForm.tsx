@@ -57,7 +57,7 @@ export const ReplaceUserForm = () => {
     },
     // enableReinitialize: true,
     validationSchema: Yup.object({
-      id: idValidation.max(100, "Must be within 100 characters"),
+      id: idValidation,
       firstName: firstNameValidation,
       lastName: lastNameValidation,
       age: ageValidation,
@@ -109,26 +109,6 @@ export const ReplaceUserForm = () => {
     },
   });
 
-  // Convert error type of string/array/object to string/undefined for passing to the input field.
-  const getError = (
-    field: keyof typeof formik.values & string,
-    nestedField?: string,
-  ): string | undefined => {
-    const err = formik.errors[field];
-
-    // Nested case: getError("socialLinks", "linkedIn")
-    if (nestedField) {
-      if (typeof err === "object" && !Array.isArray(err) && err !== null) {
-        const nestedErr = (err as Record<string, unknown>)[nestedField];
-        return typeof nestedErr === "string" ? nestedErr : undefined;
-      }
-      return undefined;
-    }
-
-    // Simple error case: getError("firstName")
-    return typeof err === "string" ? err : undefined;
-  };
-
   return (
     <Card className="flex flex-col items-stretch justify-center gap-4  py-10 px-12">
       <form
@@ -150,7 +130,7 @@ export const ReplaceUserForm = () => {
             type="text"
             placeholder="10"
             className="w-full"
-            error={getError("id")}
+            error={getFormError("id", formik.errors, formik.touched)}
             {...formik.getFieldProps("id")}
           />
         </div>
@@ -165,7 +145,7 @@ export const ReplaceUserForm = () => {
               type="text"
               placeholder="Johnathan"
               className="w-full"
-              error={getError("firstName")}
+              error={getFormError("firstName", formik.errors, formik.touched)}
               {...formik.getFieldProps("firstName")}
             />
           </div>
@@ -179,7 +159,7 @@ export const ReplaceUserForm = () => {
               type="text"
               placeholder="Doe"
               className="w-full"
-              error={getError("lastName")}
+              error={getFormError("lastName", formik.errors, formik.touched)}
               {...formik.getFieldProps("lastName")}
             />
           </div>
@@ -197,7 +177,7 @@ export const ReplaceUserForm = () => {
               type="number"
               placeholder="20"
               className="w-full"
-              error={getError("age")}
+              error={getFormError("age", formik.errors, formik.touched)}
               {...formik.getFieldProps("age")}
             />
           </div>
@@ -212,7 +192,7 @@ export const ReplaceUserForm = () => {
               type="text"
               placeholder="Full Stack Developer"
               className="w-full"
-              error={getError("designation")}
+              error={getFormError("designation", formik.errors, formik.touched)}
               {...formik.getFieldProps("designation")}
             />
           </div>
@@ -230,7 +210,7 @@ export const ReplaceUserForm = () => {
               type="email"
               placeholder="johndoe@example.com"
               className="w-full"
-              error={getError("email")}
+              error={getFormError("email", formik.errors, formik.touched)}
               {...formik.getFieldProps("email")}
             />
           </div>
@@ -245,7 +225,7 @@ export const ReplaceUserForm = () => {
               type="text"
               placeholder="+910987654321"
               className="w-full"
-              error={getError("phone")}
+              error={getFormError("phone", formik.errors, formik.touched)}
               {...formik.getFieldProps("phone")}
             />
           </div>
@@ -260,7 +240,7 @@ export const ReplaceUserForm = () => {
             variant="filled"
             id="bio"
             placeholder="Tell us a bit about yourself in 140 characters or less..."
-            error={getError("bio")}
+            error={getFormError("bio", formik.errors, formik.touched)}
             {...formik.getFieldProps("bio")}
           />
         </div>
@@ -274,7 +254,7 @@ export const ReplaceUserForm = () => {
             variant="filled"
             id="skills"
             placeholder="Please enter comma separated skills like: Next.js, Nestjs, Tailwind, TypeScript"
-            error={getError("skills")}
+            error={getFormError("skills", formik.errors, formik.touched)}
             {...formik.getFieldProps("skills")}
           />
         </div>
@@ -290,7 +270,11 @@ export const ReplaceUserForm = () => {
               type="text"
               placeholder="https://www.linkedin.com/john-doe-09"
               className="w-full"
-              error={getError("socialLinks", "linkedIn")}
+              error={getFormError(
+                "socialLinks.linkedIn",
+                formik.errors,
+                formik.touched,
+              )}
               {...formik.getFieldProps("socialLinks.linkedIn")}
             />
           </div>
@@ -305,7 +289,11 @@ export const ReplaceUserForm = () => {
               type="text"
               placeholder="https://www.my-website.com"
               className="w-full"
-              error={getError("socialLinks", "website")}
+              error={getFormError(
+                "socialLinks.website",
+                formik.errors,
+                formik.touched,
+              )}
               {...formik.getFieldProps("socialLinks.website")}
             />
           </div>
@@ -320,7 +308,11 @@ export const ReplaceUserForm = () => {
               type="text"
               placeholder="https://www.github.com/My-Github"
               className="w-full"
-              error={getError("socialLinks", "github")}
+              error={getFormError(
+                "socialLinks.github",
+                formik.errors,
+                formik.touched,
+              )}
               {...formik.getFieldProps("socialLinks.github")}
             />
           </div>

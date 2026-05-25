@@ -8,6 +8,7 @@ const phoneRegex =
 
 export const idValidation = Yup.string()
   .matches(idRegex, "ID can only contain lowercase letters, numbers, and hyphens")
+  .max(100, "Must be within 100 characters")
   .required("Required Field");
 
 export const firstNameValidation = Yup.string()
@@ -31,15 +32,17 @@ export const designationValidation = Yup.string()
     designationRegex,
     "Designation can only contain letters, numbers, spaces, and standard symbols (&, /, ., -, ')",
   )
-  .max(30, "Must be within 30 characters")
+  .max(40, "Must be within 40 characters")
   .required("Required Field");
 
 export const emailValidation = Yup.string()
   .email("Please enter a valid email address")
+  .max(100, "Must be within 100 characters")
   .required("Required Field");
 
 export const phoneValidation = Yup.string()
   .matches(phoneRegex, "Please enter a valid phone number")
+  .max(20, "Must be within 20 characters")
   .required("Required Field");
 
 export const passwordValidation = Yup.string()

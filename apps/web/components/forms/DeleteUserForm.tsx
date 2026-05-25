@@ -1,6 +1,8 @@
 "use client";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { idValidation } from "./formValidations";
+import { getFormError } from "./getFormError";
 import { useUsers } from "@/hooks";
 import { Heading, Divider, Button, TextInput, Card } from "@/components";
 import { AlternateEmailRounded } from "@mui/icons-material";
@@ -18,13 +20,7 @@ export const DeleteUserForm = (props: Props) => {
           id: "",
         }}
         validationSchema={Yup.object({
-          id: Yup.string()
-            .matches(
-              /^[a-z0-9-]+$/,
-              "ID can only contain lowercase letters and numbers",
-            )
-            .max(100, "Must be within 100 characters")
-            .required("Required Field"),
+          id: idValidation,
         })}
         onSubmit={(values, { resetForm }) => {
           mutate(values.id, {
@@ -58,12 +54,12 @@ export const DeleteUserForm = (props: Props) => {
               type="text"
               placeholder="10"
               className="w-full"
-              error={formik.errors.id}
+              error={getFormError("id", formik.errors, formik.touched)}
               {...formik.getFieldProps("id")}
             />
 
             <Button disabled={isPending} type="submit" className="flex-1">
-              {isPending ? `Saving...` : `Delete`}
+              {isPending ? `Deleting...` : `Delete`}
             </Button>
           </form>
         )}

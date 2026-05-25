@@ -16,7 +16,7 @@
   --surface: #ededed;
   --surface-top: #e3e3e3;
   --foreground-alt: #999999;
-  --warning: #f2c625;
+  --warning: #f6b935;
   --error: #e05454;
 }
 
@@ -36,22 +36,9 @@
   --color-surface: var(--surface);
   --color-surface-top: var(--surface-top);
   --color-foreground-alt: var(--foreground-alt);
+  --color-warning: var(--warning);
   --color-error: var(--error);
 }
-
-/* @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
 
 body {
   background: var(--background);
