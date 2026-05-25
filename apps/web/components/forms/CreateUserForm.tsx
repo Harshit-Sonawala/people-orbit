@@ -1,7 +1,16 @@
 "use client";
 import { useUsers } from "@/hooks";
 import { useFormik } from "formik";
-import { nameRegex, designationRegex, phoneRegex } from "./formRegexes";
+import {
+  firstNameValidation,
+  lastNameValidation,
+  designationValidation,
+  emailValidation,
+  phoneValidation,
+  ageValidation,
+  bioValidation,
+  urlValidation,
+} from "./formValidations";
 import * as Yup from "yup";
 
 import {
@@ -49,43 +58,18 @@ export const CreateUserForm = () => {
     },
     // enableReinitialize: true,
     validationSchema: Yup.object({
-      firstName: Yup.string()
-        .matches(
-          nameRegex,
-          "First name Can only contain letters, spaces, hyphens, or apostrophes",
-        )
-        .max(30, "Must be within 30 characters")
-        .required("Required Field"),
-      lastName: Yup.string()
-        .matches(
-          nameRegex,
-          "Last name Can only contain letters, spaces, hyphens, or apostrophes",
-        )
-        .max(30, "Must be within 30 characters")
-        .required("Required Field"),
-      age: Yup.number()
-        .integer("Must be a positive number")
-        .min(16, "Must be atleast 16 years of age to join")
-        .max(120, "Must be within 120 years of age"),
-      designation: Yup.string()
-        .matches(
-          designationRegex,
-          "Designation can only contain letters, numbers, spaces, and standard symbols (&, /, ., -, ')",
-        )
-        .max(30, "Must be within 30 characters")
-        .required("Required Field"),
-      email: Yup.string()
-        .email("Please enter a valid email address")
-        .required("Required Field"),
-      phone: Yup.string()
-        .matches(phoneRegex, "Please enter a valid phone number")
-        .required("Required Field"),
-      bio: Yup.string().max(140, "Must be within 140 characters"),
+      firstName: firstNameValidation,
+      lastName: lastNameValidation,
+      age: ageValidation,
+      designation: designationValidation,
+      email: emailValidation,
+      phone: phoneValidation,
+      bio: bioValidation,
       skills: Yup.string(),
       socialLinks: Yup.object({
-        linkedIn: Yup.string().url("Please enter a valid url"),
-        website: Yup.string().url("Please enter a valid url"),
-        github: Yup.string().url("Please enter a valid url"),
+        linkedIn: urlValidation,
+        website: urlValidation,
+        github: urlValidation,
       }),
     }),
     onSubmit: (values, { resetForm }) => {

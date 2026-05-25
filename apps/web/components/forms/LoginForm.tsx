@@ -3,6 +3,10 @@ import { useUsers } from "@/hooks";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
+  emailValidation,
+  passwordValidation,
+} from "@/components/forms/formValidations";
+import {
   Card,
   Heading,
   Divider,
@@ -20,10 +24,8 @@ export const LoginForm = () => {
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Please enter a valid email address")
-        .required("Required Field"),
-      password: Yup.string().required("Required Field"),
+      email: emailValidation,
+      password: passwordValidation,
     }),
     onSubmit: (values, { resetForm }) => {
       console.log(values);

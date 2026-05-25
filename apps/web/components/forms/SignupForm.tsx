@@ -3,10 +3,14 @@ import { useUsers } from "@/hooks";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  nameRegex,
-  designationRegex,
-  phoneRegex,
-} from "@/components/forms/formRegexes";
+  firstNameValidation,
+  lastNameValidation,
+  designationValidation,
+  emailValidation,
+  phoneValidation,
+  passwordValidation,
+  confirmPasswordValidation,
+} from "@/components/forms/formValidations";
 import {
   Card,
   Heading,
@@ -36,55 +40,13 @@ export const SignupForm = () => {
       confirmPassword: "",
     },
     validationSchema: Yup.object({
-      firstName: Yup.string()
-        .matches(
-          nameRegex,
-          "First name Can only contain letters, spaces, hyphens, or apostrophes",
-        )
-        .max(30, "Must be within 30 characters")
-        .required("Required Field"),
-      lastName: Yup.string()
-        .matches(
-          nameRegex,
-          "Last name Can only contain letters, spaces, hyphens, or apostrophes",
-        )
-        .max(30, "Must be within 30 characters")
-        .required("Required Field"),
-      designation: Yup.string()
-        .matches(
-          designationRegex,
-          "Designation can only contain letters, numbers, spaces, and standard symbols (&, /, ., -, ')",
-        )
-        .max(30, "Must be within 30 characters")
-        .required("Required Field"),
-      email: Yup.string()
-        .email("Please enter a valid email address")
-        .required("Required Field"),
-      phone: Yup.string()
-        .matches(phoneRegex, "Please enter a valid phone number")
-        .required("Required Field"),
-      password: Yup.string()
-        .min(12, "Password must be at least 12 characters")
-        .max(128, "Password must not exceed 128 characters")
-        .matches(/[a-z]/, "Password must contain at least one lowercase letter")
-        .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-        .matches(/[0-9]/, "Password must contain at least one number")
-        .matches(
-          /[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/,
-          "Password must contain at least one special character",
-        )
-        .test(
-          "no-consecutive-chars",
-          "Password cannot contain more than 2 consecutive identical characters",
-          (value) => {
-            if (!value) return true;
-            return !/(.)\1{2,}/.test(value);
-          },
-        )
-        .required("Password is required"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password")], "Passwords must match")
-        .required("Please re-type your password"),
+      firstName: firstNameValidation,
+      lastName: lastNameValidation,
+      designation: designationValidation,
+      email: emailValidation,
+      phone: phoneValidation,
+      password: passwordValidation,
+      confirmPassword: confirmPasswordValidation,
     }),
     onSubmit: (values, { resetForm }) => {
       console.log(values);
