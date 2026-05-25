@@ -5,7 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import profilePic from "@/public/placeholder_profile_pic.png";
 import bgImage from "@/public/dummy_bgImage.jpg";
-import { WorkRounded, EmailRounded, PhoneRounded } from "@mui/icons-material";
+import {
+  PersonRounded,
+  WorkRounded,
+  EmailRounded,
+  PhoneRounded,
+} from "@mui/icons-material";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -33,14 +38,16 @@ export const UserCard = ({ User, className }: Props) => {
         />
       </div>
       <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-12 pb-4 px-6 bg-surface transition-all duration-200 group-hover:bg-surface-top">
-        <div className="absolute left-8 -top-10 w-20 h-20 rounded-full bg-surface border-4 border-surface-top transition-colors duration-200 overflow-hidden">
-          <Image
+        <div className="flex flex-col items-center justify-center absolute left-8 -top-10 w-20 h-20 rounded-full bg-surface border-4 border-surface-top transition-colors duration-200 overflow-hidden">
+          {/* <Image
             src={profilePic}
             alt={User.firstName.charAt(0)}
             fill
             sizes="72px"
             className="object-cover"
-          />
+          /> */}
+          {/* <PersonRounded className="icon-xl" /> */}
+          <Heading className="text-4xl font-medium text-primary-alt">{`${User.firstName.charAt(0)}`}</Heading>
         </div>
         <Heading variant="sm">
           {User.firstName} {User.lastName}

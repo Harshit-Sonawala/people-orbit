@@ -20,17 +20,10 @@ const defaultTag = {
   lg: "h1",
 } as const;
 
-export const Heading = ({
-  children,
-  variant = "md",
-  className,
-  as,
-}: Props) => {
+export const Heading = ({ children, variant = "md", className, as }: Props) => {
   const Tag = as || defaultTag[variant];
 
   return (
-    <Tag className={cn(variantClasses[variant], className)}>
-      {children}
-    </Tag>
+    <Tag className={cn(variantClasses[variant], className)}>{children}</Tag>
   );
 };

@@ -1,3 +1,79 @@
+## TASKS
+
+- [x] How to cleanly pass the user info stuff from JWT payload to other places - Custom Decorator of CurrentUser, JwtPayload type
+- [x] hashing - what it does, salt, salt rounds
+- [ ] How to read payload on the FE
+- [ ] call the backend from the nextjs server - /login route
+- [ ] create the login page, wire it up with above^
+- [x] banned flag - add column, migration
+
+### Coding Steps/Tasks
+
+- [ ] Database
+  - [ ] users table
+    - [x] Add password
+    - [x] Migration
+    - [ ] New sessions table with:
+    - [ ] id | userId (FK) | tokenHash | expiresAt | createdAt
+    - [ ] Migration
+    - [ ] sessions repository methods to find, save, compare hash, etc.
+
+- [ ] Backend
+  - [x] Basic Auth Module, controller, routes
+  - [x] AuthResponse Type
+  - [ ] /auth/login
+    - [x] NestJS login DTO
+    - [x] repository find one where password matches in users table
+    - [x] compare pass with stored hash and success/failure
+      - [x] success:
+        - [x] NestJS JWT Token generation
+        <!-- - [ ] Refresh Token generation
+        - [ ] Refresh token hashing
+        - [ ] Refresh token repo save in table,
+        - [ ] Token rotation on each refresh call - repo delete old row -->
+      - [x] failure:
+        - [x] throw error
+  - [ ] /auth/signup
+    - [x] NestJS signup DTO
+    - [x] hash password with bcrypt
+    - [x] Save user to table with idSlug, hashedPassword, createdOn, updatedOn.
+    - [x] Generate JWT accessToken
+    - [x] Generate Refresh Token
+    - [ ] Store refresh token in sessions table
+    - [x] return AuthResponse type
+  - [ ] /auth/logout
+  - [x] @JwtGuard, @UseGuards(IsAuthenticated) guard creation and specfying in routes.
+
+  - [ ] refresh token reuse detection — if a token is used twice, it should invalidate the entire family (all tokens for that user)
+  - [ ] Role column everywhere and NestJS Role-based guards
+
+- Frontend
+  - [ ] Login Page
+    - [ ] Password validation rules - min/max, special chars
+    - [ ] regex
+    - [ ] Read accessToken from Redux and send
+    - [ ] Link to Signup
+    - [ ] Redirect to /profile on success
+  - [ ] Signup Page
+    - [ ] emailId, password, confirm password validation
+    - [ ] Link to Login
+    - [ ] Redirect to /profile on success
+  - [ ] Next.js Middleware for route protection - private routes (/profile), guest only routes (/login)
+  - [ ] Error notification/modal functionality with Redux?
+  - [ ] Tanstack Query useAuth hook?
+  - [ ] Clear auth state and redirect to login/signup on logout or sessions expiry
+  - [ ] Once 15min JWT expires, /auth/refresh strategy - axios interceptor?
+
+## Other Future Considerations:
+
+- [ ] Update the CreateUserForm and CreateUserDto to accept Password
+- [ ] Add the role column to the FE & BE User type, update DTOs, add the role on UsersService.create
+- [ ] Every request should send access token in Authorization header
+
+- Handle 401 globally — intercept in Axios/fetch, trigger silent refresh
+- [ ] Rate limit login endpoint?
+- HTTPS? - infrastructure side.
+
 # User Authentication / Authorization Flows
 
 - LOGIN FLOW:  
@@ -108,79 +184,3 @@
       - Remove refreshToken row from sessions table
       - log(refresh token deleted for userId)
     - Return response shape {message: "Logged out successfully"}
-
-## TASKS
-
-- [x] How to cleanly pass the user info stuff from JWT payload to other places - Custom Decorator of CurrentUser, JwtPayload type
-- [x] hashing - what it does, salt, salt rounds
-- [ ] How to read payload on the FE
-- [ ] call the backend from the nextjs server - /login route
-- [ ] create the login page, wire it up with above^
-- [x] banned flag - add column, migration
-
-### Coding Steps/Tasks
-
-- [ ] Database
-  - [ ] users table
-    - [x] Add password
-    - [x] Migration
-    - [ ] New sessions table with:
-    - [ ] id | userId (FK) | tokenHash | expiresAt | createdAt
-    - [ ] Migration
-    - [ ] sessions repository methods to find, save, compare hash, etc.
-
-- [ ] Backend
-  - [x] Basic Auth Module, controller, routes
-  - [x] AuthResponse Type
-  - [ ] /auth/login
-    - [x] NestJS login DTO
-    - [x] repository find one where password matches in users table
-    - [x] compare pass with stored hash and success/failure
-      - [x] success:
-        - [x] NestJS JWT Token generation
-        <!-- - [ ] Refresh Token generation
-        - [ ] Refresh token hashing
-        - [ ] Refresh token repo save in table,
-        - [ ] Token rotation on each refresh call - repo delete old row -->
-      - [x] failure:
-        - [x] throw error
-  - [ ] /auth/signup
-    - [x] NestJS signup DTO
-    - [x] hash password with bcrypt
-    - [x] Save user to table with idSlug, hashedPassword, createdOn, updatedOn.
-    - [x] Generate JWT accessToken
-    - [x] Generate Refresh Token
-    - [ ] Store refresh token in sessions table
-    - [x] return AuthResponse type
-  - [ ] /auth/logout
-  - [x] @JwtGuard, @UseGuards(IsAuthenticated) guard creation and specfying in routes.
-
-  - [ ] refresh token reuse detection — if a token is used twice, it should invalidate the entire family (all tokens for that user)
-  - [ ] Role column everywhere and NestJS Role-based guards
-
-- Frontend
-  - [ ] Login Page
-    - [ ] Password validation rules - min/max, special chars
-    - [ ] regex
-    - [ ] Read accessToken from Redux and send
-    - [ ] Link to Signup
-    - [ ] Redirect to /profile on success
-  - [ ] Signup Page
-    - [ ] emailId, password, confirm password validation
-    - [ ] Link to Login
-    - [ ] Redirect to /profile on success
-  - [ ] Next.js Middleware for route protection - private routes (/profile), guest only routes (/login)
-  - [ ] Error notification/modal functionality with Redux?
-  - [ ] Tanstack Query useAuth hook?
-  - [ ] Clear auth state and redirect to login/signup on logout or sessions expiry
-  - [ ] Once 15min JWT expires, /auth/refresh strategy - axios interceptor?
-
-## Other Future Considerations:
-
-- [ ] Update the CreateUserForm and CreateUserDto to accept Password
-- [ ] Add the role column to the FE & BE User type, update DTOs, add the role on UsersService.create
-- [ ] Every request should send access token in Authorization header
-
-- Handle 401 globally — intercept in Axios/fetch, trigger silent refresh
-- [ ] Rate limit login endpoint?
-- HTTPS? - infrastructure side.
