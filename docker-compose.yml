@@ -54,7 +54,8 @@ services:
     env_file:
       - apps/web/.env
     environment:
-      - INTERNAL_USER_URL=http://api:4000/api/users
+      - INTERNAL_USERS_URL=http://api:4000/api/users
+      - INTERNAL_BACKEND_URL=http://api:4000
       - WATCHPACK_POLLING=true
     command: npm run dev:web
     depends_on:

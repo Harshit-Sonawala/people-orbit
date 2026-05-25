@@ -24,7 +24,7 @@ export default async function UserDetails({
   const { id } = await params;
 
   const response = await fetch(
-    `${process.env.INTERNAL_USER_URL || process.env.NEXT_PUBLIC_USERS_URL}/${id}`,
+    `${process.env.INTERNAL_USERS_URL || process.env.NEXT_PUBLIC_USERS_URL}/${id}`,
   );
 
   if (!response.ok) {
