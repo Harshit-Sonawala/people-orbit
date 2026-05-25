@@ -8,16 +8,6 @@ import {
 
 export class SignupDto {
   @IsNotEmpty()
-  @IsEmail()
-  email!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(12)
-  @MaxLength(128)
-  password!: string;
-
-  @IsNotEmpty()
   @IsString()
   @MaxLength(30)
   firstName!: string;
@@ -26,6 +16,16 @@ export class SignupDto {
   @IsString()
   @MaxLength(30)
   lastName!: string;
+
+  @IsNotEmpty()
+  @IsEmail()
+  email!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(12)
+  @MaxLength(128)
+  password!: string;
 
   @IsNotEmpty()
   @IsString()

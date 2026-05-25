@@ -2,7 +2,11 @@
 import { useUsers } from "@/hooks";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { nameRegex } from "@/components/forms/formRegexes";
+import {
+  nameRegex,
+  designationRegex,
+  phoneRegex,
+} from "@/components/forms/formRegexes";
 import {
   Card,
   Heading,
@@ -11,23 +15,76 @@ import {
   Button,
   CustomLink,
 } from "@/components";
-import { EmailRounded, PasswordRounded } from "@mui/icons-material";
+import {
+  BadgeRounded,
+  EmailRounded,
+  PasswordRounded,
+  PhoneRounded,
+  WorkRounded,
+} from "@mui/icons-material";
 
 export const SignupForm = () => {
   const isPending = false; // replace with useUsers result var
   const formik = useFormik({
     initialValues: {
+      firstName: "",
+      lastName: "",
+      designation: "",
       email: "",
+      phone: "",
       password: "",
+      confirmPassword: "",
     },
     validationSchema: Yup.object({
+      firstName: Yup.string()
+        .matches(
+          nameRegex,
+          "First name Can only contain letters, spaces, hyphens, or apostrophes",
+        )
+        .max(30, "Must be within 30 characters")
+        .required("Required Field"),
+      lastName: Yup.string()
+        .matches(
+          nameRegex,
+          "Last name Can only contain letters, spaces, hyphens, or apostrophes",
+        )
+        .max(30, "Must be within 30 characters")
+        .required("Required Field"),
+      designation: Yup.string()
+        .matches(
+          designationRegex,
+          "Designation can only contain letters, numbers, spaces, and standard symbols (&, /, ., -, ')",
+        )
+        .max(30, "Must be within 30 characters")
+        .required("Required Field"),
       email: Yup.string()
         .email("Please enter a valid email address")
         .required("Required Field"),
-      password: Yup.string().matches(
-        nameRegex,
-        "Please enter a valid password",
-      ),
+      phone: Yup.string()
+        .matches(phoneRegex, "Please enter a valid phone number")
+        .required("Required Field"),
+      password: Yup.string()
+        .min(12, "Password must be at least 12 characters")
+        .max(128, "Password must not exceed 128 characters")
+        .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+        .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+        .matches(/[0-9]/, "Password must contain at least one number")
+        .matches(
+          /[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/,
+          "Password must contain at least one special character",
+        )
+        .test(
+          "no-consecutive-chars",
+          "Password cannot contain more than 2 consecutive identical characters",
+          (value) => {
+            if (!value) return true;
+            return !/(.)\1{2,}/.test(value);
+          },
+        )
+        .required("Password is required"),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref("password")], "Passwords must match")
+        .required("Please re-type your password"),
     }),
     onSubmit: (values, { resetForm }) => {
       console.log(`${values}`);
@@ -55,7 +112,7 @@ export const SignupForm = () => {
   };
 
   return (
-    <Card className="py-10 px-12 w-full self-center max-w-180">
+    <Card className="py-10 px-12 w-full self-center max-w-200">
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col items-stretch gap-6"
@@ -66,8 +123,57 @@ export const SignupForm = () => {
           </Heading>
           <Divider variant="surface-top" />
           <p>
-            Create a new PeopleOrbit account by providing your basic details.
+            Create a new PeopleOrbit account to start using all the features.
           </p>
+          <p>
+            Your provided email and password will be used for future logins.
+          </p>
+        </div>
+
+        <div className="flex flex-row items-center justify-center gap-4">
+          <div className="flex flex-col items-stretch justify-center gap-4 w-full">
+            <div className="flex flex-row items-center flex-1 gap-2">
+              <BadgeRounded className="text-primary" />
+              <label htmlFor="firstName">First Name:</label>
+            </div>
+            <TextInput
+              id="firstName"
+              type="text"
+              placeholder="John"
+              className="w-full"
+              error={getError("firstName")}
+              {...formik.getFieldProps("firstName")}
+            />
+          </div>
+          <div className="flex flex-col items-stretch justify-center gap-4 w-full">
+            <div className="flex flex-row items-center flex-1 gap-2">
+              <BadgeRounded className="text-primary" />
+              <label htmlFor="lastName">Last Name:</label>
+            </div>
+            <TextInput
+              id="lastName"
+              type="text"
+              placeholder="Doe"
+              className="w-full"
+              error={getError("lastName")}
+              {...formik.getFieldProps("lastName")}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col items-stretch justify-center gap-4 w-full">
+          <div className="flex flex-row items-center flex-1 gap-2">
+            <WorkRounded className="text-primary" />
+            <label htmlFor="firstName">Designation:</label>
+          </div>
+          <TextInput
+            id="designation"
+            type="text"
+            placeholder="Full Stack Developer"
+            className="w-full"
+            error={getError("designation")}
+            {...formik.getFieldProps("designation")}
+          />
         </div>
 
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">
@@ -79,6 +185,21 @@ export const SignupForm = () => {
             id="email"
             type="text"
             placeholder="johndoe@example.com"
+            className="w-full"
+            error={getError("email")}
+            {...formik.getFieldProps("email")}
+          />
+        </div>
+
+        <div className="flex flex-col items-stretch justify-center gap-4 w-full">
+          <div className="flex flex-row items-center flex-1 gap-2">
+            <PhoneRounded className="text-primary" />
+            <label htmlFor="firstName">Phone:</label>
+          </div>
+          <TextInput
+            id="phone"
+            type="text"
+            placeholder="+91 9876543210"
             className="w-full"
             error={getError("email")}
             {...formik.getFieldProps("email")}
@@ -99,10 +220,48 @@ export const SignupForm = () => {
           />
         </div>
 
-        <p>
-          By continuing you agree that you are atleast 16 years of age, and
-          agree to the terms and conditions
-        </p>
+        <div className="flex flex-col items-stretch justify-center gap-4 w-full">
+          <div className="flex flex-row items-center flex-1 gap-2">
+            <PasswordRounded className="text-primary" />
+            <label htmlFor="password">Confirm Password:</label>
+          </div>
+          <TextInput
+            id="confirmPassword"
+            type="confirmPassword"
+            className="w-full"
+            error={getError("confirmPassword")}
+            {...formik.getFieldProps("confirmPassword")}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <Heading variant="sm">Password Rules:</Heading>
+          <p>
+            - Must be minimum 12 characters in length, and maximum 128
+            characters
+          </p>
+          <p>
+            - Must contain atleast one lowercase and one uppercase character
+          </p>
+          <p>- Must contain atleast one numeric character</p>
+          <p>- Must contain atleast one special character</p>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <Heading variant="sm">
+            By continuing you agree to the following:
+          </Heading>
+          <p>- All information provided by you is correct</p>
+          <p>- You are atleast 16 years of age</p>
+          <p>- You agree to all the terms and conditions</p>
+          <p>
+            - Your profile will be publicly visible to all users on the platform
+          </p>
+          <p className="text-warning">
+            Violating any of the above policies will result in an immediate
+            profile ban.
+          </p>
+        </div>
 
         <div className="flex flex-row gap-4">
           <Button disabled={isPending} type="submit" className="flex-1 py-2">
