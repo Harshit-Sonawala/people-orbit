@@ -50,7 +50,7 @@ export const ReplaceUserForm = () => {
       profilePic: "",
       bgImage: "",
     },
-    enableReinitialize: true,
+    // enableReinitialize: true,
     validationSchema: Yup.object({
       id: Yup.string()
         .matches(idRegex, "ID can only contain lowercase letters and numbers")
@@ -155,7 +155,7 @@ export const ReplaceUserForm = () => {
   return (
     <Card className="flex flex-col items-stretch justify-center gap-4  py-10 px-12">
       <form
-        className="flex flex-col items-stretch align-center gap-6"
+        className="flex flex-col items-stretch gap-6"
         onSubmit={formik.handleSubmit}
       >
         <div className="flex flex-col gap-2">

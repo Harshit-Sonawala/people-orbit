@@ -3,7 +3,7 @@ import {
   CreateUserForm,
   ReplaceUserForm,
   DeleteUserForm,
-} from "@/app/account/_components/";
+} from "@/components/forms";
 
 type Props = {};
 
