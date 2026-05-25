@@ -2,7 +2,6 @@
 import { useUsers } from "@/hooks";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { nameRegex } from "@/components/forms/formRegexes";
 import {
   Card,
   Heading,
@@ -24,13 +23,10 @@ export const LoginForm = () => {
       email: Yup.string()
         .email("Please enter a valid email address")
         .required("Required Field"),
-      password: Yup.string().matches(
-        nameRegex,
-        "Please enter a valid password",
-      ),
+      password: Yup.string().required("Required Field"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(`${values}`);
+      console.log(values);
       // call mutate with values
     },
   });
@@ -71,7 +67,7 @@ export const LoginForm = () => {
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">
           <div className="flex flex-row items-center flex-1 gap-2">
             <EmailRounded className="text-primary" />
-            <label htmlFor="firstName">Email:</label>
+            <label htmlFor="email">Email:</label>
           </div>
           <TextInput
             id="email"

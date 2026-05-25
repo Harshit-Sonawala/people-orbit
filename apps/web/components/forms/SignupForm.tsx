@@ -87,7 +87,7 @@ export const SignupForm = () => {
         .required("Please re-type your password"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(`${values}`);
+      console.log(values);
       // call mutate with values
     },
   });
@@ -164,7 +164,7 @@ export const SignupForm = () => {
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">
           <div className="flex flex-row items-center flex-1 gap-2">
             <WorkRounded className="text-primary" />
-            <label htmlFor="firstName">Designation:</label>
+            <label htmlFor="designation">Designation:</label>
           </div>
           <TextInput
             id="designation"
@@ -179,7 +179,7 @@ export const SignupForm = () => {
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">
           <div className="flex flex-row items-center flex-1 gap-2">
             <EmailRounded className="text-primary" />
-            <label htmlFor="firstName">Email:</label>
+            <label htmlFor="email">Email:</label>
           </div>
           <TextInput
             id="email"
@@ -194,15 +194,15 @@ export const SignupForm = () => {
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">
           <div className="flex flex-row items-center flex-1 gap-2">
             <PhoneRounded className="text-primary" />
-            <label htmlFor="firstName">Phone:</label>
+            <label htmlFor="phone">Phone:</label>
           </div>
           <TextInput
             id="phone"
             type="text"
             placeholder="+91 9876543210"
             className="w-full"
-            error={getError("email")}
-            {...formik.getFieldProps("email")}
+            error={getError("phone")}
+            {...formik.getFieldProps("phone")}
           />
         </div>
 
@@ -223,11 +223,11 @@ export const SignupForm = () => {
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">
           <div className="flex flex-row items-center flex-1 gap-2">
             <PasswordRounded className="text-primary" />
-            <label htmlFor="password">Confirm Password:</label>
+            <label htmlFor="confirmPassword">Confirm Password:</label>
           </div>
           <TextInput
             id="confirmPassword"
-            type="confirmPassword"
+            type="password"
             className="w-full"
             error={getError("confirmPassword")}
             {...formik.getFieldProps("confirmPassword")}
