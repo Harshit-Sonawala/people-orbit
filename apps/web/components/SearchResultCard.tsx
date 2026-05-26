@@ -24,13 +24,14 @@ export const SearchResultCard = ({ User, className }: Props) => {
         <div className="bg-primary rounded-l-lg px-7 py-12"></div>
 
         <div className="relative flex flex-1 flex-row items-center justify-center gap-1 bg-surface pl-4 pr-6 rounded-r-lg transition-all duration-200 group-hover:bg-surface-top">
-          <div className="absolute -left-10 w-20 h-20 rounded-full bg-surface border-4 border-surface-top transition-colors duration-200 overflow-hidden">
-            <Image
+          <div className="absolute -left-10 w-20 h-20 flex flex-col items-center justify-center rounded-full bg-surface border-4 border-surface-top transition-colors duration-200 overflow-hidden">
+            {/* <Image
               src={profilePic}
               alt={User.firstName.charAt(0)}
               sizes="72px"
               className="object-cover"
-            />
+            /> */}
+            <Heading className="text-4xl font-medium text-primary-alt">{`${User.firstName.charAt(0)}`}</Heading>
           </div>
           <div className="flex flex-1 flex-col gap-1 pl-10 py-2 pr-2">
             <Heading variant="sm">{`${User.firstName} ${User.lastName}`}</Heading>

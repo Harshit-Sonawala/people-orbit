@@ -16,6 +16,8 @@ import {
   CustomLink,
 } from "@/components";
 import { EmailRounded, KeyRounded } from "@mui/icons-material";
+import Image from "next/image";
+import loginImg from "@/public/login_img.svg";
 
 export const LoginForm = () => {
   const isPending = false; // replace with useUsers result var
@@ -35,7 +37,15 @@ export const LoginForm = () => {
   });
 
   return (
-    <Card className="py-10 px-12 w-full self-center max-w-180">
+    <Card className="flex flex-row items-center justify-evenly gap-8 py-10 px-12 w-full self-center">
+      <div className="h-72 w-72 flex items-center justify-center rounded-lg bg-surface">
+        <Image
+          src={loginImg}
+          alt={`Login Image`}
+          sizes="(max-width: 1280px) 128px, (max-width: 768px) 112px"
+          className="object-cover"
+        />
+      </div>
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col items-stretch gap-6"

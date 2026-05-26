@@ -10,7 +10,7 @@ type Props = {
 
 const variantClasses = {
   sm: "text-xl font-semibold",
-  md: "text-2xl font-bold",
+  md: "text-2xl font-semibold",
   lg: "text-4xl font-bold",
 };
 
