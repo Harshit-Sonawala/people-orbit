@@ -2,8 +2,8 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { User, PaginatedUsers } from "@/types";
 
-const USERS_URL =
-  process.env.NEXT_PUBLIC_USERS_URL ?? "http://localhost:4000/api/users";
+// const USERS_URL = process.env.NEXT_PUBLIC_USERS_URL ?? "http://localhost:4000/api/users";
+const USERS_URL = "/api/users";
 
 export const useUsers = () => {
   const queryClient = useQueryClient();
@@ -59,7 +59,10 @@ export const useUsers = () => {
   const create = () => {
     return useMutation({
       mutationFn: async (
-        createData: Omit<User, "id" | "createdOn" | "updatedOn" | "role" | "isBanned">,
+        createData: Omit<
+          User,
+          "id" | "createdOn" | "updatedOn" | "role" | "isBanned"
+        >,
       ): Promise<User> => {
         const { data } = await axios.post<User>(USERS_URL, createData);
         return data;
@@ -84,7 +87,10 @@ export const useUsers = () => {
         replaceData,
       }: {
         replaceId: string;
-        replaceData: Omit<User, "id" | "createdOn" | "updatedOn" | "role" | "isBanned">;
+        replaceData: Omit<
+          User,
+          "id" | "createdOn" | "updatedOn" | "role" | "isBanned"
+        >;
       }): Promise<User> => {
         const { data } = await axios.put<User>(
           `${USERS_URL}/${replaceId}`,
@@ -115,7 +121,10 @@ export const useUsers = () => {
         updateData,
       }: {
         updateId: string;
-        updateData: Omit<User, "id" | "createdOn" | "updatedOn" | "role" | "isBanned">;
+        updateData: Omit<
+          User,
+          "id" | "createdOn" | "updatedOn" | "role" | "isBanned"
+        >;
       }): Promise<User> => {
         // const res = await fetch(`${USERS_URL}/${updateId}`, {
         //   method: "PATCH",
