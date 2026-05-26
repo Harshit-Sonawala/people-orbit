@@ -27,9 +27,11 @@ export default async function proxy(
 
     let body;
     if (request.method !== "GET" && request.method !== "HEAD") {
-      body = await request.json();
-    } else {
-      body = undefined;
+      try {
+        body = await request.json();
+      } catch {
+        body = undefined;
+      }
     }
 
     const apiResponse = await axios({
@@ -40,7 +42,20 @@ export default async function proxy(
       validateStatus: () => true, // pass through all status codes like 4xx, 5xx
     });
 
-    return new NextResponse(JSON.stringify(apiResponse.data), {
+    const isAuthRoute =
+      pathname === "/api/auth/signup" || pathname === "/api/auth/login";
+
+    // Handle both auth and non auth routes response data
+    const { accessToken, refreshToken, ...responseBody } =
+      isAuthRoute && apiResponse.data
+        ? apiResponse.data
+        : {
+            accessToken: undefined,
+            refreshToken: undefined,
+            ...apiResponse.data,
+          };
+
+    const response = new NextResponse(JSON.stringify(responseBody), {
       status: apiResponse.status,
       headers: {
         "Content-Type": String(
@@ -48,6 +63,36 @@ export default async function proxy(
         ),
       },
     });
+
+    // Signup or login request, successful and received data
+    if (isAuthRoute && apiResponse.status >= 200 && apiResponse.status < 300) {
+      if (accessToken) {
+        response.cookies.set("accessToken", accessToken, {
+          httpOnly: true, // block document.cookie reads and XSS attacks
+          secure: false, // send over https only. always true in production TODO: Set env variable PROD?
+          sameSite: "strict", // cookies sent only if user on same site
+          path: "/", // which path the cookie is sent
+          maxAge: 30 * 60, // 30 minutes
+        });
+      }
+      if (refreshToken) {
+        response.cookies.set("refreshToken", refreshToken, {
+          httpOnly: true,
+          secure: false,
+          sameSite: "strict",
+          path: "/",
+          maxAge: 7 * 24 * 60 * 60, // 7 days
+        });
+      }
+    }
+
+    // Logout request, delete token cookies
+    if (pathname === "/api/auth/logout") {
+      response.cookies.delete("accessToken");
+      response.cookies.delete("refreshToken");
+    }
+
+    return response;
   } catch (error) {
     console.error("Proxy error:", error);
 

@@ -62,8 +62,7 @@ export class AuthService {
     const accessToken = this.generateAccessToken(createdUser);
     // Generate refreshToken
     const refreshToken = await this.generateRefreshToken();
-    // Save hash, userId, expiresAt into refresh_tokens table
-    // Set refreshToken as httpOnly, Secure, SameSite=Strict, maxAge 7 days as response.cookie
+    // TODO: Save hash, userId, expiresAt into sessions table
 
     return { user: createdUser, accessToken, refreshToken };
   }
@@ -100,9 +99,8 @@ export class AuthService {
     const accessToken = this.generateAccessToken(foundUser);
     // Generate refreshToken
     const refreshToken = await this.generateRefreshToken();
-    // Save hash, userId, expiresAt into refresh_tokens table
-    // Set refreshToken as httpOnly, Secure, SameSite=Strict, maxAge 7 days as response.cookie
-    // already logged in?
+    // TODO: Save hash, userId, expiresAt into sessions table
+    // TODO: prevent already logged in mechanism / multiple logins policy
 
     return { user: foundUser, accessToken, refreshToken };
   }
