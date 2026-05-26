@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import axios, { AxiosError } from "axios";
 
 // Proxy function to forward requests from Next.js to the NestJS backend.
-export async function proxy(request: NextRequest) {
+export default async function proxy(
+  request: NextRequest,
+): Promise<NextResponse> {
   const { pathname, search } = new URL(request.url); // "/api/auth", "/login",
 
+  console.log(`[proxy] ${request.method} ${pathname}${search}`);
+
   const BACKEND_URL =
-    process.env.INTERNAL_BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL; // to solve docker internal network issue
+    process.env.INTERNAL_BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL; // for docker internal network
 
   if (!BACKEND_URL) {
     return NextResponse.json(
@@ -18,8 +22,8 @@ export async function proxy(request: NextRequest) {
   const targetUrl = `${BACKEND_URL}${pathname}${search}`;
 
   try {
-    const incomingHeaders = Object.fromEntries(request.headers.entries());
-    delete incomingHeaders.host; // remove host header to allow Axios to set it correctly
+    const headers = new Headers(request.headers);
+    headers.delete("host"); // Remove host header so Axios will correctly & automatically set it
 
     let body;
     if (request.method !== "GET" && request.method !== "HEAD") {
@@ -31,17 +35,18 @@ export async function proxy(request: NextRequest) {
     const apiResponse = await axios({
       url: targetUrl,
       method: request.method,
-      headers: {
-        ...incomingHeaders,
-        "Content-Type": "application/json",
-      },
+      headers: Object.fromEntries(headers.entries()),
       data: body,
       validateStatus: () => true, // pass through all status codes like 4xx, 5xx
     });
 
     return new NextResponse(JSON.stringify(apiResponse.data), {
       status: apiResponse.status,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": String(
+          apiResponse.headers["content-type"] ?? "application/json",
+        ),
+      },
     });
   } catch (error) {
     console.error("Proxy error:", error);
@@ -57,3 +62,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.json({ message }, { status });
   }
 }
+
+// Scope this proxy to only intercept /api/* routes
+export const config = {
+  matcher: "/api/:path*",
+};
