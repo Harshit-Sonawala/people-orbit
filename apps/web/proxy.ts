@@ -69,7 +69,7 @@ export default async function proxy(
       if (accessToken) {
         response.cookies.set("accessToken", accessToken, {
           httpOnly: true, // block document.cookie reads and XSS attacks
-          secure: false, // send over https only. always true in production TODO: Set env variable PROD?
+          secure: process.env.NODE_ENV === "production", // send over https only. always true in production
           sameSite: "strict", // cookies sent only if user on same site
           path: "/", // which path the cookie is sent
           maxAge: 30 * 60, // 30 minutes
@@ -78,7 +78,7 @@ export default async function proxy(
       if (refreshToken) {
         response.cookies.set("refreshToken", refreshToken, {
           httpOnly: true,
-          secure: false,
+          secure: process.env.NODE_ENV === "production",
           sameSite: "strict",
           path: "/",
           maxAge: 7 * 24 * 60 * 60, // 7 days

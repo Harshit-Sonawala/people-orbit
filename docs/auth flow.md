@@ -1,6 +1,6 @@
 ## TASKS
 
-- [ ] Add JWT and refreshToken to cookie
+- [x] Add JWT and refreshToken to cookie
 - [ ] How to use payload/cookie on the FE
 - [ ] Pass tokens with requests
 - [ ] Password fields Peek eye icon & functionality.
