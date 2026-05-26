@@ -1,5 +1,5 @@
 "use client";
-import { useUsers } from "@/hooks";
+import { useAuth } from "@/hooks";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -31,7 +31,9 @@ import Image from "next/image";
 import signupImg from "@/public/signup_img.svg";
 
 export const SignupForm = () => {
-  const isPending = false; // replace with useUsers result var
+  const { signup } = useAuth();
+  const { mutate, isPending } = signup();
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -53,7 +55,14 @@ export const SignupForm = () => {
     }),
     onSubmit: (values, { resetForm }) => {
       console.log(values);
-      // call mutate with values
+      if (values.confirmPassword === values.password) {
+        mutate(values, {
+          onSuccess: () => {
+            console.log(`Signup successful!`);
+            resetForm();
+          },
+        });
+      }
     },
   });
 
