@@ -23,7 +23,7 @@ import {
 import {
   BadgeRounded,
   EmailRounded,
-  PasswordRounded,
+  KeyRounded,
   PhoneRounded,
   WorkRounded,
 } from "@mui/icons-material";
@@ -152,7 +152,7 @@ export const SignupForm = () => {
 
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">
           <div className="flex flex-row items-center flex-1 gap-2">
-            <PasswordRounded className="text-primary" />
+            <KeyRounded className="text-primary" />
             <label htmlFor="password">Password:</label>
           </div>
           <TextInput
@@ -166,7 +166,7 @@ export const SignupForm = () => {
 
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">
           <div className="flex flex-row items-center flex-1 gap-2">
-            <PasswordRounded className="text-primary" />
+            <KeyRounded className="text-primary" />
             <label htmlFor="confirmPassword">Confirm Password:</label>
           </div>
           <TextInput
@@ -197,17 +197,22 @@ export const SignupForm = () => {
 
         <div className="flex flex-col gap-1">
           <Heading variant="sm">
-            By continuing you agree to the following:
+            By continuing you agree to the following policies:
           </Heading>
-          <p>- All information provided by you is correct</p>
-          <p>- You are atleast 16 years of age</p>
-          <p>- You agree to all the terms and conditions</p>
+          <p>- All information provided by you is correct and verifiable.</p>
+          <p>- You are atleast 16 years of age.</p>
+          <p>- You agree to all the terms and conditions.</p>
           <p>
-            - Your profile will be publicly visible to all users on the platform
+            - Your profile will be publicly visible and searchable for all users
+            on the platform.
+          </p>
+          <p>
+            - You agree to communicate respectfully with other users, never
+            engaging in any forms of hate, harassment or bullying.
           </p>
           <p className="text-warning">
-            Violating any of the above policies will result in an immediate
-            profile ban.
+            Violating any of the above policies at any time will result in an
+            immediate profile ban.
           </p>
         </div>
 

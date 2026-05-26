@@ -201,7 +201,7 @@ export default function Profile() {
                     />
                   </div>
                 </div>
-                <Card className="gap-6 p-6">
+                <Card className="gap-6 py-10 px-12">
                   <div className="flex flex-col gap-4">
                     <div className="flex flex-row items-center justify-between gap-4">
                       <div className="flex flex-col gap-4">

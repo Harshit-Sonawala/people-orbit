@@ -15,7 +15,7 @@ import {
   Button,
   CustomLink,
 } from "@/components";
-import { EmailRounded, PasswordRounded } from "@mui/icons-material";
+import { EmailRounded, KeyRounded } from "@mui/icons-material";
 
 export const LoginForm = () => {
   const isPending = false; // replace with useUsers result var
@@ -65,7 +65,7 @@ export const LoginForm = () => {
 
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">
           <div className="flex flex-row items-center flex-1 gap-2">
-            <PasswordRounded className="text-primary" />
+            <KeyRounded className="text-primary" />
             <label htmlFor="password">Password:</label>
           </div>
           <TextInput

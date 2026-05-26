@@ -53,16 +53,17 @@ export default async function UserDetails({
               priority
             />
             <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top overflow-hidden">
-              <Image
+              {/* <Image
                 src={profilePic}
                 alt={user.firstName.charAt(0)}
                 fill
                 sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
                 className="object-cover"
-              />
+              /> */}
+              <Heading className="text-6xl font-medium text-primary-alt">{`${user.firstName.charAt(0)}`}</Heading>
             </div>
           </div>
-          <Card className="gap-8 p-6">
+          <Card className="gap-8 p-6 py-10 px-12">
             <div className="flex flex-col gap-4">
               <div className="flex flex-row items-center justify-between gap-4">
                 <div className="flex flex-col gap-2">
