@@ -18,7 +18,7 @@ export class Logger implements NestMiddleware {
       .format(now)
       .replace(',', '');
 
-    console.log(`LOGGER [${timestamp}]: ${method} ${originalUrl}`);
+    console.log(`[Logger ${timestamp}]: ${method} ${originalUrl}`);
 
     next();
   }

@@ -7,7 +7,7 @@ export default async function proxy(
 ): Promise<NextResponse> {
   const { pathname, search } = new URL(request.url); // "/api/auth", "/login",
 
-  console.log(`[proxy] ${request.method} ${pathname}${search}`);
+  console.log(`[Proxy] ${request.method} ${pathname}${search}`);
 
   const BACKEND_URL =
     process.env.INTERNAL_BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL; // for docker internal network
