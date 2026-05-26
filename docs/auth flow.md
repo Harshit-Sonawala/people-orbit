@@ -1,11 +1,14 @@
 ## TASKS
 
+- [ ] Add JWT and refreshToken to cookie
+- [ ] How to use payload/cookie on the FE
+- [ ] Pass tokens with requests
+- [ ] Password fields Peek eye icon & functionality.
+- [x] create the login page, wire it up with above^
+- [x] call the backend from the nextjs server - /login route
 - [x] How to cleanly pass the user info stuff from JWT payload to other places - Custom Decorator of CurrentUser, JwtPayload type
-- [x] hashing - what it does, salt, salt rounds
-- [ ] How to read payload on the FE
-- [ ] call the backend from the nextjs server - /login route
-- [ ] create the login page, wire it up with above^
 - [x] banned flag - add column, migration
+- [x] hashing - what it does, salt, salt rounds
 
 ### Coding Steps/Tasks
 

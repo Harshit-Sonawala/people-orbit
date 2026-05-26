@@ -38,7 +38,7 @@ export const LoginForm = () => {
 
   return (
     <Card className="flex flex-row items-center justify-evenly gap-8 py-10 px-12 w-full self-center">
-      <div className="h-72 w-72 flex items-center justify-center rounded-lg bg-surface">
+      <div className="flex items-center justify-center p-8 rounded-lg bg-surface-top max-w-100">
         <Image
           src={loginImg}
           alt={`Login Image`}
