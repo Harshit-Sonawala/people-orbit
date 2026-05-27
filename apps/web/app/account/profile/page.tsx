@@ -125,7 +125,7 @@ export default function Profile() {
                 console.log(
                   `Data for ID: ${loggedInId}, ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
                 );
-                // dispatch(setUser(updatedUser));
+                dispatch(setUser(updatedUser));
                 resetForm();
                 setIsEdit((prev) => !prev);
               },

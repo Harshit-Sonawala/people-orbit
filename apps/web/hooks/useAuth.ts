@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { User, AuthResponse } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { setUser } from "@/store/authSlice";
+import { setUserId } from "@/store/authSlice";
 
 const AUTH_URL = "/api/auth";
 
@@ -37,7 +37,7 @@ export const useAuth = () => {
       },
       onSuccess: (result) => {
         queryClient.invalidateQueries({ queryKey: ["auth"] });
-        dispatch(setUser(result.userId));
+        dispatch(setUserId(result.userId));
         console.log(
           `Signup successful. Logged in User: ${JSON.stringify(result.userId)}`,
         );
@@ -62,7 +62,7 @@ export const useAuth = () => {
       },
       onSuccess: (result) => {
         queryClient.invalidateQueries({ queryKey: ["auth"] });
-        dispatch(setUser(result.userId));
+        dispatch(setUserId(result.userId));
         console.log(`Logged in User: ${JSON.stringify(result.userId)}`);
       },
       onError: (error: any) => {
@@ -84,13 +84,25 @@ export const useAuth = () => {
       );
     } finally {
       queryClient.clear();
-      dispatch(setUser(null));
+      dispatch(setUserId(null));
     }
+  };
+
+  const getMe = () => {
+    return useQuery({
+      queryKey: ["auth", "me"],
+      queryFn: async (): Promise<User> => {
+        const { data } = await axios.get<User>(`${AUTH_URL}/me`);
+        return data;
+      },
+      retry: false, // do not retry if no token/expired token
+    });
   };
 
   return {
     signup,
     login,
     logout,
+    getMe,
   };
 };

@@ -2,6 +2,7 @@ import {
   Injectable,
   ConflictException,
   UnauthorizedException,
+  NotFoundException,
 } from '@nestjs/common';
 import type { AuthResponse } from './types';
 import { SignupDto, LoginDto } from './dto';
@@ -113,5 +114,34 @@ export class AuthService {
 
     // console.log(`User with id ${id} logged out successfully.`);
     return { message: `User with id ${id} logged out successfully.` };
+  }
+
+  // GET user automatically on load based on accessToken
+  async getMe(request: Request): Promise<User> {
+    // Get the cookies from the header
+    const cookieHeader = request.headers['cookie'];
+    const cookies = Object.fromEntries(
+      cookieHeader?.split('; ').map((cookie: string) => cookie.split('=')) ??
+        [],
+    );
+    const accessToken = cookies['accessToken']; // Get the accessToken from the cookie
+    if (!accessToken) {
+      throw new UnauthorizedException('No accessToken found.');
+    }
+
+    // Get the user based on the payload.sub (userId) from the accessToken
+    try {
+      const payload = this.jwtService.verify(accessToken);
+      const foundUser = await this.usersRepository.findOne({ id: payload.sub });
+      if (!foundUser) {
+        throw new NotFoundException(`User with ID ${payload.sub} not found`);
+      }
+      return foundUser;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error; // let it throw as it is if not found error,
+      }
+      throw new UnauthorizedException('Invalid or expired accessToken.');
+    }
   }
 }

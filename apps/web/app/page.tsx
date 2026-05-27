@@ -1,5 +1,10 @@
 "use client";
-import { useUsers } from "@/hooks/useUsers";
+import { useEffect } from "react";
+import { User } from "@/types";
+import { useUsers, useAuth } from "@/hooks";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/authSlice";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import {
   Heading,
   DropDown,
@@ -8,7 +13,6 @@ import {
   UserCard,
   type DropDownOption,
 } from "@/components";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import {
   ArrowBackRounded,
   ArrowForwardRounded,
@@ -17,7 +21,6 @@ import {
   HistoryRounded,
   SortByAlphaRounded,
 } from "@mui/icons-material";
-import { User } from "@/types";
 
 const sortMap = new Map<string, DropDownOption>([
   ["createdOn", { label: "Date Created", icon: <HistoryRounded /> }],
@@ -30,11 +33,29 @@ export default function Home() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const dispatch = useDispatch();
 
   const page = Number(searchParams.get("page")) || 1;
   const limit = 28;
   const sortBy = searchParams.get("sortBy") || "createdOn";
   const order = searchParams.get("order") || "desc";
+
+  const { getAll } = useUsers();
+  const { data, isLoading, isError, error } = getAll(
+    page,
+    limit,
+    sortBy,
+    order,
+  );
+
+  const { getMe } = useAuth();
+  const { data: fetchedUser } = getMe();
+
+  useEffect(() => {
+    if (fetchedUser) {
+      dispatch(setUser(fetchedUser));
+    }
+  }, [fetchedUser]);
 
   // Updates current page query params based on Tanstack results
   const updateURLSearchParams = (updates: Record<string, string | number>) => {
@@ -44,14 +65,6 @@ export default function Home() {
     });
     router.push(`${pathname}?${params.toString()}`);
   };
-
-  const { getAll } = useUsers();
-  const { data, isLoading, isError, error } = getAll(
-    page,
-    limit,
-    sortBy,
-    order,
-  );
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
