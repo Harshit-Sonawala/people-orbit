@@ -54,6 +54,8 @@ export default function Home() {
   useEffect(() => {
     if (fetchedUser) {
       dispatch(setUser(fetchedUser));
+    } else {
+      dispatch(setUser(null));
     }
   }, [fetchedUser]);
 

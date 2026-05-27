@@ -89,7 +89,7 @@ export const useAuth = () => {
     } finally {
       queryClient.clear();
       dispatch(setUserId(null));
-      router.push("/login");
+      router.push("/");
     }
   };
 

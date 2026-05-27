@@ -36,7 +36,8 @@ export class AuthController {
   }
 
   @Get('me')
-  async getMe(@Req() request: Request): Promise<User> {
-    return this.authService.getMe(request);
+  @UseGuards(IsAuthenticated)
+  async getMe(@CurrentUser() user: JwtPayload): Promise<User> {
+    return this.authService.getMe(user.sub);
   }
 }
