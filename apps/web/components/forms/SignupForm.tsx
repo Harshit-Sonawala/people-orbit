@@ -1,7 +1,7 @@
 "use client";
-import { useAuth } from "@/hooks";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useAuth } from "@/hooks";
 import {
   firstNameValidation,
   lastNameValidation,

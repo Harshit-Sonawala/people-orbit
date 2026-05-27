@@ -1,10 +1,13 @@
 "use client";
-import { Heading, Divider, CustomLink } from "@/components";
+import { Heading, Divider, CustomLink, Button } from "@/components";
 import { Card, UserCard } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { useAuth } from "@/hooks";
 
 export default function Account() {
+  const { logout } = useAuth();
+
   const loggedInUser = useSelector(
     (state: RootState) => state.auth.loggedInUser,
   );
@@ -31,9 +34,14 @@ export default function Account() {
           <CustomLink href="/account" className="py-4">
             View Privacy Policy
           </CustomLink>
-          <CustomLink href="/account" className="py-4">
+          <Button
+            onClick={() => {
+              logout();
+            }}
+            className="py-4"
+          >
             Log Out
-          </CustomLink>
+          </Button>
         </Card>
       </div>
     </div>

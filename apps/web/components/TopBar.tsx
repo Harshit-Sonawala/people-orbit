@@ -29,13 +29,23 @@ export const TopBar = () => {
         <CustomLink href="/about">About</CustomLink>
         <CustomLink href="/demo">Demo</CustomLink>
         <ThemeToggleButton />
-        <CustomLink
-          href="/login"
-          className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-lg gap-2"
-        >
-          <AccountCircleRounded className="icon-xl" />
-          {`Login`}
-        </CustomLink>
+        {loggedInUser === null ? (
+          <CustomLink
+            href="/login"
+            className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-lg gap-2"
+          >
+            <AccountCircleRounded className="icon-xl" />
+            {`Login`}
+          </CustomLink>
+        ) : (
+          <CustomLink
+            href="/account"
+            className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-lg gap-2"
+          >
+            <AccountCircleRounded className="icon-xl" />
+            {`${loggedInUser.firstName}`}
+          </CustomLink>
+        )}
       </div>
     </div>
   );
