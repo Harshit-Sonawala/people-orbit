@@ -5,8 +5,8 @@ import { CustomLink, SearchInput, ThemeToggleButton } from "@/components";
 import { RootState } from "@/store";
 
 export const TopBar = () => {
-  const loggedInUser = useSelector(
-    (state: RootState) => state.auth.loggedInUser,
+  const loggedInUserId = useSelector(
+    (state: RootState) => state.auth.loggedInUserId,
   );
 
   return (
@@ -29,7 +29,7 @@ export const TopBar = () => {
         <CustomLink href="/about">About</CustomLink>
         <CustomLink href="/demo">Demo</CustomLink>
         <ThemeToggleButton />
-        {loggedInUser === null ? (
+        {loggedInUserId === null ? (
           <CustomLink
             href="/login"
             className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-lg gap-2"
@@ -43,7 +43,7 @@ export const TopBar = () => {
             className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-lg gap-2"
           >
             <AccountCircleRounded className="icon-xl" />
-            {`${loggedInUser.firstName}`}
+            {`${loggedInUserId.slice(0, 10)}`}
           </CustomLink>
         )}
       </div>

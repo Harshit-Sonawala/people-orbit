@@ -8,8 +8,8 @@ import { useAuth } from "@/hooks";
 export default function Account() {
   const { logout } = useAuth();
 
-  const loggedInUser = useSelector(
-    (state: RootState) => state.auth.loggedInUser,
+  const loggedInUserId = useSelector(
+    (state: RootState) => state.auth.loggedInUserId,
   );
 
   return (
@@ -20,7 +20,7 @@ export default function Account() {
       </div>
 
       <div className="flex flex-row items-center justify-stretch gap-4">
-        {loggedInUser && <UserCard User={loggedInUser} className="flex-1" />}
+        {/* {loggedInUserId && <UserCard User={loggedInUser} className="flex-1" />} */}
         <Card variant="outlined" className="flex flex-1 flex-col gap-2">
           <CustomLink href={`/account/profile`} className="py-4">
             Manage your profile
@@ -35,6 +35,7 @@ export default function Account() {
             View Privacy Policy
           </CustomLink>
           <Button
+            variant="outlined"
             onClick={() => {
               logout();
             }}

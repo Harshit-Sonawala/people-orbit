@@ -11,7 +11,7 @@ export const useAuth = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const loggedInUser = useSelector(
-    (state: RootState) => state.auth.loggedInUser,
+    (state: RootState) => state.auth.loggedInUserId,
   );
 
   const signup = () => {
@@ -37,9 +37,9 @@ export const useAuth = () => {
       },
       onSuccess: (result) => {
         queryClient.invalidateQueries({ queryKey: ["auth"] });
-        dispatch(setUser(result.user));
+        dispatch(setUser(result.userId));
         console.log(
-          `Signup successful. Logged in User: ${JSON.stringify(loggedInUser)}`,
+          `Signup successful. Logged in User: ${JSON.stringify(result.userId)}`,
         );
       },
       onError: (error: any) => {
@@ -62,8 +62,8 @@ export const useAuth = () => {
       },
       onSuccess: (result) => {
         queryClient.invalidateQueries({ queryKey: ["auth"] });
-        dispatch(setUser(result.user));
-        console.log(`Logged in User: ${JSON.stringify(loggedInUser)}`);
+        dispatch(setUser(result.userId));
+        console.log(`Logged in User: ${JSON.stringify(result.userId)}`);
       },
       onError: (error: any) => {
         console.error(

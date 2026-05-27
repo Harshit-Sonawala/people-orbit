@@ -1,13 +1,16 @@
 ## TASKS
 
-- [x] Add JWT and refreshToken to cookie
-- [ ] How to use payload/cookie on the FE
-- [ ] Pass tokens with requests
+- [x] Change to only userId received on FE?
+- [ ] Redux initialState fix
+- [ ] Incorrect credentials error message - global modal
 - [ ] Password fields Peek eye icon & functionality.
-- [x] create the login page, wire it up with above^
-- [x] call the backend from the nextjs server - /login route
+- [x] Update Redux store with User Object
+- [x] create the login/signup pages & forms, wire it up with tanstack
+- [x] Backend From Frontend setup - call the backend from nextjs server - Proxy
+- [x] Add JWT and refreshToken to cookie
 - [x] How to cleanly pass the user info stuff from JWT payload to other places - Custom Decorator of CurrentUser, JwtPayload type
 - [x] banned flag - add column, migration
+- [x] How to use payload/cookie on the FE - automatically passed with every request
 - [x] hashing - what it does, salt, salt rounds
 
 ### Coding Steps/Tasks

@@ -64,7 +64,7 @@ export class AuthService {
     const refreshToken = await this.generateRefreshToken();
     // TODO: Save hash, userId, expiresAt into sessions table
 
-    return { user: createdUser, accessToken, refreshToken };
+    return { userId: createdUser.id, accessToken, refreshToken };
   }
 
   // POST login
@@ -102,7 +102,7 @@ export class AuthService {
     // TODO: Save hash, userId, expiresAt into sessions table
     // TODO: prevent already logged in mechanism / multiple logins policy
 
-    return { user: foundUser, accessToken, refreshToken };
+    return { userId: foundUser.id, accessToken, refreshToken };
   }
 
   // POST logout. Gets id from JWT payload
@@ -111,7 +111,7 @@ export class AuthService {
     // no match found > throw error
     // match found: remove refreshToken row from sessions table where id matches
 
-    console.log(`User with id ${id} logged out successfully.`);
+    // console.log(`User with id ${id} logged out successfully.`);
     return { message: `User with id ${id} logged out successfully.` };
   }
 }

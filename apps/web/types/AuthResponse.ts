@@ -1,7 +1,8 @@
 import { User } from ".";
 
 export type AuthResponse = {
-  user: User;
+  // user: User;
+  userId: string;
   accessToken: string;
   refreshToken: string;
 };
