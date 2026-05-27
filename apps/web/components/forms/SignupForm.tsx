@@ -54,11 +54,9 @@ export const SignupForm = () => {
       confirmPassword: confirmPasswordValidation,
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
       if (values.confirmPassword === values.password) {
         mutate(values, {
           onSuccess: () => {
-            console.log(`Signup successful!`);
             resetForm();
           },
         });
