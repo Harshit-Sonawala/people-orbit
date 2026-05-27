@@ -4,6 +4,7 @@ import { User, AuthResponse } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { setUserId } from "@/store/authSlice";
+import { useRouter } from "next/navigation";
 
 const AUTH_URL = "/api/auth";
 
@@ -13,6 +14,7 @@ export const useAuth = () => {
   const loggedInUser = useSelector(
     (state: RootState) => state.auth.loggedInUserId,
   );
+  const router = useRouter();
 
   const signup = () => {
     return useMutation({
@@ -41,6 +43,7 @@ export const useAuth = () => {
         console.log(
           `Signup successful. Logged in User: ${JSON.stringify(result.userId)}`,
         );
+        router.push("/");
       },
       onError: (error: any) => {
         console.error(
@@ -64,6 +67,7 @@ export const useAuth = () => {
         queryClient.invalidateQueries({ queryKey: ["auth"] });
         dispatch(setUserId(result.userId));
         console.log(`Logged in User: ${JSON.stringify(result.userId)}`);
+        router.push("/");
       },
       onError: (error: any) => {
         console.error(
@@ -85,6 +89,7 @@ export const useAuth = () => {
     } finally {
       queryClient.clear();
       dispatch(setUserId(null));
+      router.push("/login");
     }
   };
 
