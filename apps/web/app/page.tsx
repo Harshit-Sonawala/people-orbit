@@ -1,9 +1,7 @@
 "use client";
-import { useEffect } from "react";
 import { User } from "@/types";
-import { useUsers, useAuth } from "@/hooks";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/store/authSlice";
+import { useUsers } from "@/hooks";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import {
   Heading,
@@ -21,6 +19,7 @@ import {
   HistoryRounded,
   SortByAlphaRounded,
 } from "@mui/icons-material";
+import { RootState } from "@/store";
 
 const sortMap = new Map<string, DropDownOption>([
   ["createdOn", { label: "Date Created", icon: <HistoryRounded /> }],
@@ -34,6 +33,7 @@ export default function Home() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
+  const { userId, user } = useSelector((state: RootState) => state.auth);
 
   const page = Number(searchParams.get("page")) || 1;
   const limit = 28;
@@ -48,17 +48,6 @@ export default function Home() {
     order,
   );
 
-  const { getMe } = useAuth();
-  const { data: fetchedUser } = getMe();
-
-  useEffect(() => {
-    if (fetchedUser) {
-      dispatch(setUser(fetchedUser));
-    } else {
-      dispatch(setUser(null));
-    }
-  }, [fetchedUser]);
-
   // Updates current page query params based on Tanstack results
   const updateURLSearchParams = (updates: Record<string, string | number>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -71,6 +60,7 @@ export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       <div className="flex flex-col gap-2">
+        <Heading variant="md">{`Logged in ID: ${userId}, User: ${user?.firstName} ${user?.lastName}`}</Heading>
         <div className="flex flex-row items-center justify-between">
           <Heading variant="md">Browse All Records</Heading>
           <div className="flex flex-row items-center justify-between gap-2">
