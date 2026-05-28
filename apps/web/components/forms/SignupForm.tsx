@@ -66,7 +66,7 @@ export const SignupForm = () => {
 
   return (
     <Card className="flex flex-col items-center justify-evenly gap-8 py-10 px-12 w-full self-center">
-      <div className="flex items-center justify-center p-8 rounded-lg bg-surface-top max-w-80">
+      <div className="flex items-center justify-center p-8 rounded-lg bg-surface max-w-80">
         <Image
           src={signupImg}
           alt={`Login Image`}
