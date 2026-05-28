@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserRole, type User } from "@/types";
 
 interface AuthState {
-  loggedInUserId: string | null;
-  loggedInUser: User | null;
+  userId: string | null;
+  user: User | null;
 }
 
 const initialState: AuthState = {
-  loggedInUserId: null,
-  loggedInUser: null,
+  userId: null,
+  user: null,
 };
 
 export const authSlice = createSlice({
@@ -16,10 +16,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setUserId: (state, action: PayloadAction<string | null>) => {
-      state.loggedInUserId = action.payload;
+      state.userId = action.payload;
     },
     setUser: (state, action: PayloadAction<User | null>) => {
-      state.loggedInUser = action.payload;
+      state.user = action.payload;
     },
   },
 });

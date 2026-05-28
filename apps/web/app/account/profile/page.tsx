@@ -45,10 +45,8 @@ import {
 export default function Profile() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const loggedInUserId = useSelector(
-    (state: RootState) => state.auth.loggedInUserId,
-  );
-  const loggedInId = loggedInUserId || "";
+  const userId = useSelector((state: RootState) => state.auth.userId);
+  const loggedInId = userId || "";
 
   const { getById } = useUsers();
   const { data, isLoading, isError, error } = getById(loggedInId);
@@ -56,7 +54,7 @@ export default function Profile() {
   const { replaceById } = useUsers();
   const { mutate, isPending } = replaceById();
 
-  console.log(JSON.stringify(loggedInUserId));
+  console.log(JSON.stringify(userId));
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6">

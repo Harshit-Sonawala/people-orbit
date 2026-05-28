@@ -5,9 +5,7 @@ import { CustomLink, SearchInput, ThemeToggleButton } from "@/components";
 import { RootState } from "@/store";
 
 export const TopBar = () => {
-  const loggedInUser = useSelector(
-    (state: RootState) => state.auth.loggedInUser,
-  );
+  const user = useSelector((state: RootState) => state.auth.user);
 
   return (
     <div className="flex flex-row items-center justify-between py-1 px-4 w-[90%] mx-auto mb-2">
@@ -29,7 +27,7 @@ export const TopBar = () => {
         <CustomLink href="/about">About</CustomLink>
         <CustomLink href="/demo">Demo</CustomLink>
         <ThemeToggleButton />
-        {loggedInUser === null ? (
+        {user === null ? (
           <CustomLink
             href="/login"
             className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-lg gap-2"
@@ -43,7 +41,7 @@ export const TopBar = () => {
             className="py-1 px-4 bg-surface hover:bg-surface-top text-lg text-secondary rounded-lg gap-2"
           >
             <AccountCircleRounded className="icon-xl" />
-            {`${loggedInUser.firstName}`}
+            {`${user.firstName}`}
           </CustomLink>
         )}
       </div>

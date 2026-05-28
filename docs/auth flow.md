@@ -169,7 +169,7 @@
     - success, gets new accessToken
       - store new accessToken in Redux
       - retry request
-    - failure - clear loggedInUser in Redux - redirect to /login
+    - failure - clear user in Redux - redirect to /login
 
   (BACKEND)
   - NestJS AuthController receives request on POST /auth/refresh
