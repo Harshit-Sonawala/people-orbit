@@ -1,16 +1,13 @@
 "use client";
 import axios from "axios";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { User, AuthResponse } from "@/types";
-import { useDispatch } from "react-redux";
-import { setUserId, setUser } from "@/store/authSlice";
 import { useRouter } from "next/navigation";
 
 const AUTH_URL = "/api/auth";
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
-  const dispatch = useDispatch();
   const router = useRouter();
 
   const signup = () => {
@@ -35,8 +32,6 @@ export const useAuth = () => {
         return data;
       },
       onSuccess: (result) => {
-        // queryClient.invalidateQueries({ queryKey: ["auth"] });
-        dispatch(setUserId(result.userId));
         console.log(
           `Signup successful. Logged in User: ${JSON.stringify(result.userId)}`,
         );
@@ -63,8 +58,6 @@ export const useAuth = () => {
         return data;
       },
       onSuccess: (result) => {
-        // queryClient.invalidateQueries({ queryKey: ["auth"] });
-        dispatch(setUserId(result.userId));
         console.log(`Logged in User: ${JSON.stringify(result.userId)}`);
         localStorage.setItem("isLoggedIn", "true");
         router.refresh(); // re-runs layout.tsx with the new cookie
@@ -89,7 +82,6 @@ export const useAuth = () => {
       );
     } finally {
       queryClient.clear();
-      dispatch(setUserId(null));
       localStorage.removeItem("isLoggedIn");
       router.refresh();
       router.push("/");

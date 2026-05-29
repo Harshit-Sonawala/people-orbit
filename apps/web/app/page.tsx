@@ -1,7 +1,7 @@
 "use client";
 import { User } from "@/types";
 import { useUsers } from "@/hooks";
-import { useDispatch, useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import {
   Heading,
@@ -32,8 +32,7 @@ export default function Home() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const dispatch = useDispatch();
-  const { userId, user } = useSelector((state: RootState) => state.auth);
+  // const { user } = useSelector((state: RootState) => state.auth);
 
   const page = Number(searchParams.get("page")) || 1;
   const limit = 28;
@@ -60,7 +59,6 @@ export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       <div className="flex flex-col gap-2">
-        <Heading variant="md">{`Logged in ID: ${userId}, User: ${user?.firstName} ${user?.lastName}`}</Heading>
         <div className="flex flex-row items-center justify-between">
           <Heading variant="md">Browse All Records</Heading>
           <div className="flex flex-row items-center justify-between gap-2">

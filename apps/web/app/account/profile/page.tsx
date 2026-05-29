@@ -45,16 +45,14 @@ import {
 export default function Profile() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const userId = useSelector((state: RootState) => state.auth.userId);
-  const loggedInId = userId || "";
+  const user = useSelector((state: RootState) => state.auth.user);
+  const userId = user?.id || "";
 
   const { getById } = useUsers();
-  const { data, isLoading, isError, error } = getById(loggedInId);
+  const { data, isLoading, isError, error } = getById(userId);
 
   const { replaceById } = useUsers();
   const { mutate, isPending } = replaceById();
-
-  console.log(JSON.stringify(userId));
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
@@ -117,11 +115,11 @@ export default function Profile() {
               : undefined,
           };
           mutate(
-            { replaceId: loggedInId, replaceData: formattedData },
+            { replaceId: userId, replaceData: formattedData },
             {
               onSuccess: (updatedUser) => {
                 console.log(
-                  `Data for ID: ${loggedInId}, ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
+                  `Data for ID: ${userId}, ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
                 );
                 dispatch(setUser(updatedUser));
                 resetForm();

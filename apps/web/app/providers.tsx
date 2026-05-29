@@ -12,10 +12,8 @@ import { ThemeWrapper } from "@/components";
 function UserInitializer({ user }: { user: User | null }) {
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(`UserInitializer user: ${user}`);
     if (user) {
       dispatch(setUser(user));
-      console.log(`user ${user} dispatched.`);
     }
   }, [user, dispatch]);
   return null;
