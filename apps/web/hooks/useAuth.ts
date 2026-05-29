@@ -3,12 +3,16 @@ import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { User, AuthResponse } from "@/types";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/authSlice";
+import { getMeClient } from "@/lib/utils";
 
 const AUTH_URL = "/api/auth";
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const signup = () => {
     return useMutation({
@@ -31,11 +35,13 @@ export const useAuth = () => {
         const { data } = await axios.post(`${AUTH_URL}/signup`, signupData);
         return data;
       },
-      onSuccess: (result) => {
+      onSuccess: async (result) => {
         console.log(
           `Signup successful. Logged in User: ${JSON.stringify(result.userId)}`,
         );
         localStorage.setItem("isLoggedIn", "true");
+        const user = await getMeClient();
+        dispatch(setUser(user));
         router.refresh();
         router.push("/");
       },
@@ -57,9 +63,11 @@ export const useAuth = () => {
         const { data } = await axios.post(`${AUTH_URL}/login`, credentials);
         return data;
       },
-      onSuccess: (result) => {
+      onSuccess: async (result) => {
         console.log(`Logged in User: ${JSON.stringify(result.userId)}`);
         localStorage.setItem("isLoggedIn", "true");
+        const user = await getMeClient();
+        dispatch(setUser(user));
         router.refresh(); // re-runs layout.tsx with the new cookie
         router.push("/");
       },
@@ -83,30 +91,15 @@ export const useAuth = () => {
     } finally {
       queryClient.clear();
       localStorage.removeItem("isLoggedIn");
+      dispatch(setUser(null));
       router.refresh();
       router.push("/");
     }
   };
 
-  // const getMe = () => {
-  //   return useQuery({
-  //     queryKey: ["auth", "me"],
-  //     queryFn: async (): Promise<User> => {
-  //       const { data } = await axios.get<User>(`${AUTH_URL}/me`);
-  //       console.log(`useAuth getMe returned: ${data}`);
-  //       if (data) {
-  //         dispatch(setUser(data));
-  //       }
-  //       return data;
-  //     },
-  //     retry: false, // do not retry if no token/expired token
-  //   });
-  // };
-
   return {
     signup,
     login,
     logout,
-    // getMe,
   };
 };

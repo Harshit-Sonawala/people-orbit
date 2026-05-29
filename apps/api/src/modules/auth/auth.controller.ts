@@ -31,7 +31,6 @@ export class AuthController {
   @Post('logout')
   @UseGuards(IsAuthenticated)
   async logout(@CurrentUser() user: JwtPayload): Promise<{ message: string }> {
-    // const userId = req['user'].sub; // Get user id from JWT
     return this.authService.logout(user.sub); // Get user id from JWT
   }
 

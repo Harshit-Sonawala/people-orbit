@@ -26,3 +26,19 @@ export const getMe = async (accessToken: string): Promise<User | null> => {
     return null;
   }
 };
+
+export const getMeClient = async (): Promise<User | null> => {
+  if (localStorage.getItem("isLoggedIn") === "true") {
+    try {
+      const { data } = await axios.get<User>("/api/auth/me");
+      return data;
+    } catch {
+      return null;
+    }
+  } else {
+    console.log(
+      `localStorage isLoggedIn: ${localStorage.getItem("isLoggedIn")}.`,
+    );
+    return null;
+  }
+};
