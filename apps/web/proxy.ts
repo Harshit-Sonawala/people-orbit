@@ -25,6 +25,15 @@ export default async function proxy(
     const headers = new Headers(request.headers);
     headers.delete("host"); // Remove host header so Axios will correctly & automatically set it
 
+    // For routes that need auth via Bearer token, extract cookie and set Authorization header
+    const protectedRoutes = ["/api/auth/logout"];
+    if (protectedRoutes.includes(pathname)) {
+      const accessToken = request.cookies.get("accessToken")?.value;
+      if (accessToken) {
+        headers.set("Authorization", `Bearer ${accessToken}`);
+      }
+    }
+
     let body;
     if (request.method !== "GET" && request.method !== "HEAD") {
       try {
@@ -44,6 +53,8 @@ export default async function proxy(
 
     const isAuthRoute =
       pathname === "/api/auth/signup" || pathname === "/api/auth/login";
+    const isResponseSuccess =
+      apiResponse.status >= 200 && apiResponse.status < 300;
 
     // Handle both auth and non auth routes response data
     const { accessToken, refreshToken, ...responseBody } =
@@ -65,7 +76,7 @@ export default async function proxy(
     });
 
     // Signup or login request, successful and received data
-    if (isAuthRoute && apiResponse.status >= 200 && apiResponse.status < 300) {
+    if (isAuthRoute && isResponseSuccess) {
       if (accessToken) {
         response.cookies.set("accessToken", accessToken, {
           httpOnly: true, // block document.cookie reads and XSS attacks
@@ -87,7 +98,7 @@ export default async function proxy(
     }
 
     // Logout request, delete token cookies
-    if (pathname === "/api/auth/logout") {
+    if (pathname === "/api/auth/logout" && isResponseSuccess) {
       response.cookies.delete("accessToken");
       response.cookies.delete("refreshToken");
     }
