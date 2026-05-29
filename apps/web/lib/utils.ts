@@ -7,7 +7,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const getMe = async (accessToken: string): Promise<User | null> => {
+export const getMeServer = async (
+  accessToken: string,
+): Promise<User | null> => {
   try {
     const { data } = await axios.get<User>(
       `${process.env.INTERNAL_BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/me`,
@@ -17,11 +19,11 @@ export const getMe = async (accessToken: string): Promise<User | null> => {
         },
       },
     );
-    console.log(`getMe returned: ${JSON.stringify(data)}`);
+    console.log(`getMeServer returned: ${JSON.stringify(data)}`);
     return data;
   } catch (e: any) {
     console.error(
-      `getMe error: ${e?.response?.status} ${JSON.stringify(e?.response?.data)}`,
+      `getMeServer error: ${e?.response?.status} ${JSON.stringify(e?.response?.data)}`,
     );
     return null;
   }

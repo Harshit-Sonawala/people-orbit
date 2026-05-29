@@ -3,7 +3,7 @@ import "./globals.css";
 import Providers from "./providers";
 import { TopBar } from "@/components/TopBar";
 import { cookies } from "next/headers";
-import { getMe } from "@/lib/utils";
+import { getMeServer } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "PeopleOrbit",
@@ -17,7 +17,7 @@ export default async function RootLayout({
   const accessToken = cookieStore.get("accessToken")?.value;
   let user = null;
   if (accessToken) {
-    user = await getMe(accessToken);
+    user = await getMeServer(accessToken);
   }
 
   return (
