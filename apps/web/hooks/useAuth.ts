@@ -38,10 +38,7 @@ export const useAuth = () => {
         console.log(
           `Signup successful. Logged in userId: ${JSON.stringify(result.userId)}, object: ${JSON.stringify(result.user)}`,
         );
-        // localStorage.setItem("isLoggedIn", "true");
-        // const user = await getMeClient();
         if (result.user) dispatch(setUser(result.user));
-        // router.refresh();
         router.push("/");
       },
       onError: (error: any) => {
@@ -66,10 +63,7 @@ export const useAuth = () => {
         console.log(
           `Logged in userId: ${JSON.stringify(result.userId)}, object: ${JSON.stringify(result.user)}`,
         );
-        // localStorage.setItem("isLoggedIn", "true");
-        // const user = await getMeClient();
         if (result.user) dispatch(setUser(result.user));
-        // router.refresh(); // re-runs layout.tsx with the new cookie
         router.push("/");
       },
       onError: (error: any) => {
@@ -91,10 +85,7 @@ export const useAuth = () => {
       );
     } finally {
       queryClient.clear();
-      // localStorage.removeItem("isLoggedIn");
-      console.log("[useAuth] Reached here.");
       dispatch(setUser(null));
-      // router.refresh();
       router.push("/");
     }
   };
