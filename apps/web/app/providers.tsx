@@ -1,23 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { User } from "@/types";
 import { Provider } from "react-redux";
 import { store } from "@/store";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/store/authSlice";
-import { ThemeWrapper } from "@/components";
-
-function UserInitializer({ user }: { user: User | null }) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (user) {
-      dispatch(setUser(user));
-    }
-  }, [user, dispatch]);
-  return null;
-}
+import { ThemeProvider } from "@/components";
+import AuthProvider from "@/app/AuthProvider";
 
 export default function Providers({
   children,
@@ -30,13 +19,12 @@ export default function Providers({
 
   return (
     <Provider store={store}>
-      <ThemeWrapper>
+      <ThemeProvider>
         <QueryClientProvider client={queryClient}>
-          <UserInitializer user={user} />
-          {children}
+          <AuthProvider user={user}>{children}</AuthProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
-      </ThemeWrapper>
+      </ThemeProvider>
     </Provider>
   );
 }

@@ -11,4 +11,5 @@ export * from "./SearchInput";
 export * from "./DropDown";
 export * from "./SearchResultCard";
 export * from "./ThemeToggleButton";
-export * from "./ThemeWrapper";
+export * from "./ThemeProvider";
+export * from "./TopBarLoginButton";

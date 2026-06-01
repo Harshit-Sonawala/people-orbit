@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios, { AxiosError } from "axios";
+import { getMeServer } from "./lib/utils";
 
 // Proxy function to forward requests from Next.js to the NestJS backend.
 export default async function proxy(
@@ -57,6 +58,7 @@ export default async function proxy(
       apiResponse.status >= 200 && apiResponse.status < 300;
 
     // Handle both auth and non auth routes response data
+    // Only get accessToken, refreshToken if it was an auth route and received apiResponse.data, else simply data, tokens are undefined
     const { accessToken, refreshToken, ...responseBody } =
       isAuthRoute && apiResponse.data
         ? apiResponse.data
@@ -66,6 +68,17 @@ export default async function proxy(
             ...apiResponse.data,
           };
 
+    // Immediately fetch the user details here and attach it to the response for usage in useAuth onSuccess
+    if (isAuthRoute && isResponseSuccess && accessToken) {
+      try {
+        const user = await getMeServer(accessToken);
+        if (user) responseBody.user = user;
+      } catch (e) {
+        console.error("[Proxy] getMeServer failed: ", e);
+      }
+    }
+
+    // New basic response to forward to the FE
     const response = new NextResponse(JSON.stringify(responseBody), {
       status: apiResponse.status,
       headers: {
@@ -75,7 +88,7 @@ export default async function proxy(
       },
     });
 
-    // Signup or login request, successful and received data
+    // if a Signup or login request, successful and received data, set the tokens in the cookies
     if (isAuthRoute && isResponseSuccess) {
       if (accessToken) {
         response.cookies.set("accessToken", accessToken, {

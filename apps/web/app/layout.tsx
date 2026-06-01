@@ -14,11 +14,8 @@ export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
-  let user = null;
-  if (accessToken) {
-    user = await getMeServer(accessToken);
-  }
+  const accessToken = cookieStore.get("accessToken")?.value ?? "";
+  const user = accessToken ? await getMeServer(accessToken) : null;
 
   return (
     <html lang="en" className={`h-full antialiased`}>

@@ -5,7 +5,6 @@ import { User, AuthResponse } from "@/types";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/store/authSlice";
-import { getMeClient } from "@/lib/utils";
 
 const AUTH_URL = "/api/auth";
 
@@ -37,12 +36,12 @@ export const useAuth = () => {
       },
       onSuccess: async (result) => {
         console.log(
-          `Signup successful. Logged in User: ${JSON.stringify(result.userId)}`,
+          `Signup successful. Logged in userId: ${JSON.stringify(result.userId)}, object: ${JSON.stringify(result.user)}`,
         );
-        localStorage.setItem("isLoggedIn", "true");
-        const user = await getMeClient();
-        dispatch(setUser(user));
-        router.refresh();
+        // localStorage.setItem("isLoggedIn", "true");
+        // const user = await getMeClient();
+        if (result.user) dispatch(setUser(result.user));
+        // router.refresh();
         router.push("/");
       },
       onError: (error: any) => {
@@ -64,11 +63,13 @@ export const useAuth = () => {
         return data;
       },
       onSuccess: async (result) => {
-        console.log(`Logged in User: ${JSON.stringify(result.userId)}`);
-        localStorage.setItem("isLoggedIn", "true");
-        const user = await getMeClient();
-        dispatch(setUser(user));
-        router.refresh(); // re-runs layout.tsx with the new cookie
+        console.log(
+          `Logged in userId: ${JSON.stringify(result.userId)}, object: ${JSON.stringify(result.user)}`,
+        );
+        // localStorage.setItem("isLoggedIn", "true");
+        // const user = await getMeClient();
+        if (result.user) dispatch(setUser(result.user));
+        // router.refresh(); // re-runs layout.tsx with the new cookie
         router.push("/");
       },
       onError: (error: any) => {
@@ -90,9 +91,10 @@ export const useAuth = () => {
       );
     } finally {
       queryClient.clear();
-      localStorage.removeItem("isLoggedIn");
+      // localStorage.removeItem("isLoggedIn");
+      console.log("[useAuth] Reached here.");
       dispatch(setUser(null));
-      router.refresh();
+      // router.refresh();
       router.push("/");
     }
   };

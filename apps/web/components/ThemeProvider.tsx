@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { setTheme } from "@/store/themeSlice";
 
-export const ThemeWrapper = ({ children }: { children: React.ReactNode }) => {
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.mode);
 
