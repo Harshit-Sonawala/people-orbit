@@ -2,7 +2,6 @@
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { User, AuthResponse } from "@/types";
-import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/store/authSlice";
 
@@ -10,7 +9,6 @@ const AUTH_URL = "/api/auth";
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const signup = () => {
@@ -39,7 +37,6 @@ export const useAuth = () => {
         //   `Signup successful. Logged in userId: ${JSON.stringify(result.userId)}, object: ${JSON.stringify(result.user)}`,
         // );
         if (result.user) dispatch(setUser(result.user));
-        router.push("/");
       },
       onError: (error: any) => {
         console.error(
@@ -64,7 +61,6 @@ export const useAuth = () => {
         //   `Logged in userId: ${JSON.stringify(result.userId)}, object: ${JSON.stringify(result.user)}`,
         // );
         if (result.user) dispatch(setUser(result.user));
-        router.push("/");
       },
       onError: (error: any) => {
         console.error(
@@ -86,7 +82,6 @@ export const useAuth = () => {
     } finally {
       queryClient.clear();
       dispatch(setUser(null));
-      router.push("/");
     }
   };
 

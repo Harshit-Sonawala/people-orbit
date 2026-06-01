@@ -4,11 +4,20 @@ import { Card, UserCard } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useAuth } from "@/hooks";
+import { useRouter } from "next/navigation";
 
 export default function Account() {
   const { logout } = useAuth();
+  const router = useRouter();
 
   const user = useSelector((state: RootState) => state.auth.user);
+
+  const handleLogout = async () => {
+    await logout();
+    // window.location.href = "/"; // push to / with a page refresh
+    router.push("/");
+    router.refresh();
+  };
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto">
@@ -32,13 +41,7 @@ export default function Account() {
           <CustomLink href="/account" className="py-4">
             View Privacy Policy
           </CustomLink>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              logout();
-            }}
-            className="py-4"
-          >
+          <Button variant="outlined" onClick={handleLogout} className="py-4">
             Log Out
           </Button>
         </Card>

@@ -1,5 +1,7 @@
 ## TASKS
 
+- [ ] Check out router.refresh() and use difference in usecases between window refresh and router.refresh().
+- [ ] Find out new package for handling auth with 3 criterias - core login/signup, Google etc signup, Magic Link signup, great documentation, great community support
 - [x] Change to only userId received on FE?
 - [ ] Redux initialState fix
 - [ ] Incorrect credentials error message - global modal

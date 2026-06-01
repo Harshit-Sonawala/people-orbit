@@ -22,7 +22,7 @@ export default async function RootLayout({
     <html lang="en" className={`h-full antialiased`}>
       <body className="min-h-full flex flex-col pb-48">
         <Providers user={user}>
-          <TopBar />
+          <TopBar user={user} />
           <div className="w-[90%] lg:w-[80%] mx-auto">{children}</div>
           <Notification />
         </Providers>

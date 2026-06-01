@@ -1,5 +1,4 @@
-import React from "react";
-import { Heading, Divider, CustomLink } from "@/components";
+import { Heading, Divider } from "@/components";
 import { LoginForm } from "@/components/forms";
 
 export default function Login() {

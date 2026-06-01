@@ -29,10 +29,12 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import signupImg from "@/public/signup_img.svg";
+import { useRouter } from "next/navigation";
 
 export const SignupForm = () => {
   const { signup } = useAuth();
   const { mutate, isPending } = signup();
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -58,6 +60,9 @@ export const SignupForm = () => {
         mutate(values, {
           onSuccess: () => {
             resetForm();
+            window.location.href = "/"; // push to / with a page refresh
+            router.push("/");
+            router.refresh();
           },
         });
       }

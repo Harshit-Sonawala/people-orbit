@@ -18,10 +18,12 @@ import {
 import { EmailRounded, KeyRounded } from "@mui/icons-material";
 import Image from "next/image";
 import loginImg from "@/public/login_img.svg";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
   const { login } = useAuth();
   const { mutate, isPending } = login();
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -36,6 +38,9 @@ export const LoginForm = () => {
       mutate(values, {
         onSuccess: () => {
           resetForm();
+          // window.location.href = "/"; // push to / with a page refresh
+          router.push("/");
+          router.refresh();
         },
       });
     },
