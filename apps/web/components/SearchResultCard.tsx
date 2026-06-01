@@ -16,7 +16,7 @@ export const SearchResultCard = ({ User, className }: Props) => {
     <Link
       href={`/users/${User.id}`}
       className={cn(
-        "max-w-140 flex flex-1 flex-row items-stretch group transition-transform duration-200 hover:-translate-y-1",
+        "max-w-lg flex flex-1 flex-row items-stretch group transition-transform duration-200 hover:-translate-y-1",
         className,
       )}
     >

@@ -23,7 +23,7 @@ export const UserCard = ({ User, className }: Props) => {
     <Link
       href={`/users/${User.id}`}
       className={cn(
-        "max-w-110 flex flex-col group transition-transform duration-200 hover:-translate-y-1",
+        "max-w-md flex flex-col group transition-transform duration-200 hover:-translate-y-1",
         className,
       )}
     >

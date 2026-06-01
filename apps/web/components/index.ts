@@ -13,3 +13,4 @@ export * from "./SearchResultCard";
 export * from "./ThemeToggleButton";
 export * from "./ThemeProvider";
 export * from "./TopBarLoginButton";
+export * from "./Notification";

@@ -9,8 +9,9 @@ import {
   CustomLink,
   UserCard,
   SearchResultCard,
+  Notification,
 } from "@/components";
-import { User } from "@/types";
+import { User, UserRole } from "@/types";
 
 export default function Demo() {
   const dummyUser: User = {
@@ -31,6 +32,8 @@ export default function Demo() {
     },
     createdOn: Date.parse("2025-08-14T09:30:00.000Z"),
     updatedOn: Date.parse("2025-08-14T09:30:00.000Z"),
+    role: UserRole.USER,
+    isBanned: false,
   };
 
   return (
@@ -47,6 +50,7 @@ export default function Demo() {
 
         <UserCard User={dummyUser} />
         <SearchResultCard User={dummyUser} />
+        <Notification />
 
         <Card variant="surface">
           <p>Card default surface variant</p>
@@ -90,6 +94,18 @@ export default function Demo() {
             onClick={() => console.log("Outlined Rounded button pressed.")}
           >
             Outlined Rounded Button
+          </Button>
+          <Button
+            variant="surface"
+            onClick={() => console.log("Surface button pressed.")}
+          >
+            Surface Button
+          </Button>
+          <Button
+            variant="surface-rounded"
+            onClick={() => console.log("Surface Rounded button pressed.")}
+          >
+            Surface Rounded Button
           </Button>
           <Button disabled={true}>Disabled Button</Button>
         </Card>

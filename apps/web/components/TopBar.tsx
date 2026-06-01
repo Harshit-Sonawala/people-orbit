@@ -8,7 +8,7 @@ import {
 
 export const TopBar = () => {
   return (
-    <div className="flex flex-row items-center justify-between py-1 px-4 w-[90%] mx-auto mb-2">
+    <div className="flex flex-row items-center justify-between py-1 px-4 w-full md:w-[90%] mx-auto mb-2">
       <CustomLink href="/" className="py-2 px-4">
         <div className="flex flex-row items-center justify-center gap-2">
           <SatelliteAltRounded

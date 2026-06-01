@@ -11,7 +11,7 @@ export const SearchInput = () => {
   const allowedCharsRegex = /[^A-Za-z0-9\s'.&/@+-]/g;
 
   return (
-    <div className="hidden md:block flex-row items-center gap-2 relative">
+    <div className="hidden lg:block flex-row items-center gap-2 relative">
       <Formik
         initialValues={{ query: "" }}
         onSubmit={(values, { resetForm }) => {
