@@ -19,7 +19,7 @@ export const getMeServer = async (
         },
       },
     );
-    console.log(`getMeServer returned: ${JSON.stringify(data)}`);
+    // console.log(`getMeServer returned: ${JSON.stringify(data)}`);
     return data;
   } catch (e: any) {
     console.error(
@@ -28,19 +28,3 @@ export const getMeServer = async (
     return null;
   }
 };
-
-// export const getMeClient = async (): Promise<User | null> => {
-//   if (localStorage.getItem("isLoggedIn") === "true") {
-//     try {
-//       const { data } = await axios.get<User>("/api/auth/me");
-//       return data;
-//     } catch {
-//       return null;
-//     }
-//   } else {
-//     console.log(
-//       `localStorage isLoggedIn: ${localStorage.getItem("isLoggedIn")}.`,
-//     );
-//     return null;
-//   }
-// };

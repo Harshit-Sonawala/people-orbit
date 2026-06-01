@@ -35,9 +35,9 @@ export const useAuth = () => {
         return data;
       },
       onSuccess: async (result) => {
-        console.log(
-          `Signup successful. Logged in userId: ${JSON.stringify(result.userId)}, object: ${JSON.stringify(result.user)}`,
-        );
+        // console.log(
+        //   `Signup successful. Logged in userId: ${JSON.stringify(result.userId)}, object: ${JSON.stringify(result.user)}`,
+        // );
         if (result.user) dispatch(setUser(result.user));
         router.push("/");
       },
@@ -60,9 +60,9 @@ export const useAuth = () => {
         return data;
       },
       onSuccess: async (result) => {
-        console.log(
-          `Logged in userId: ${JSON.stringify(result.userId)}, object: ${JSON.stringify(result.user)}`,
-        );
+        // console.log(
+        //   `Logged in userId: ${JSON.stringify(result.userId)}, object: ${JSON.stringify(result.user)}`,
+        // );
         if (result.user) dispatch(setUser(result.user));
         router.push("/");
       },

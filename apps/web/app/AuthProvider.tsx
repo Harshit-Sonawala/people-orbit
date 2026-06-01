@@ -12,7 +12,6 @@ type AuthProviderProps = {
 export default function AuthProvider({ user, children }: AuthProviderProps) {
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(`AuthProvider dispatched user: ${JSON.stringify(user)}`);
     dispatch(setUser(user));
   }, [user, dispatch]);
   return <>{children}</>;
