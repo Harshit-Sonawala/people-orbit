@@ -22,7 +22,7 @@ export default function Providers({
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <AuthProvider user={user}>{children}</AuthProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </QueryClientProvider>
       </ThemeProvider>
     </Provider>

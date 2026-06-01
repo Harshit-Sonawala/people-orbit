@@ -13,7 +13,18 @@ export const Notification = () => {
     notification.visible && (
       <Card className="max-w-lg fixed bottom-4 right-4">
         <div className="flex flex-1 flex-row items-center gap-4">
-          <InfoRounded className="text-secondary icon-xl" />
+          {notification.type === "info" && (
+            <InfoRounded className="text-primary icon-xl" />
+          )}
+          {notification.type === "warning" && (
+            <InfoRounded className="text-warning icon-xl" />
+          )}
+          {notification.type === "error" && (
+            <InfoRounded className="text-error icon-xl" />
+          )}
+          {notification.type === "success" && (
+            <InfoRounded className="text-secondary icon-xl" />
+          )}
           <div className="flex flex-1 flex-col">
             <div className="flex flex-1 flex-row items-center justify-between gap-4">
               <div className="flex flex-row items-center justify-between gap-4">

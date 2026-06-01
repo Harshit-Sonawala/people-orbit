@@ -12,7 +12,6 @@ import {
   CustomLink,
   UserCard,
   SearchResultCard,
-  Notification,
 } from "@/components";
 
 export default function Demo() {
@@ -48,19 +47,63 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <Button
-          onClick={() => {
-            dispatch(
-              showNotification({
-                title: "Example Notification",
-                message: "This is an example of a sample notification.",
-                type: "info",
-              }),
-            );
-          }}
-        >
-          Show Notification
-        </Button>
+        <Heading variant="sm" className="text-secondary">
+          Notifications
+        </Heading>
+        <Card className="max-w-md">
+          <Button
+            onClick={() => {
+              dispatch(
+                showNotification({
+                  title: "Example Notification",
+                  message: "This is an example of a sample notification.",
+                  type: "info",
+                }),
+              );
+            }}
+          >
+            Show Info Notification
+          </Button>
+          <Button
+            onClick={() => {
+              dispatch(
+                showNotification({
+                  title: "Warning Notification",
+                  message: "This is an example of a warning notification.",
+                  type: "warning",
+                }),
+              );
+            }}
+          >
+            Show Warning Notification
+          </Button>
+          <Button
+            onClick={() => {
+              dispatch(
+                showNotification({
+                  title: "Error Notification",
+                  message: "This is an example of an error notification.",
+                  type: "error",
+                }),
+              );
+            }}
+          >
+            Show Error Notification
+          </Button>
+          <Button
+            onClick={() => {
+              dispatch(
+                showNotification({
+                  title: "Success Notification",
+                  message: "This is an example of a success notification.",
+                  type: "success",
+                }),
+              );
+            }}
+          >
+            Show Success Notification
+          </Button>
+        </Card>
 
         <Heading variant="sm" className="text-secondary">
           Cards
