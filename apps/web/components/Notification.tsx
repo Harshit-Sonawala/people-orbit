@@ -1,33 +1,38 @@
+"use client";
 import { Card, Heading, Button } from "@/components";
 import { InfoRounded, CloseRounded } from "@mui/icons-material";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
+import { hideNotification } from "@/store/notificationSlice";
 
-type Props = {};
+export const Notification = () => {
+  const notification = useSelector((state: RootState) => state.notification);
+  const dispatch = useDispatch();
 
-export const Notification = (props: Props) => {
   return (
-    <Card className="max-w-lg">
-      <div className="flex flex-row items-center gap-4">
-        <InfoRounded className="text-secondary icon-xl" />
-        <div className="flex flex-col">
-          <div className="flex flex-row items-center justify-between gap-4">
-            <div className="flex flex-row items-center justify-between gap-4">
-              <Heading>Notification Title</Heading>
+    notification.visible && (
+      <Card className="max-w-lg fixed bottom-4 right-4">
+        <div className="flex flex-1 flex-row items-center gap-4">
+          <InfoRounded className="text-secondary icon-xl" />
+          <div className="flex flex-1 flex-col">
+            <div className="flex flex-1 flex-row items-center justify-between gap-4">
+              <div className="flex flex-row items-center justify-between gap-4">
+                <Heading>{notification.title}</Heading>
+              </div>
+              <Button
+                variant="surface-rounded"
+                onClick={() => {
+                  dispatch(hideNotification());
+                }}
+                className="p-3"
+              >
+                <CloseRounded className="icon-md" />
+              </Button>
             </div>
-            <Button
-              variant="surface-rounded"
-              onClick={() => console.log("Notification Pressed")}
-              className="p-3"
-            >
-              <CloseRounded className="icon-md" />
-            </Button>
+            <p>{notification.message}</p>
           </div>
-          <p>
-            This is an example notification.This is an example notification.This
-            is an example notification.This is an example notification.This is
-            an example notification.
-          </p>
         </div>
-      </div>
-    </Card>
+      </Card>
+    )
   );
 };

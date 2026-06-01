@@ -4,9 +4,7 @@ import { RootState } from "@/store";
 import { AccountCircleRounded } from "@mui/icons-material";
 import { Heading, CustomLink } from "@/components";
 
-type Props = {};
-
-export const TopBarLoginButton = (props: Props) => {
+export const TopBarLoginButton = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
   return user === null ? (

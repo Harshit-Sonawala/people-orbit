@@ -4,6 +4,7 @@ import Providers from "./providers";
 import { TopBar } from "@/components/TopBar";
 import { cookies } from "next/headers";
 import { getMeServer } from "@/lib/utils";
+import { Notification } from "@/components";
 
 export const metadata: Metadata = {
   title: "PeopleOrbit",
@@ -23,6 +24,7 @@ export default async function RootLayout({
         <Providers user={user}>
           <TopBar />
           <div className="w-[90%] lg:w-[80%] mx-auto">{children}</div>
+          <Notification />
         </Providers>
       </body>
     </html>

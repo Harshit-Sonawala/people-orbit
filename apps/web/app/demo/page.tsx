@@ -1,4 +1,7 @@
 "use client";
+import { User, UserRole } from "@/types";
+import { showNotification } from "@/store/notificationSlice";
+import { useDispatch } from "react-redux";
 import {
   Heading,
   Card,
@@ -11,9 +14,10 @@ import {
   SearchResultCard,
   Notification,
 } from "@/components";
-import { User, UserRole } from "@/types";
 
 export default function Demo() {
+  const dispatch = useDispatch();
+
   const dummyUser: User = {
     id: "arjun-mehta-1755163800000",
     firstName: "Arjun",
@@ -44,13 +48,26 @@ export default function Demo() {
       </div>
 
       <div className="flex flex-col gap-4">
+        <Button
+          onClick={() => {
+            dispatch(
+              showNotification({
+                title: "Example Notification",
+                message: "This is an example of a sample notification.",
+                type: "info",
+              }),
+            );
+          }}
+        >
+          Show Notification
+        </Button>
+
         <Heading variant="sm" className="text-secondary">
           Cards
         </Heading>
 
         <UserCard User={dummyUser} />
         <SearchResultCard User={dummyUser} />
-        <Notification />
 
         <Card variant="surface">
           <p>Card default surface variant</p>
