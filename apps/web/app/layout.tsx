@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "./providers";
-import { TopBar } from "@/components/TopBar";
+import { Header, Footer } from "@/components";
 import { cookies } from "next/headers";
 import { getMeServer } from "@/lib/utils";
 import { Notification } from "@/components";
@@ -20,13 +20,16 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`h-full antialiased`}>
-      <body className="min-h-full flex flex-col pb-48">
-        <Providers user={user}>
-          <TopBar user={user} />
-          <div className="w-[90%] lg:w-[80%] mx-auto">{children}</div>
-          <Notification />
-        </Providers>
-      </body>
+      <Providers user={user}>
+        <body className="min-h-full flex flex-col">
+          <Header user={user} />
+          <div className="w-[90%] lg:w-[80%] mx-auto pb-32">
+            {children}
+            <Notification />
+          </div>
+          <Footer />
+        </body>
+      </Providers>
     </html>
   );
 }

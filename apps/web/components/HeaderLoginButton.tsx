@@ -2,7 +2,7 @@ import { AccountCircleRounded } from "@mui/icons-material";
 import { Heading, CustomLink } from "@/components";
 import { User } from "@/types";
 
-export const TopBarLoginButton = ({ user }: { user: User | null }) => {
+export const HeaderLoginButton = ({ user }: { user: User | null }) => {
   return !user ? (
     <CustomLink
       href="/login"
