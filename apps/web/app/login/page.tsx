@@ -5,8 +5,8 @@ export default function Login() {
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto">
       <div className="flex flex-col gap-2">
-        <Heading variant="lg">Login</Heading>
-        <Divider />
+        {/* <Heading variant="lg">Login</Heading>
+        <Divider /> */}
       </div>
       <LoginForm />
     </div>

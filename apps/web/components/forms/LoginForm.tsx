@@ -38,9 +38,9 @@ export const LoginForm = () => {
       mutate(values, {
         onSuccess: () => {
           resetForm();
-          window.location.href = "/"; // push to / with a page refresh
-          // router.push("/");
-          // router.refresh();
+          // window.location.href = "/"; // push to / with a page refresh
+          router.push("/");
+          router.refresh();
         },
       });
     },
