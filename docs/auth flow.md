@@ -1,11 +1,23 @@
 ## TASKS
 
-- [ ] Check out router.refresh() and use difference in usecases between window refresh and router.refresh().
+## General Auth TODO:
+
+- [ ] Password hashing with bcrypt
+- [ ] Generating AccessTokens - JWT Signing, verification
+- [ ] Setting Cookies in proxy.ts
+- [ ] Refresh Token Generation
+- [ ] Save Sessions into sessions Table on login and delete on logouts.
+- [ ] Refresh token rotation
+- [ ] Token expiry + silent refresh
+- [ ] OAuth (Google/Github etc auth)
+- [ ] Magic Links
+
 - [ ] Find out new package for handling auth with 3 criterias - core login/signup, Google etc signup, Magic Link signup, great documentation, great community support
-- [x] Change to only userId received on FE?
-- [ ] Redux initialState fix
-- [ ] Incorrect credentials error message - global modal
+- [x] Incorrect credentials error message - global notification modal
+- [ ] Wire up Notification on faliures/errors.
 - [ ] Password fields Peek eye icon & functionality.
+- [x] Change to only userId received on FE?
+- [x] Check out router.refresh() and use difference in usecases between window refresh and router.refresh().
 - [x] Update Redux store with User Object
 - [x] create the login/signup pages & forms, wire it up with tanstack
 - [x] Backend From Frontend setup - call the backend from nextjs server - Proxy

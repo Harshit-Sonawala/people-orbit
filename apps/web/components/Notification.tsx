@@ -10,10 +10,20 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { hideNotification } from "@/store/notificationSlice";
+import { useEffect } from "react";
 
 export const Notification = () => {
   const notification = useSelector((state: RootState) => state.notification);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (notification.visible) {
+      const timer = setTimeout(() => {
+        dispatch(hideNotification());
+      }, 10000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification.visible]);
 
   return (
     notification.visible && (
