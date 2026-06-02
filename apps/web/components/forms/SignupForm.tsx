@@ -61,8 +61,8 @@ export const SignupForm = () => {
           onSuccess: () => {
             resetForm();
             window.location.href = "/"; // push to / with a page refresh
-            router.push("/");
-            router.refresh();
+            // router.push("/");
+            // router.refresh();
           },
         });
       }
