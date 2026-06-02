@@ -60,7 +60,7 @@ export default function Home() {
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
-          <Heading variant="md">Browse All Records</Heading>
+          <Heading variant="md">Find People</Heading>
           <div className="flex flex-row items-center justify-between gap-2">
             <DropDown
               options={sortMap}
@@ -94,7 +94,6 @@ export default function Home() {
             </Button>
           </div>
         </div>
-        <Divider />
       </div>
       {isLoading && <p className="text-center py-8">Loading User Data...</p>}
       {isError && (
@@ -124,8 +123,9 @@ export default function Home() {
                     updateURLSearchParams({ page: page - 1 });
                   }
                 }}
+                className="gap-2"
               >
-                <ArrowBackRounded />
+                <ArrowBackRounded className="icon-md" />
                 PREV
               </Button>
               <div className="flex flex-row gap-4">
@@ -149,8 +149,6 @@ export default function Home() {
                       onClick={() => {
                         if (eachPage !== page) {
                           updateURLSearchParams({ page: eachPage });
-                          // prevent unnecessary fetch
-                          // setPage(eachPage);
                         }
                       }}
                     >
@@ -165,14 +163,12 @@ export default function Home() {
                 onClick={() => {
                   if (page < data.meta.totalPages) {
                     updateURLSearchParams({ page: page + 1 });
-                    // setPage((oldPage) =>
-                    //   Math.min(users.meta.totalPages, oldPage + 1),
-                    // );
                   }
                 }}
+                className="gap-2"
               >
                 NEXT
-                <ArrowForwardRounded />
+                <ArrowForwardRounded className="icon-md" />
               </Button>
             </div>
           </div>

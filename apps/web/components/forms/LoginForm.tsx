@@ -65,7 +65,7 @@ export const LoginForm = () => {
             Login
           </Heading>
           <Divider variant="surface-top" />
-          <p>Log back into your PeopleOrbit user account.</p>
+          <p>Log into your PeopleOrbit user account.</p>
         </div>
 
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">

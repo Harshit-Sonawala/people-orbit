@@ -9,10 +9,10 @@ type Props = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
 const variantClasses: { [key: string]: string } = {
   filled: "rounded-lg bg-surface-top font-medium text-foreground",
   outlined:
-    "rounded-lg bg-transparent border-2 border-foreground font-medium text-foreground",
+    "rounded-lg bg-transparent border border-foreground font-medium text-foreground",
   rounded: "rounded-2xl bg-surface-top font-medium text-foreground",
   "outlined-primary":
-    "rounded-lg bg-transparent border-2 border-primary font-medium text-primary",
+    "rounded-lg bg-transparent border border-primary font-medium text-primary",
 };
 
 export const TextArea = ({
@@ -23,7 +23,7 @@ export const TextArea = ({
 }: Props) => {
   let placeholderClasses: string = "text-foreground";
   let textClasses: string = "font-medium text-foreground";
-  let borderClasses: string = "border-2 border-surface-top";
+  let borderClasses: string = "border border-surface-top";
 
   if (rest.disabled) {
     placeholderClasses = "text-foreground-alt";
@@ -33,7 +33,7 @@ export const TextArea = ({
   if (error) {
     placeholderClasses = "text-error";
     textClasses = "font-regular text-error";
-    borderClasses = "border-2 border-error";
+    borderClasses = "border border-error";
   }
 
   return (
@@ -47,7 +47,7 @@ export const TextArea = ({
           borderClasses,
           className,
         )}
-        {...rest} // spread out rest parameters
+        {...rest} // get rest parameters
       />
       {error && <p className="ml-2 text-sm text-error">{error}</p>}
     </div>

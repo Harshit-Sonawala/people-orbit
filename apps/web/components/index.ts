@@ -15,3 +15,4 @@ export * from "./ThemeToggleButton";
 export * from "./ThemeProvider";
 export * from "./HeaderLoginButton";
 export * from "./Notification";
+export * from "./Logo";

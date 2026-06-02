@@ -33,7 +33,6 @@ export const SearchInput = () => {
               variant="rounded"
               placeholder="Search..."
               className="sm:w-64 md:w-72 lg:w-84"
-              // error={formik.errors.query && formik.errors.query}
               {...formik.getFieldProps("query")}
             />
             <Button

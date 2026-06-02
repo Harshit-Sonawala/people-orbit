@@ -23,7 +23,7 @@ export const UserCard = ({ User, className }: Props) => {
     <Link
       href={`/users/${User.id}`}
       className={cn(
-        "max-w-md flex flex-col group transition-transform duration-200 hover:-translate-y-1",
+        "max-w-md flex flex-col group transition-transform duration-200 hover:-translate-y-1 border border-surface-top rounded-lg",
         className,
       )}
     >
@@ -37,8 +37,8 @@ export const UserCard = ({ User, className }: Props) => {
           priority
         />
       </div>
-      <div className="relative flex flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-12 pb-4 px-6 bg-surface transition-all duration-200 group-hover:bg-surface-top">
-        <div className="flex flex-col items-center justify-center absolute left-8 -top-10 w-20 h-20 rounded-full bg-surface border-4 border-surface-top transition-colors duration-200 overflow-hidden">
+      <div className="relative flex flex-1 flex-col items-start justify-start gap-2 rounded-bl-lg rounded-br-lg pt-12 pb-4 px-6 bg-surface transition-all duration-200 group-hover:bg-surface-top">
+        <div className="flex flex-col items-center justify-center absolute left-8 -top-10 w-20 h-20 rounded-full bg-surface border-2 border-surface-top transition-colors duration-200 overflow-hidden">
           {/* <Image
             src={profilePic}
             alt={User.firstName.charAt(0)}

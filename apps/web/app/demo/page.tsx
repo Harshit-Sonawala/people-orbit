@@ -68,8 +68,9 @@ export default function Demo() {
             onClick={() => {
               dispatch(
                 showNotification({
-                  title: "Warning Notification",
-                  message: "This is an example of a warning notification.",
+                  title: "Medium Length Warning Title",
+                  message:
+                    "This is an example of a warning notification. This is an example of a warning notification.",
                   type: "warning",
                 }),
               );
@@ -81,7 +82,8 @@ export default function Demo() {
             onClick={() => {
               dispatch(
                 showNotification({
-                  title: "Error Notification",
+                  title:
+                    "Very Long Error Notification Title. Please Try Again.",
                   message: "This is an example of an error notification.",
                   type: "error",
                 }),

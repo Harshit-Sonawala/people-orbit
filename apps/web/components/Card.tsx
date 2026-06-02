@@ -9,10 +9,10 @@ type Props = {
 };
 
 const variantClasses: { [key: string]: string } = {
-  surface: "bg-surface",
+  surface: "bg-surface border border-surface-top",
   "surface-top": "bg-surface-top",
-  outlined: "border-2 border-surface-top bg-transparent",
-  "outlined-primary": "border-2 border-primary bg-transparent",
+  outlined: "border border-surface-top bg-transparent",
+  "outlined-primary": "border border-primary bg-transparent",
 };
 
 export const Card = ({

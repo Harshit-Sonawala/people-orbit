@@ -15,16 +15,16 @@ type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variantClasses: { [key: string]: string } = {
   filled:
-    "rounded-lg bg-primary border-2 border-primary font-semibold text-white",
+    "rounded-lg bg-primary border border-primary font-semibold text-white",
   rounded:
-    "rounded-full bg-primary border-2 border-primary font-semibold text-white",
-  outlined: "rounded-lg border-2 border-primary font-semibold text-primary",
+    "rounded-full bg-primary border border-primary font-semibold text-white",
+  outlined: "rounded-lg border border-primary font-semibold text-primary",
   "outlined-rounded":
     "rounded-full border-2 border-primary font-semibold text-primary",
   surface:
-    "rounded-lg bg-surface border-2 border-surface font-semibold text-foreground",
+    "rounded-lg bg-surface border border-surface font-semibold text-foreground",
   "surface-rounded":
-    "rounded-full bg-surface border-2 border-surface font-semibold text-foreground",
+    "rounded-full bg-surface border border-surface font-semibold text-foreground",
 };
 
 export const Button = forwardRef<HTMLButtonElement, Props>(
