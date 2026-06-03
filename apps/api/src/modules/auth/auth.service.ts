@@ -5,12 +5,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import type { AuthResponse } from '@/modules/auth/types';
-import { SignupDto, LoginDto } from '@/modules/auth/dto';
-import { UsersRepository } from '@/modules/users';
-import { User, UserRole } from '@/modules/users/types';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
+import type { AuthResponse } from './types';
+import { SignupDto, LoginDto } from './dto';
+import { UsersRepository } from '@/modules/users';
+import { User, UserRole } from '@/modules/users/types';
 
 @Injectable()
 export class AuthService {

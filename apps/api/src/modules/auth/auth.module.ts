@@ -7,7 +7,7 @@ import {
   AuthService,
   AuthSessionsEntity,
   AuthSessionsRepository,
-} from '@/modules/auth';
+} from './';
 import { UsersEntity, UsersRepository } from '@/modules/users';
 
 @Module({
