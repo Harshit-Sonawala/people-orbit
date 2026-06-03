@@ -2,15 +2,20 @@
 
 ## General Auth TODO:
 
-- [ ] Password hashing with bcrypt
-- [ ] Generating AccessTokens - JWT Signing, verification
-- [ ] Setting Cookies in proxy.ts
-- [ ] Refresh Token Generation
+- [x] Password hashing with bcrypt
+- [x] Generating AccessTokens - JWT Signing, verification
+- [x] Setting Cookies in proxy.ts
+- [x] Refresh Token Generation - in auth.service.
 - [ ] Save Sessions into sessions Table on login and delete on logouts.
-- [ ] Refresh token rotation
-- [ ] Token expiry + silent refresh
+- [ ] Refresh token rotation - on every log in delete and resend new generated refreshToken
+- [ ] Token expiry - silent refresh & retry on a failed 401 response
+- [ ] Password reset case
+- [ ] Log me out of all devices case
 - [ ] OAuth (Google/Github etc auth)
 - [ ] Magic Links
+- [ ] Email verification — confirming a user owns email on signup
+- [ ] Rate limiting — blocking brute force attempts on /api/auth/login
+- [ ] Ban enforcement — isBanned on UsersEntity checks during login/token verification
 
 - [ ] Find out new package for handling auth with 3 criterias - core login/signup, Google etc signup, Magic Link signup, great documentation, great community support
 - [x] Incorrect credentials error message - global notification modal

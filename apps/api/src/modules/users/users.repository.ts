@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ILike, FindOptionsWhere } from 'typeorm';
-import { UserEntity } from '@/entities';
+import { UsersEntity } from '@/entities';
 import { dummyData } from './users.dummyData.static';
 import { User } from './types';
 
 @Injectable()
 export class UsersRepository {
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly repository: Repository<UserEntity>,
+    @InjectRepository(UsersEntity)
+    private readonly repository: Repository<UsersEntity>,
   ) {}
 
   async findAll(
@@ -17,7 +17,7 @@ export class UsersRepository {
     limit: number,
     sortBy: string,
     order: string,
-  ): Promise<[UserEntity[], number]> {
+  ): Promise<[UsersEntity[], number]> {
     return await this.repository.findAndCount({
       order: {
         [sortBy]: order,
@@ -28,15 +28,15 @@ export class UsersRepository {
   }
 
   async findOne(
-    criteria: FindOptionsWhere<UserEntity>,
-  ): Promise<UserEntity | null> {
+    criteria: FindOptionsWhere<UsersEntity>,
+  ): Promise<UsersEntity | null> {
     return this.repository.findOne({
       where: criteria,
       relationLoadStrategy: 'query', // returns all array types too
     });
   }
 
-  async findOneAndGetPassword(email: string): Promise<UserEntity | null> {
+  async findOneAndGetPassword(email: string): Promise<UsersEntity | null> {
     return this.repository
       .createQueryBuilder('user')
       .where('user.email = :email', { email })
@@ -44,20 +44,20 @@ export class UsersRepository {
       .getOne();
   }
 
-  async createOrReplace(newUser: User): Promise<UserEntity> {
-    const newUserEntity = this.repository.create(newUser);
-    return await this.repository.save(newUserEntity);
+  async createOrReplace(newUser: User): Promise<UsersEntity> {
+    const newUsersEntity = this.repository.create(newUser);
+    return await this.repository.save(newUsersEntity);
   }
 
   async update(
     id: string,
     partialUpdatedUser: Partial<User>,
-  ): Promise<UserEntity | null> {
+  ): Promise<UsersEntity | null> {
     await this.repository.update(id, partialUpdatedUser);
     return await this.findOne({ id });
   }
 
-  async delete(id: string): Promise<UserEntity | null> {
+  async delete(id: string): Promise<UsersEntity | null> {
     const user = await this.findOne({ id });
     if (user) {
       await this.repository.delete(id);
@@ -76,7 +76,7 @@ export class UsersRepository {
     query: string,
     page: number,
     limit: number,
-  ): Promise<[UserEntity[], number]> {
+  ): Promise<[UsersEntity[], number]> {
     return await this.repository.findAndCount({
       where: [
         { firstName: ILike(`%${query}%`) },

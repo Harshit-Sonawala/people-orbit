@@ -2,7 +2,7 @@ import { Entity, PrimaryColumn, Column, Index } from 'typeorm';
 import { type SocialLinks, UserRole } from '../modules/users/types';
 
 @Entity('users') // table name users
-export class UserEntity {
+export class UsersEntity {
   @PrimaryColumn({ type: 'varchar' })
   id: string;
 

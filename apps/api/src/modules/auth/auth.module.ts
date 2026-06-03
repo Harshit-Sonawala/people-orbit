@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { UserEntity } from '@/entities';
+import { UsersEntity } from '@/entities';
 import { UsersRepository } from '@/modules/users/users.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([UsersEntity]),
     JwtModule.registerAsync({
       global: true,
       useFactory: async (configService: ConfigService) => ({
