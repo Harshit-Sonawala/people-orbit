@@ -1,7 +1,7 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm';
 
-@Entity('sessions') // table name sessions
-export class SessionsEntity {
+@Entity('auth_sessions') // table name auth_sessions
+export class AuthSessionsEntity {
   @PrimaryColumn({ type: 'varchar' })
   id: string;
 

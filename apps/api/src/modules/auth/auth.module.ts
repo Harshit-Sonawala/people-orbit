@@ -1,15 +1,18 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { UsersEntity } from '@/entities';
-import { UsersRepository } from '@/modules/users/users.repository';
-import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
+import {
+  AuthController,
+  AuthService,
+  AuthSessionsEntity,
+  AuthSessionsRepository,
+} from '@/modules/auth';
+import { UsersEntity, UsersRepository } from '@/modules/users';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UsersEntity]),
+    TypeOrmModule.forFeature([AuthSessionsEntity, UsersEntity]),
     JwtModule.registerAsync({
       global: true,
       useFactory: async (configService: ConfigService) => ({
@@ -20,6 +23,6 @@ import { ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, UsersRepository],
+  providers: [AuthService, AuthSessionsRepository, UsersRepository],
 })
 export class AuthModule {}

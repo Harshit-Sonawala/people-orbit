@@ -4,19 +4,19 @@ import {
   UnauthorizedException,
   NotFoundException,
 } from '@nestjs/common';
-import type { AuthResponse } from './types';
-import { SignupDto, LoginDto } from './dto';
-import { UsersRepository } from '../users/users.repository';
+import { JwtService } from '@nestjs/jwt';
+import type { AuthResponse } from '@/modules/auth/types';
+import { SignupDto, LoginDto } from '@/modules/auth/dto';
+import { UsersRepository } from '@/modules/users';
+import { User, UserRole } from '@/modules/users/types';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
-import { User, UserRole } from '../users/types';
-import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly usersRepository: UsersRepository,
     private readonly jwtService: JwtService,
+    private readonly usersRepository: UsersRepository,
   ) {}
 
   private generateAccessToken(user: User): string {

@@ -3,15 +3,19 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
-import { type User, type PaginatedUsers, UserRole } from './types';
+import {
+  type User,
+  type PaginatedUsers,
+  UserRole,
+} from '@/modules/users/types';
 import {
   QueryOptionsDto,
   CreateUserDto,
   UpdateUserDto,
   SortBy,
   Order,
-} from './dto';
-import { UsersRepository } from './users.repository';
+} from '@/modules/users/dto';
+import { UsersRepository } from '@/modules/users';
 import bcrypt from 'bcrypt';
 
 @Injectable()

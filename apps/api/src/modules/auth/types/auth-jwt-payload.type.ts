@@ -1,4 +1,4 @@
-export type JwtPayload = {
+export type AuthJwtPayload = {
   sub: string;
   email: string;
   iat?: number;

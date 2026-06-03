@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, Column, Index } from 'typeorm';
-import { type SocialLinks, UserRole } from '../modules/users/types';
+import { type SocialLinks, UserRole } from './types';
 
 @Entity('users') // table name users
 export class UsersEntity {
