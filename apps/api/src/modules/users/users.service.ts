@@ -4,15 +4,14 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import bcrypt from 'bcrypt';
-import { UsersRepository } from './';
-import { type User, type PaginatedUsers, UserRole } from './types';
-import {
-  QueryOptionsDto,
-  CreateUserDto,
-  UpdateUserDto,
-  SortBy,
-  Order,
-} from './dto';
+import { UsersRepository } from './users.repository';
+import { type User } from './types/user.type';
+import { type PaginatedUsers } from './types/paginated-users.type';
+import { UserRole } from './types/user-role.enum';
+import { QueryOptionsDto } from './dto/query-options.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { SortBy, Order } from './dto/query-options.dto';
 
 @Injectable()
 export class UsersService {

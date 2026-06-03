@@ -10,9 +10,12 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-import { UsersService } from './';
-import type { User, PaginatedUsers } from './types';
-import { QueryOptionsDto, CreateUserDto, UpdateUserDto } from './dto';
+import { UsersService } from './users.service';
+import type { User } from './types/user.type';
+import type { PaginatedUsers } from './types/paginated-users.type';
+import { QueryOptionsDto } from './dto/query-options.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { IsAuthenticated } from '@/common/guards/is-authenticated.guard';
 
 @Controller('users') // for URL: /api/users

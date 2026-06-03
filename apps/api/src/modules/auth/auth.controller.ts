@@ -1,8 +1,10 @@
 import { Controller, UseGuards, Get, Post, Body } from '@nestjs/common';
-import { AuthService } from './';
-import { AuthResponse, type AuthJwtPayload } from './types';
-import { SignupDto, LoginDto } from './dto';
-import { User } from '@/modules/users/types';
+import { AuthService } from './auth.service';
+import { AuthResponse } from './types/auth-response.type';
+import { type AuthJwtPayload } from './types/auth-jwt-payload.type';
+import { SignupDto } from './dto/signup.dto';
+import { LoginDto } from './dto/login.dto';
+import { User } from '@/modules/users/types/user.type';
 import { IsAuthenticated } from '@/common/guards/is-authenticated.guard';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 

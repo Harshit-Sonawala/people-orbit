@@ -7,10 +7,12 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
-import type { AuthResponse } from './types';
-import { SignupDto, LoginDto } from './dto';
-import { UsersRepository } from '@/modules/users';
-import { User, UserRole } from '@/modules/users/types';
+import type { AuthResponse } from './types/auth-response.type';
+import { SignupDto } from './dto/signup.dto';
+import { LoginDto } from './dto/login.dto';
+import { UsersRepository } from '@/modules/users/users.repository';
+import { User } from '@/modules/users/types/user.type';
+import { UserRole } from '@/modules/users/types/user-role.enum';
 
 @Injectable()
 export class AuthService {

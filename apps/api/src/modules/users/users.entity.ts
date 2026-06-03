@@ -1,5 +1,6 @@
 import { Entity, PrimaryColumn, Column, Index } from 'typeorm';
-import { type SocialLinks, UserRole } from './types';
+import { type SocialLinks } from './types/social-links.type';
+import { UserRole } from './types/user-role.enum';
 
 @Entity('users') // table name users
 export class UsersEntity {
