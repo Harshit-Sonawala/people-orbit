@@ -24,17 +24,18 @@ export class AuthSessionsRepository {
     return await this.repository.save(newAuthSessionsEntity);
   }
 
-  async deleteOne(id: string): Promise<AuthSessionsEntity | null> {
-    const foundSession = await this.findOne({ userId: id });
+  // delete one record by userId
+  async deleteOne(userId: string): Promise<AuthSessionsEntity | null> {
+    const foundSession = await this.findOne({ userId: userId });
     if (!foundSession) {
-      throw new NotFoundException(`Session with userId ${id} not found.`);
+      throw new NotFoundException(`Session with userId ${userId} not found.`);
     }
     await this.repository.delete(foundSession.id);
     return foundSession;
   }
 
-  async deleteAll(id: string): Promise<void> {
-    await this.repository.delete({ userId: id });
+  async deleteAll(userId: string): Promise<void> {
+    await this.repository.delete({ userId: userId });
   }
 
   // deleteExpired? delete all rows where the expiresAt column is expired

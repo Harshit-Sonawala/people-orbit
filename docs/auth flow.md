@@ -18,6 +18,7 @@
 - [ ] Rate limiting — blocking brute force attempts on /api/auth/login
 - [ ] Ban enforcement — isBanned on UsersEntity checks during login/token verification
 - [ ] More robust against crashes and connection losses with more try catch blocks
+- [ ] chore: change all expiresOn, createdOn, updatedOn with expiresAt/createdAt/updatedAt
 
 ```ts
 if (result.affected === 0) {

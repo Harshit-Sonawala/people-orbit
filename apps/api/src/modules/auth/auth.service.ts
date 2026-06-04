@@ -13,12 +13,15 @@ import { LoginDto } from './dto/login.dto';
 import { UsersRepository } from '@/modules/users/users.repository';
 import { User } from '@/modules/users/types/user.type';
 import { UserRole } from '@/modules/users/types/user-role.enum';
+import { AuthSession } from './types/auth-session.type';
+import { AuthSessionsRepository } from './auth-sessions.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersRepository: UsersRepository,
+    private readonly authSessionsRepository: AuthSessionsRepository,
   ) {}
 
   private generateAccessToken(user: User): string {
@@ -61,11 +64,19 @@ export class AuthService {
     };
     const createdUser = await this.usersRepository.createOrReplace(newUser);
 
-    // Generate JWT accessToken
-    const accessToken = this.generateAccessToken(createdUser);
-    // Generate refreshToken
-    const refreshToken = await this.generateRefreshToken();
-    // TODO: Save hash, userId, expiresAt into sessions table
+    const accessToken = this.generateAccessToken(createdUser); // Generate JWT accessToken
+    const refreshToken = await this.generateRefreshToken(); // Generate refreshToken
+
+    // Save id, hash, userId, expiresAt into sessions table
+    const newAuthSession: AuthSession = {
+      id: `session-${newDate}`,
+      userId: idSlug,
+      refreshTokenHash: refreshToken,
+      expiresAt: newDate + 7 * 24 * 60 * 60 * 1000,
+    };
+    const createdAuthSession =
+      await this.authSessionsRepository.create(newAuthSession);
+    console.log(`createdAuthSession: ${JSON.stringify(createdAuthSession)}`);
 
     return { id: createdUser.id, accessToken, refreshToken };
   }
@@ -84,25 +95,31 @@ export class AuthService {
       );
     }
 
-    // Add banned flag
     // Compare plaintext password with hash from table
     const isPassHashMatches = await bcrypt.compare(
       loginData.password,
       foundUser.password,
     );
     if (!isPassHashMatches) {
-      console.log(
-        `Incorrect password ${loginData.password} for user with email ${loginData.email}.`,
-      );
       throw new UnauthorizedException(
         `Provided user email or password is incorrect.`,
       );
     }
-    // Generate JWT accessToken
-    const accessToken = this.generateAccessToken(foundUser);
-    // Generate refreshToken
-    const refreshToken = await this.generateRefreshToken();
-    // TODO: Save hash, userId, expiresAt into sessions table
+    const accessToken = this.generateAccessToken(foundUser); // Generate JWT accessToken
+    const refreshToken = await this.generateRefreshToken(); // Generate refreshToken
+
+    // Save id, hash, userId, expiresAt into sessions table
+    const newDate: number = Date.now();
+    const newAuthSession: AuthSession = {
+      id: `session-${newDate}`,
+      userId: foundUser.id,
+      refreshTokenHash: refreshToken,
+      expiresAt: newDate + 7 * 24 * 60 * 60 * 1000,
+    };
+    const createdAuthSession =
+      await this.authSessionsRepository.create(newAuthSession);
+    console.log(`createdAuthSession: ${JSON.stringify(createdAuthSession)}`);
+
     // TODO: prevent already logged in mechanism / multiple logins policy
 
     return { id: foundUser.id, accessToken, refreshToken };
@@ -110,12 +127,10 @@ export class AuthService {
 
   // POST logout. Gets id from JWT payload
   async logout(id: string): Promise<{ message: string }> {
-    // TODO:
-    // find id in sessions table
-    // no match found > throw error
-    // match found: remove refreshToken row from sessions table where id matches
+    // remove refreshToken row from sessions table where id matches
+    const deletedAuthSession = await this.authSessionsRepository.deleteOne(id);
+    console.log(`deletedAuthSession: ${deletedAuthSession}`);
 
-    // console.log(`User with id ${id} logged out successfully.`);
     return { message: `User with id ${id} logged out successfully.` };
   }
 
