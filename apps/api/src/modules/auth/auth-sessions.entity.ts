@@ -6,6 +6,9 @@ export class AuthSessionsEntity {
   id: string;
 
   @Column({ type: 'varchar' })
+  userId: string;
+
+  @Column({ type: 'varchar' })
   refreshTokenHash: string;
 
   @Column({
@@ -15,5 +18,5 @@ export class AuthSessionsEntity {
       from: (value: string) => parseInt(value, 10),
     },
   })
-  expiry: number;
+  expiresAt: number;
 }

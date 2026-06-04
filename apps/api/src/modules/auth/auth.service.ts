@@ -67,7 +67,7 @@ export class AuthService {
     const refreshToken = await this.generateRefreshToken();
     // TODO: Save hash, userId, expiresAt into sessions table
 
-    return { userId: createdUser.id, accessToken, refreshToken };
+    return { id: createdUser.id, accessToken, refreshToken };
   }
 
   // POST login
@@ -105,7 +105,7 @@ export class AuthService {
     // TODO: Save hash, userId, expiresAt into sessions table
     // TODO: prevent already logged in mechanism / multiple logins policy
 
-    return { userId: foundUser.id, accessToken, refreshToken };
+    return { id: foundUser.id, accessToken, refreshToken };
   }
 
   // POST logout. Gets id from JWT payload

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ILike, FindOptionsWhere } from 'typeorm';
 import { UsersEntity } from './users.entity';
@@ -59,14 +59,14 @@ export class UsersRepository {
 
   async deleteOne(id: string): Promise<UsersEntity | null> {
     const user = await this.findOne({ id });
-    if (user) {
-      await this.repository.delete(id);
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} no found.`);
     }
+    await this.repository.delete(id);
     return user;
   }
 
   async seed() {
-    // const count = await this.repository.count();
     console.log('Seeding dummy data into Postgres...');
     await this.repository.save(dummyData);
     console.log(`Successfully seeded ${dummyData.length} users.`);
