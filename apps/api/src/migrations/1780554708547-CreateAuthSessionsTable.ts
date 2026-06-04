@@ -5,9 +5,9 @@ export class CreateAuthSessionsTable1780554708547 implements MigrationInterface 
     await queryRunner.query(`
       CREATE TABLE "auth_sessions" (
         "id" VARCHAR PRIMARY KEY,
-        "userId" VARCHAR NOT NULL,
+        "userId" VARCHAR NOT NULL REFERENCES users("id") ON DELETE CASCADE,
         "refreshTokenHash" VARCHAR NOT NULL,
-        "expiresAt" BIGINT NOT NULL,
+        "expiresAt" BIGINT NOT NULL
       ) 
     `);
   }

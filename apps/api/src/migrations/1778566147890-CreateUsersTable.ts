@@ -17,7 +17,7 @@ export class CreateUsersTable1778566147890 implements MigrationInterface {
         "profilePic" TEXT,
         "bgImage" TEXT,
         "createdAt" BIGINT NOT NULL,
-        "updatedAt" BIGINT NOT NULL,
+        "updatedAt" BIGINT NOT NULL
       )
     `);
   }
