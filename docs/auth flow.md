@@ -6,6 +6,7 @@
 - [x] Generating AccessTokens - JWT Signing, verification
 - [x] Setting Cookies in proxy.ts
 - [x] Refresh Token Generation - in auth.service.
+- [ ] AuthSessionsEntity, repository, migration for sessions table.
 - [ ] Save Sessions into sessions Table on login and delete on logouts.
 - [ ] Refresh token rotation - on every log in delete and resend new generated refreshToken
 - [ ] Token expiry - silent refresh & retry on a failed 401 response
@@ -16,6 +17,13 @@
 - [ ] Email verification — confirming a user owns email on signup
 - [ ] Rate limiting — blocking brute force attempts on /api/auth/login
 - [ ] Ban enforcement — isBanned on UsersEntity checks during login/token verification
+- [ ] More robust against crashes and connection losses with more try catch blocks
+
+```ts
+if (result.affected === 0) {
+  throw new NotFoundException(`Session with ID ${id} not found`);
+}
+```
 
 - [ ] Find out new package for handling auth with 3 criterias - core login/signup, Google etc signup, Magic Link signup, great documentation, great community support
 - [x] Incorrect credentials error message - global notification modal

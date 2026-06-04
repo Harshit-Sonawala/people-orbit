@@ -57,7 +57,7 @@ export class UsersRepository {
     return await this.findOne({ id });
   }
 
-  async delete(id: string): Promise<UsersEntity | null> {
+  async deleteOne(id: string): Promise<UsersEntity | null> {
     const user = await this.findOne({ id });
     if (user) {
       await this.repository.delete(id);
@@ -66,7 +66,7 @@ export class UsersRepository {
   }
 
   async seed() {
-    const count = await this.repository.count();
+    // const count = await this.repository.count();
     console.log('Seeding dummy data into Postgres...');
     await this.repository.save(dummyData);
     console.log(`Successfully seeded ${dummyData.length} users.`);
