@@ -450,7 +450,7 @@ export default function Profile() {
                     <div className="flex flex-row items-center gap-2">
                       <VerifiedRounded className="text-foreground-alt" />
                       <p>{`Member since ${new Date(
-                        data.createdOn,
+                        data.createdAt,
                       ).toLocaleDateString("en-US", {
                         day: "numeric",
                         month: "short",
@@ -461,7 +461,7 @@ export default function Profile() {
                     <div className="flex flex-row items-center gap-2">
                       <HistoryRounded className="text-foreground-alt" />
                       <p>{`Last updated on ${new Date(
-                        data.updatedOn,
+                        data.updatedAt,
                       ).toLocaleDateString("en-US", {
                         day: "numeric",
                         month: "short",

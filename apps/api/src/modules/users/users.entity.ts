@@ -60,7 +60,7 @@ export class UsersEntity {
       from: (value: string) => parseInt(value, 10),
     },
   })
-  createdOn: number;
+  createdAt: number;
 
   @Column({
     type: 'bigint',
@@ -69,7 +69,7 @@ export class UsersEntity {
       from: (value: string) => parseInt(value, 10),
     },
   })
-  updatedOn: number;
+  updatedAt: number;
 
   @Column({
     type: 'boolean',

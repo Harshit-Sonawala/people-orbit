@@ -15,7 +15,7 @@ export type User = {
   socialLinks?: SocialLinks;
   profilePic?: string;
   bgImage?: string;
-  createdOn: number;
-  updatedOn: number;
+  createdAt: number;
+  updatedAt: number;
   isBanned: boolean;
 };

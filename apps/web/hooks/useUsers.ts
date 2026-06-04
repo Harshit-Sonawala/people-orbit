@@ -11,7 +11,7 @@ export const useUsers = () => {
   const getAll = (
     page: number = 1,
     limit: number = 30,
-    sortBy: string = "createdOn",
+    sortBy: string = "createdAt",
     order: string = "desc",
   ) => {
     return useQuery({
@@ -61,7 +61,7 @@ export const useUsers = () => {
       mutationFn: async (
         createData: Omit<
           User,
-          "id" | "createdOn" | "updatedOn" | "role" | "isBanned"
+          "id" | "createdAt" | "updatedAt" | "role" | "isBanned"
         >,
       ): Promise<User> => {
         const { data } = await axios.post<User>(USERS_URL, createData);
@@ -89,7 +89,7 @@ export const useUsers = () => {
         replaceId: string;
         replaceData: Omit<
           User,
-          "id" | "createdOn" | "updatedOn" | "role" | "isBanned"
+          "id" | "createdAt" | "updatedAt" | "role" | "isBanned"
         >;
       }): Promise<User> => {
         const { data } = await axios.put<User>(
@@ -123,7 +123,7 @@ export const useUsers = () => {
         updateId: string;
         updateData: Omit<
           User,
-          "id" | "createdOn" | "updatedOn" | "role" | "isBanned"
+          "id" | "createdAt" | "updatedAt" | "role" | "isBanned"
         >;
       }): Promise<User> => {
         // const res = await fetch(`${USERS_URL}/${updateId}`, {

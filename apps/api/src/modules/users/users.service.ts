@@ -27,8 +27,8 @@ export class UsersService {
     } = pageData;
 
     const sortFieldMap: Record<SortBy, string> = {
-      [SortBy.CREATED]: 'createdOn',
-      [SortBy.UPDATED]: 'updatedOn',
+      [SortBy.CREATED]: 'createdAt',
+      [SortBy.UPDATED]: 'updatedAt',
       [SortBy.FIRST_NAME]: 'firstName',
       [SortBy.LAST_NAME]: 'lastName',
     };
@@ -85,8 +85,8 @@ export class UsersService {
       id: idSlug,
       password: hashedPassword,
       role: UserRole.USER,
-      createdOn: newDate,
-      updatedOn: newDate,
+      createdAt: newDate,
+      updatedAt: newDate,
       isBanned: false,
     };
     return await this.usersRepository.createOrReplace(newUser);
@@ -104,8 +104,8 @@ export class UsersService {
         id: existingUser?.id,
         password: 'PLACEHOLDER_PASS_HASH',
         role: existingUser?.role || UserRole.USER,
-        createdOn: existingUser?.createdOn || newDate,
-        updatedOn: newDate,
+        createdAt: existingUser?.createdAt || newDate,
+        updatedAt: newDate,
         isBanned: existingUser?.isBanned || false,
       };
       return await this.usersRepository.createOrReplace(newUser);
@@ -125,7 +125,7 @@ export class UsersService {
     const partialUpdatedUser: Partial<User> = {
       // building a partial user payload
       ...updateData,
-      updatedOn: newDate,
+      updatedAt: newDate,
     };
     return await this.usersRepository.update(updateId, partialUpdatedUser);
   }

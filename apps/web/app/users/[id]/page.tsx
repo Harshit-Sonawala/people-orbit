@@ -167,7 +167,7 @@ export default async function UserDetails({
 
               <div className="flex flex-row items-center gap-2">
                 <VerifiedRounded className="text-foreground-alt" />
-                <p>{`Member since ${new Date(user.createdOn).toLocaleDateString(
+                <p>{`Member since ${new Date(user.createdAt).toLocaleDateString(
                   "en-US",
                   {
                     day: "numeric",
@@ -180,7 +180,7 @@ export default async function UserDetails({
               <div className="flex flex-row items-center gap-2">
                 <HistoryRounded className="text-foreground-alt" />
                 <p>{`Last updated on ${new Date(
-                  user.updatedOn,
+                  user.updatedAt,
                 ).toLocaleDateString("en-US", {
                   day: "numeric",
                   month: "short",

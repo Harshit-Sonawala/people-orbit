@@ -18,7 +18,7 @@
 - [ ] Rate limiting — blocking brute force attempts on /api/auth/login
 - [ ] Ban enforcement — isBanned on UsersEntity checks during login/token verification
 - [ ] More robust against crashes and connection losses with more try catch blocks
-- [ ] chore: change all expiresOn, createdOn, updatedOn with expiresAt/createdAt/updatedAt
+- [ ] chore: change all expiresOn, createdAt, updatedAt with expiresAt/createdAt/updatedAt
 
 ```ts
 if (result.affected === 0) {
@@ -70,7 +70,7 @@ if (result.affected === 0) {
   - [ ] /auth/signup
     - [x] NestJS signup DTO
     - [x] hash password with bcrypt
-    - [x] Save user to table with idSlug, hashedPassword, createdOn, updatedOn.
+    - [x] Save user to table with idSlug, hashedPassword, createdAt, updatedAt.
     - [x] Generate JWT accessToken
     - [x] Generate Refresh Token
     - [ ] Store refresh token in sessions table

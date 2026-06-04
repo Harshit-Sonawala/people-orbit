@@ -58,8 +58,8 @@ export class AuthService {
       id: idSlug,
       password: hashedPassword,
       role: UserRole.USER,
-      createdOn: newDate,
-      updatedOn: newDate,
+      createdAt: newDate,
+      updatedAt: newDate,
       isBanned: false,
     };
     const createdUser = await this.usersRepository.createOrReplace(newUser);

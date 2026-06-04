@@ -1,26 +1,23 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class CreateUsersTable1778566147890 implements MigrationInterface {
-
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       CREATE TABLE "users" (
-        "id" varchar NOT NULL,
-        "firstName" varchar(30) NOT NULL,
-        "lastName" varchar(30) NOT NULL,
-        "age" smallint,
-        "designation" varchar(40) NOT NULL,
-        "email" varchar(100) NOT NULL,
-        "phone" varchar(20) NOT NULL,
-        "bio" varchar(140),
-        "skills" text array,
-        "socialLinks" jsonb,
-        "profilePic" text,
-        "bgImage" text,
-        "createdOn" timestamptz NOT NULL,
-        "updatedOn" timestamptz NOT NULL,
-        CONSTRAINT "PK_users_id" PRIMARY KEY ("id"),
-        CONSTRAINT "UQ_users_email" UNIQUE ("email")
+        "id" VARCHAR NOT NULL PRIMARY KEY,
+        "firstName" VARCHAR(30) NOT NULL,
+        "lastName" VARCHAR(30) NOT NULL,
+        "age" SMALLINT,
+        "designation" VARCHAR(40) NOT NULL,
+        "email" VARCHAR(100) NOT NULL UNIQUE,
+        "phone" VARCHAR(20) NOT NULL,
+        "bio" VARCHAR(140),
+        "skills" TEXT ARRAY,
+        "socialLinks" JSONB,
+        "profilePic" TEXT,
+        "bgImage" TEXT,
+        "createdAt" BIGINT NOT NULL,
+        "updatedAt" BIGINT NOT NULL,
       )
     `);
   }
@@ -28,5 +25,4 @@ export class CreateUsersTable1778566147890 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`DROP TABLE "users"`);
   }
-
 }

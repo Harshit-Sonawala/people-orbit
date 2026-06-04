@@ -33,8 +33,8 @@ export default function Demo() {
       linkedIn: "https://linkedin.com/in/arjunmehta",
       github: "https://github.com/arjunm",
     },
-    createdOn: Date.parse("2025-08-14T09:30:00.000Z"),
-    updatedOn: Date.parse("2025-08-14T09:30:00.000Z"),
+    createdAt: Date.parse("2025-08-14T09:30:00.000Z"),
+    updatedAt: Date.parse("2025-08-14T09:30:00.000Z"),
     role: UserRole.USER,
     isBanned: false,
   };

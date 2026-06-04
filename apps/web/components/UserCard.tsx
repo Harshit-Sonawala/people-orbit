@@ -82,7 +82,7 @@ export const UserCard = ({ User, className }: Props) => {
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
           <p className="text-xs text-foreground-alt truncate">
             Member since{" "}
-            {new Date(User.createdOn).toLocaleDateString("en-US", {
+            {new Date(User.createdAt).toLocaleDateString("en-US", {
               day: "numeric",
               month: "short",
               year: "numeric",

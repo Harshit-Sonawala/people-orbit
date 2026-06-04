@@ -22,8 +22,8 @@ import {
 import { RootState } from "@/store";
 
 const sortMap = new Map<string, DropDownOption>([
-  ["createdOn", { label: "Date Created", icon: <HistoryRounded /> }],
-  ["updatedOn", { label: "Date Updated", icon: <HistoryRounded /> }],
+  ["createdAt", { label: "Date Created", icon: <HistoryRounded /> }],
+  ["updatedAt", { label: "Date Updated", icon: <HistoryRounded /> }],
   ["firstName", { label: "First Name", icon: <SortByAlphaRounded /> }],
   ["lastName", { label: "Last Name", icon: <SortByAlphaRounded /> }],
 ]);
@@ -36,7 +36,7 @@ export default function Home() {
 
   const page = Number(searchParams.get("page")) || 1;
   const limit = 28;
-  const sortBy = searchParams.get("sortBy") || "createdOn";
+  const sortBy = searchParams.get("sortBy") || "createdAt";
   const order = searchParams.get("order") || "desc";
 
   const { getAll } = useUsers();

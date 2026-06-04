@@ -24,8 +24,8 @@ export const useAuth = () => {
           | "socialLinks"
           | "profilePic"
           | "bgImage"
-          | "createdOn"
-          | "updatedOn"
+          | "createdAt"
+          | "updatedAt"
           | "isBanned"
         >,
       ): Promise<AuthResponse> => {
