@@ -34,6 +34,7 @@ export class AuthSessionsRepository {
     return foundSession;
   }
 
+  // delete all records with matching userId from auth_sessions table
   async deleteAll(userId: string): Promise<void> {
     await this.repository.delete({ userId: userId });
   }

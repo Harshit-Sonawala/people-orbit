@@ -6,8 +6,8 @@
 - [x] Generating AccessTokens - JWT Signing, verification
 - [x] Setting Cookies in proxy.ts
 - [x] Refresh Token Generation - in auth.service.
-- [ ] AuthSessionsEntity, repository, migration for sessions table.
-- [ ] Save Sessions into sessions Table on login and delete on logouts.
+- [x] AuthSessionsEntity, repository, migration for auth_sessions table.
+- [x] Save Sessions into sessions Table on login/signup and delete on logouts.
 - [ ] Refresh token rotation - on every log in delete and resend new generated refreshToken
 - [ ] Token expiry - silent refresh & retry on a failed 401 response
 - [ ] Password reset case
@@ -18,7 +18,7 @@
 - [ ] Rate limiting — blocking brute force attempts on /api/auth/login
 - [ ] Ban enforcement — isBanned on UsersEntity checks during login/token verification
 - [ ] More robust against crashes and connection losses with more try catch blocks
-- [ ] chore: change all expiresOn, createdAt, updatedAt with expiresAt/createdAt/updatedAt
+- [ ] chore: change all expiresOn, createdAt(done maybe), updatedAt(done maybe) with expiresAt/createdAt/updatedAt
 
 ```ts
 if (result.affected === 0) {
