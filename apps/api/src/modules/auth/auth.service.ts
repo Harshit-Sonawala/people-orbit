@@ -32,10 +32,13 @@ export class AuthService {
     return accessToken;
   }
 
-  private async generateRefreshToken(): Promise<string> {
+  private async generateRefreshToken(): Promise<{
+    refreshToken: string;
+    hashedRefreshToken: string;
+  }> {
     const refreshToken = crypto.randomBytes(32).toString('hex');
     const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
-    return hashedRefreshToken;
+    return { refreshToken, hashedRefreshToken };
   }
 
   // POST signup
@@ -65,13 +68,14 @@ export class AuthService {
     const createdUser = await this.usersRepository.createOrReplace(newUser);
 
     const accessToken = this.generateAccessToken(createdUser); // Generate JWT accessToken
-    const refreshToken = await this.generateRefreshToken(); // Generate refreshToken
+    const { refreshToken, hashedRefreshToken } =
+      await this.generateRefreshToken(); // Generate refreshToken
 
     // Save id, hash, userId, expiresAt into sessions table
     const newAuthSession: AuthSession = {
       id: `session-${newDate}`,
       userId: idSlug,
-      refreshTokenHash: refreshToken,
+      refreshTokenHash: hashedRefreshToken,
       expiresAt: newDate + 7 * 24 * 60 * 60 * 1000,
     };
     const createdAuthSession =
@@ -106,14 +110,15 @@ export class AuthService {
       );
     }
     const accessToken = this.generateAccessToken(foundUser); // Generate JWT accessToken
-    const refreshToken = await this.generateRefreshToken(); // Generate refreshToken
+    const { refreshToken, hashedRefreshToken } =
+      await this.generateRefreshToken(); // Generate refreshToken
 
     // Save id, hash, userId, expiresAt into sessions table
     const newDate: number = Date.now();
     const newAuthSession: AuthSession = {
       id: `session-${newDate}`,
       userId: foundUser.id,
-      refreshTokenHash: refreshToken,
+      refreshTokenHash: hashedRefreshToken,
       expiresAt: newDate + 7 * 24 * 60 * 60 * 1000,
     };
     const createdAuthSession =

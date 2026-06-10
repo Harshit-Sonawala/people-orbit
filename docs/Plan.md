@@ -3,11 +3,25 @@
 ## General Auth TODO:
 
 - [x] Password hashing with bcrypt
-- [x] Generating AccessTokens - JWT Signing, verification
+- [x] Generating AccessTokens - JWT Signing, verification, generating refreshTokens.
 - [x] Setting Cookies in proxy.ts
 - [x] Refresh Token Generation - in auth.service.
 - [x] AuthSessionsEntity, repository, migration for auth_sessions table.
 - [x] Save Sessions into sessions Table on login/signup and delete on logouts.
+      Currently here:
+  1.  Implement /auth/refresh
+      This route is completely missing. Per your plan:
+  - Controller: @Post('refresh'), decorated @Public(), reads the refresh token from the cookie
+  - Service: find the session by userId, compare the plain token against the stored hash with bcrypt.compare, generate a new
+    access token (and rotate the refresh token), return the new accessToken
+  2. Refresh token rotation
+     This is the next unchecked item in Plan.md (line 11). On every /auth/refresh call: delete the old session row, generate a
+     new refresh token, save the new hash, set the new cookie.
+
+  3. /auth/logout cookie clearing
+     The current logout deletes the DB row but doesn't clear the refreshToken cookie from the response. The controller needs
+     @Res({ passthrough: true }) and a res.clearCookie(...) call.
+
 - [ ] Refresh token rotation - on every log in delete and resend new generated refreshToken
 - [ ] Token expiry - silent refresh & retry on a failed 401 response
 - [ ] Password reset case
