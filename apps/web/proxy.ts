@@ -44,6 +44,14 @@ export default async function proxy(
       }
     }
 
+    // For routes that need it, add the cookie to the request body
+    if (protectedRoutes.includes(pathname)) {
+      const refreshToken = request.cookies.get("refreshToken")?.value;
+      if (refreshToken) {
+        body = { ...body, refreshToken };
+      }
+    }
+
     const apiResponse = await axios({
       url: targetUrl,
       method: request.method,

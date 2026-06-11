@@ -26,8 +26,9 @@ export class AuthController {
   @UseGuards(IsAuthenticated)
   async logout(
     @CurrentUser() user: AuthJwtPayload,
+    @Body('refreshToken') refreshToken: string,
   ): Promise<{ message: string }> {
-    return this.authService.logout(user.sub); // Get user id from JWT
+    return this.authService.logout(user.sub, refreshToken); // Get user id from JWT
   }
 
   @Get('me')

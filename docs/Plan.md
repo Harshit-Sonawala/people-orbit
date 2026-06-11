@@ -22,7 +22,7 @@
      The current logout deletes the DB row but doesn't clear the refreshToken cookie from the response. The controller needs
      @Res({ passthrough: true }) and a res.clearCookie(...) call.
 
-- [ ] Refresh token rotation - on every log in delete and resend new generated refreshToken
+- [ ] Refresh Token Rotation
 - [ ] Token expiry - silent refresh & retry on a failed 401 response
 - [ ] Password reset case
 - [ ] Log me out of all devices case
