@@ -23,6 +23,8 @@ export default async function proxy(
   const targetUrl = `${BACKEND_URL}${pathname}${search}`;
 
   try {
+    // REQUEST SIDE
+
     const headers = new Headers(request.headers);
     headers.delete("host"); // Remove host header so Axios will correctly & automatically set it
 
@@ -52,6 +54,15 @@ export default async function proxy(
       }
     }
 
+    // For refresh route add both tokens from cookies into request body
+    if (pathname === "/api/auth/refresh") {
+      const accessToken = request.cookies.get("accessToken")?.value;
+      const refreshToken = request.cookies.get("refreshToken")?.value;
+      if (accessToken) body = { ...body, accessToken };
+      if (refreshToken) body = { ...body, refreshToken };
+    }
+
+    // RESPONSE SIDE
     const apiResponse = await axios({
       url: targetUrl,
       method: request.method,
@@ -62,13 +73,14 @@ export default async function proxy(
 
     const isAuthRoute =
       pathname === "/api/auth/signup" || pathname === "/api/auth/login";
+    const isRefreshRoute = pathname === "/api/auth/refresh";
     const isResponseSuccess =
       apiResponse.status >= 200 && apiResponse.status < 300;
 
     // Handle both auth and non auth routes response data
     // Only get accessToken, refreshToken if it was an auth route and received apiResponse.data, else simply data, tokens are undefined
     const { accessToken, refreshToken, ...responseBody } =
-      isAuthRoute && apiResponse.data
+      (isAuthRoute || isRefreshRoute) && apiResponse.data
         ? apiResponse.data
         : {
             accessToken: undefined,
@@ -97,7 +109,7 @@ export default async function proxy(
     });
 
     // if a Signup or login request, successful and received data, set the tokens in the cookies
-    if (isAuthRoute && isResponseSuccess) {
+    if ((isAuthRoute || isRefreshRoute) && isResponseSuccess) {
       if (accessToken) {
         response.cookies.set("accessToken", accessToken, {
           httpOnly: true, // block document.cookie reads and XSS attacks

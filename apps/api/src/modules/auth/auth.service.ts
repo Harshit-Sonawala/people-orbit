@@ -155,6 +155,9 @@ export class AuthService {
     userId: string,
     refreshToken: string,
   ): Promise<{ message: string }> {
+    if (!refreshToken) {
+      throw new UnauthorizedException('Refresh token not found.');
+    }
     const matchedSession = await this.findMatchingSession(userId, refreshToken);
 
     await this.authSessionsRepository.deleteOne(matchedSession.id);
