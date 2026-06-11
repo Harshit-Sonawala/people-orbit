@@ -36,4 +36,12 @@ export class AuthController {
   async getMe(@CurrentUser() user: AuthJwtPayload): Promise<User> {
     return this.authService.getMe(user.sub);
   }
+
+  @Post('refresh')
+  async refresh(
+    @Body('accessToken') accessToken: string,
+    @Body('refreshToken') refreshToken: string,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    return this.authService.refresh(accessToken, refreshToken);
+  }
 }
