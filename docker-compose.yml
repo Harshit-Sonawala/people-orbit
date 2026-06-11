@@ -6,9 +6,7 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - /app/node_modules
       - /app/apps/api/node_modules
-      - /app/apps/web/node_modules
     develop:
       watch:
         - action: sync
@@ -17,15 +15,13 @@ services:
           ignore:
             - node_modules/
         - action: rebuild
-          path: package.json
-        - action: rebuild
           path: apps/api/package.json
     env_file:
       - apps/api/.env
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
-    command: npm run dev:api
+    command: npm run start:dev
     depends_on:
       db:
         condition: service_healthy
@@ -37,8 +33,6 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /app/node_modules
-      - /app/apps/api/node_modules
       - /app/apps/web/node_modules
     develop:
       watch:
@@ -48,8 +42,6 @@ services:
           ignore:
             - node_modules/
         - action: rebuild
-          path: package.json
-        - action: rebuild
           path: apps/web/package.json
     env_file:
       - apps/web/.env
@@ -57,7 +49,7 @@ services:
       - INTERNAL_USERS_URL=http://api:4000/api/users
       - INTERNAL_BACKEND_URL=http://api:4000
       - WATCHPACK_POLLING=true
-    command: npm run dev:web
+    command: npm run dev
     depends_on:
       - api
 

@@ -1,12 +1,11 @@
 FROM node:24-alpine
-WORKDIR /app
+WORKDIR /app/apps/api
 
-COPY package.json package-lock.json ./
-COPY apps/api/package.json ./apps/api/
+COPY apps/api/package.json apps/api/package-lock.json ./
 
 RUN npm install
 
-COPY . .
+COPY apps/api/ .
 
 EXPOSE 4000
-CMD ["npm", "run", "dev:api"]
+CMD ["npm", "run", "start:dev"]
