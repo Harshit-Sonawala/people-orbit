@@ -13,7 +13,6 @@ import { LoginDto } from './dto/login.dto';
 import { UsersRepository } from '@/modules/users/users.repository';
 import { User } from '@/modules/users/types/user.type';
 import { UserRole } from '@/modules/users/types/user-role.enum';
-import { AuthSession } from './types/auth-session.type';
 import { AuthSessionsRepository } from './auth-sessions.repository';
 import { AuthSessionsEntity } from './auth-sessions.entity';
 
@@ -40,6 +39,45 @@ export class AuthService {
     const refreshToken = crypto.randomBytes(32).toString('hex');
     const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
     return { refreshToken, hashedRefreshToken };
+  }
+
+  // Create a new row in auth_sessions
+  private async createSession(
+    userId: string,
+    hashedRefreshToken: string,
+  ): Promise<void> {
+    const newDate = Date.now();
+    await this.authSessionsRepository.create({
+      id: `session-${newDate}`,
+      userId,
+      refreshTokenHash: hashedRefreshToken,
+      expiresAt: newDate + 7 * 24 * 60 * 60 * 1000,
+    });
+  }
+
+  // Find matching session in auth_sessions for specific userId + refreshToken
+  private async findMatchingSession(
+    userId: string,
+    refreshToken: string,
+  ): Promise<AuthSessionsEntity> {
+    // find all sessions for userId
+    const sessions = await this.authSessionsRepository.findAllByUserId(userId);
+    // find which of those sessions matches the current refreshToken by hashing it again
+    let matchedSession: AuthSessionsEntity | null = null;
+    for (const session of sessions) {
+      const isMatch = await bcrypt.compare(
+        refreshToken,
+        session.refreshTokenHash,
+      );
+      if (isMatch) {
+        matchedSession = session;
+        break;
+      }
+    }
+    if (!matchedSession) {
+      throw new UnauthorizedException('Invalid refresh token.');
+    }
+    return matchedSession;
   }
 
   // POST signup
@@ -73,15 +111,7 @@ export class AuthService {
       await this.generateRefreshToken(); // Generate refreshToken
 
     // Save id, hash, userId, expiresAt into sessions table
-    const newAuthSession: AuthSession = {
-      id: `session-${newDate}`,
-      userId: idSlug,
-      refreshTokenHash: hashedRefreshToken,
-      expiresAt: newDate + 7 * 24 * 60 * 60 * 1000,
-    };
-    const createdAuthSession =
-      await this.authSessionsRepository.create(newAuthSession);
-    console.log(`createdAuthSession: ${JSON.stringify(createdAuthSession)}`);
+    await this.createSession(idSlug, hashedRefreshToken);
 
     return { id: createdUser.id, accessToken, refreshToken };
   }
@@ -115,18 +145,7 @@ export class AuthService {
       await this.generateRefreshToken(); // Generate refreshToken
 
     // Save id, hash, userId, expiresAt into sessions table
-    const newDate: number = Date.now();
-    const newAuthSession: AuthSession = {
-      id: `session-${newDate}`,
-      userId: foundUser.id,
-      refreshTokenHash: hashedRefreshToken,
-      expiresAt: newDate + 7 * 24 * 60 * 60 * 1000,
-    };
-    const createdAuthSession =
-      await this.authSessionsRepository.create(newAuthSession);
-    console.log(`createdAuthSession: ${JSON.stringify(createdAuthSession)}`);
-
-    // TODO: prevent already logged in mechanism / multiple logins policy
+    await this.createSession(foundUser.id, hashedRefreshToken);
 
     return { id: foundUser.id, accessToken, refreshToken };
   }
@@ -136,25 +155,8 @@ export class AuthService {
     userId: string,
     refreshToken: string,
   ): Promise<{ message: string }> {
-    // find all sessions for userId
-    const sessions = await this.authSessionsRepository.findAllByUserId(userId);
+    const matchedSession = await this.findMatchingSession(userId, refreshToken);
 
-    // find which of those sessions matches the current refreshToken by hashing it again
-    let matchedSession: AuthSessionsEntity | null = null;
-    for (const session of sessions) {
-      const isMatch = await bcrypt.compare(
-        refreshToken,
-        session.refreshTokenHash,
-      );
-      if (isMatch) {
-        matchedSession = session;
-        break;
-      }
-    }
-
-    if (!matchedSession) {
-      throw new UnauthorizedException('No matching session found.');
-    }
     await this.authSessionsRepository.deleteOne(matchedSession.id);
 
     return {
@@ -169,5 +171,51 @@ export class AuthService {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
     return foundUser;
+  }
+
+  // Refresh token
+  async refresh(
+    expiredAccessToken: string,
+    refreshToken: string,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    if (!expiredAccessToken || !refreshToken) {
+      throw new UnauthorizedException('Missing Access Token or Refresh Token.');
+    }
+
+    // Decode to get userId
+    const payload = this.jwtService.decode(expiredAccessToken) as {
+      sub: string;
+    } | null;
+    if (!payload?.sub) {
+      throw new UnauthorizedException('Invalid Access token.');
+    }
+    const userId = payload.sub;
+
+    const matchedSession = await this.findMatchingSession(userId, refreshToken);
+
+    // 7 Day Expiry Passed, Delete row from auth_sessions DB and prompt a login
+    if (matchedSession.expiresAt < Date.now()) {
+      await this.authSessionsRepository.deleteOne(matchedSession.id);
+      throw new UnauthorizedException('Session expired. Please log in again.');
+    }
+
+    // Prevent generating token for a non-existent user
+    const user = await this.usersRepository.findOne({ id: userId });
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    // Rotate: delete old session and create new session
+    await this.authSessionsRepository.deleteOne(matchedSession.id);
+
+    const newAccessToken = this.generateAccessToken(user);
+    const {
+      refreshToken: newRefreshToken,
+      hashedRefreshToken: newHashedRefreshToken,
+    } = await this.generateRefreshToken();
+
+    await this.createSession(userId, newHashedRefreshToken);
+
+    return { accessToken: newAccessToken, refreshToken: newRefreshToken };
   }
 }
