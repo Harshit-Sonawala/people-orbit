@@ -11,7 +11,7 @@ import {
   EmailRounded,
   PhoneRounded,
 } from "@mui/icons-material";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/twMerge";
 
 type Props = {
   User: User;

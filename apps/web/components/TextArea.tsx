@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/twMerge";
 
 type Props = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   variant?: "filled" | "outlined" | "rounded" | "outlined-primary";

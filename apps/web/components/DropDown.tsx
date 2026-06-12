@@ -2,7 +2,7 @@
 import React, { useState, type ReactNode } from "react";
 import { Button } from "@/components";
 import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/twMerge";
 
 export type DropDownOption = {
   label: string;

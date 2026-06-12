@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/twMerge";
 
 type Props = {
   variant?: "surface" | "surface-top" | "primary" | "secondary";
@@ -16,7 +16,11 @@ const variantClasses: { [key: string]: string } = {
 export const Divider = ({ variant = "surface", className }: Props) => {
   return (
     <div
-      className={cn("w-full px-8 border-b-2", variantClasses[variant], className)}
+      className={cn(
+        "w-full px-8 border-b-2",
+        variantClasses[variant],
+        className,
+      )}
     />
   );
 };

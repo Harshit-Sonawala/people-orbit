@@ -11,7 +11,7 @@ import {
   bioValidation,
   urlValidation,
 } from "./formValidations";
-import { getFormError } from "@/lib/utils";
+import { getFormError } from "@/lib/getFormError";
 import * as Yup from "yup";
 
 import {

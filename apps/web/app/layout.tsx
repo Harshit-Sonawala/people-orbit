@@ -3,7 +3,7 @@ import "./globals.css";
 import Providers from "./providers";
 import { Header, Footer } from "@/components";
 import { cookies } from "next/headers";
-import { getMeServer } from "@/lib/utils";
+import { getMeServer } from "@/lib/getMeServer";
 import { Notification } from "@/components";
 
 export const metadata: Metadata = {
