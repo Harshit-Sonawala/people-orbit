@@ -18,6 +18,10 @@ export default async function proxy(
     );
   }
   const targetUrl = `${BACKEND_URL}${pathname}${search}`;
+  const isLoginOrSignup =
+    pathname === "/api/auth/signup" || pathname === "/api/auth/login";
+  const isRefresh = pathname === "/api/auth/refresh";
+  const isLogout = pathname === "/api/auth/logout";
 
   try {
     // REQUEST SIDE
@@ -67,16 +71,95 @@ export default async function proxy(
       validateStatus: () => true, // pass through all status codes like 4xx, 5xx
     });
 
-    const isAuthRoute =
-      pathname === "/api/auth/signup" || pathname === "/api/auth/login";
-    const isRefreshRoute = pathname === "/api/auth/refresh";
+    // Refresh Interceptor
+    // 401 on a non-auth route
+    if (
+      apiResponse.status === 401 &&
+      !isLoginOrSignup &&
+      !isRefresh &&
+      !isLogout
+    ) {
+      const oldRefreshToken = request.cookies.get("refreshToken")?.value;
+      const oldAccessToken = request.cookies.get("accessToken")?.value;
+
+      if (oldRefreshToken) {
+        const refreshResponse = await axios({
+          url: `${BACKEND_URL}/api/auth/refresh`,
+          method: "POST",
+          data: { accessToken: oldAccessToken, refreshToken: oldRefreshToken },
+          validateStatus: () => true, // pass through all status codes like 4xx, 5xx
+        });
+
+        if (refreshResponse.status >= 200 && refreshResponse.status < 300) {
+          const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+            refreshResponse.data;
+
+          // Retry original request with the newAccessToken
+          const retryHeaders = Object.fromEntries(headers.entries());
+          if (newAccessToken)
+            retryHeaders["Authorization"] = `Bearer ${newAccessToken}`;
+
+          const retryResponse = await axios({
+            url: targetUrl,
+            method: request.method,
+            headers: retryHeaders,
+            data: body,
+            validateStatus: () => true,
+          });
+
+          const retryNextResponse = new NextResponse(
+            JSON.stringify(retryResponse.data),
+            {
+              status: retryResponse.status,
+              headers: {
+                "Content-Type": String(
+                  retryResponse.headers["content-type"] ?? "application/json",
+                ),
+              },
+            },
+          );
+
+          if (newAccessToken) {
+            retryNextResponse.cookies.set("accessToken", newAccessToken, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === "production",
+              sameSite: "strict",
+              path: "/",
+              maxAge: 30 * 60,
+            });
+          }
+
+          if (newRefreshToken) {
+            retryNextResponse.cookies.set("refreshToken", newRefreshToken, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === "production",
+              sameSite: "strict",
+              path: "/",
+              maxAge: 7 * 24 * 60 * 60,
+            });
+          }
+
+          return retryNextResponse;
+        } else {
+          // Refresh failed - clear cookies and return a 401 so FE can logout
+          const expiredResponse = NextResponse.json(
+            { message: "Session expired" },
+            { status: 401 },
+          );
+          expiredResponse.cookies.delete("accessToken");
+          expiredResponse.cookies.delete("refreshToken");
+          return expiredResponse;
+        }
+      }
+    }
+
     const isResponseSuccess =
       apiResponse.status >= 200 && apiResponse.status < 300;
 
     // Handle both auth and non auth routes response data
     // Only get accessToken, refreshToken if it was an auth route and received apiResponse.data, else simply data, tokens are undefined
     const { accessToken, refreshToken, ...responseBody } =
-      (isAuthRoute || isRefreshRoute) && apiResponse.data
+      (isLoginOrSignup || isRefresh) && apiResponse.data
         ? apiResponse.data
         : {
             accessToken: undefined,
@@ -85,7 +168,7 @@ export default async function proxy(
           };
 
     // Immediately fetch the user details here and attach it to the response for usage in useAuth onSuccess
-    if (isAuthRoute && isResponseSuccess && accessToken) {
+    if (isLoginOrSignup && isResponseSuccess && accessToken) {
       try {
         const user = await getMeServer(accessToken);
         if (user) responseBody.user = user;
@@ -105,7 +188,7 @@ export default async function proxy(
     });
 
     // if a Signup or login request, successful and received data, set the tokens in the cookies
-    if ((isAuthRoute || isRefreshRoute) && isResponseSuccess) {
+    if ((isLoginOrSignup || isRefresh) && isResponseSuccess) {
       if (accessToken) {
         response.cookies.set("accessToken", accessToken, {
           httpOnly: true, // block document.cookie reads and XSS attacks
