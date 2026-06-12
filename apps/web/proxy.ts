@@ -27,6 +27,7 @@ export default async function proxy(
     // REQUEST SIDE
     const headers = new Headers(request.headers);
     headers.delete("host"); // Remove host header so Axios will correctly & automatically set it
+    headers.delete("content-length"); // Remove so Axios recalculates after body modification
 
     // Always send the accessToken with every request:
     const accessToken = request.cookies.get("accessToken")?.value;
