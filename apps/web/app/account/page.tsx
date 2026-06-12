@@ -14,7 +14,6 @@ export default function Account() {
 
   const handleLogout = async () => {
     await logout();
-    // window.location.href = "/"; // push to / with a page refresh
     router.push("/");
     router.refresh();
   };

@@ -13,6 +13,7 @@ import {
   urlValidation,
 } from "./formValidations";
 import * as Yup from "yup";
+import { getFormError } from "@/lib/utils";
 
 import {
   Heading,
@@ -99,9 +100,6 @@ export const ReplaceUserForm = () => {
         { replaceId: formattedData.id, replaceData: formattedData },
         {
           onSuccess: () => {
-            // console.log(
-            //   `Data for ID: ${formattedData.id}, ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
-            // );
             resetForm();
           },
         },

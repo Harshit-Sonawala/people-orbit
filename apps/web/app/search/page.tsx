@@ -1,12 +1,7 @@
 "use client";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useUsers } from "@/hooks";
-import {
-  Heading,
-  Button,
-  Divider,
-  SearchResultCard,
-} from "@/components";
+import { Heading, Button, Divider, SearchResultCard } from "@/components";
 import { ArrowBackRounded, ArrowForwardRounded } from "@mui/icons-material";
 
 export default function Search() {
@@ -16,7 +11,6 @@ export default function Search() {
 
   const query = searchParams.get("q") || "";
   const page = Number(searchParams.get("page")) || 1;
-  // const [page, setPage] = useState(1);
   const limit = 30;
 
   const updateQuery = (updates: Record<string, string | number>) => {
@@ -72,7 +66,6 @@ export default function Search() {
                 onClick={() => {
                   if (page > 1) {
                     updateQuery({ page: page - 1 });
-                    // setPage((oldPage) => Math.max(oldPage - 1, 1));
                   }
                 }}
               >
@@ -100,7 +93,6 @@ export default function Search() {
                       onClick={() => {
                         if (eachPage !== page) {
                           updateQuery({ page: eachPage });
-                          // setPage(eachPage);
                         }
                       }}
                     >
@@ -115,9 +107,6 @@ export default function Search() {
                 onClick={() => {
                   if (page < data.meta.totalPages) {
                     updateQuery({ page: page + 1 });
-                    // setPage((oldPage) =>
-                    //   Math.min(data.meta.totalPages, oldPage + 1),
-                    // );
                   }
                 }}
               >

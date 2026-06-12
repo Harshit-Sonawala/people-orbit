@@ -1,7 +1,6 @@
 "use client";
 import { User } from "@/types";
 import { useUsers } from "@/hooks";
-// import { useSelector } from "react-redux";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import {
   Heading,
@@ -19,7 +18,6 @@ import {
   HistoryRounded,
   SortByAlphaRounded,
 } from "@mui/icons-material";
-import { RootState } from "@/store";
 
 const sortMap = new Map<string, DropDownOption>([
   ["createdAt", { label: "Date Created", icon: <HistoryRounded /> }],
@@ -32,7 +30,6 @@ export default function Home() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  // const { user } = useSelector((state: RootState) => state.auth);
 
   const page = Number(searchParams.get("page")) || 1;
   const limit = 28;

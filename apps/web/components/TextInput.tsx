@@ -37,7 +37,6 @@ export const TextInput = ({
     borderClasses = "border border-error";
   }
 
-  // ${!error ? `mb-5` : ``} // prevent misalignment on !error
   return (
     <div className="flex flex-col">
       <input

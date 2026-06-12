@@ -10,6 +10,7 @@ export const Footer = () => {
         <p>Find and gravitate to all the stars in your orbit.</p>
       </div>
     </Card>
+    // Glow Background color asethetic styling:
     // <div className="relative bg-surface">
     //   <div className="w-100 h-100 bg-[#03abc9] rounded-full blur-[100px] opacity-40 pointer-events-none"></div>
 

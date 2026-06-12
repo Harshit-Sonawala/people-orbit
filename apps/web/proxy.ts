@@ -28,13 +28,10 @@ export default async function proxy(
     const headers = new Headers(request.headers);
     headers.delete("host"); // Remove host header so Axios will correctly & automatically set it
 
-    // For routes that need auth via Bearer token, extract cookie and set Authorization header
-    const protectedRoutes = ["/api/auth/logout"];
-    if (protectedRoutes.includes(pathname)) {
-      const accessToken = request.cookies.get("accessToken")?.value;
-      if (accessToken) {
-        headers.set("Authorization", `Bearer ${accessToken}`);
-      }
+    // Always send the accessToken with every request:
+    const accessToken = request.cookies.get("accessToken")?.value;
+    if (accessToken) {
+      headers.set("Authorization", `Bearer ${accessToken}`);
     }
 
     let body;
@@ -47,7 +44,7 @@ export default async function proxy(
     }
 
     // For routes that need it, add the cookie to the request body
-    if (protectedRoutes.includes(pathname)) {
+    if (isLogout) {
       const refreshToken = request.cookies.get("refreshToken")?.value;
       if (refreshToken) {
         body = { ...body, refreshToken };
@@ -56,7 +53,6 @@ export default async function proxy(
 
     // For refresh route add both tokens from cookies into request body
     if (pathname === "/api/auth/refresh") {
-      const accessToken = request.cookies.get("accessToken")?.value;
       const refreshToken = request.cookies.get("refreshToken")?.value;
       if (accessToken) body = { ...body, accessToken };
       if (refreshToken) body = { ...body, refreshToken };
@@ -158,19 +154,22 @@ export default async function proxy(
 
     // Handle both auth and non auth routes response data
     // Only get accessToken, refreshToken if it was an auth route and received apiResponse.data, else simply data, tokens are undefined
-    const { accessToken, refreshToken, ...responseBody } =
-      (isLoginOrSignup || isRefresh) && apiResponse.data
-        ? apiResponse.data
-        : {
-            accessToken: undefined,
-            refreshToken: undefined,
-            ...apiResponse.data,
-          };
+    const {
+      accessToken: tokenFromResponse,
+      refreshToken: refreshTokenFromResponse,
+      ...responseBody
+    } = (isLoginOrSignup || isRefresh) && apiResponse.data
+      ? apiResponse.data
+      : {
+          accessToken: undefined,
+          refreshToken: undefined,
+          ...apiResponse.data,
+        };
 
     // Immediately fetch the user details here and attach it to the response for usage in useAuth onSuccess
-    if (isLoginOrSignup && isResponseSuccess && accessToken) {
+    if (isLoginOrSignup && isResponseSuccess && tokenFromResponse) {
       try {
-        const user = await getMeServer(accessToken);
+        const user = await getMeServer(tokenFromResponse);
         if (user) responseBody.user = user;
       } catch (e) {
         console.error("[Proxy] getMeServer failed: ", e);
@@ -189,8 +188,8 @@ export default async function proxy(
 
     // if a Signup or login request, successful and received data, set the tokens in the cookies
     if ((isLoginOrSignup || isRefresh) && isResponseSuccess) {
-      if (accessToken) {
-        response.cookies.set("accessToken", accessToken, {
+      if (tokenFromResponse) {
+        response.cookies.set("accessToken", tokenFromResponse, {
           httpOnly: true, // block document.cookie reads and XSS attacks
           secure: process.env.NODE_ENV === "production", // send over https only. always true in production
           sameSite: "strict", // cookies sent only if user on same site
@@ -198,8 +197,8 @@ export default async function proxy(
           maxAge: 30 * 60, // 30 minutes
         });
       }
-      if (refreshToken) {
-        response.cookies.set("refreshToken", refreshToken, {
+      if (refreshTokenFromResponse) {
+        response.cookies.set("refreshToken", refreshTokenFromResponse, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: "strict",

@@ -2,7 +2,6 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { User, PaginatedUsers } from "@/types";
 
-// const USERS_URL = process.env.NEXT_PUBLIC_USERS_URL ?? "http://localhost:4000/api/users";
 const USERS_URL = "/api/users";
 
 export const useUsers = () => {

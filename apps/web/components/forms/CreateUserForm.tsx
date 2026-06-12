@@ -11,7 +11,7 @@ import {
   bioValidation,
   urlValidation,
 } from "./formValidations";
-import { getFormError } from "./getFormError";
+import { getFormError } from "@/lib/utils";
 import * as Yup from "yup";
 
 import {
@@ -98,9 +98,6 @@ export const CreateUserForm = () => {
       };
       mutate(formattedData, {
         onSuccess: () => {
-          // console.log(
-          //   `Data for ${formattedData.firstName} ${formattedData.lastName} submitted successfully.`,
-          // );
           resetForm();
         },
       });
