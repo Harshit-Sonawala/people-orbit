@@ -2,7 +2,7 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { idValidation } from "./formValidations";
-import { getFormError } from "@/utils/getMeServer";
+import { getFormError } from "@/utils/getFormError";
 import { useUsers } from "@/hooks";
 import { Heading, Divider, Button, TextInput, Card } from "@/components";
 import { AlternateEmailRounded } from "@mui/icons-material";
