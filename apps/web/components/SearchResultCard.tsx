@@ -1,9 +1,7 @@
 import React from "react";
 import { User } from "@/types";
-import { Card, Heading } from "@/components";
+import { Heading } from "@/components";
 import Link from "next/link";
-import profilePic from "@/public/placeholder_profile_pic.png";
-import Image from "next/image";
 import { cn } from "@/utils/twMerge";
 
 type Props = {
@@ -20,27 +18,21 @@ export const SearchResultCard = ({ User, className }: Props) => {
         className,
       )}
     >
-      <div className="flex flex-1 flex-row items-center justify-stretch rounded-lg">
-        <div className="bg-primary rounded-l-lg px-7 py-12"></div>
+      <div className="flex flex-1 flex-row items-center justify-stretch rounded-lg min-w-0">
+        <div className="bg-primary rounded-l-lg px-7 py-12 shrink-0"></div>
 
-        <div className="relative flex flex-1 flex-row items-center justify-center gap-1 bg-surface pl-4 pr-6 rounded-r-lg transition-all duration-200 group-hover:bg-surface-top">
-          <div className="absolute -left-10 w-20 h-20 flex flex-col items-center justify-center rounded-full bg-surface border-2 border-surface-top transition-colors duration-200 overflow-hidden">
-            {/* <Image
-              src={profilePic}
-              alt={User.firstName.charAt(0)}
-              sizes="72px"
-              className="object-cover"
-            /> */}
-            <Heading className="text-4xl font-medium text-primary-alt">{`${User.firstName.charAt(0)}`}</Heading>
+        <div className="relative flex flex-1 flex-row items-center justify-center bg-surface pl-4 rounded-r-lg transition-all duration-200 group-hover:bg-surface-top min-w-0">
+          <div className="absolute -left-8 w-18 h-18 flex flex-col items-center justify-center rounded-full bg-surface border-2 border-surface-top transition-colors duration-200 overflow-hidden">
+            <Heading className="text-4xl font-medium text-primary-alt">{User.firstName.charAt(0)}</Heading>
           </div>
-          <div className="flex flex-1 flex-col gap-1 pl-10 py-2 pr-2">
-            <Heading variant="sm">{`${User.firstName} ${User.lastName}`}</Heading>
-            <p className="text-md font-semibold text-secondary">
+          <div className="flex flex-1 flex-col gap-1 pl-10 py-2 pr-2 min-w-0">
+            <Heading variant="sm" className="truncate">{User.firstName} {User.lastName}</Heading>
+            <p className="text-md font-semibold text-secondary truncate">
               {User.designation}
             </p>
-            <div className="flex flex-row items-center gap-4">
-              <p className="text-sm text-foreground truncate">{User.email}</p>
-              <p className="text-sm text-foreground truncate">{User.phone}</p>
+            <div className="flex flex-row items-center gap-4 min-w-0">
+              <p className="text-sm text-foreground truncate min-w-0">{User.email}</p>
+              <p className="text-sm text-foreground truncate min-w-0">{User.phone}</p>
             </div>
           </div>
         </div>
