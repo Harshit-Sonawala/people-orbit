@@ -13,7 +13,7 @@ import {
   urlValidation,
 } from "./formValidations";
 import * as Yup from "yup";
-import { getFormError } from "@/lib/getMeServer";
+import { getFormError } from "@/utils/getMeServer";
 
 import {
   Heading,

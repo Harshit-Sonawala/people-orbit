@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/twMerge";
+import { cn } from "@/utils/twMerge";
 
 type Props = {
   key?: number;

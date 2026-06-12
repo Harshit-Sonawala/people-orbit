@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { cn } from "@/lib/twMerge";
+import { cn } from "@/utils/twMerge";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;

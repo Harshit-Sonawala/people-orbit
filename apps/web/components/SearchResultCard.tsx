@@ -4,7 +4,7 @@ import { Card, Heading } from "@/components";
 import Link from "next/link";
 import profilePic from "@/public/placeholder_profile_pic.png";
 import Image from "next/image";
-import { cn } from "@/lib/twMerge";
+import { cn } from "@/utils/twMerge";
 
 type Props = {
   User: User;

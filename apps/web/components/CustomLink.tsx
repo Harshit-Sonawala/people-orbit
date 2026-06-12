@@ -1,6 +1,6 @@
 import Link, { LinkProps } from "next/link";
 import React from "react";
-import { cn } from "@/lib/twMerge";
+import { cn } from "@/utils/twMerge";
 
 interface CustomLinkProps extends LinkProps {
   children: React.ReactNode;

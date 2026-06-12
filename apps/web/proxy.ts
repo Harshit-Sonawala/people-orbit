@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios, { AxiosError } from "axios";
-import { getMeServer } from "./lib/getMeServer";
+import { getMeServer } from "./utils/getMeServer";
 
 // Proxy function to forward requests from Next.js to the NestJS backend.
 export default async function proxy(

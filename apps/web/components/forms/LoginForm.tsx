@@ -6,7 +6,7 @@ import {
   emailValidation,
   passwordValidation,
 } from "@/components/forms/formValidations";
-import { getFormError } from "./getFormError";
+import { getFormError } from "@/utils/getFormError";
 import {
   Card,
   Heading,
