@@ -8,27 +8,15 @@
 - [x] Refresh Token Generation - in auth.service.
 - [x] AuthSessionsEntity, repository, migration for auth_sessions table.
 - [x] Save Sessions into sessions Table on login/signup and delete on logouts.
-      Currently here:
-  1.  Implement /auth/refresh
-      This route is completely missing. Per your plan:
-  - Controller: @Post('refresh'), decorated @Public(), reads the refresh token from the cookie
-  - Service: find the session by userId, compare the plain token against the stored hash with bcrypt.compare, generate a new
-    access token (and rotate the refresh token), return the new accessToken
-  2. Refresh token rotation
-     This is the next unchecked item in Plan.md (line 11). On every /auth/refresh call: delete the old session row, generate a
-     new refresh token, save the new hash, set the new cookie.
-
-  3. /auth/logout cookie clearing
-     The current logout deletes the DB row but doesn't clear the refreshToken cookie from the response. The controller needs
-     @Res({ passthrough: true }) and a res.clearCookie(...) call.
-
-- [ ] Refresh Token Rotation
+- [x] Implement /auth/refresh - Controller: @Post('refresh'), reads the refresh token from the cookie, Service: find the session by userId, compare the plain token against the stored hash with bcrypt.compare, generate a new access token (and rotate the refresh token), return the new accessToken
+- [x] Refresh token rotation - On every /auth/refresh call: delete the old session row, generate a new refresh token, save the new hash, set the new cookie.
+- [x] /auth/logout cookie clearing - logout deletes the DB row but doesn't clear the refreshToken cookie from the response. The controller needs @Res({ passthrough: true }) and a res.clearCookie(...) call.
 - [ ] Token expiry - silent refresh & retry on a failed 401 response
 - [ ] Password reset case
 - [ ] Log me out of all devices case
 - [ ] OAuth (Google/Github etc auth)
 - [ ] Magic Links
-- [ ] Email verification — confirming a user owns email on signup
+- [ ] Email verification — confirming a user actually owns the email on signup
 - [ ] Rate limiting — blocking brute force attempts on /api/auth/login
 - [ ] Ban enforcement — isBanned on UsersEntity checks during login/token verification
 - [ ] More robust against crashes and connection losses with more try catch blocks

@@ -7,24 +7,20 @@ export default async function proxy(
   request: NextRequest,
 ): Promise<NextResponse> {
   const { pathname, search } = new URL(request.url); // "/api/auth", "/login",
-
   console.log(`[Proxy] ${request.method} ${pathname}${search}`);
 
   const BACKEND_URL =
     process.env.INTERNAL_BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL; // for docker internal network
-
   if (!BACKEND_URL) {
     return NextResponse.json(
       { message: "Backend URL configuration missing" },
       { status: 500 },
     );
   }
-
   const targetUrl = `${BACKEND_URL}${pathname}${search}`;
 
   try {
     // REQUEST SIDE
-
     const headers = new Headers(request.headers);
     headers.delete("host"); // Remove host header so Axios will correctly & automatically set it
 
