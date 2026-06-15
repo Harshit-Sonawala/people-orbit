@@ -14,7 +14,8 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-store.subscribe(() => {
-  const newState = store.getState();
-  console.log("newState", newState.auth);
-});
+// Log the Redux state
+// store.subscribe(() => {
+//   const newState = store.getState();
+//   console.log("newAuthState", newState.auth);
+// });
