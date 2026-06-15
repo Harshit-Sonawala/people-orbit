@@ -36,7 +36,7 @@ export class AuthSessionsRepository {
 
   // delete all records with matching userId from auth_sessions table
   async deleteAll(userId: string): Promise<void> {
-    await this.repository.delete({ userId: userId });
+    await this.repository.delete({ userId });
   }
 
   // deleteExpired? delete all rows where the expiresAt column is expired
