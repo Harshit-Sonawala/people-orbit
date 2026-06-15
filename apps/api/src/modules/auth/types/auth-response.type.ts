@@ -1,5 +1,6 @@
 export type AuthResponse = {
-  id: string;
+  userId: string;
   accessToken: string;
   refreshToken: string;
+  sessionId: string;
 };

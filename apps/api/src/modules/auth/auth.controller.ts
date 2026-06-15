@@ -27,8 +27,9 @@ export class AuthController {
   async logout(
     @CurrentUser() user: AuthJwtPayload,
     @Body('refreshToken') refreshToken: string,
+    @Body('sessionId') sessionId: string,
   ): Promise<{ message: string }> {
-    return this.authService.logout(user.sub, refreshToken); // Get user id from JWT
+    return this.authService.logout(user.sub, refreshToken, sessionId); // Get user id from JWT
   }
 
   @Get('me')
@@ -39,9 +40,9 @@ export class AuthController {
 
   @Post('refresh')
   async refresh(
-    @Body('accessToken') accessToken: string,
     @Body('refreshToken') refreshToken: string,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
-    return this.authService.refresh(accessToken, refreshToken);
+    @Body('sessionId') sessionId: string,
+  ): Promise<{ accessToken: string; refreshToken: string; sessionId: string }> {
+    return this.authService.refresh(refreshToken, sessionId);
   }
 }

@@ -41,43 +41,39 @@ export class AuthService {
     return { refreshToken, hashedRefreshToken };
   }
 
-  // Create a new row in auth_sessions
+  // Create a new row in auth_sessions and return the sessionId
   private async createSession(
     userId: string,
     hashedRefreshToken: string,
-  ): Promise<void> {
+  ): Promise<string> {
     const newDate = Date.now();
+    const sessionId = `session-${newDate}`;
     await this.authSessionsRepository.create({
-      id: `session-${newDate}`,
+      sessionId,
       userId,
       refreshTokenHash: hashedRefreshToken,
       expiresAt: newDate + 7 * 24 * 60 * 60 * 1000,
     });
+    return sessionId;
   }
 
-  // Find matching session in auth_sessions for specific userId + refreshToken
+  // Find session by sessionId, then verify the refreshToken
   private async findMatchingSession(
-    userId: string,
+    sessionId: string,
     refreshToken: string,
   ): Promise<AuthSessionsEntity> {
-    // find all sessions for userId
-    const sessions = await this.authSessionsRepository.findAllByUserId(userId);
-    // find which of those sessions matches the current refreshToken by hashing it again
-    let matchedSession: AuthSessionsEntity | null = null;
-    for (const session of sessions) {
-      const isMatch = await bcrypt.compare(
-        refreshToken,
-        session.refreshTokenHash,
-      );
-      if (isMatch) {
-        matchedSession = session;
-        break;
-      }
+    const session = await this.authSessionsRepository.findOne({ sessionId });
+    if (!session) {
+      throw new UnauthorizedException('Invalid session.');
     }
-    if (!matchedSession) {
+    const isMatch = await bcrypt.compare(
+      refreshToken,
+      session.refreshTokenHash,
+    );
+    if (!isMatch) {
       throw new UnauthorizedException('Invalid refresh token.');
     }
-    return matchedSession;
+    return session;
   }
 
   // POST signup
@@ -111,9 +107,9 @@ export class AuthService {
       await this.generateRefreshToken(); // Generate refreshToken
 
     // Save id, hash, userId, expiresAt into sessions table
-    await this.createSession(idSlug, hashedRefreshToken);
+    const sessionId = await this.createSession(idSlug, hashedRefreshToken);
 
-    return { id: createdUser.id, accessToken, refreshToken };
+    return { userId: createdUser.id, accessToken, refreshToken, sessionId };
   }
 
   // POST login
@@ -145,25 +141,32 @@ export class AuthService {
       await this.generateRefreshToken(); // Generate refreshToken
 
     // Save id, hash, userId, expiresAt into sessions table
-    await this.createSession(foundUser.id, hashedRefreshToken);
+    const sessionId = await this.createSession(
+      foundUser.id,
+      hashedRefreshToken,
+    );
 
-    return { id: foundUser.id, accessToken, refreshToken };
+    return { userId: foundUser.id, accessToken, refreshToken, sessionId };
   }
 
   // POST logout. Gets userId from JWT payload
   async logout(
     userId: string,
     refreshToken: string,
+    sessionId: string,
   ): Promise<{ message: string }> {
-    if (!refreshToken) {
-      throw new UnauthorizedException('Refresh token not found.');
+    if (!refreshToken || !sessionId) {
+      throw new UnauthorizedException('Refresh token or session not found.');
     }
-    const matchedSession = await this.findMatchingSession(userId, refreshToken);
+    const matchedSession = await this.findMatchingSession(
+      sessionId,
+      refreshToken,
+    );
 
-    await this.authSessionsRepository.deleteOne(matchedSession.id);
+    await this.authSessionsRepository.deleteOne(matchedSession.sessionId);
 
     return {
-      message: `User with id: ${userId}, sessionId: ${matchedSession.id} logged out successfully.`,
+      message: `User with id: ${userId}, sessionId: ${matchedSession.sessionId} logged out successfully.`,
     };
   }
 
@@ -178,38 +181,34 @@ export class AuthService {
 
   // Refresh token
   async refresh(
-    expiredAccessToken: string,
     refreshToken: string,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
-    if (!expiredAccessToken || !refreshToken) {
-      throw new UnauthorizedException('Missing Access Token or Refresh Token.');
+    sessionId: string,
+  ): Promise<{ accessToken: string; refreshToken: string; sessionId: string }> {
+    if (!refreshToken || !sessionId) {
+      throw new UnauthorizedException('Missing Refresh Token, or Session.');
     }
 
-    // Decode to get userId
-    const payload = this.jwtService.decode(expiredAccessToken) as {
-      sub: string;
-    } | null;
-    if (!payload?.sub) {
-      throw new UnauthorizedException('Invalid Access token.');
-    }
-    const userId = payload.sub;
-
-    const matchedSession = await this.findMatchingSession(userId, refreshToken);
+    const matchedSession = await this.findMatchingSession(
+      sessionId,
+      refreshToken,
+    );
 
     // 7 Day Expiry Passed, Delete row from auth_sessions DB and prompt a login
     if (matchedSession.expiresAt < Date.now()) {
-      await this.authSessionsRepository.deleteOne(matchedSession.id);
+      await this.authSessionsRepository.deleteOne(matchedSession.sessionId);
       throw new UnauthorizedException('Session expired. Please log in again.');
     }
 
     // Prevent generating token for a non-existent user
-    const user = await this.usersRepository.findOne({ id: userId });
+    const user = await this.usersRepository.findOne({
+      id: matchedSession.userId,
+    });
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
 
     // Rotate: delete old session and create new session
-    await this.authSessionsRepository.deleteOne(matchedSession.id);
+    await this.authSessionsRepository.deleteOne(matchedSession.sessionId);
 
     const newAccessToken = this.generateAccessToken(user);
     const {
@@ -217,8 +216,15 @@ export class AuthService {
       hashedRefreshToken: newHashedRefreshToken,
     } = await this.generateRefreshToken();
 
-    await this.createSession(userId, newHashedRefreshToken);
+    const newSessionId = await this.createSession(
+      matchedSession.userId,
+      newHashedRefreshToken,
+    );
 
-    return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+    return {
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+      sessionId: newSessionId,
+    };
   }
 }

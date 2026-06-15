@@ -5,25 +5,25 @@ import { UserRole } from './types/user-role.enum';
 @Entity('users') // table name users
 export class UsersEntity {
   @PrimaryColumn({ type: 'varchar' })
-  id: string;
+  id!: string;
 
   @Column({ type: 'varchar', length: 30 })
   @Index()
-  firstName: string;
+  firstName!: string;
 
   @Column({ type: 'varchar', length: 30 })
   @Index()
-  lastName: string;
+  lastName!: string;
 
   @Column({ type: 'smallint', nullable: true })
   age?: number;
 
   @Column({ type: 'varchar', length: 40 })
   @Index()
-  designation: string;
+  designation!: string;
 
   @Column({ type: 'varchar', length: 100, unique: true })
-  email: string;
+  email!: string;
 
   @Column({ type: 'varchar', length: 128, select: false, nullable: false })
   password!: string;
@@ -33,10 +33,10 @@ export class UsersEntity {
     enum: UserRole,
     default: UserRole.USER,
   })
-  role: UserRole;
+  role!: UserRole;
 
   @Column({ type: 'varchar', length: 20 })
-  phone: string;
+  phone!: string;
 
   @Column({ type: 'varchar', length: 140, nullable: true })
   bio?: string;
@@ -60,7 +60,7 @@ export class UsersEntity {
       from: (value: string) => parseInt(value, 10),
     },
   })
-  createdAt: number;
+  createdAt!: number;
 
   @Column({
     type: 'bigint',
@@ -69,11 +69,11 @@ export class UsersEntity {
       from: (value: string) => parseInt(value, 10),
     },
   })
-  updatedAt: number;
+  updatedAt!: number;
 
   @Column({
     type: 'boolean',
     default: false,
   })
-  isBanned: boolean;
+  isBanned!: boolean;
 }

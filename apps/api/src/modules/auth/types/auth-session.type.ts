@@ -1,5 +1,5 @@
 export type AuthSession = {
-  id: string;
+  sessionId: string;
   userId: string;
   refreshTokenHash: string;
   expiresAt: number;

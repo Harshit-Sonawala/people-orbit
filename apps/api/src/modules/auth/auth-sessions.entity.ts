@@ -3,13 +3,13 @@ import { Entity, PrimaryColumn, Column } from 'typeorm';
 @Entity('auth_sessions') // table name auth_sessions
 export class AuthSessionsEntity {
   @PrimaryColumn({ type: 'varchar' })
-  id: string;
+  sessionId!: string;
 
   @Column({ type: 'varchar' })
-  userId: string;
+  userId!: string;
 
   @Column({ type: 'varchar' })
-  refreshTokenHash: string;
+  refreshTokenHash!: string;
 
   @Column({
     type: 'bigint',
@@ -18,5 +18,5 @@ export class AuthSessionsEntity {
       from: (value: string) => parseInt(value, 10),
     },
   })
-  expiresAt: number;
+  expiresAt!: number;
 }

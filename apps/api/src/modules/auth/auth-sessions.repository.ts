@@ -19,10 +19,6 @@ export class AuthSessionsRepository {
     });
   }
 
-  async findAllByUserId(userId: string): Promise<AuthSessionsEntity[]> {
-    return this.repository.find({ where: { userId } });
-  }
-
   async create(newAuthSession: AuthSession): Promise<AuthSessionsEntity> {
     const newAuthSessionsEntity = this.repository.create(newAuthSession);
     return await this.repository.save(newAuthSessionsEntity);
