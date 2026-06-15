@@ -5,15 +5,25 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useAuth } from "@/hooks";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { showNotification } from "@/store/notificationSlice";
 
 export default function Account() {
   const { logout } = useAuth();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.auth.user);
 
   const handleLogout = async () => {
     await logout();
+    dispatch(
+      showNotification({
+        title: "Logged Out",
+        message: "You have successfully logged out.",
+        type: "success",
+      }),
+    );
     router.push("/");
     router.refresh();
   };

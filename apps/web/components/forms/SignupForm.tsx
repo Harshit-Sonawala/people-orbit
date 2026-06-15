@@ -30,11 +30,14 @@ import {
 import Image from "next/image";
 import signupImg from "@/public/signup_img.svg";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { showNotification } from "@/store/notificationSlice";
 
 export const SignupForm = () => {
   const { signup } = useAuth();
   const { mutate, isPending } = signup();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -58,11 +61,28 @@ export const SignupForm = () => {
     onSubmit: (values, { resetForm }) => {
       if (values.confirmPassword === values.password) {
         mutate(values, {
-          onSuccess: () => {
+          onSuccess: (result) => {
             resetForm();
+            dispatch(
+              showNotification({
+                title: "Successfully Signed up",
+                message: `Welcome to PeopleOrbit, ${result.user?.firstName || "User"}!`,
+                type: "success",
+              }),
+            );
             // window.location.href = "/"; // push to / with a page refresh
             router.push("/");
             router.refresh();
+          },
+          onError: (error: unknown) => {
+            const err = error as { response?: { data?: { message?: string } }; message?: string };
+            dispatch(
+              showNotification({
+                title: "Signup Error",
+                message: `${err.response?.data?.message || err.message || "Failed to sign up"}`,
+                type: "error",
+              }),
+            );
           },
         });
       }

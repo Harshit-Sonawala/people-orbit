@@ -19,11 +19,14 @@ import { EmailRounded, KeyRounded } from "@mui/icons-material";
 import Image from "next/image";
 import loginImg from "@/public/login_img.svg";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { showNotification } from "@/store/notificationSlice";
 
 export const LoginForm = () => {
   const { login } = useAuth();
   const { mutate, isPending } = login();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -36,11 +39,28 @@ export const LoginForm = () => {
     }),
     onSubmit: (values, { resetForm }) => {
       mutate(values, {
-        onSuccess: () => {
+        onSuccess: (result) => {
           resetForm();
+          dispatch(
+            showNotification({
+              title: "Login Successful",
+              message: `Welcome back, ${result.user?.firstName || "User"}`,
+              type: "success",
+            }),
+          );
           // window.location.href = "/"; // push to / with a page refresh
           router.push("/");
           router.refresh();
+        },
+        onError: (error: unknown) => {
+          const err = error as { response?: { data?: { message?: string } }; message?: string };
+          dispatch(
+            showNotification({
+              title: "Login Error",
+              message: `${err.response?.data?.message || err.message || "Failed to log in"}`,
+              type: "error",
+            }),
+          );
         },
       });
     },
@@ -111,7 +131,7 @@ export const LoginForm = () => {
         </div>
 
         <div className="flex flex-row items-center justify-stretch">
-          <p>Don't have an account? Create one here:</p>
+          <p>Don&apos;t have an account? Create one here:</p>
           <CustomLink href="/signup">Create Account</CustomLink>
         </div>
       </form>
