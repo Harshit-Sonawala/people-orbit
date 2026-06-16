@@ -7,7 +7,7 @@ export const Footer = () => {
     <Card className="flex flex-row items-center justify-between p-8 w-full rounded-none mt-8">
       <div className="flex flex-col gap-4 md:w-[90%] mx-auto">
         <Logo />
-        <p>Find and gravitate to all the stars in your orbit.</p>
+        <p>Find and connect with all the stars in your orbit.</p>
       </div>
     </Card>
     // Glow Background color asethetic styling:
@@ -18,9 +18,7 @@ export const Footer = () => {
     //     <Heading variant="md" className="text-primary text-xl font-semibold">
     //       PeopleOrbit
     //     </Heading>
-    //     <p className="text-sm">
-    //       Find and gravitate to all the stars in your orbit.
-    //     </p>
+    //     <p>Find and connect with all the stars in your orbit.</p>
     //   </div>
     // </div>
   );

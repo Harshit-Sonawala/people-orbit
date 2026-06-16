@@ -11,7 +11,7 @@ type Props = {
 const variantClasses = {
   sm: "text-xl font-semibold",
   md: "text-2xl font-semibold",
-  lg: "text-4xl font-bold",
+  lg: "text-4xl font-semibold",
 };
 
 const defaultTag = {

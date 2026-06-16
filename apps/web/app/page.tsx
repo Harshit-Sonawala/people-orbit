@@ -2,11 +2,13 @@
 import { User } from "@/types";
 import { useUsers } from "@/hooks";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
+import landing_bgImage from "@/public/landing_bgImage.jpg";
+
 import {
   Heading,
   DropDown,
   Button,
-  Divider,
   UserCard,
   type DropDownOption,
 } from "@/components";
@@ -55,6 +57,32 @@ export default function Home() {
 
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
+      {/* Hero Landing Section */}
+      <div className="relative w-full overflow-hidden rounded-2xl bg-surface/10 py-20 px-6 sm:px-12 flex flex-col items-center justify-center min-h-120">
+        {/* Background Image Container with radial fade masking */}
+        <Image
+          className="absolute inset-0 -z-10 object-cover"
+          src={landing_bgImage}
+          alt="Background"
+          fill
+          priority
+        />
+
+        {/* Top-to-Bottom Gradient Overlay to fade into the page background color */}
+        <div className="absolute inset-0 -z-10 bg-linear-to-b from-transparent via-background/1 to-background pointer-events-none" />
+
+        {/* Hero Title and Subtitle */}
+        <div className="p-20 max-w-6xl mx-auto flex flex-col gap-4">
+          <Heading variant="lg" className="text-white sm:text-6xl">
+            {`Find and connect with all the stars in your orbit.`}
+          </Heading>
+          <Heading className="text-primary-alt font-medium">
+            {`Discover, connect, and explore our community. Network with professionals from all over the globe.`}
+          </Heading>
+        </div>
+      </div>
+
+      {/* UserCards Grid */}
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
           <Heading variant="md">Find People</Heading>
