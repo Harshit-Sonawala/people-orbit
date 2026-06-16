@@ -18,6 +18,10 @@
   --foreground-alt: #999999;
   --warning: #f6b935;
   --error: #e05454;
+  --tertiary: #8c7ae6;
+  --accent: #e84393;
+  --info: #0984e3;
+  --success: #2ecc71;
 }
 
 .dark {
@@ -26,6 +30,10 @@
   --surface: #1d1d1d;
   --surface-top: #2d2d2d;
   --secondary: #05d0a0;
+  --tertiary: #9c88ff;
+  --accent: #fd79a8;
+  --info: #74b9ff;
+  --success: #55efc4;
 }
 
 @theme {
@@ -39,6 +47,10 @@
   --color-foreground-alt: var(--foreground-alt);
   --color-warning: var(--warning);
   --color-error: var(--error);
+  --color-tertiary: var(--tertiary);
+  --color-accent: var(--accent);
+  --color-info: var(--info);
+  --color-success: var(--success);
 }
 
 body {

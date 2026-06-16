@@ -4,12 +4,13 @@ import { useUsers } from "@/hooks";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 import {
-  LandingHero,
   Heading,
-  DropDown,
-  Button,
-  UserCard,
+  LandingHero,
+  StatCard,
   Card,
+  Button,
+  DropDown,
+  UserCard,
   type DropDownOption,
 } from "@/components";
 import {
@@ -69,166 +70,121 @@ export default function Home() {
       <LandingHero />
 
       {/* Dashboard Fact Cards Row */}
-      <div className="flex flex-col gap-2 mb-12">
-        <Heading variant="md">At a Glance</Heading>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+      <div className="flex flex-col gap-4 mb-12">
+        <div className="flex flex-col">
+          <Heading variant="md">Statistics</Heading>
+          <p className="text-sm text-foreground-alt">
+            Facts and figures at a glance
+          </p>
+        </div>
+        <div className="flex flex-row flex-wrap gap-2">
           {/* Card 1: Total People */}
-          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-primary/10 text-primary shrink-0">
-              <PeopleAltRounded className="icon-lg" />
-            </div>
-            <div className="flex flex-col gap-0.5 min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
-                Total People
-              </p>
-              <p className="text-3xl font-bold text-foreground">
-                {data?.meta.total ?? 0}
-              </p>
-            </div>
-          </Card>
+          <StatCard
+            icon={<PeopleAltRounded className="icon-lg" />}
+            title="Total People"
+            statistic={(data?.meta.total ?? 0).toString()}
+            color="primary"
+          />
 
           {/* Card 2: Total Designations */}
-          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-secondary/10 text-secondary shrink-0">
-              <WorkRounded className="icon-lg" />
-            </div>
-            <div className="flex flex-col gap-0.5 min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
-                Designations
-              </p>
-              <p className="text-3xl font-bold text-foreground">
-                {data ? new Set(data.data.map((u) => u.designation)).size : 0}
-              </p>
-            </div>
-          </Card>
+          <StatCard
+            icon={<WorkRounded className="icon-lg" />}
+            color="tertiary"
+            title="Designations"
+            statistic={(data
+              ? new Set(data.data.map((u) => u.designation)).size
+              : 0
+            ).toString()}
+          />
 
           {/* Card 3: New Members (Past 1 Year) */}
-          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-warning/10 text-warning shrink-0">
-              <PersonAddAlt1Rounded className="icon-lg" />
-            </div>
-            <div className="flex flex-col gap-0.5 min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
-                New Members
-              </p>
-              <p className="text-3xl font-bold text-foreground">
-                {data
-                  ? data.data.filter(
-                      (u) =>
-                        new Date(u.createdAt) >
-                        new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
-                    ).length
-                  : 0}
-              </p>
-            </div>
-          </Card>
+          <StatCard
+            icon={<PersonAddAlt1Rounded className="icon-lg" />}
+            title="New Members"
+            statistic={(data
+              ? data.data.filter(
+                  (u) =>
+                    new Date(u.createdAt) >
+                    new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
+                ).length
+              : 0
+            ).toString()}
+            color="warning"
+          />
 
           {/* Card 4: Unique Skills */}
-          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-primary-alt/10 text-primary-alt shrink-0">
-              <PsychologyRounded className="icon-lg" />
-            </div>
-            <div className="flex flex-col gap-0.5 min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
-                Unique Skills
-              </p>
-              <p className="text-3xl font-bold text-foreground">
-                {data ? new Set(data.data.flatMap((u) => u.skills || [])).size : 0}
-              </p>
-            </div>
-          </Card>
-
-          {/* Card 5: Average Age */}
-          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-secondary/10 text-secondary shrink-0">
-              <CakeRounded className="icon-lg" />
-            </div>
-            <div className="flex flex-col gap-0.5 min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
-                Average Age
-              </p>
-              <p className="text-3xl font-bold text-foreground">
-                {data && data.data.length
-                  ? Math.round(data.data.reduce((sum, u) => sum + u.age, 0) / data.data.length)
-                  : 0}
-              </p>
-            </div>
-          </Card>
-
-          {/* Card 6: LinkedIn Connected */}
-          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-primary/10 text-primary shrink-0">
-              <LinkRounded className="icon-lg" />
-            </div>
-            <div className="flex flex-col gap-0.5 min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
-                LinkedIn Connected
-              </p>
-              <p className="text-3xl font-bold text-foreground">
-                {data
-                  ? data.data.filter((u) => u.socialLinks?.linkedin).length
-                  : 0}
-              </p>
-            </div>
-          </Card>
+          <StatCard
+            icon={<PsychologyRounded className="icon-lg" />}
+            title="Unique Skills"
+            statistic={(data
+              ? new Set(data.data.flatMap((u) => u.skills || [])).size
+              : 0
+            ).toString()}
+            color="primary-alt"
+          />
 
           {/* Card 7: Top Designation */}
-          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-warning/10 text-warning shrink-0">
-              <TrendingUpRounded className="icon-lg" />
-            </div>
-            <div className="flex flex-col gap-0.5 min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
-                Top Designation
-              </p>
-              <p className="text-lg font-bold text-foreground truncate">
-                {data && data.data.length
-                  ? (() => {
-                      const freq = data.data.reduce<Record<string, number>>(
-                        (acc, u) => {
-                          acc[u.designation] = (acc[u.designation] ?? 0) + 1;
-                          return acc;
-                        },
-                        {},
-                      );
-                      return Object.entries(freq).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "—";
-                    })()
-                  : "—"}
-              </p>
-            </div>
-          </Card>
+          <StatCard
+            icon={<TrendingUpRounded className="icon-lg" />}
+            color="info"
+            title="Top Designation"
+            statistic={
+              data && data.data.length
+                ? (() => {
+                    const freq = data.data.reduce<Record<string, number>>(
+                      (acc, u) => {
+                        acc[u.designation] = (acc[u.designation] ?? 0) + 1;
+                        return acc;
+                      },
+                      {},
+                    );
+                    return (
+                      Object.entries(freq).sort(
+                        (a, b) => b[1] - a[1],
+                      )[0]?.[0] ?? "—"
+                    );
+                  })()
+                : "—"
+            }
+          />
 
           {/* Card 8: Most Popular Skill */}
-          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-primary-alt/10 text-primary-alt shrink-0">
-              <EmojiEventsRounded className="icon-lg" />
-            </div>
-            <div className="flex flex-col gap-0.5 min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
-                Most Popular Skill
-              </p>
-              <p className="text-lg font-bold text-foreground truncate">
-                {data && data.data.length
-                  ? (() => {
-                      const freq = data.data
-                        .flatMap((u) => u.skills || [])
-                        .reduce<Record<string, number>>((acc, s) => {
-                          acc[s] = (acc[s] ?? 0) + 1;
-                          return acc;
-                        }, {});
-                      return Object.entries(freq).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "—";
-                    })()
-                  : "—"}
-              </p>
-            </div>
-          </Card>
+          <StatCard
+            icon={<EmojiEventsRounded className="icon-lg" />}
+            title="Most Popular Skill"
+            statistic={
+              data && data.data.length
+                ? (() => {
+                    const freq = data.data
+                      .flatMap((u) => u.skills || [])
+                      .reduce<Record<string, number>>((acc, s) => {
+                        acc[s] = (acc[s] ?? 0) + 1;
+                        return acc;
+                      }, {});
+                    return (
+                      Object.entries(freq).sort(
+                        (a, b) => b[1] - a[1],
+                      )[0]?.[0] ?? "—"
+                    );
+                  })()
+                : "—"
+            }
+            color="accent"
+          />
         </div>
       </div>
 
       {/* UserCards Grid */}
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
-          <Heading variant="md">Find People</Heading>
+          <div className="flex flex-col">
+            <Heading variant="md">Find People</Heading>
+            <p className="text-sm text-foreground-alt">
+              {/* Found {data.meta.total} record
+              {data.meta.total !== 1 ? "s" : ""} */}
+              Browse through all user profiles
+            </p>
+          </div>
           <div className="flex flex-row items-center justify-between gap-2">
             <DropDown
               options={sortMap}
@@ -270,10 +226,6 @@ export default function Home() {
       {data && data.data.length > 0 ? (
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <p className="text-sm text-foreground-alt">
-              Found {data.meta.total} record
-              {data.meta.total !== 1 ? "s" : ""}
-            </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {data.data.map((eachUser: User, i: number) => (
                 <UserCard User={eachUser} key={eachUser.id ?? i} />

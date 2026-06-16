@@ -17,3 +17,4 @@ export * from "./HeaderLoginButton";
 export * from "./Notification";
 export * from "./Logo";
 export * from "./LandingHero";
+export * from "./StatCard";
