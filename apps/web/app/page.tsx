@@ -74,10 +74,10 @@ export default function Home() {
         <div className="flex flex-col gap-2">
           <Heading variant="md">At a Glance</Heading>
           <div className="flex flex-row flex-wrap gap-2">
-            {/* Card 1: Total People */}
+            {/* Card 1: Total Users */}
             <StatCard
               icon={<PeopleAltRounded className="icon-lg" />}
-              title="Total People"
+              title="Total Users"
               statistic={(data?.meta.total ?? 0).toString()}
               color="primary"
             />
