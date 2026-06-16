@@ -70,107 +70,142 @@ export default function Home() {
       <LandingHero />
 
       {/* Dashboard Fact Cards Row */}
-      <div className="flex flex-col gap-4 mb-12">
-        <div className="flex flex-col">
-          <Heading variant="md">Statistics</Heading>
-          <p className="text-sm text-foreground-alt">
-            Facts and figures at a glance
-          </p>
+      <div className="flex flex-col gap-6 mb-12">
+        <div className="flex flex-col gap-2">
+          <Heading variant="md">At a Glance</Heading>
+          <div className="flex flex-row flex-wrap gap-2">
+            {/* Card 1: Total People */}
+            <StatCard
+              icon={<PeopleAltRounded className="icon-lg" />}
+              title="Total People"
+              statistic={(data?.meta.total ?? 0).toString()}
+              color="primary"
+            />
+
+            {/* Card 2: Total Designations */}
+            <StatCard
+              icon={<WorkRounded className="icon-lg" />}
+              title="Designations"
+              statistic={(data
+                ? new Set(data.data.map((u) => u.designation)).size
+                : 0
+              ).toString()}
+              color="info"
+            />
+
+            {/* Card 3: New Members (Past 1 Year) */}
+            <StatCard
+              icon={<PersonAddAlt1Rounded className="icon-lg" />}
+              title="New Members"
+              statistic={(data
+                ? data.data.filter(
+                    (u) =>
+                      new Date(u.createdAt) >
+                      new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
+                  ).length
+                : 0
+              ).toString()}
+              color="warning"
+            />
+
+            {/* Card 4: Unique Skills */}
+            <StatCard
+              icon={<PsychologyRounded className="icon-lg" />}
+              title="Unique Skills"
+              statistic={(data
+                ? new Set(data.data.flatMap((u) => u.skills || [])).size
+                : 0
+              ).toString()}
+              color="primary-alt"
+            />
+
+            {/* Card 5: Average Age */}
+            <StatCard
+              icon={<CakeRounded className="icon-lg" />}
+              title="Average Age"
+              statistic={(data && data.data.length
+                ? Math.round(
+                    data.data.reduce((sum, u) => sum + u.age, 0) /
+                      data.data.length,
+                  )
+                : 0
+              ).toString()}
+              color="secondary"
+            />
+          </div>
         </div>
-        <div className="flex flex-row flex-wrap gap-2">
-          {/* Card 1: Total People */}
-          <StatCard
-            icon={<PeopleAltRounded className="icon-lg" />}
-            title="Total People"
-            statistic={(data?.meta.total ?? 0).toString()}
-            color="primary"
-          />
 
-          {/* Card 2: Total Designations */}
-          <StatCard
-            icon={<WorkRounded className="icon-lg" />}
-            color="tertiary"
-            title="Designations"
-            statistic={(data
-              ? new Set(data.data.map((u) => u.designation)).size
-              : 0
-            ).toString()}
-          />
+        <div className="flex flex-col gap-2">
+          <Heading variant="md">Key Insights</Heading>
+          <div className="flex flex-row flex-wrap gap-2">
+            {/* Card 6: Top Designation */}
+            <StatCard
+              icon={<TrendingUpRounded className="icon-lg" />}
+              title="Top Designation"
+              statistic={
+                data && data.data.length
+                  ? (() => {
+                      const freq = data.data.reduce<Record<string, number>>(
+                        (acc, u) => {
+                          acc[u.designation] = (acc[u.designation] ?? 0) + 1;
+                          return acc;
+                        },
+                        {},
+                      );
+                      return (
+                        Object.entries(freq).sort(
+                          (a, b) => b[1] - a[1],
+                        )[0]?.[0] ?? "—"
+                      );
+                    })()
+                  : "—"
+              }
+              color="tertiary"
+            />
 
-          {/* Card 3: New Members (Past 1 Year) */}
-          <StatCard
-            icon={<PersonAddAlt1Rounded className="icon-lg" />}
-            title="New Members"
-            statistic={(data
-              ? data.data.filter(
-                  (u) =>
-                    new Date(u.createdAt) >
-                    new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
-                ).length
-              : 0
-            ).toString()}
-            color="warning"
-          />
+            {/* Card 7: Most Popular Skill */}
+            <StatCard
+              icon={<EmojiEventsRounded className="icon-lg" />}
+              title="Most Popular Skill"
+              statistic={
+                data && data.data.length
+                  ? (() => {
+                      const freq = data.data
+                        .flatMap((u) => u.skills || [])
+                        .reduce<Record<string, number>>((acc, s) => {
+                          acc[s] = (acc[s] ?? 0) + 1;
+                          return acc;
+                        }, {});
+                      return (
+                        Object.entries(freq).sort(
+                          (a, b) => b[1] - a[1],
+                        )[0]?.[0] ?? "—"
+                      );
+                    })()
+                  : "—"
+              }
+              color="accent"
+            />
 
-          {/* Card 4: Unique Skills */}
-          <StatCard
-            icon={<PsychologyRounded className="icon-lg" />}
-            title="Unique Skills"
-            statistic={(data
-              ? new Set(data.data.flatMap((u) => u.skills || [])).size
-              : 0
-            ).toString()}
-            color="primary-alt"
-          />
-
-          {/* Card 7: Top Designation */}
-          <StatCard
-            icon={<TrendingUpRounded className="icon-lg" />}
-            color="info"
-            title="Top Designation"
-            statistic={
-              data && data.data.length
-                ? (() => {
-                    const freq = data.data.reduce<Record<string, number>>(
-                      (acc, u) => {
-                        acc[u.designation] = (acc[u.designation] ?? 0) + 1;
-                        return acc;
-                      },
-                      {},
-                    );
-                    return (
-                      Object.entries(freq).sort(
-                        (a, b) => b[1] - a[1],
-                      )[0]?.[0] ?? "—"
-                    );
-                  })()
-                : "—"
-            }
-          />
-
-          {/* Card 8: Most Popular Skill */}
-          <StatCard
-            icon={<EmojiEventsRounded className="icon-lg" />}
-            title="Most Popular Skill"
-            statistic={
-              data && data.data.length
-                ? (() => {
-                    const freq = data.data
-                      .flatMap((u) => u.skills || [])
-                      .reduce<Record<string, number>>((acc, s) => {
-                        acc[s] = (acc[s] ?? 0) + 1;
-                        return acc;
-                      }, {});
-                    return (
-                      Object.entries(freq).sort(
-                        (a, b) => b[1] - a[1],
-                      )[0]?.[0] ?? "—"
-                    );
-                  })()
-                : "—"
-            }
-            color="accent"
-          />
+            {/* Card 8: Newest Member */}
+            <StatCard
+              icon={<PersonAddAlt1Rounded className="icon-lg" />}
+              title="Newest Member"
+              statistic={
+                data && data.data.length
+                  ? (() => {
+                      const sorted = [...data.data].sort(
+                        (a, b) => b.createdAt - a.createdAt,
+                      );
+                      return sorted[0]
+                        ? `${sorted[0].firstName} ${sorted[0].lastName}`
+                        : "—";
+                    })()
+                  : "—"
+              }
+              color="success"
+            />
+          </div>
         </div>
       </div>
 
@@ -180,8 +215,6 @@ export default function Home() {
           <div className="flex flex-col">
             <Heading variant="md">Find People</Heading>
             <p className="text-sm text-foreground-alt">
-              {/* Found {data.meta.total} record
-              {data.meta.total !== 1 ? "s" : ""} */}
               Browse through all user profiles
             </p>
           </div>

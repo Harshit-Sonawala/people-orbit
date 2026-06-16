@@ -41,8 +41,10 @@ export const StatCard = ({
   const statTextClass = isLong ? "text-lg" : "text-3xl";
 
   return (
-    <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
-      <div className={`flex items-center justify-center w-13 h-13 rounded-full shrink-0 ${colorClasses}`}>
+    <Card className="flex flex-row flex-1 items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
+      <div
+        className={`flex items-center justify-center w-13 h-13 rounded-full shrink-0 ${colorClasses}`}
+      >
         {icon}
       </div>
       <div className="flex flex-col gap-0.5 min-w-0">

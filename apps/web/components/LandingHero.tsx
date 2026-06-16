@@ -12,17 +12,22 @@ const GlobeCanvas = () => {
     if (!ctx) return;
 
     let animationId: number;
-    let width = (canvas.width = window.innerWidth);
+    let width = (canvas.width = canvas.clientWidth || window.innerWidth);
     let height = (canvas.height =
       canvas.clientHeight || canvas.offsetHeight || 500);
 
     const handleResize = () => {
       if (!canvas) return;
-      width = canvas.width = window.innerWidth;
+      width = canvas.width = canvas.clientWidth || window.innerWidth;
       height = canvas.height =
         canvas.clientHeight || canvas.offsetHeight || 500;
     };
     window.addEventListener("resize", handleResize);
+
+    const resizeObserver = new ResizeObserver(() => {
+      handleResize();
+    });
+    resizeObserver.observe(canvas);
 
     // 1. 3D Globe Vertices Grid
     const globePoints: { x: number; y: number; z: number }[] = [];
@@ -266,6 +271,7 @@ const GlobeCanvas = () => {
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      resizeObserver.disconnect();
       cancelAnimationFrame(animationId);
     };
   }, []);
@@ -275,7 +281,7 @@ const GlobeCanvas = () => {
 
 export const LandingHero = () => {
   return (
-    <div className="relative -z-10 bg-[radial-gradient(circle_at_center,var(--surface-top)_0%,transparent_75%)] -mt-24 pt-10 flex flex-col items-center justify-center min-h-125">
+    <div className="relative -z-10 bg-[radial-gradient(circle_at_center,var(--surface-top)_0%,transparent_75%)] -mt-24 py-10 flex flex-col items-center justify-center min-h-125">
       {/* Globe & Network Canvas Background */}
       <div className="absolute inset-y-0 left-[calc(50%-50vw)] w-screen -z-10 overflow-hidden pointer-events-none">
         <GlobeCanvas />
@@ -285,7 +291,7 @@ export const LandingHero = () => {
       </div>
 
       {/* Hero Title and Subtitle */}
-      <div className="p-6 md:p-20 max-w-6xl mx-auto flex flex-col gap-4 w-full">
+      <div className="py-6 md:py-40 max-w-6xl mx-auto flex flex-col gap-4 w-full">
         <Heading variant="lg" className="text-foreground sm:text-6xl">
           {`Find and connect with all the stars in your orbit.`}
         </Heading>
