@@ -22,7 +22,11 @@ import {
   PeopleAltRounded,
   WorkRounded,
   PersonAddAlt1Rounded,
-  ContactPhoneRounded,
+  PsychologyRounded,
+  CakeRounded,
+  LinkRounded,
+  TrendingUpRounded,
+  EmojiEventsRounded,
 } from "@mui/icons-material";
 
 const sortMap = new Map<string, DropDownOption>([
@@ -69,45 +73,45 @@ export default function Home() {
         <Heading variant="md">At a Glance</Heading>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
           {/* Card 1: Total People */}
-          <Card className="flex-row items-center gap-4 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary shrink-0">
+          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
+            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-primary/10 text-primary shrink-0">
               <PeopleAltRounded className="icon-lg" />
             </div>
-            <div className="flex flex-col min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider">
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
                 Total People
               </p>
-              <p className="text-2xl font-bold text-foreground truncate">
+              <p className="text-3xl font-bold text-foreground">
                 {data?.meta.total ?? 0}
               </p>
             </div>
           </Card>
 
           {/* Card 2: Total Designations */}
-          <Card className="flex-row items-center gap-4 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-secondary/10 text-secondary shrink-0">
+          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
+            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-secondary/10 text-secondary shrink-0">
               <WorkRounded className="icon-lg" />
             </div>
-            <div className="flex flex-col min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider">
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
                 Designations
               </p>
-              <p className="text-2xl font-bold text-foreground truncate">
+              <p className="text-3xl font-bold text-foreground">
                 {data ? new Set(data.data.map((u) => u.designation)).size : 0}
               </p>
             </div>
           </Card>
 
           {/* Card 3: New Members (Past 1 Year) */}
-          <Card className="flex-row items-center gap-4 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-warning/10 text-warning shrink-0">
+          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
+            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-warning/10 text-warning shrink-0">
               <PersonAddAlt1Rounded className="icon-lg" />
             </div>
-            <div className="flex flex-col min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider">
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
                 New Members
               </p>
-              <p className="text-2xl font-bold text-foreground truncate">
+              <p className="text-3xl font-bold text-foreground">
                 {data
                   ? data.data.filter(
                       (u) =>
@@ -119,17 +123,102 @@ export default function Home() {
             </div>
           </Card>
 
-          {/* Card 4: Verified Contacts */}
-          <Card className="flex-row items-center gap-4 hover:bg-surface-top transition-colors duration-200">
-            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary-alt/10 text-primary-alt shrink-0">
-              <ContactPhoneRounded className="icon-lg" />
+          {/* Card 4: Unique Skills */}
+          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
+            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-primary-alt/10 text-primary-alt shrink-0">
+              <PsychologyRounded className="icon-lg" />
             </div>
-            <div className="flex flex-col min-w-0">
-              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider">
-                Verified Members
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
+                Unique Skills
               </p>
-              <p className="text-2xl font-bold text-foreground truncate">
-                {data ? data.data.filter((u) => u.email && u.phone).length : 0}
+              <p className="text-3xl font-bold text-foreground">
+                {data ? new Set(data.data.flatMap((u) => u.skills || [])).size : 0}
+              </p>
+            </div>
+          </Card>
+
+          {/* Card 5: Average Age */}
+          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
+            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-secondary/10 text-secondary shrink-0">
+              <CakeRounded className="icon-lg" />
+            </div>
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
+                Average Age
+              </p>
+              <p className="text-3xl font-bold text-foreground">
+                {data && data.data.length
+                  ? Math.round(data.data.reduce((sum, u) => sum + u.age, 0) / data.data.length)
+                  : 0}
+              </p>
+            </div>
+          </Card>
+
+          {/* Card 6: LinkedIn Connected */}
+          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
+            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-primary/10 text-primary shrink-0">
+              <LinkRounded className="icon-lg" />
+            </div>
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
+                LinkedIn Connected
+              </p>
+              <p className="text-3xl font-bold text-foreground">
+                {data
+                  ? data.data.filter((u) => u.socialLinks?.linkedin).length
+                  : 0}
+              </p>
+            </div>
+          </Card>
+
+          {/* Card 7: Top Designation */}
+          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
+            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-warning/10 text-warning shrink-0">
+              <TrendingUpRounded className="icon-lg" />
+            </div>
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
+                Top Designation
+              </p>
+              <p className="text-lg font-bold text-foreground truncate">
+                {data && data.data.length
+                  ? (() => {
+                      const freq = data.data.reduce<Record<string, number>>(
+                        (acc, u) => {
+                          acc[u.designation] = (acc[u.designation] ?? 0) + 1;
+                          return acc;
+                        },
+                        {},
+                      );
+                      return Object.entries(freq).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "—";
+                    })()
+                  : "—"}
+              </p>
+            </div>
+          </Card>
+
+          {/* Card 8: Most Popular Skill */}
+          <Card className="flex-row items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
+            <div className="flex items-center justify-center w-13 h-13 rounded-full bg-primary-alt/10 text-primary-alt shrink-0">
+              <EmojiEventsRounded className="icon-lg" />
+            </div>
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
+                Most Popular Skill
+              </p>
+              <p className="text-lg font-bold text-foreground truncate">
+                {data && data.data.length
+                  ? (() => {
+                      const freq = data.data
+                        .flatMap((u) => u.skills || [])
+                        .reduce<Record<string, number>>((acc, s) => {
+                          acc[s] = (acc[s] ?? 0) + 1;
+                          return acc;
+                        }, {});
+                      return Object.entries(freq).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "—";
+                    })()
+                  : "—"}
               </p>
             </div>
           </Card>
