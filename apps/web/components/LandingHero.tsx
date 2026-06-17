@@ -31,7 +31,7 @@ const GlobeCanvas = () => {
 
     // 1. 3D Globe Vertices Grid
     const globePoints: { x: number; y: number; z: number }[] = [];
-    const globeRadius = 250; // Larger globe size
+    const globeRadius = 400;
     const latitudeBands = 15;
     const longitudeBands = 26;
 
@@ -79,7 +79,7 @@ const GlobeCanvas = () => {
 
     const rotationSpeedY = 0.0012;
     const rotationSpeedX = 0.0003;
-    const focalLength = 380;
+    const focalLength = 400;
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -281,7 +281,8 @@ const GlobeCanvas = () => {
 
 export const LandingHero = () => {
   return (
-    <div className="relative -z-10 bg-[radial-gradient(circle_at_center,var(--surface-top)_0%,transparent_75%)] -mt-24 py-10 flex flex-col items-center justify-center min-h-125">
+    // <div className="relative -z-10 bg-[radial-gradient(circle_at_center,var(--surface-top)_0%,transparent_75%)] -mt-24 py-10 flex flex-col items-center justify-center min-h-125">
+    <div className="relative -z-10 left-[calc(50%-50vw)] w-screen -mt-24 flex flex-col items-center justify-center min-h-150 bg-surface/80">
       {/* Globe & Network Canvas Background */}
       <div className="absolute inset-y-0 left-[calc(50%-50vw)] w-screen -z-10 overflow-hidden pointer-events-none">
         <GlobeCanvas />
@@ -291,7 +292,7 @@ export const LandingHero = () => {
       </div>
 
       {/* Hero Title and Subtitle */}
-      <div className="py-6 md:py-40 max-w-6xl mx-auto flex flex-col gap-4 w-full">
+      <div className="py-6 md:py-20 max-w-4xl mx-auto flex flex-col gap-4 w-full">
         <Heading variant="lg" className="text-foreground sm:text-6xl">
           {`Find and connect with all the stars in your orbit.`}
         </Heading>

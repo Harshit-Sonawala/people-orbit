@@ -1,4 +1,4 @@
-import { Card } from "@/components/Card";
+import { Card, Heading } from "@/components";
 
 export type StatCardColor =
   | "primary"
@@ -37,8 +37,8 @@ export const StatCard = ({
   color = "primary",
 }: StatCardProps) => {
   const colorClasses = colorMap[color] || colorMap.primary;
-  const isLong = statistic.length > 5 || !/^\d+$/.test(statistic.trim());
-  const statTextClass = isLong ? "text-lg" : "text-3xl";
+  const isLong = statistic.length > 10 || !/^\d+$/.test(statistic.trim());
+  const statTextClass = isLong ? "text-md" : "text-3xl";
 
   return (
     <Card className="flex flex-row flex-1 items-center gap-4 py-5 hover:bg-surface-top transition-colors duration-200">
@@ -47,13 +47,13 @@ export const StatCard = ({
       >
         {icon}
       </div>
-      <div className="flex flex-col gap-0.5 min-w-0">
+
+      <div className="flex flex-col">
         <p className="text-xs font-semibold text-foreground-alt uppercase tracking-wider whitespace-nowrap">
           {title}
         </p>
-        <p className={`font-bold text-foreground truncate ${statTextClass}`}>
-          {statistic}
-        </p>
+
+        <Heading className={`truncate ${statTextClass}`}>{statistic}</Heading>
       </div>
     </Card>
   );

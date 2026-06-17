@@ -36,10 +36,15 @@ export const DashboardCardsRows = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 mb-12">
-      <div className="flex flex-col gap-2">
-        <Heading variant="md">At a Glance</Heading>
-        <div className="flex flex-row flex-wrap gap-2">
+    <div className="flex flex-col gap-4 mb-12">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col">
+          <Heading variant="md">At a Glance</Heading>
+          <p className="text-sm text-foreground-alt">
+            View key user statistics
+          </p>
+        </div>
+        <div className="flex flex-row flex-wrap gap-4">
           {/* Total Users */}
           <StatCard
             icon={<PeopleAltRounded className="icon-lg" />}
@@ -47,7 +52,6 @@ export const DashboardCardsRows = () => {
             statistic={formatStat(totalUsers)}
             color="primary"
           />
-
           {/* New Users joined in the past year */}
           <StatCard
             icon={<PersonAddAlt1Rounded className="icon-lg" />}
@@ -55,7 +59,6 @@ export const DashboardCardsRows = () => {
             statistic={formatStat(newUsersCount)}
             color="warning"
           />
-
           {/* Unique Designations */}
           <StatCard
             icon={<WorkRounded className="icon-lg" />}
@@ -63,7 +66,6 @@ export const DashboardCardsRows = () => {
             statistic={formatStat(uniqueDesignations)}
             color="info"
           />
-
           {/* Unique Skills */}
           <StatCard
             icon={<PsychologyRounded className="icon-lg" />}
@@ -71,7 +73,6 @@ export const DashboardCardsRows = () => {
             statistic={formatStat(uniqueSkills)}
             color="primary-alt"
           />
-
           {/* Average Age */}
           <StatCard
             icon={<CakeRounded className="icon-lg" />}
@@ -82,33 +83,30 @@ export const DashboardCardsRows = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <Heading variant="md">Key Insights</Heading>
-        <div className="flex flex-row flex-wrap gap-2">
-          {/* Top Designations */}
-          <StatCard
-            icon={<TrendingUpRounded className="icon-lg" />}
-            title="Top Designations"
-            statistic={formatListStat(topDesignations)}
-            color="tertiary"
-          />
+      <div className="flex flex-row flex-wrap gap-4">
+        {/* Top 3 Designations */}
+        <StatCard
+          icon={<TrendingUpRounded className="icon-lg" />}
+          title="Top 3 Designations"
+          statistic={formatListStat(topDesignations)}
+          color="tertiary"
+        />
 
-          {/* Top 3 Skills */}
-          <StatCard
-            icon={<EmojiEventsRounded className="icon-lg" />}
-            title="Top 3 Skills"
-            statistic={formatListStat(topSkills)}
-            color="accent"
-          />
+        {/* Top 3 Skills */}
+        <StatCard
+          icon={<EmojiEventsRounded className="icon-lg" />}
+          title="Top 3 Skills"
+          statistic={formatListStat(topSkills)}
+          color="accent"
+        />
 
-          {/* Newest User Name */}
-          <StatCard
-            icon={<PersonAddAlt1Rounded className="icon-lg" />}
-            title="Newest User"
-            statistic={formatStat(newestUserName)}
-            color="success"
-          />
-        </div>
+        {/* Newest User Name */}
+        <StatCard
+          icon={<PersonAddAlt1Rounded className="icon-lg" />}
+          title="Newest User"
+          statistic={formatStat(newestUserName)}
+          color="success"
+        />
       </div>
     </div>
   );
