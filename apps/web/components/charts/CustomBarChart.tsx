@@ -8,29 +8,19 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Heading, Card } from "@/components";
-
-type SkillChartData = {
-  name: string;
-  frequency: number;
-};
+import { BarChartData } from "@/types";
 
 type BarChartProps = {
-  data?: SkillChartData[];
+  data: BarChartData[];
+  title?: string;
+  subtitle?: string;
   className?: string;
 };
 
-const dummyBarChartData: SkillChartData[] = [
-  { name: "React", frequency: 24 },
-  { name: "Next.js", frequency: 36 },
-  { name: "NestJS", frequency: 15 },
-  { name: "Tanstack Query", frequency: 9 },
-  { name: "Tailwind CSS", frequency: 32 },
-  { name: "Postgres", frequency: 20 },
-  { name: "Docker", frequency: 10 },
-];
-
-export const SkillsBarChart = ({
-  data = dummyBarChartData,
+export const CustomBarChart = ({
+  data,
+  title,
+  subtitle,
   className,
 }: BarChartProps) => {
   return (
@@ -39,10 +29,10 @@ export const SkillsBarChart = ({
         className={`items-stretch justify-center w-full h-100 ${className ?? ""}`}
       >
         <div className="flex flex-col items-stretch rounded-lg p-4">
-          <Heading>Skills Distribution</Heading>
-          <p className="text-sm text-foreground-alt">
-            View a distribution of all skills
-          </p>
+          {title && <Heading>{title}</Heading>}
+          {subtitle && (
+            <p className="text-sm text-foreground-alt">{subtitle}</p>
+          )}
         </div>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ left: -20, right: 20 }}>
@@ -59,12 +49,14 @@ export const SkillsBarChart = ({
                 color: "var(--foreground)",
                 borderRadius: "8px",
               }}
-              cursor={{ fill: "var(--surface-top)", opacity: 0.4 }}
+              cursor={false}
             />
             <Bar
               dataKey="frequency"
+              radius={[4, 4, 4, 4]}
               fill="var(--primary)"
-              radius={[4, 4, 0, 0]}
+              activeBar={{ fill: "var(--primary-alt)" }}
+              className="cursor-pointer"
             />
           </BarChart>
         </ResponsiveContainer>

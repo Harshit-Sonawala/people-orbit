@@ -1,8 +1,7 @@
 "use client";
-import { User } from "@/types";
+import { User, BarChartData } from "@/types";
 import { useUsers } from "@/hooks";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-
 import {
   Heading,
   LandingHero,
@@ -20,7 +19,7 @@ import {
   HistoryRounded,
   SortByAlphaRounded,
 } from "@mui/icons-material";
-import { SkillsBarChart } from "@/components/charts";
+import { CustomBarChart } from "@/components/charts";
 
 const sortMap = new Map<string, DropDownOption>([
   ["createdAt", { label: "Date Created", icon: <HistoryRounded /> }],
@@ -56,6 +55,16 @@ export default function Home() {
     router.push(`${pathname}?${params.toString()}`);
   };
 
+  const dummyBarChartData: BarChartData[] = [
+    { name: "React", frequency: 24 },
+    { name: "Next.js", frequency: 36 },
+    { name: "NestJS", frequency: 15 },
+    { name: "Tanstack Query", frequency: 9 },
+    { name: "Tailwind CSS", frequency: 32 },
+    { name: "Postgres", frequency: 20 },
+    { name: "Docker", frequency: 10 },
+  ];
+
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
       {/* Hero Landing Section */}
@@ -65,7 +74,18 @@ export default function Home() {
       <DashboardCardsRows />
 
       {/* Visualtizations */}
-      <SkillsBarChart />
+      <div className="flex flex-row items-center justify-center gap-4">
+        <CustomBarChart
+          data={dummyBarChartData}
+          title="Skills Distribution"
+          subtitle="This is the subtitle"
+        />
+        <CustomBarChart
+          data={dummyBarChartData}
+          title="Title"
+          subtitle="This is the subtitle"
+        />
+      </div>
 
       {/* UserCards Grid */}
       <div className="flex flex-col gap-2">
