@@ -20,6 +20,7 @@ import {
   HistoryRounded,
   SortByAlphaRounded,
 } from "@mui/icons-material";
+import { SkillsBarChart } from "@/components/charts";
 
 const sortMap = new Map<string, DropDownOption>([
   ["createdAt", { label: "Date Created", icon: <HistoryRounded /> }],
@@ -62,6 +63,9 @@ export default function Home() {
 
       {/* Dashboard Fact Cards Row */}
       <DashboardCardsRows />
+
+      {/* Visualtizations */}
+      <SkillsBarChart />
 
       {/* UserCards Grid */}
       <div className="flex flex-col gap-2">

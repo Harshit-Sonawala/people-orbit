@@ -22,15 +22,15 @@ export const DashboardCardsRows = () => {
     avgAge = 0,
     topDesignations = [],
     topSkills = [],
-    newestUserName = "—",
+    newestUserName = "-",
   } = data ?? {};
 
-  const formatStat = (val: number | string, fallback = "—") => {
+  const formatStat = (val: number | string, fallback = "-") => {
     if (isLoading) return "...";
     return val?.toString() || fallback;
   };
 
-  const formatListStat = (list: string[], fallback = "—") => {
+  const formatListStat = (list: string[], fallback = "-") => {
     if (isLoading) return "...";
     return list.length > 0 ? list.join(", ") : fallback;
   };
