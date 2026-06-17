@@ -126,7 +126,7 @@ if (result.affected === 0) {
   - LoginDTO validated in controller
     - DTO validation faliure > 400 Bad Request
   - Goes into AuthService login method with loginDTO
-    - calls usersRepository.findOne where email matches
+    - calls usersRepo.findOne where email matches
     - Email not matching any entries
       - throw 401 Unauthorized Error
       - log(email not found)
@@ -167,12 +167,12 @@ if (result.affected === 0) {
   - SignupDTO validated in controller
   - DTO validation failure > 400 Bad Request
   - Goes into AuthService signup method with signupDTO
-    - calls usersRepository.findOne where email matches
+    - calls usersRepo.findOne where email matches
     - Email already exists in table
       - throw 409 Conflict Error
       - log(email already registered)
     - bcrypt.hash() password plaintext
-    - save new user record with usersRepository.create(id, name, email, password, ...)
+    - save new user record with usersRepo.create(id, name, email, password, ...)
     - Generate access token (JWT, 15min expiry)
       - send JWT in response body
     - Generate refresh token (crypto random string, 7d expiry)

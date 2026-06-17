@@ -3,8 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ILike, FindOptionsWhere } from 'typeorm';
 import { UsersEntity } from './users.entity';
 import { dummyData } from './users.dummyData.static';
-import { User } from './types';
-import { UserStats } from './types';
+import { User, UserStats } from './types';
 
 @Injectable()
 export class UsersRepository {
@@ -94,7 +93,7 @@ export class UsersRepository {
     });
   }
 
-  // Dashboard Statistics Cards
+  // Dashboard statistics
   async getStats(): Promise<UserStats> {
     const newMembersRange = Date.now() - 365 * 24 * 60 * 60 * 1000; // 1 Year ago in milliseconds
 

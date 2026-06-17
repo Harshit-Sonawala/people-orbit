@@ -20,7 +20,7 @@ import { AuthSessionsEntity } from './auth-sessions.entity';
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly usersRepository: UsersRepository,
+    private readonly usersRepo: UsersRepository,
     private readonly authSessionsRepository: AuthSessionsRepository,
   ) {}
 
@@ -78,7 +78,7 @@ export class AuthService {
 
   // POST signup
   async signup(signupData: SignupDto): Promise<AuthResponse> {
-    const foundUser = await this.usersRepository.findOne({
+    const foundUser = await this.usersRepo.findOne({
       email: signupData.email,
     });
     // Already exists: throw 409 Conflict Error
@@ -100,7 +100,7 @@ export class AuthService {
       updatedAt: newDate,
       isBanned: false,
     };
-    const createdUser = await this.usersRepository.createOrReplace(newUser);
+    const createdUser = await this.usersRepo.createOrReplace(newUser);
 
     const accessToken = this.generateAccessToken(createdUser); // Generate JWT accessToken
     const { refreshToken, hashedRefreshToken } =
@@ -114,7 +114,7 @@ export class AuthService {
 
   // POST login
   async login(loginData: LoginDto): Promise<AuthResponse> {
-    const foundUser = await this.usersRepository.findOneAndGetPassword(
+    const foundUser = await this.usersRepo.findOneAndGetPassword(
       loginData.email,
     );
 
@@ -172,7 +172,7 @@ export class AuthService {
 
   // GET user automatically on load based on accessToken
   async getMe(userId: string): Promise<User> {
-    const foundUser = await this.usersRepository.findOne({ id: userId });
+    const foundUser = await this.usersRepo.findOne({ id: userId });
     if (!foundUser) {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
@@ -200,7 +200,7 @@ export class AuthService {
     }
 
     // Prevent generating token for a non-existent user
-    const user = await this.usersRepository.findOne({
+    const user = await this.usersRepo.findOne({
       id: matchedSession.userId,
     });
     if (!user) {

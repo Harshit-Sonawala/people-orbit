@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { User, PaginatedUsers } from "@/types";
+import { User, PaginatedUsers, UserStats } from "@/types";
 
 const USERS_URL = "/api/users";
 
@@ -193,6 +193,16 @@ export const useUsers = () => {
     });
   };
 
+  const getStats = () => {
+    return useQuery({
+      queryKey: ["users", "stats"],
+      queryFn: async (): Promise<UserStats> => {
+        const { data } = await axios.get<UserStats>(`${USERS_URL}/stats`);
+        return data;
+      },
+    });
+  };
+
   return {
     getAll,
     getById,
@@ -201,5 +211,6 @@ export const useUsers = () => {
     replaceById,
     updateById,
     deleteById,
+    getStats,
   };
 };
