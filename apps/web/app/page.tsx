@@ -125,7 +125,7 @@ export default function Home() {
               title="Average Age"
               statistic={(data && data.data.length
                 ? Math.round(
-                    data.data.reduce((sum, u) => sum + u.age, 0) /
+                    data.data.reduce((sum, u) => sum + u.age!, 0) /
                       data.data.length,
                   )
                 : 0

@@ -3,7 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ILike, FindOptionsWhere } from 'typeorm';
 import { UsersEntity } from './users.entity';
 import { dummyData } from './users.dummyData.static';
-import { User } from './types/user.type';
+import { User } from './types';
+import { UserStats } from './types';
 
 @Injectable()
 export class UsersRepository {
@@ -91,5 +92,77 @@ export class UsersRepository {
       skip: (page - 1) * limit,
       take: limit,
     });
+  }
+
+  // Dashboard Statistics Cards
+  async getStats(): Promise<UserStats> {
+    const newMembersRange = Date.now() - 365 * 24 * 60 * 60 * 1000; // 1 Year ago in milliseconds
+
+    const [totalUsers] = await this.repository.query(`
+      SELECT
+        COUNT(*) AS "totalUsers",
+        COUNT(DISTINCT designation) AS "uniqueDesignations"
+      FROM
+        users
+    `);
+
+    const [newMembers] = await this.repository.query(
+      `
+      SELECT COUNT(*) AS "newMembers"
+      FROM users
+      WHERE "createdAt" > $1
+    `,
+      [newMembersRange],
+    );
+
+    const [uniqueSkills] = await this.repository.query(`
+      SELECT COUNT(DISTINCT skill) AS "uniqueSkills"
+      FROM users, unnest(skills) AS skill
+      WHERE skills IS NOT NULL AND array_length(skills, 1) > 0
+    `);
+
+    const [avgAge] = await this.repository.query(`
+      SELECT ROUND(AVG(age)) AS "avgAge"
+      FROM users
+    `);
+
+    const topDesignations = await this.repository.query(`
+      SELECT designation AS "topDesignation", COUNT(*) AS count
+      FROM users
+      GROUP BY designation
+      ORDER BY count DESC
+      LIMIT 3
+    `);
+
+    const topSkills = await this.repository.query(`
+      SELECT skill AS "topSkill", COUNT(*) AS count
+      FROM users, unnest(skills) AS skill
+      WHERE skills IS NOT NULL AND array_length(skills, 1) > 0
+      GROUP BY skill
+      ORDER BY count DESC
+      LIMIT 3
+    `);
+
+    const [newestUserName] = await this.repository.query(`
+      SELECT "firstName", "lastName"
+      FROM users
+      ORDER BY "createdAt" DESC
+      LIMIT 1
+    `);
+
+    return {
+      totalUsers: parseInt(totalUsers.totalUsers),
+      newUsersCount: parseInt(newMembers.newMembers),
+      avgAge: parseInt(avgAge.avgAge),
+      uniqueDesignations: parseInt(totalUsers.uniqueDesignations),
+      uniqueSkills: parseInt(uniqueSkills.uniqueSkills),
+      topDesignations: topDesignations.map(
+        (d: { topDesignation: string }) => d.topDesignation,
+      ),
+      topSkills: topSkills.map((s: { topSkill: string }) => s.topSkill),
+      newestUserName: newestUserName
+        ? `${newestUserName.firstName} ${newestUserName.lastName}`
+        : '-',
+    };
   }
 }
