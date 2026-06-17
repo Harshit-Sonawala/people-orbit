@@ -1,7 +1,7 @@
 export type UserStats = {
   totalUsers: number;
-  uniqueDesignations: number;
   newUsersCount: number;
+  uniqueDesignations: number;
   uniqueSkills: number;
   avgAge: number;
   topDesignations: string[];
