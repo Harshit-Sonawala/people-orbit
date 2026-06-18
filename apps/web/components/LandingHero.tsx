@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { Heading } from "@/components";
+import { CustomLink, Heading } from "@/components";
 
 const GlobeCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -281,10 +281,9 @@ const GlobeCanvas = () => {
 
 export const LandingHero = () => {
   return (
-    // <div className="relative -z-10 bg-[radial-gradient(circle_at_center,var(--surface-top)_0%,transparent_75%)] -mt-24 py-10 flex flex-col items-center justify-center min-h-125">
-    <div className="relative -z-10 left-[calc(50%-50vw)] w-screen -mt-24 flex flex-col items-center justify-center min-h-150 bg-surface/80">
+    <div className="relative z-10 left-[calc(50%-50vw)] w-screen -mt-24 flex flex-col items-center justify-center min-h-150 bg-surface/80">
       {/* Globe & Network Canvas Background */}
-      <div className="absolute inset-y-0 left-[calc(50%-50vw)] w-screen -z-10 overflow-hidden pointer-events-none">
+      <div className="absolute inset-y-0 left-[calc(50%-50vw)] w-screen overflow-hidden pointer-events-none">
         <GlobeCanvas />
 
         {/* Top-to-Bottom Gradient Overlay to fade into the page background color */}
@@ -292,13 +291,28 @@ export const LandingHero = () => {
       </div>
 
       {/* Hero Title and Subtitle */}
-      <div className="py-6 md:py-20 max-w-4xl mx-auto flex flex-col gap-4 w-full">
+      <div className="relative z-10 flex flex-col items-start gap-4 w-full py-6 md:py-20 max-w-4xl mx-auto">
         <Heading variant="lg" className="text-foreground sm:text-6xl">
-          {`Find and connect with all the stars in your orbit.`}
+          Find and connect with all the stars in your{" "}
+          <span className="text-primary">orbit</span>.
         </Heading>
-        <Heading className="text-primary-alt font-medium">
-          {`Discover, connect, and explore our community. Network with professionals from all over the globe.`}
-        </Heading>
+        <p className="text-2xl text-secondary font-medium">
+          {`Explore and connect with our community. Network with professionals from all over the globe.`}
+        </p>
+        <div className="flex flex-row items-center gap-4">
+          <CustomLink
+            href={`/explore`}
+            className="px-4 py-2 text-xl border border-transparent hover:border hover:border-primary"
+          >
+            Explore
+          </CustomLink>
+          <CustomLink
+            href={`/login`}
+            className="px-4 py-2 text-xl border border-transparent hover:border hover:border-primary"
+          >
+            Join Now
+          </CustomLink>
+        </div>
       </div>
     </div>
   );

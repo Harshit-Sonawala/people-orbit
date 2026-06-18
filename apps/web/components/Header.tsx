@@ -9,7 +9,7 @@ import {
 
 export const Header = ({ user }: { user: User | null }) => {
   return (
-    <div className="flex flex-row items-center justify-between py-1 px-4 w-full md:w-[90%] mx-auto mb-8">
+    <div className="relative z-20 flex flex-row items-center justify-between py-1 px-4 w-full md:w-[90%] mx-auto mb-8">
       <div className="flex flex-row items-center justify-between gap-4">
         <CustomLink href="/" className="py-2 px-4">
           <Logo />
