@@ -1,7 +1,7 @@
 "use client";
 import {
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   CartesianGrid,
   XAxis,
   YAxis,
@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import { Heading, Card } from "@/components";
 
-type BarChartProps = {
+type LineChartProps = {
   data: Record<string, unknown>[];
   xAxisKey: string;
   yAxisKey: string;
@@ -20,7 +20,7 @@ type BarChartProps = {
   className?: string;
 };
 
-export const CustomBarChart = ({
+export const CustomLineChart = ({
   data,
   xAxisKey,
   yAxisKey,
@@ -28,7 +28,7 @@ export const CustomBarChart = ({
   subtitle,
   height = 300,
   className,
-}: BarChartProps) => {
+}: LineChartProps) => {
   return (
     <div className="flex flex-col flex-1 gap-4">
       <Card
@@ -41,7 +41,7 @@ export const CustomBarChart = ({
           )}
         </div>
         <ResponsiveContainer width="100%" height={height}>
-          <BarChart data={data} margin={{ left: -20, right: 20 }}>
+          <LineChart data={data} margin={{ left: -20, right: 20 }}>
             <CartesianGrid strokeDasharray="5 5" />
             <XAxis
               dataKey={xAxisKey as string}
@@ -62,17 +62,15 @@ export const CustomBarChart = ({
               }}
               cursor={false}
             />
-            <Bar
+            <Line
               dataKey="frequency"
-              radius={[4, 4, 4, 4]}
               fill="var(--primary)"
-              activeBar={{ fill: "var(--secondary)" }}
+              className="cursor-pointer"
               isAnimationActive={true}
               animationDuration={1000}
               animationBegin={100}
-              className="cursor-pointer"
             />
-          </BarChart>
+          </LineChart>
         </ResponsiveContainer>
       </Card>
     </div>

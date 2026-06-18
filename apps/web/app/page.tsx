@@ -1,5 +1,5 @@
 "use client";
-import { User, BarChartData } from "@/types";
+import { User } from "@/types";
 import { useUsers } from "@/hooks";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import {
@@ -55,7 +55,7 @@ export default function Home() {
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  const dummyBarChartData: BarChartData[] = [
+  const dummyBarChartData = [
     { name: "React", frequency: 24 },
     { name: "Next.js", frequency: 36 },
     { name: "NestJS", frequency: 15 },
@@ -77,13 +77,11 @@ export default function Home() {
       <div className="flex flex-row items-center justify-center gap-4">
         <CustomBarChart
           data={dummyBarChartData}
+          xAxisKey="name"
+          yAxisKey="frequency"
           title="Skills Distribution"
-          subtitle="This is the subtitle"
-        />
-        <CustomBarChart
-          data={dummyBarChartData}
-          title="Title"
-          subtitle="This is the subtitle"
+          subtitle="Frequency distribution of most popular skills"
+          className="w-200"
         />
       </div>
 
