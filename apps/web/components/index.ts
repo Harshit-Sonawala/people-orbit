@@ -19,3 +19,4 @@ export * from "./Logo";
 export * from "./LandingHero";
 export * from "./StatCard";
 export * from "./DashboardCardsRows";
+export * from "./DashboardCharts";

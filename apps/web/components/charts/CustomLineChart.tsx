@@ -11,7 +11,7 @@ import {
 import { Heading, Card } from "@/components";
 
 type LineChartProps = {
-  data: Record<string, unknown>[];
+  data: Record<string, any>[];
   xAxisKey: string;
   yAxisKey: string;
   title?: string;

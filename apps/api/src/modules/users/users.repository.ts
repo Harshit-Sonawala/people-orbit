@@ -93,7 +93,7 @@ export class UsersRepository {
     });
   }
 
-  // Dashboard statistics
+  // Dashboard statistics - cards and charts
   async getStats(): Promise<UserStats> {
     const newMembersRange = Date.now() - 365 * 24 * 60 * 60 * 1000; // 1 Year ago in milliseconds
 
@@ -149,6 +149,37 @@ export class UsersRepository {
       LIMIT 1
     `);
 
+    // All the skills grouped by skill, counts of each group
+    const skillsFreq = await this.repository.query(`
+      SELECT skill, COUNT(*) AS count
+      FROM users, unnest(skills) AS skill
+      WHERE skills IS NOT NULL AND array_length(skills, 1) > 0
+      GROUP BY skill
+      ORDER BY count DESC
+    `);
+
+    // All designations grouped by designation, counts of each group
+    const designationsFreq = await this.repository.query(`
+      SELECT designation, COUNT(*) AS count
+      FROM users
+      GROUP BY designation
+    `);
+
+    // All createdAt grouped by createdAt, counts of each group
+    const createdAtFreq = await this.repository.query(`
+      SELECT DATE_TRUNC('day', TO_TIMESTAMP("createdAt" / 1000.0)) AS created, COUNT(*) AS count
+      FROM users
+      GROUP BY created
+      ORDER BY created
+    `);
+
+    // Ages and counts of all distinct ages
+    const ageFreq = await this.repository.query(`
+      SELECT age, COUNT(*) AS count
+      FROM users
+      GROUP BY age
+    `);
+
     return {
       totalUsers: parseInt(totalUsers.totalUsers),
       newUsersCount: parseInt(newMembers.newMembers),
@@ -162,6 +193,11 @@ export class UsersRepository {
       newestUserName: newestUserName
         ? `${newestUserName.firstName} ${newestUserName.lastName}`
         : '-',
+
+      skillsFreq: skillsFreq,
+      designationsFreq: designationsFreq,
+      createdAtFreq: createdAtFreq,
+      ageFreq: ageFreq,
     };
   }
 }

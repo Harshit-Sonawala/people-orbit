@@ -302,13 +302,13 @@ export const LandingHero = () => {
         <div className="flex flex-row items-center gap-4">
           <CustomLink
             href={`/explore`}
-            className="px-4 py-2 text-xl border border-transparent hover:border hover:border-primary"
+            className="px-4 py-2 text-xl border border-foreground hover:border-primary"
           >
             Explore
           </CustomLink>
           <CustomLink
             href={`/login`}
-            className="px-4 py-2 text-xl border border-transparent hover:border hover:border-primary"
+            className="px-4 py-2 text-xl border border-foreground hover:border-primary"
           >
             Join Now
           </CustomLink>

@@ -13,6 +13,98 @@ import { SortBy, Order } from './dto/query-options.dto';
 export class UsersService {
   constructor(private readonly usersRepo: UsersRepository) {}
 
+  private getDesignationCategory(designation: string): string {
+    const title = designation.toLowerCase();
+
+    if (
+      title.includes('frontend') ||
+      (title.includes('react') && !title.includes('native')) ||
+      title.includes('ui developer')
+    ) {
+      return 'Frontend';
+    }
+    if (
+      title.includes('backend') ||
+      title.includes('database') ||
+      title.includes('embedded') ||
+      title.includes('systems')
+    ) {
+      return 'Backend';
+    }
+    if (
+      title.includes('full stack') ||
+      title.includes('full-stack') ||
+      title.includes('software engineer') ||
+      title.includes('staff engineer') ||
+      title.includes('principal engineer') ||
+      title.includes('intern') ||
+      title.includes('graduate')
+    ) {
+      return 'Full Stack & Software Engineering';
+    }
+    if (
+      title.includes('devops') ||
+      title.includes('devsecops') ||
+      title.includes('sre') ||
+      title.includes('reliability') ||
+      title.includes('cloud') ||
+      title.includes('infrastructure') ||
+      title.includes('platform') ||
+      title.includes('release')
+    ) {
+      return 'DevOps & Cloud';
+    }
+    if (
+      title.includes('data') ||
+      title.includes('ml') ||
+      title.includes('machine learning') ||
+      title.includes('scientist')
+    ) {
+      return 'Data & AI/ML';
+    }
+    if (
+      title.includes('mobile') ||
+      title.includes('ios') ||
+      title.includes('android') ||
+      title.includes('flutter') ||
+      title.includes('react native')
+    ) {
+      return 'Mobile';
+    }
+    if (
+      title.includes('designer') ||
+      title.includes('ux') ||
+      title.includes('ui/ux') ||
+      title.includes('visual') ||
+      title.includes('interaction') ||
+      title.includes('accessibility')
+    ) {
+      return 'Design';
+    }
+    if (
+      title.includes('qa') ||
+      title.includes('testing') ||
+      title.includes('performance engineer')
+    ) {
+      return 'QA & Testing';
+    }
+    if (
+      title.includes('manager') ||
+      title.includes('vp') ||
+      title.includes('director') ||
+      title.includes('cto') ||
+      title.includes('scrum') ||
+      title.includes('architect')
+    ) {
+      return 'Management & Leadership';
+    }
+    return 'Operations & Business';
+  }
+
+  private getParsedCount(count: string | number): number {
+    return typeof count === 'string' ? parseInt(count, 10) : count;
+  }
+
   // GET all records
   async getAll(pageData: QueryOptionsDto): Promise<PaginatedUsers> {
     const {
@@ -160,7 +252,45 @@ export class UsersService {
   }
 
   // GET dashboard statistics
-  async getStats(): Promise<UserStats> {
-    return await this.usersRepo.getStats();
+  async getStats(): Promise<any> {
+    const data = await this.usersRepo.getStats();
+
+    // 1. Bar Chart Data - Aggregate skills from skillsFreq
+    const mappedSkills = data.skillsFreq.map(({ skill, count }) => ({
+      skill,
+      count: this.getParsedCount(count),
+    }));
+    const top10Skills = mappedSkills.slice(0, 10);
+    const otherCount = mappedSkills
+      .slice(10)
+      .reduce((sum, item) => sum + item.count, 0);
+    const aggregatedSkills = [...top10Skills];
+    if (otherCount > 0) {
+      aggregatedSkills.push({ skill: 'Other', count: otherCount });
+    }
+
+    // 2. Designations Donut Chart Data - Aggregate designations
+    const categoryMap = data.designationsFreq.reduce(
+      (acc, { designation, count }) => {
+        const category = this.getDesignationCategory(designation);
+        const parsedCount = this.getParsedCount(count);
+
+        acc[category] = (acc[category] || 0) + parsedCount;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
+    const aggregatedDesignations = Object.entries(categoryMap).map(
+      ([designation, count]) => ({
+        designation,
+        count,
+      }),
+    );
+
+    return {
+      ...data,
+      skillsFreq: aggregatedSkills,
+      designationsFreq: aggregatedDesignations,
+    };
   }
 }

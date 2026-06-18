@@ -1,4 +1,5 @@
 export type UserStats = {
+  // Cards data
   totalUsers: number;
   newUsersCount: number;
   uniqueDesignations: number;
@@ -7,4 +8,10 @@ export type UserStats = {
   topDesignations: string[];
   topSkills: string[];
   newestUserName: string;
+
+  // Charts data
+  skillsFreq: { skill: string; count: number | string }[];
+  designationsFreq: { designation: string; count: number | string }[];
+  createdAtFreq: { createdAt: number; count: number | string }[];
+  ageFreq: { age: number; count: number | string }[];
 };
