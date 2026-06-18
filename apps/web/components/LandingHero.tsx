@@ -283,7 +283,7 @@ export const LandingHero = () => {
   return (
     <div className="relative z-10 left-[calc(50%-50vw)] w-screen -mt-24 flex flex-col items-center justify-center min-h-150 bg-surface/80">
       {/* Globe & Network Canvas Background */}
-      <div className="absolute inset-y-0 left-[calc(50%-50vw)] w-screen overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <GlobeCanvas />
 
         {/* Top-to-Bottom Gradient Overlay to fade into the page background color */}
@@ -291,7 +291,7 @@ export const LandingHero = () => {
       </div>
 
       {/* Hero Title and Subtitle */}
-      <div className="relative z-10 flex flex-col items-start gap-4 w-full py-6 md:py-20 max-w-4xl mx-auto">
+      <div className="relative z-10 flex flex-col items-start gap-4 w-full px-4 md:px-8 pt-16 pb-12 md:pt-28 md:pb-20 max-w-4xl mx-auto">
         <Heading variant="lg" className="text-foreground sm:text-6xl">
           Find and connect with all the stars in your{" "}
           <span className="text-primary">orbit</span>.
