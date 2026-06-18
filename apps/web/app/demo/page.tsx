@@ -12,7 +12,14 @@ import {
   CustomLink,
   UserCard,
   SearchResultCard,
+  StatCard,
 } from "@/components";
+import { CustomBarChart, CustomLineChart } from "@/components/charts";
+import {
+  PeopleAltRounded,
+  WorkRounded,
+  EmojiEventsRounded,
+} from "@mui/icons-material";
 
 export default function Demo() {
   const dispatch = useDispatch();
@@ -39,11 +46,73 @@ export default function Demo() {
     isBanned: false,
   };
 
+  const dummyBarChartData = [
+    { name: "React", frequency: 24 },
+    { name: "Next.js", frequency: 36 },
+    { name: "NestJS", frequency: 15 },
+    { name: "Tanstack Query", frequency: 9 },
+    { name: "Tailwind CSS", frequency: 32 },
+    { name: "Postgres", frequency: 20 },
+    { name: "Docker", frequency: 10 },
+  ];
+
+  const dummyLineChartData = [
+    { date: new Date("2026-01-01"), newUsers: 9 },
+    { date: new Date("2026-02-01"), newUsers: 22 },
+    { date: new Date("2026-03-01"), newUsers: 34 },
+    { date: new Date("2026-04-01"), newUsers: 58 },
+    { date: new Date("2026-05-01"), newUsers: 109 },
+  ];
+
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-10">
       <div className="flex flex-col gap-2">
         <Heading variant="lg">Components Demo Page</Heading>
         <Divider />
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <Heading variant="sm" className="text-secondary">
+          Dashboard Components (Stat Cards & Charts)
+        </Heading>
+
+        <div className="flex flex-row flex-wrap gap-4">
+          <StatCard
+            icon={<PeopleAltRounded className="icon-lg" />}
+            title="Total Users"
+            statistic="1,248"
+            color="primary"
+          />
+          <StatCard
+            icon={<WorkRounded className="icon-lg" />}
+            title="Designations"
+            statistic="42"
+            color="info"
+          />
+          <StatCard
+            icon={<EmojiEventsRounded className="icon-lg" />}
+            title="Awards Given"
+            statistic="15"
+            color="accent"
+          />
+        </div>
+
+        <div className="flex flex-row flex-wrap items-center justify-center gap-4">
+          <CustomBarChart
+            data={dummyBarChartData}
+            xAxisKey="name"
+            yAxisKey="frequency"
+            title="Demo Skills Distribution"
+            subtitle="Frequency distribution of popular skills"
+          />
+          <CustomLineChart
+            data={dummyLineChartData}
+            xAxisKey="date"
+            yAxisKey="newUsers"
+            title="Demo New Users Trend"
+            subtitle="User registration growth over time"
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-4">

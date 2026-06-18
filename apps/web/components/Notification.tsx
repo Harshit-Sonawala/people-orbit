@@ -30,7 +30,7 @@ export const Notification = () => {
       <Card className="z-30 max-w-lg fixed bottom-4 right-4 border border-surface-top">
         <div className="flex flex-1 flex-row items-center gap-4">
           {notification.type === "info" && (
-            <InfoRounded className="text-primary icon-xl" />
+            <InfoRounded className="text-info icon-xl" />
           )}
           {notification.type === "warning" && (
             <WarningRounded className="text-warning icon-xl" />
@@ -53,7 +53,7 @@ export const Notification = () => {
                         ? `text-warning`
                         : notification.type === "error"
                           ? `text-error`
-                          : `text-primary`
+                          : `text-info`
                   }
                 >
                   {notification.title}

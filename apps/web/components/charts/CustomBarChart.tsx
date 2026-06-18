@@ -42,14 +42,17 @@ export const CustomBarChart = ({
         </div>
         <ResponsiveContainer width="100%" height={height}>
           <BarChart data={data} margin={{ left: -20, right: 20 }}>
-            <CartesianGrid strokeDasharray="5 5" />
+            <CartesianGrid
+              stroke="var(--foreground-alt)"
+              strokeDasharray="5 5"
+            />
             <XAxis
-              dataKey={xAxisKey as string}
+              dataKey={xAxisKey}
               stroke="var(--foreground-alt)"
               fontSize={12}
             />
             <YAxis
-              dataKey={yAxisKey as string}
+              dataKey={yAxisKey}
               stroke="var(--foreground-alt)"
               fontSize={12}
             />
@@ -63,7 +66,7 @@ export const CustomBarChart = ({
               cursor={false}
             />
             <Bar
-              dataKey="frequency"
+              dataKey={yAxisKey}
               radius={[4, 4, 4, 4]}
               fill="var(--primary)"
               activeBar={{ fill: "var(--secondary)" }}

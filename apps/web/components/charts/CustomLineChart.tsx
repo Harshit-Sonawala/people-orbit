@@ -20,6 +20,33 @@ type LineChartProps = {
   className?: string;
 };
 
+export const formatDateValue = (value: unknown): string => {
+  if (value instanceof Date) {
+    return value.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+
+  if (typeof value === "string") {
+    const timestamp = Date.parse(value);
+    if (!isNaN(timestamp)) {
+      const hasSeparators = /[-/:]/.test(value);
+      const isNotPureNumber = isNaN(Number(value));
+      if (hasSeparators || isNotPureNumber) {
+        return new Date(timestamp).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+    }
+  }
+
+  return String(value ?? "");
+};
+
 export const CustomLineChart = ({
   data,
   xAxisKey,
@@ -42,18 +69,23 @@ export const CustomLineChart = ({
         </div>
         <ResponsiveContainer width="100%" height={height}>
           <LineChart data={data} margin={{ left: -20, right: 20 }}>
-            <CartesianGrid strokeDasharray="5 5" />
+            <CartesianGrid
+              stroke="var(--foreground-alt)"
+              strokeDasharray="5 5"
+            />
             <XAxis
-              dataKey={xAxisKey as string}
+              dataKey={xAxisKey}
               stroke="var(--foreground-alt)"
               fontSize={12}
+              tickFormatter={formatDateValue}
             />
             <YAxis
-              dataKey={yAxisKey as string}
+              dataKey={yAxisKey}
               stroke="var(--foreground-alt)"
               fontSize={12}
             />
             <Tooltip
+              labelFormatter={formatDateValue}
               contentStyle={{
                 backgroundColor: "var(--surface)",
                 borderColor: "var(--surface-top)",
@@ -63,7 +95,7 @@ export const CustomLineChart = ({
               cursor={false}
             />
             <Line
-              dataKey="frequency"
+              dataKey={yAxisKey}
               fill="var(--primary)"
               className="cursor-pointer"
               isAnimationActive={true}
