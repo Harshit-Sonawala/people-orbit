@@ -27,7 +27,7 @@ export default function Home() {
               src={landingCardImg1}
               alt="Connect with like-minded professionals"
               fill
-              sizes="(max-width: 1280px) 100vw, 30vw"
+              sizes="(max-width: 1280px)"
               className="object-cover rounded-lg opacity-80"
               priority
             />
@@ -48,7 +48,7 @@ export default function Home() {
               src={landingCardImg2}
               alt="Connect with like-minded professionals"
               fill
-              sizes="(max-width: 1280px) 100vw, 30vw"
+              sizes="(max-width: 1280px)"
               className="object-cover rounded-lg opacity-80"
               priority
             />
@@ -69,7 +69,7 @@ export default function Home() {
               src={landingCardImg3}
               alt="Connect with like-minded professionals"
               fill
-              sizes="(max-width: 1280px) 100vw, 30vw"
+              sizes="(max-width: 1280px)"
               className="object-cover rounded-lg opacity-80"
               priority
             />

@@ -1,6 +1,10 @@
 import { useUsers } from "@/hooks";
 import { CircularProgress } from "@mui/material";
-import { CustomBarChart, CustomLineChart } from "@/components/charts";
+import {
+  CustomBarChart,
+  CustomDonutChart,
+  CustomLineChart,
+} from "@/components/charts";
 
 export const DashboardCharts = () => {
   const { getStats } = useUsers();
@@ -33,13 +37,20 @@ export const DashboardCharts = () => {
           <CircularProgress color="primary" />
         </div>
       ) : (
-        <div className="flex flex-row items-center justify-center gap-8">
+        <div className="grid grid-cols-2 gap-8">
           <CustomBarChart
             data={skillsFreq ?? []}
             xAxisKey="skill"
             yAxisKey="count"
             title="Skills Distribution"
             subtitle="Frequency distribution of most popular skills"
+          />
+          <CustomDonutChart
+            data={designationsFreq ?? []}
+            dataKey="count"
+            nameKey="designation"
+            title="Designations Breakdown"
+            subtitle="A detailed view into the different categories of professionals"
           />
           <CustomLineChart
             data={dummyLineChartData}
