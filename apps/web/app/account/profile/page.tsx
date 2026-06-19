@@ -55,7 +55,7 @@ export default function Profile() {
   const { mutate, isPending } = replaceById();
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-6">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-8 w-[90%] lg:w-[80%] mx-auto pb-32">
       <Formik
         enableReinitialize
         initialValues={{

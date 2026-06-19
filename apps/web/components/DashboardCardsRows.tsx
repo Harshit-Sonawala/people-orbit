@@ -1,5 +1,5 @@
 import { useUsers } from "@/hooks";
-import { Heading, StatCard } from "@/components";
+import { Heading, Card, StatCard } from "@/components";
 import {
   PeopleAltRounded,
   WorkRounded,
@@ -33,12 +33,12 @@ export const DashboardCardsRows = () => {
           <CircularProgress color="primary" />
         </div>
       ) : (
-        <div className="flex flex-col gap-4 mb-12">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col">
-              <Heading variant="md">At a Glance</Heading>
+        <div className="flex flex-col gap-4">
+          <Card className="flex flex-col gap-4">
+            <div className="flex flex-col p-4">
+              <Heading variant="md">Key Statistics</Heading>
               <p className="text-sm text-foreground-alt">
-                View key user statistics
+                View user details at a glance
               </p>
             </div>
             <div className="flex flex-row flex-wrap gap-4">
@@ -78,33 +78,32 @@ export const DashboardCardsRows = () => {
                 color="secondary"
               />
             </div>
-          </div>
+            <div className="flex flex-row flex-wrap gap-4">
+              {/* Top 3 Designations */}
+              <StatCard
+                icon={<TrendingUpRounded className="icon-lg" />}
+                title="Top 3 Designations"
+                statistic={topDesignations.join(", ")}
+                color="tertiary"
+              />
 
-          <div className="flex flex-row flex-wrap gap-4">
-            {/* Top 3 Designations */}
-            <StatCard
-              icon={<TrendingUpRounded className="icon-lg" />}
-              title="Top 3 Designations"
-              statistic={topDesignations.join(", ")}
-              color="tertiary"
-            />
+              {/* Top 3 Skills */}
+              <StatCard
+                icon={<EmojiEventsRounded className="icon-lg" />}
+                title="Top 3 Skills"
+                statistic={topSkills.join(", ")}
+                color="accent"
+              />
 
-            {/* Top 3 Skills */}
-            <StatCard
-              icon={<EmojiEventsRounded className="icon-lg" />}
-              title="Top 3 Skills"
-              statistic={topSkills.join(", ")}
-              color="accent"
-            />
-
-            {/* Newest User Name */}
-            <StatCard
-              icon={<PersonAddAlt1Rounded className="icon-lg" />}
-              title="Newest User"
-              statistic={newestUserName}
-              color="success"
-            />
-          </div>
+              {/* Newest User Name */}
+              <StatCard
+                icon={<PersonAddAlt1Rounded className="icon-lg" />}
+                title="Newest User"
+                statistic={newestUserName}
+                color="success"
+              />
+            </div>
+          </Card>
         </div>
       )}
     </>

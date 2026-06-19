@@ -17,6 +17,7 @@ type LineChartProps = {
   title?: string;
   subtitle?: string;
   height?: number;
+  variant?: "surface" | "surface-top" | "outlined" | "outlined-primary";
   className?: string;
 };
 
@@ -54,12 +55,14 @@ export const CustomLineChart = ({
   title,
   subtitle,
   height = 300,
+  variant = "surface",
   className,
 }: LineChartProps) => {
   return (
     <div className="flex flex-col flex-1 gap-4">
       <Card
-        className={`items-stretch justify-center w-full ${className ?? ""}`}
+        variant={variant}
+        className={`items-stretch justify-center w-full gap-4 ${className ?? ""}`}
       >
         <div className="flex flex-col items-stretch rounded-lg p-4">
           {title && <Heading>{title}</Heading>}

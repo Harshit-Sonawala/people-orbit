@@ -33,7 +33,7 @@ export const DashboardCharts = () => {
           <CircularProgress color="primary" />
         </div>
       ) : (
-        <div className="flex flex-row items-center justify-center gap-4">
+        <div className="flex flex-row items-center justify-center gap-8">
           <CustomBarChart
             data={skillsFreq ?? []}
             xAxisKey="skill"

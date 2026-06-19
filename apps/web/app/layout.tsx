@@ -23,10 +23,8 @@ export default async function RootLayout({
       <Providers user={user}>
         <body className="min-h-full flex flex-col">
           <Header user={user} />
-          <div className="w-[90%] lg:w-[80%] mx-auto pb-32">
-            {children}
-            <Notification />
-          </div>
+          {children}
+          <Notification />
           <Footer />
         </body>
       </Providers>

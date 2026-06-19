@@ -53,7 +53,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-8 w-[90%] lg:w-[80%] mx-auto pb-32">
       {/* UserCards Grid */}
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">

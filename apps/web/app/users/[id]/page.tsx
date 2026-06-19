@@ -40,7 +40,7 @@ export default async function UserDetails({
   const user: User = await response.json();
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-8 w-[90%] lg:w-[80%] mx-auto pb-32">
       {user && (
         <div className="flex flex-col items-stretch gap-4 justify-center">
           <div className="relative h-84 rounded-lg overflow-hidden">

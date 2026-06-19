@@ -25,7 +25,7 @@ export default function Search() {
   const { data: data, isLoading, isError, error } = search(query, page, limit);
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-6 w-[80%] mx-auto">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-8 w-[90%] lg:w-[80%] mx-auto pb-32">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
           <Heading variant="md">

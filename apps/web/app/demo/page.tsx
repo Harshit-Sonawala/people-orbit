@@ -65,7 +65,7 @@ export default function Demo() {
   ];
 
   return (
-    <div className="flex flex-col flex-1 items-stretch justify-center gap-10">
+    <div className="flex flex-col flex-1 items-stretch justify-center gap-10 w-[90%] lg:w-[80%] mx-auto pb-32">
       <div className="flex flex-col gap-2">
         <Heading variant="lg">Components Demo Page</Heading>
         <Divider />
