@@ -97,6 +97,7 @@ export class UsersRepository {
   async getStats(): Promise<UserStats> {
     const newMembersRange = Date.now() - 365 * 24 * 60 * 60 * 1000; // 1 Year ago in milliseconds
 
+    // Key Statistics Cards Queries:
     const [totalUsers] = await this.repository.query(`
       SELECT
         COUNT(*) AS "totalUsers",
@@ -149,7 +150,8 @@ export class UsersRepository {
       LIMIT 1
     `);
 
-    // All the skills grouped by skill, counts of each group
+    // Charts Queries:
+    // All the skills grouped by skill with counts of each group
     const skillsFreq = await this.repository.query(`
       SELECT skill, COUNT(*) AS count
       FROM users, unnest(skills) AS skill

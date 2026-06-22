@@ -1,5 +1,13 @@
 "use client";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+  Label,
+  LabelList,
+} from "recharts";
 import { Heading, Card } from "@/components";
 
 type DonutChartProps = {
@@ -23,35 +31,68 @@ export const CustomDonutChart = ({
   variant = "surface",
   className,
 }: DonutChartProps) => {
+  const total = data.reduce(
+    (sum, item) => sum + (Number(item[dataKey]) || 0),
+    0,
+  );
+
   const renderCustomizedLabel = ({
     cx,
     cy,
     midAngle,
-    innerRadius,
     outerRadius,
-    percent,
     name,
     payload,
+    fill,
   }: any) => {
     const RADIAN = Math.PI / 180;
-    const radius = outerRadius + 15;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    const sin = Math.sin(-midAngle * RADIAN);
+    const cos = Math.cos(-midAngle * RADIAN);
+
+    // sx, sy: start of line on the outer edge of pie slice
+    const sx = cx + outerRadius * cos;
+    const sy = cy + outerRadius * sin;
+
+    // mx, my: knee point
+    const mx = cx + (outerRadius + 15) * cos;
+    const my = cy + (outerRadius + 15) * sin;
+
+    // ex, ey: end of line pointing horizontally left or right
+    const ex = mx + (cos >= 0 ? 1 : -1) * 15;
+    const ey = my;
+
+    // tx, ty: text position
+    const tx = ex + (cos >= 0 ? 1 : -1) * 6;
+    const ty = ey;
+
+    const textAnchor = cos >= 0 ? "start" : "end";
     const labelText = name || payload?.[nameKey] || "";
+    const count = payload?.[dataKey] ?? 0;
+    const percentStr =
+      total > 0 ? `${((count / total) * 100).toFixed(2)}%` : "0.00%";
 
     if (!labelText) return null;
 
     return (
-      <text
-        x={x}
-        y={y}
-        fill="var(--foreground)"
-        textAnchor={x > cx ? "start" : "end"}
-        dominantBaseline="central"
-        className="text-[11px] font-semibold"
-      >
-        {`${labelText} (${(percent * 100).toFixed(0)}%)`}
-      </text>
+      <g>
+        <path
+          d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+          stroke={fill}
+          strokeWidth={1.5}
+          fill="none"
+        />
+        <circle cx={ex} cy={ey} r={2} fill={fill} />
+        <text
+          x={tx}
+          y={ty}
+          fill="var(--foreground)"
+          textAnchor={textAnchor}
+          dominantBaseline="central"
+          className="text-sm font-light"
+        >
+          {`${labelText.slice(0, 10)}${labelText.length > 12 ? "..." : ""} - ${percentStr}`}
+        </text>
+      </g>
     );
   };
 
@@ -84,7 +125,7 @@ export const CustomDonutChart = ({
               nameKey={nameKey}
               label={renderCustomizedLabel}
               labelLine={false}
-              innerRadius="70%"
+              innerRadius="60%"
               outerRadius="100%"
               cornerRadius="4%"
               paddingAngle={4}
@@ -94,6 +135,12 @@ export const CustomDonutChart = ({
               className="cursor-pointer"
               stroke="none"
             >
+              <LabelList
+                dataKey={dataKey}
+                position="inside"
+                fill="var(--foreground)"
+                className="text-sm font-semibold select-none pointer-events-none"
+              />
               {data.map((entry, index) => {
                 const colors = [
                   "var(--primary)",
@@ -109,6 +156,20 @@ export const CustomDonutChart = ({
                   <Cell key={`cell-${index}`} fill={color} stroke="none" />
                 );
               })}
+              <Label
+                value={total}
+                position="center"
+                dy={-10}
+                fill="var(--foreground)"
+                className="text-4xl font-semibold"
+              />
+              <Label
+                value="Total"
+                position="center"
+                dy={20}
+                fill="var(--foreground-alt)"
+                className="text-xs text-foreground-alt uppercase tracking-wider"
+              />
             </Pie>
           </PieChart>
         </ResponsiveContainer>
