@@ -251,11 +251,11 @@ export class UsersService {
     };
   }
 
-  // GET dashboard statistics
+  // GET dashboard statistics - Key Statistics cards, charts data
   async getStats(): Promise<any> {
     const data = await this.usersRepo.getStats();
 
-    // 1. Bar Chart Data - Aggregate skills from skillsFreq
+    // Bar Chart Data - Aggregate skills from skillsFreq + Other category
     const mappedSkills = data.skillsFreq.map(({ skill, count }) => ({
       skill,
       count: this.getParsedCount(count),
@@ -269,7 +269,7 @@ export class UsersService {
       aggregatedSkills.push({ skill: 'Other', count: otherCount });
     }
 
-    // 2. Designations Donut Chart Data - Aggregate designations
+    // Designations Donut Chart Data - Aggregate designations
     const categoryMap = data.designationsFreq.reduce(
       (acc, { designation, count }) => {
         const category = this.getDesignationCategory(designation);
@@ -287,10 +287,37 @@ export class UsersService {
       }),
     );
 
+    // New Joinees Line Chart Data - Aggregate createdAt to monthly count
+    const monthlyMap = data.createdAtFreq.reduce(
+      (acc, { createdAt, count }) => {
+        const date = new Date(createdAt);
+        const year = date.getUTCFullYear();
+        const month = date.getUTCMonth();
+        // Format as "YYYY-MM-DD" representing the first day of the month
+        const monthKey = `${year}-${String(month + 1).padStart(2, '0')}-01`;
+
+        const countVal =
+          typeof count === 'string' ? parseInt(count, 10) : count;
+        acc[monthKey] = (acc[monthKey] || 0) + countVal;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
+    const aggregatedCreatedAt = Object.entries(monthlyMap)
+      .map(([createdAt, count]) => ({
+        createdAt,
+        count,
+      }))
+      .sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      );
+
     return {
       ...data,
       skillsFreq: aggregatedSkills,
       designationsFreq: aggregatedDesignations,
+      createdAtFreq: aggregatedCreatedAt,
     };
   }
 }

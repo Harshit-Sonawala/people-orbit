@@ -12,24 +12,6 @@ export const DashboardCharts = () => {
 
   const { skillsFreq, designationsFreq, createdAtFreq, ageFreq } = data ?? {};
 
-  const dummyBarChartData = [
-    { skill: "React", count: 24 },
-    { skill: "Next.js", count: 36 },
-    { skill: "NestJS", count: 15 },
-    { skill: "Tanstack Query", count: 9 },
-    { skill: "Tailwind CSS", count: 32 },
-    { skill: "Postgres", count: 20 },
-    { skill: "Docker", count: 10 },
-  ];
-
-  const dummyLineChartData = [
-    { date: new Date("2026-01-01"), newUsers: 9 },
-    { date: new Date("2026-02-01"), newUsers: 22 },
-    { date: new Date("2026-03-01"), newUsers: 34 },
-    { date: new Date("2026-04-01"), newUsers: 58 },
-    { date: new Date("2026-05-01"), newUsers: 109 },
-  ];
-
   return (
     <>
       {isLoading ? (
@@ -53,11 +35,11 @@ export const DashboardCharts = () => {
             subtitle="A detailed view into the different categories of professionals"
           />
           <CustomLineChart
-            data={dummyLineChartData}
-            xAxisKey="date"
-            yAxisKey="newUsers"
-            title="New Users"
-            subtitle="User registrations trend over time"
+            data={createdAtFreq ?? []}
+            xAxisKey="createdAt"
+            yAxisKey="count"
+            title="Monthly Growth"
+            subtitle="New user registrations trend over the past few months"
           />
         </div>
       )}

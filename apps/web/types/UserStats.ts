@@ -12,6 +12,6 @@ export type UserStats = {
   // Charts data
   skillsFreq: { skill: string; count: number | string }[];
   designationsFreq: { designation: string; count: number | string }[];
-  createdAtFreq: { createdAt: number; count: number | string }[];
+  createdAtFreq: { createdAt: string; count: number | string }[];
   ageFreq: { age: number; count: number | string }[];
 };

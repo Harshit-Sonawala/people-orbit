@@ -25,7 +25,6 @@ export const formatDateValue = (value: unknown): string => {
   if (value instanceof Date) {
     return value.toLocaleDateString("en-US", {
       month: "short",
-      day: "numeric",
       year: "numeric",
     });
   }
@@ -38,7 +37,6 @@ export const formatDateValue = (value: unknown): string => {
       if (hasSeparators || isNotPureNumber) {
         return new Date(timestamp).toLocaleDateString("en-US", {
           month: "short",
-          day: "numeric",
           year: "numeric",
         });
       }
@@ -71,7 +69,7 @@ export const CustomLineChart = ({
           )}
         </div>
         <ResponsiveContainer width="100%" height={height}>
-          <LineChart data={data} margin={{ left: -20, right: 20 }}>
+          <LineChart data={data} margin={{ left: -20, right: 20, bottom: 25 }}>
             <CartesianGrid
               stroke="var(--foreground-alt)"
               strokeDasharray="5 5"
@@ -81,6 +79,9 @@ export const CustomLineChart = ({
               stroke="var(--foreground-alt)"
               fontSize={12}
               tickFormatter={formatDateValue}
+              angle={-45}
+              textAnchor="end"
+              interval="equidistantPreserveEnd"
             />
             <YAxis
               dataKey={yAxisKey}

@@ -44,8 +44,9 @@ export const CustomBarChart = ({
           )}
         </div>
         <ResponsiveContainer width="100%" height={height}>
-          <BarChart data={data} margin={{ left: -20, right: 20 }}>
+          <BarChart data={data} margin={{ left: -20, right: 20, bottom: 25 }}>
             <CartesianGrid
+              syncWithTicks={true}
               stroke="var(--foreground-alt)"
               strokeDasharray="5 5"
             />
@@ -53,6 +54,9 @@ export const CustomBarChart = ({
               dataKey={xAxisKey}
               stroke="var(--foreground-alt)"
               fontSize={12}
+              textAnchor="end"
+              angle={-45}
+              interval="equidistantPreserveEnd"
             />
             <YAxis
               dataKey={yAxisKey}

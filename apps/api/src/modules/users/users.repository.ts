@@ -151,7 +151,7 @@ export class UsersRepository {
     `);
 
     // Charts Queries:
-    // All the skills grouped by skill with counts of each group
+    // All skills, counts grouped by skill, ordered by count descending (most popular to least popular)
     const skillsFreq = await this.repository.query(`
       SELECT skill, COUNT(*) AS count
       FROM users, unnest(skills) AS skill
@@ -160,19 +160,19 @@ export class UsersRepository {
       ORDER BY count DESC
     `);
 
-    // All designations grouped by designation, counts of each group
+    // All designations, counts grouped by designation of each group
     const designationsFreq = await this.repository.query(`
       SELECT designation, COUNT(*) AS count
       FROM users
       GROUP BY designation
     `);
 
-    // All createdAt grouped by createdAt, counts of each group
+    // All createdAt, counts grouped by createdAt, ordered by createdAt of each group
     const createdAtFreq = await this.repository.query(`
-      SELECT DATE_TRUNC('day', TO_TIMESTAMP("createdAt" / 1000.0)) AS created, COUNT(*) AS count
+      SELECT DATE_TRUNC('day', TO_TIMESTAMP("createdAt" / 1000.0)) AS "createdAt", COUNT(*) AS count
       FROM users
-      GROUP BY created
-      ORDER BY created
+      GROUP BY "createdAt"
+      ORDER BY "createdAt"
     `);
 
     // Ages and counts of all distinct ages
