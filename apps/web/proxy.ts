@@ -44,25 +44,19 @@ export default async function proxy(
       }
     }
 
-    // For routes that need it, add the cookie to the request body
+    // For logout route, add the cookie to the request body
     if (isLogout) {
       const refreshToken = request.cookies.get("refreshToken")?.value;
-      const sessionId = request.cookies.get("sessionId")?.value;
       if (refreshToken) {
         body = { ...body, refreshToken };
       }
-      if (sessionId) {
-        body = { ...body, sessionId };
-      }
     }
 
-    // For refresh route add both tokens + sessionId from cookies into request body
+    // For refresh route add both tokens from cookies into request body
     if (pathname === "/api/auth/refresh") {
       const refreshToken = request.cookies.get("refreshToken")?.value;
-      const sessionId = request.cookies.get("sessionId")?.value;
       if (accessToken) body = { ...body, accessToken };
       if (refreshToken) body = { ...body, refreshToken };
-      if (sessionId) body = { ...body, sessionId };
     }
 
     // RESPONSE SIDE
@@ -84,7 +78,6 @@ export default async function proxy(
     ) {
       const oldRefreshToken = request.cookies.get("refreshToken")?.value;
       const oldAccessToken = request.cookies.get("accessToken")?.value;
-      const oldSessionId = request.cookies.get("sessionId")?.value;
 
       if (oldRefreshToken) {
         const refreshResponse = await axios({
@@ -93,17 +86,13 @@ export default async function proxy(
           data: {
             accessToken: oldAccessToken,
             refreshToken: oldRefreshToken,
-            sessionId: oldSessionId,
           },
           validateStatus: () => true, // pass through all status codes like 4xx, 5xx
         });
 
         if (refreshResponse.status >= 200 && refreshResponse.status < 300) {
-          const {
-            accessToken: newAccessToken,
-            refreshToken: newRefreshToken,
-            sessionId: newSessionId,
-          } = refreshResponse.data;
+          const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+            refreshResponse.data;
 
           // Retry original request with the newAccessToken
           const retryHeaders = Object.fromEntries(headers.entries());
@@ -150,16 +139,6 @@ export default async function proxy(
             });
           }
 
-          if (newSessionId) {
-            retryNextResponse.cookies.set("sessionId", newSessionId, {
-              httpOnly: true,
-              secure: process.env.NODE_ENV === "production",
-              sameSite: "strict",
-              path: "/",
-              maxAge: 7 * 24 * 60 * 60,
-            });
-          }
-
           return retryNextResponse;
         } else {
           // Refresh failed - clear cookies and return a 401 so FE can logout
@@ -169,7 +148,6 @@ export default async function proxy(
           );
           expiredResponse.cookies.delete("accessToken");
           expiredResponse.cookies.delete("refreshToken");
-          expiredResponse.cookies.delete("sessionId");
           return expiredResponse;
         }
       }
@@ -183,14 +161,12 @@ export default async function proxy(
     const {
       accessToken: accessTokenFromResponse,
       refreshToken: refreshTokenFromResponse,
-      sessionId: sessionIdFromResponse,
       ...responseBody
     } = (isLoginOrSignup || isRefresh) && apiResponse.data
       ? apiResponse.data
       : {
           accessToken: undefined,
           refreshToken: undefined,
-          sessionId: undefined,
           ...apiResponse.data,
         };
 
@@ -234,22 +210,12 @@ export default async function proxy(
           maxAge: 7 * 24 * 60 * 60, // 7 days
         });
       }
-      if (sessionIdFromResponse) {
-        response.cookies.set("sessionId", sessionIdFromResponse, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
-          path: "/",
-          maxAge: 7 * 24 * 60 * 60, // 7 days
-        });
-      }
     }
 
     // Logout request, delete token cookies
     if (pathname === "/api/auth/logout" && isResponseSuccess) {
       response.cookies.delete("accessToken");
       response.cookies.delete("refreshToken");
-      response.cookies.delete("sessionId");
     }
 
     return response;

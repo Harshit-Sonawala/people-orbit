@@ -6,7 +6,7 @@
 - [x] Generating AccessTokens - JWT Signing, verification, generating refreshTokens.
 - [x] Setting Cookies in proxy.ts
 - [x] Refresh Token Generation - in auth.service.
-- [x] AuthSessionsEntity, repository, migration for auth_sessions table.
+- [x] RefreshTokensEntity, repository, migration for refresh_tokens table.
 - [x] Save Sessions into sessions Table on login/signup and delete on logouts.
 - [x] Implement /auth/refresh - Controller: @Post('refresh'), reads the refresh token from the cookie, Service: find the session by userId, compare the plain token against the stored hash with bcrypt.compare, generate a new access token (and rotate the refresh token), return the new accessToken
 - [x] Refresh token rotation - On every /auth/refresh call: delete the old session row, generate a new refresh token, save the new hash, set the new cookie.

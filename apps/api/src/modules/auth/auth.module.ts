@@ -4,14 +4,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { AuthSessionsEntity } from './auth-sessions.entity';
-import { AuthSessionsRepository } from './auth-sessions.repository';
+import { RefreshTokensEntity } from './auth-refresh-tokens.entity';
+import { RefreshTokensRepository } from './auth-refresh-tokens.repository';
 import { UsersEntity } from '@/modules/users/users.entity';
 import { UsersRepository } from '@/modules/users/users.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([AuthSessionsEntity, UsersEntity]),
+    TypeOrmModule.forFeature([RefreshTokensEntity, UsersEntity]),
     JwtModule.registerAsync({
       global: true,
       useFactory: async (configService: ConfigService) => ({
@@ -22,6 +22,6 @@ import { UsersRepository } from '@/modules/users/users.repository';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthSessionsRepository, UsersRepository],
+  providers: [AuthService, RefreshTokensRepository, UsersRepository],
 })
 export class AuthModule {}

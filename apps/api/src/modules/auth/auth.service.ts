@@ -6,74 +6,64 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
-import crypto from 'crypto';
 import type { AuthResponse } from './types/auth-response.type';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { UsersRepository } from '@/modules/users/users.repository';
 import { User } from '@/modules/users/types/user.type';
 import { UserRole } from '@/modules/users/types/user-role.enum';
-import { AuthSessionsRepository } from './auth-sessions.repository';
-import { AuthSessionsEntity } from './auth-sessions.entity';
+import { RefreshTokensRepository } from './auth-refresh-tokens.repository';
+import { RefreshTokensEntity } from './auth-refresh-tokens.entity';
+import { AuthJwtPayload } from './types';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersRepo: UsersRepository,
-    private readonly authSessionsRepository: AuthSessionsRepository,
+    private readonly RefreshTokensRepository: RefreshTokensRepository,
   ) {}
 
-  private generateAccessToken(user: User): string {
-    const accessToken = this.jwtService.sign({
+  private async generateAccessToken(user: User): Promise<string> {
+    const accessToken = this.jwtService.signAsync({
       sub: user.id,
       email: user.email,
     });
     return accessToken;
   }
 
-  private async generateRefreshToken(): Promise<{
-    refreshToken: string;
-    hashedRefreshToken: string;
-  }> {
-    const refreshToken = crypto.randomBytes(32).toString('hex');
-    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
-    return { refreshToken, hashedRefreshToken };
-  }
-
-  // Create a new row in auth_sessions and return the sessionId
-  private async createSession(
-    userId: string,
-    hashedRefreshToken: string,
-  ): Promise<string> {
-    const newDate = Date.now();
-    const sessionId = `session-${newDate}`;
-    await this.authSessionsRepository.create({
-      sessionId,
-      userId,
-      refreshTokenHash: hashedRefreshToken,
-      expiresAt: newDate + 7 * 24 * 60 * 60 * 1000,
-    });
-    return sessionId;
-  }
-
-  // Find session by sessionId, then verify the refreshToken
-  private async findMatchingSession(
-    sessionId: string,
-    refreshToken: string,
-  ): Promise<AuthSessionsEntity> {
-    const session = await this.authSessionsRepository.findOne({ sessionId });
-    if (!session) {
-      throw new UnauthorizedException('Invalid session.');
-    }
-    const isMatch = await bcrypt.compare(
-      refreshToken,
-      session.refreshTokenHash,
+  private async generateRefreshToken(user: User): Promise<string> {
+    const refreshToken = this.jwtService.signAsync(
+      {
+        sub: user.id,
+        email: user.email,
+      },
+      { expiresIn: '7d' },
     );
-    if (!isMatch) {
-      throw new UnauthorizedException('Invalid refresh token.');
+    return refreshToken;
+  }
+
+  // Create a new row in refresh_tokens and return the id
+  private async createRefreshTokensRow(userId: string, refreshToken: string) {
+    const newDate = Date.now();
+    const id = `refreshToken-${newDate}`;
+    await this.RefreshTokensRepository.create({
+      id,
+      refreshToken,
+    });
+  }
+
+  // Find refreshTokensRow based on refreshToken
+  private async findMatchingRefreshTokensRow(
+    refreshToken: string,
+  ): Promise<RefreshTokensEntity> {
+    const refreshTokensRow = await this.RefreshTokensRepository.findOne({
+      refreshToken,
+    });
+    if (!refreshTokensRow) {
+      throw new UnauthorizedException('No matching record found.');
     }
-    return session;
+    return refreshTokensRow;
   }
 
   // POST signup
@@ -102,14 +92,13 @@ export class AuthService {
     };
     const createdUser = await this.usersRepo.createOrReplace(newUser);
 
-    const accessToken = this.generateAccessToken(createdUser); // Generate JWT accessToken
-    const { refreshToken, hashedRefreshToken } =
-      await this.generateRefreshToken(); // Generate refreshToken
+    const accessToken = await this.generateAccessToken(createdUser); // Generate JWT accessToken
+    const refreshToken = await this.generateRefreshToken(createdUser); // Generate JWT refreshToken
 
-    // Save id, hash, userId, expiresAt into sessions table
-    const sessionId = await this.createSession(idSlug, hashedRefreshToken);
+    // Save id, refreshToken into refreshTokens table
+    await this.createRefreshTokensRow(idSlug, refreshToken);
 
-    return { userId: createdUser.id, accessToken, refreshToken, sessionId };
+    return { userId: createdUser.id, accessToken, refreshToken };
   }
 
   // POST login
@@ -136,37 +125,29 @@ export class AuthService {
         `Provided user email or password is incorrect.`,
       );
     }
-    const accessToken = this.generateAccessToken(foundUser); // Generate JWT accessToken
-    const { refreshToken, hashedRefreshToken } =
-      await this.generateRefreshToken(); // Generate refreshToken
 
-    // Save id, hash, userId, expiresAt into sessions table
-    const sessionId = await this.createSession(
-      foundUser.id,
-      hashedRefreshToken,
-    );
+    const accessToken = await this.generateAccessToken(foundUser); // Generate JWT accessToken
+    const refreshToken = await this.generateRefreshToken(foundUser); // Generate refreshToken
 
-    return { userId: foundUser.id, accessToken, refreshToken, sessionId };
+    // Save id, refreshToken into refreshTokens table
+    await this.createRefreshTokensRow(foundUser.id, refreshToken);
+
+    return { userId: foundUser.id, accessToken, refreshToken };
   }
 
   // POST logout. Gets userId from JWT payload
   async logout(
     userId: string,
     refreshToken: string,
-    sessionId: string,
   ): Promise<{ message: string }> {
-    if (!refreshToken || !sessionId) {
-      throw new UnauthorizedException('Refresh token or session not found.');
+    if (!refreshToken) {
+      throw new UnauthorizedException('Missing Refresh Token.');
     }
-    const matchedSession = await this.findMatchingSession(
-      sessionId,
-      refreshToken,
-    );
-
-    await this.authSessionsRepository.deleteOne(matchedSession.sessionId);
-
+    const matchedRefreshTokensRow =
+      await this.findMatchingRefreshTokensRow(refreshToken);
+    await this.RefreshTokensRepository.deleteOne(matchedRefreshTokensRow.id);
     return {
-      message: `User with id: ${userId}, sessionId: ${matchedSession.sessionId} logged out successfully.`,
+      message: `User with id: ${userId} logged out successfully.`,
     };
   }
 
@@ -179,52 +160,50 @@ export class AuthService {
     return foundUser;
   }
 
-  // Refresh token
+  // POST Refresh route returns new accessToken and refreshToken
   async refresh(
     refreshToken: string,
-    sessionId: string,
-  ): Promise<{ accessToken: string; refreshToken: string; sessionId: string }> {
-    if (!refreshToken || !sessionId) {
-      throw new UnauthorizedException('Missing Refresh Token, or Session.');
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    if (!refreshToken) {
+      throw new UnauthorizedException('Missing Refresh Token.');
+    }
+    // Verify token exists in DB, prevent reuse of revoked tokens
+    const matchedRefreshTokenRow =
+      await this.findMatchingRefreshTokensRow(refreshToken);
+
+    // Decode and verify refreshToken JWT
+    let payload: AuthJwtPayload;
+    try {
+      payload = await this.jwtService.verifyAsync(refreshToken);
+    } catch (error) {
+      // Clean up expired/invalid refreshTokensRow from DB
+      await this.RefreshTokensRepository.deleteOne(matchedRefreshTokenRow.id);
+      throw new UnauthorizedException(
+        'RefreshTokensRow expired. Please log in again.',
+      );
     }
 
-    const matchedSession = await this.findMatchingSession(
-      sessionId,
-      refreshToken,
-    );
-
-    // 7 Day Expiry Passed, Delete row from auth_sessions DB and prompt a login
-    if (matchedSession.expiresAt < Date.now()) {
-      await this.authSessionsRepository.deleteOne(matchedSession.sessionId);
-      throw new UnauthorizedException('Session expired. Please log in again.');
-    }
+    const userId = payload.sub;
 
     // Prevent generating token for a non-existent user
     const user = await this.usersRepo.findOne({
-      id: matchedSession.userId,
+      id: userId,
     });
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
 
-    // Rotate: delete old session and create new session
-    await this.authSessionsRepository.deleteOne(matchedSession.sessionId);
+    // Rotate: delete old refreshTokensRow and create new refreshTokensRow
+    await this.RefreshTokensRepository.deleteOne(matchedRefreshTokenRow.id);
 
-    const newAccessToken = this.generateAccessToken(user);
-    const {
-      refreshToken: newRefreshToken,
-      hashedRefreshToken: newHashedRefreshToken,
-    } = await this.generateRefreshToken();
+    const newAccessToken = await this.generateAccessToken(user);
+    const newRefreshToken = await this.generateRefreshToken(user);
 
-    const newSessionId = await this.createSession(
-      matchedSession.userId,
-      newHashedRefreshToken,
-    );
+    await this.createRefreshTokensRow(userId, newRefreshToken);
 
     return {
       accessToken: newAccessToken,
       refreshToken: newRefreshToken,
-      sessionId: newSessionId,
     };
   }
 }

@@ -46,35 +46,37 @@ export const DashboardCardsRows = () => {
               <StatCard
                 icon={<PeopleAltRounded className="icon-lg" />}
                 title="Total Users"
-                statistic={totalUsers.toString()}
+                statistic={totalUsers ? totalUsers.toString() : "-"}
                 color="primary"
               />
               {/* New Users joined in the past year */}
               <StatCard
                 icon={<PersonAddAlt1Rounded className="icon-lg" />}
                 title="New Members"
-                statistic={newUsersCount.toString()}
+                statistic={newUsersCount ? newUsersCount.toString() : "-"}
                 color="warning"
               />
               {/* Unique Designations */}
               <StatCard
                 icon={<WorkRounded className="icon-lg" />}
                 title="Unique Designations"
-                statistic={uniqueDesignations.toString()}
+                statistic={
+                  uniqueDesignations ? uniqueDesignations.toString() : "-"
+                }
                 color="info"
               />
               {/* Unique Skills */}
               <StatCard
                 icon={<PsychologyRounded className="icon-lg" />}
                 title="Unique Skills"
-                statistic={uniqueSkills.toString()}
+                statistic={uniqueSkills ? uniqueSkills.toString() : "-"}
                 color="primary-alt"
               />
               {/* Average Age */}
               <StatCard
                 icon={<CakeRounded className="icon-lg" />}
                 title="Average Age"
-                statistic={avgAge.toString()}
+                statistic={avgAge ? avgAge.toString() : "-"}
                 color="secondary"
               />
             </div>
@@ -83,7 +85,7 @@ export const DashboardCardsRows = () => {
               <StatCard
                 icon={<TrendingUpRounded className="icon-lg" />}
                 title="Top 3 Designations"
-                statistic={topDesignations.join(", ")}
+                statistic={topDesignations ? topDesignations.join(", ") : "-"}
                 color="tertiary"
               />
 
@@ -91,7 +93,7 @@ export const DashboardCardsRows = () => {
               <StatCard
                 icon={<EmojiEventsRounded className="icon-lg" />}
                 title="Top 3 Skills"
-                statistic={topSkills.join(", ")}
+                statistic={topSkills ? topSkills.join(", ") : "-"}
                 color="accent"
               />
 
@@ -99,7 +101,7 @@ export const DashboardCardsRows = () => {
               <StatCard
                 icon={<PersonAddAlt1Rounded className="icon-lg" />}
                 title="Newest User"
-                statistic={newestUserName}
+                statistic={newestUserName ? newestUserName : "-"}
                 color="success"
               />
             </div>
