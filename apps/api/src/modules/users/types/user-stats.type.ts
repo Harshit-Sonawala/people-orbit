@@ -10,8 +10,8 @@ export type UserStats = {
   newestUserName: string;
 
   // Charts data
-  skillsFreq: { skill: string; count: number | string }[];
-  designationsFreq: { designation: string; count: number | string }[];
-  createdAtFreq: { createdAt: string; count: number | string }[];
-  ageFreq: { age: number; count: number | string }[];
+  skillsFreq: { skill: string; count: number }[];
+  designationsFreq: { designation: string; count: number }[];
+  createdAtFreq: { createdAt: string; count: number }[];
+  ageFreq: { age: string; count: number }[];
 };

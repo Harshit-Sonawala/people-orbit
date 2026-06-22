@@ -17,6 +17,8 @@ type BarChartProps = {
   title?: string;
   subtitle?: string;
   height?: number;
+  barSpacingPerc?: string;
+  barRadiiArray?: number | [number, number, number, number];
   variant?: "surface" | "surface-top" | "outlined" | "outlined-primary";
   className?: string;
 };
@@ -28,6 +30,8 @@ export const CustomBarChart = ({
   title,
   subtitle,
   height = 300,
+  barSpacingPerc = "10%",
+  barRadiiArray = [4, 4, 4, 4],
   variant = "surface",
   className,
 }: BarChartProps) => {
@@ -44,7 +48,11 @@ export const CustomBarChart = ({
           )}
         </div>
         <ResponsiveContainer width="100%" height={height}>
-          <BarChart data={data} margin={{ left: -20, right: 20, bottom: 25 }}>
+          <BarChart
+            data={data}
+            barCategoryGap={barSpacingPerc}
+            margin={{ left: -20, right: 20, bottom: 25 }}
+          >
             <CartesianGrid
               syncWithTicks={true}
               stroke="var(--foreground-alt)"
@@ -74,7 +82,7 @@ export const CustomBarChart = ({
             />
             <Bar
               dataKey={yAxisKey}
-              radius={[4, 4, 4, 4]}
+              radius={barRadiiArray}
               fill="var(--primary)"
               activeBar={{ fill: "var(--secondary)" }}
               isAnimationActive={true}

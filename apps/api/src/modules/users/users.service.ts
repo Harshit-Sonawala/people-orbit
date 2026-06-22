@@ -40,7 +40,7 @@ export class UsersService {
       title.includes('intern') ||
       title.includes('graduate')
     ) {
-      return 'Full Stack & Software Engineering';
+      return 'Full Stack & SDE';
     }
     if (
       title.includes('devops') ||
@@ -101,8 +101,8 @@ export class UsersService {
     return 'Operations & Business';
   }
 
-  private getParsedCount(count: string | number): number {
-    return typeof count === 'string' ? parseInt(count, 10) : count;
+  private getParsedValue(value: string | number): number {
+    return typeof value === 'string' ? parseInt(value, 10) : value;
   }
 
   // GET all records
@@ -252,13 +252,13 @@ export class UsersService {
   }
 
   // GET dashboard statistics - Key Statistics cards, charts data
-  async getStats(): Promise<any> {
+  async getStats(): Promise<UserStats> {
     const data = await this.usersRepo.getStats();
 
     // Bar Chart Data - Aggregate skills from skillsFreq + Other category
     const mappedSkills = data.skillsFreq.map(({ skill, count }) => ({
       skill,
-      count: this.getParsedCount(count),
+      count: this.getParsedValue(count),
     }));
     const top10Skills = mappedSkills.slice(0, 10);
     const otherCount = mappedSkills
@@ -273,7 +273,7 @@ export class UsersService {
     const categoryMap = data.designationsFreq.reduce(
       (acc, { designation, count }) => {
         const category = this.getDesignationCategory(designation);
-        const parsedCount = this.getParsedCount(count);
+        const parsedCount = this.getParsedValue(count);
 
         acc[category] = (acc[category] || 0) + parsedCount;
         return acc;
@@ -313,11 +313,39 @@ export class UsersService {
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       );
 
+    // Age Distribution Histogram Data - bin into 5 distinct ranges
+    const aggregatedAges = [
+      { age: '16-19', count: 0 },
+      { age: '20-29', count: 0 },
+      { age: '30-39', count: 0 },
+      { age: '40-49', count: 0 },
+      { age: '50+', count: 0 },
+    ];
+    data.ageFreq.map(({ age, count }) => {
+      const parsedAge = this.getParsedValue(age);
+      const parsedCount = this.getParsedValue(count);
+
+      if (isNaN(parsedAge) || isNaN(parsedCount)) return;
+
+      if (parsedAge < 20) {
+        aggregatedAges[0].count += parsedCount;
+      } else if (parsedAge >= 20 && parsedAge < 30) {
+        aggregatedAges[1].count += parsedCount;
+      } else if (parsedAge >= 30 && parsedAge < 40) {
+        aggregatedAges[2].count += parsedCount;
+      } else if (parsedAge >= 40 && parsedAge < 50) {
+        aggregatedAges[3].count += parsedCount;
+      } else {
+        aggregatedAges[4].count += parsedCount;
+      }
+    });
+
     return {
       ...data,
       skillsFreq: aggregatedSkills,
       designationsFreq: aggregatedDesignations,
       createdAtFreq: aggregatedCreatedAt,
+      ageFreq: aggregatedAges,
     };
   }
 }

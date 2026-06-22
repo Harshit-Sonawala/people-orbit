@@ -175,7 +175,7 @@ export class UsersRepository {
       ORDER BY "createdAt"
     `);
 
-    // Ages and counts of all distinct ages
+    // Ages, counts grouped by age
     const ageFreq = await this.repository.query(`
       SELECT age, COUNT(*) AS count
       FROM users

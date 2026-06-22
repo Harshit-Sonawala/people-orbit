@@ -38,8 +38,17 @@ export const DashboardCharts = () => {
             data={createdAtFreq ?? []}
             xAxisKey="createdAt"
             yAxisKey="count"
-            title="Monthly Growth"
+            title="User Growth"
             subtitle="New user registrations trend over the past few months"
+          />
+          <CustomBarChart
+            data={ageFreq ?? []}
+            xAxisKey="age"
+            yAxisKey="count"
+            title="Age Distribution"
+            subtitle="Demographic layout of users by age range"
+            barSpacingPerc="2%"
+            barRadiiArray={[4, 4, 0, 0]}
           />
         </div>
       )}
