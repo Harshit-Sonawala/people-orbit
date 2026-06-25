@@ -4,10 +4,12 @@ export type User = {
   id: string;
   firstName: string;
   lastName: string;
-  age?: number;
-  designation: string;
   email: string;
   password: string;
+  designation: string;
+  company: string;
+  location?: string;
+  age?: number;
   role: UserRole;
   phone: string;
   bio?: string;

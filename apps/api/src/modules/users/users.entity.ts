@@ -7,26 +7,34 @@ export class UsersEntity {
   @PrimaryColumn({ type: 'varchar' })
   id!: string;
 
-  @Column({ type: 'varchar', length: 30 })
+  @Column({ type: 'varchar', length: 50, nullable: false })
   @Index()
   firstName!: string;
 
-  @Column({ type: 'varchar', length: 30 })
+  @Column({ type: 'varchar', length: 50, nullable: false })
   @Index()
   lastName!: string;
 
-  @Column({ type: 'smallint', nullable: true })
-  age?: number;
-
-  @Column({ type: 'varchar', length: 40 })
-  @Index()
-  designation!: string;
-
-  @Column({ type: 'varchar', length: 100, unique: true })
+  @Column({ type: 'varchar', length: 200, nullable: false, unique: true })
   email!: string;
 
   @Column({ type: 'varchar', length: 128, select: false, nullable: false })
   password!: string;
+
+  @Column({ type: 'varchar', length: 100 })
+  @Index()
+  designation!: string;
+
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  @Index()
+  company!: string;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Index()
+  location?: string;
+
+  @Column({ type: 'smallint', nullable: true })
+  age?: number;
 
   @Column({
     type: 'enum',
@@ -38,7 +46,7 @@ export class UsersEntity {
   @Column({ type: 'varchar', length: 20 })
   phone!: string;
 
-  @Column({ type: 'varchar', length: 140, nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   bio?: string;
 
   @Column({ type: 'text', array: true, nullable: true })

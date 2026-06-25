@@ -9,17 +9,17 @@ import {
 export class SignupDto {
   @IsNotEmpty()
   @IsString()
-  @MaxLength(30)
+  @MaxLength(50)
   firstName!: string;
 
   @IsNotEmpty()
   @IsString()
-  @MaxLength(30)
+  @MaxLength(50)
   lastName!: string;
 
   @IsNotEmpty()
   @IsEmail()
-  @MaxLength(100)
+  @MaxLength(200)
   email!: string;
 
   @IsNotEmpty()
@@ -30,8 +30,13 @@ export class SignupDto {
 
   @IsNotEmpty()
   @IsString()
-  @MaxLength(40)
+  @MaxLength(100)
   designation!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(100)
+  company!: string;
 
   @IsNotEmpty()
   @IsString()

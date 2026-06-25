@@ -22,29 +22,17 @@ export class CreateUserDto implements Omit<
 > {
   @IsNotEmpty()
   @IsString()
-  @MaxLength(30)
+  @MaxLength(50)
   firstName!: string;
 
   @IsNotEmpty()
   @IsString()
-  @MaxLength(30)
+  @MaxLength(50)
   lastName!: string;
-
-  @IsOptional()
-  @Type(() => Number) // Convert into number if string was passed
-  @IsInt() // ensures whole integer
-  @Min(16, { message: 'User must be atleast 16 years of age to join.' })
-  @Max(120)
-  age?: number;
-
-  @IsNotEmpty()
-  @IsString()
-  @MaxLength(40)
-  designation!: string;
 
   @IsNotEmpty()
   @IsEmail()
-  @MaxLength(100)
+  @MaxLength(200)
   email!: string;
 
   @IsNotEmpty()
@@ -52,6 +40,27 @@ export class CreateUserDto implements Omit<
   @MinLength(12)
   @MaxLength(128)
   password!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(100)
+  designation!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(100)
+  company!: string;
+
+  @IsString()
+  @MaxLength(100)
+  location?: string;
+
+  @IsOptional()
+  @Type(() => Number) // Convert into number if string was passed
+  @IsInt() // ensures whole integer
+  @Min(16, { message: 'User must be atleast 16 years of age to join.' })
+  @Max(120)
+  age?: number;
 
   @IsNotEmpty()
   @IsString()

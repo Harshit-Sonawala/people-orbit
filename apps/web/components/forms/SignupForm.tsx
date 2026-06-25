@@ -6,6 +6,7 @@ import {
   firstNameValidation,
   lastNameValidation,
   designationValidation,
+  companyValidation,
   emailValidation,
   phoneValidation,
   passwordValidation,
@@ -22,6 +23,7 @@ import {
 } from "@/components";
 import {
   BadgeRounded,
+  BusinessRounded,
   EmailRounded,
   KeyRounded,
   PhoneRounded,
@@ -44,6 +46,7 @@ export const SignupForm = () => {
       firstName: "",
       lastName: "",
       designation: "",
+      company: "",
       email: "",
       phone: "",
       password: "",
@@ -53,6 +56,7 @@ export const SignupForm = () => {
       firstName: firstNameValidation,
       lastName: lastNameValidation,
       designation: designationValidation,
+      company: companyValidation,
       email: emailValidation,
       phone: phoneValidation,
       password: passwordValidation,
@@ -75,7 +79,10 @@ export const SignupForm = () => {
             router.refresh();
           },
           onError: (error: unknown) => {
-            const err = error as { response?: { data?: { message?: string } }; message?: string };
+            const err = error as {
+              response?: { data?: { message?: string } };
+              message?: string;
+            };
             dispatch(
               showNotification({
                 title: "Signup Error",
@@ -147,19 +154,35 @@ export const SignupForm = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-stretch justify-center gap-4 w-full">
-          <div className="flex flex-row items-center flex-1 gap-2">
-            <WorkRounded className="text-primary" />
-            <label htmlFor="designation">Designation:</label>
+        <div className="flex flex-row items-center justify-center gap-4">
+          <div className="flex flex-col items-stretch justify-center gap-4 w-full">
+            <div className="flex flex-row items-center flex-1 gap-2">
+              <WorkRounded className="text-primary" />
+              <label htmlFor="designation">Designation:</label>
+            </div>
+            <TextInput
+              id="designation"
+              type="text"
+              placeholder="Full Stack Developer"
+              className="w-full"
+              error={getFormError("designation", formik.errors, formik.touched)}
+              {...formik.getFieldProps("designation")}
+            />
           </div>
-          <TextInput
-            id="designation"
-            type="text"
-            placeholder="Full Stack Developer"
-            className="w-full"
-            error={getFormError("designation", formik.errors, formik.touched)}
-            {...formik.getFieldProps("designation")}
-          />
+          <div className="flex flex-col items-stretch justify-center gap-4 w-full">
+            <div className="flex flex-row items-center flex-1 gap-2">
+              <BusinessRounded className="text-primary" />
+              <label htmlFor="company">Company:</label>
+            </div>
+            <TextInput
+              id="company"
+              type="text"
+              placeholder="Example Corp"
+              className="w-full"
+              error={getFormError("company", formik.errors, formik.touched)}
+              {...formik.getFieldProps("company")}
+            />
+          </div>
         </div>
 
         <div className="flex flex-col items-stretch justify-center gap-4 w-full">
