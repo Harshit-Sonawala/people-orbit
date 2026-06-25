@@ -4,14 +4,14 @@ import Image from "next/image";
 import profilePic from "@/public/placeholder_profile_pic.png";
 import bgImage from "@/public/dummy_bgImage.jpg";
 import {
+  LocationOnRounded,
+  AlternateEmailRounded,
   LinkedIn,
   LanguageRounded,
   GitHub,
-  CakeRounded,
-  WorkRounded,
   EmailRounded,
   PhoneRounded,
-  AlternateEmailRounded,
+  CakeRounded,
   VerifiedRounded,
   HistoryRounded,
 } from "@mui/icons-material";
@@ -42,8 +42,8 @@ export default async function UserDetails({
   return (
     <div className="flex flex-col flex-1 items-stretch justify-center gap-8 w-[90%] lg:w-[80%] mx-auto pb-32">
       {user && (
-        <div className="flex flex-col items-stretch gap-4 justify-center">
-          <div className="relative h-84 rounded-lg overflow-hidden">
+        <div className="flex flex-col flex-1 items-stretch justify-center gap-4">
+          <div className="relative h-84 rounded-lg overflow-hidden border border-surface-top">
             <Image
               src={bgImage}
               alt="Background"
@@ -52,7 +52,7 @@ export default async function UserDetails({
               className="bg-primary-alt object-cover"
               priority
             />
-            <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface-top border-4 border-surface-top overflow-hidden">
+            <div className="absolute left-8 bottom-8 h-24 w-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full bg-surface border border-surface-top overflow-hidden">
               {/* <Image
                 src={profilePic}
                 alt={user.firstName.charAt(0)}
@@ -64,23 +64,36 @@ export default async function UserDetails({
             </div>
           </div>
           <Card className="gap-8 p-6 py-10 px-12">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-8">
               <div className="flex flex-row items-center justify-between gap-4">
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4">
                   <Heading variant="lg">
                     {user.firstName} {user.lastName}
                   </Heading>
 
                   <div className="flex flex-row items-center gap-2">
-                    <WorkRounded className="text-primary" />
-                    <Heading variant="sm" className="text-primary">
+                    {/* <WorkRounded className="text-primary" /> */}
+                    <Heading variant="sm" className="text-secondary">
                       {user.designation}
                     </Heading>
+                    {`•`}
+                    <Heading variant="sm" className="text-tertiary">
+                      {user.company}
+                    </Heading>
                   </div>
-
-                  <div className="flex flex-row items-center gap-1">
-                    <AlternateEmailRounded className="text-foreground-alt icon-sm" />
-                    <p className="text-foreground-alt p-1">{user.id}</p>
+                  <div className="flex flex-col">
+                    {user.location && (
+                      <div className="flex flex-row items-center">
+                        <LocationOnRounded className="text-foreground-alt icon-md" />
+                        <p className="text-foreground-alt p-1">
+                          {user.location}
+                        </p>
+                      </div>
+                    )}
+                    <div className="flex flex-row items-center">
+                      <AlternateEmailRounded className="text-foreground-alt icon-md" />
+                      <p className="text-foreground-alt p-1">{user.id}</p>
+                    </div>
                   </div>
                 </div>
 

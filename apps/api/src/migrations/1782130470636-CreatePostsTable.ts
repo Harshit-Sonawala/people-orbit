@@ -15,7 +15,7 @@ export class CreatePostsTable1782130470636 implements MigrationInterface {
         "company" VARCHAR NOT NULL,
         "postedBy" VARCHAR NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
         "createdAt" BIGINT NOT NULL,
-        "updatedAt" BIGINT NOT NULL, 
+        "updatedAt" BIGINT NOT NULL,
         "skills" TEXT ARRAY,
         "industry" VARCHAR,
         "type" VARCHAR,
