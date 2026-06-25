@@ -53,7 +53,7 @@ export const UserCard = ({ User, className }: Props) => {
           {User.firstName} {User.lastName}
         </Heading>
 
-        <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
+        <div className="flex flex-row flex-wrap gap-2 items-center justify-start min-w-0 w-full">
           {/* <WorkRounded
             fontSize="inherit"
             className="icon-md text-secondary shrink-0"
@@ -61,6 +61,7 @@ export const UserCard = ({ User, className }: Props) => {
           <p className="text-md font-semibold text-secondary truncate">
             {User.designation}
           </p>
+          <p className="text-md font-semibold text-tertiary truncate">{`@${User.company}`}</p>
         </div>
 
         <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
@@ -79,16 +80,7 @@ export const UserCard = ({ User, className }: Props) => {
           <p className="text-sm text-foreground truncate">{User.phone}</p>
         </div>
 
-        <div className="flex flex-row gap-2 items-center justify-start min-w-0 w-full">
-          <p className="text-xs text-foreground-alt truncate">
-            Member since{" "}
-            {new Date(User.createdAt).toLocaleDateString("en-US", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })}
-          </p>
-        </div>
+        <p className="text-xs text-foreground-alt truncate">{User.location}</p>
       </div>
     </Link>
   );
